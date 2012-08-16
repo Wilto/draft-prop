@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+  <head>
+    <title>Responsive Images Extension</title>
+    <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
+    <script src='http://www.w3.org/Tools/respec/respec-w3c-common' class='remove' async></script>
+    <script type="text/javascript" class='remove'>
+      var respecConfig = {
+          specStatus:           "ED",
+          shortName:            "respimg",
+          noIDLSorting:         true,
+          edDraftURI:           "http://dvcs.w3.org/tbc.html",
+
+          editors:  [
+              { name: "Mat Marquis", company: "Responsive Images Community Group",
+                companyURL: "http://www.w3.org/community/respimg/" },
+              //{ name: "Adrian Bateman", url: "mailto:adrianba@microsoft.com",
+              //  company: "Microsoft Corporation", companyURL: "http://www.microsoft.com/" },
+          ],
+
+          wg:          "HTML Working Group",
+          wgURI:       "http://www.w3.org/html/wg/",
+          wgPublicList: "public-html",
+          wgPatentURI: "http://www.w3.org/2004/01/pp-impl/40318/status",
+          issueBase:   "http://www.w3.org/html/wg/tracker/issues",
+          noIDLSectionTitle: true,
+      };
+    </script>
+  </head>
+  <body>
+    <section id='abstract'>
+    This proposal adds new elements and attribute to [[!HTML5]] to enable different sources of images based on browser and display characteristics.
+    The proposal addresses multiple use cases such as images used in responsive web designs and different images needed for high density displays.
+    </section>
+
+    <section id="sotd">
+    This document was proposed by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a> as a solution to
+    <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384">bug 18384</a>.
+    </section>
+
+    <section id="intro" class="informative">
+	<h1>Introduction</h1>
+	<p>This proposal allows content authors to provide user agents with the information they need to select the best image source. The current <code>img</code> element only allows for a single source of an image, but there are numerous use cases where document authors need to define different image sources depending on the factors such as the design, size resolution, and display density.</p>
+	<p>The best image source may be an image sized appropriately for the display size or pixel density. Or the best image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: art direction use case).</p>
+
+    <section id="goals">
+	<h1>Goals</h1>
+	<p>This proposal was designed with the following goals in mind:</p>
+	<ul>
+		<li>Respond to different screen pixel width/height</li>
+		<li>Respond to different screen pixel densities</li>
+		<li>Respond to user zoom on image resource.</li>
+		<li>Provide user agents with information they need to select the most appropriate image source given low bandwidth situations</li>
+		<li>Will fallback gracefully on older user agents</li>
+		<li>Can be polyfilled effectively</li>
+		<li>Retains, at a minimum, the same level of accessibility as current <code>img</code> element</li>
+		<li>Preserves separation of content markup and styling</li>
+		<li>Provides a purely client-side solution which can include JavaScript, but doesn’t require it</li>
+		<li>Supports use cases where authors need to explicitly define different image versions as opposed to simply different resolutions of the same image</li>
+		<li>Provides a consistent and predictable pattern for delivering alternate media sources based on client context</li>
+	</ul>
+    </section><!-- goals -->
+
+    </section><!-- introduction -->
+
+    <section id="definitions">
+	<h1>Definitions</h1>
+	<p><em>Text in this font and color is non-normative.</em></p>
+	<p>[[ Note: TBD ]]</p>
+    </section><!-- definitions -->
+
+    <section>
+	<h1>Picture Element</h1>
+	<p>The Picture Element represents a list sources of image data and associated attributes that define when an image should be used. Image data sources may be explicitly declared based on media queries or can be suggested to the browser via the srcset attribute on the picture element.</p>
+	<p>Sample picture element markup:</p>
+
+<pre class="example">&lt;picture alt=&quot;&quot;&gt;
+	&lt;source media=&quot;(min-width: 45em)&quot; srcset=&quot;large-1.jpg 1x, large-2.jpg 2x&quot;&gt;
+	&lt;source media=&quot;(min-width: 18em)&quot; srcset=&quot;med-1.jpg 1x, med-2.jpg 2x&quot;&gt;
+	&lt;source srcset=&quot;small-1.jpg 1x, small-2.jpg 2x&quot;&gt; 
+	&lt;img src=&quot;small-1.jpg&quot;&gt; 
+&lt;/picture&gt;</pre>
+	
+        <section>
+	    <h1>Picture element permitted attributes</h1>
+	    <p>global attributes &amp; src &amp; srcset &amp; type &amp; media</p>
+
+	    <ul>
+		    <li>global attributes = Any attributes permitted globally.</li>
+		    <li>src = <a href="http://www.w3.org/TR/html-markup/datatypes.html#common.data.uri.non-empty">non-empty URL potentially surrounded by spaces</a> The address of the <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a>.</li>
+		    <li>type = MIME type The type of the <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a> (used for helping the UA determine, before fetching this <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a>, if it can play it). A string that identifies a valid MIME media type as defined in [<a href="http://www.w3.org/TR/html-markup/references.html#refsRFC2046">RFC 2046</a>].</li>
+		    <li>media = <a href="http://www.w3.org/TR/html-markup/datatypes.html#common.data.mediaquery">media-query list</a> The intended media type of the <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a> (used for helping the UA determine, before fetching this <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a>, if it is useful to the user). A valid media query list as defined in [<a href="http://www.w3.org/TR/html-markup/references.html#refsMediaQueries">Media Queries</a>].</li>
+		    <li>srcset = list containing a single image at different resolutions</li>
+	    </ul>
+        </section><!-- picture permitted attributes -->
+
+        <section>
+	    <h1>Source element</h1>
+	    <p>The source element is a child of the picture element and extends the existing source element [<a href="http://www.w3.org/TR/html-markup/source.html#source.attrs.media">http://www.w3.org/TR/html-markup/source.html#source.attrs.media</a>]. Each source defines one or more image data sources and the conditions under which each source should be utilized.</p>
+	    <p>Note that all supplied sources for a given <code>picture</code> element should represent the same subject matter, while cropping and zooming may differ. It should be codified that this is not a mechanism by which to swap disparate images depending on screen size. See: <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7">https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7</a></p>
+        </section><!-- source-element -->
+
+        <section id="source-permitted-attr">
+	    <h1>Source element permitted attributes</h1>
+	    <p>global attributes &amp; src &amp; srcset &amp; type &amp; media</p>
+
+	    <ul>
+		    <li>global attributes = Any attributes permitted globally.</li>
+		    <li>src = <a href="http://www.w3.org/TR/html-markup/datatypes.html#common.data.uri.non-empty">non-empty URL potentially surrounded by spaces</a> The address of the <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a>.</li>
+		    <li>type = MIME type The type of the <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a> (used for helping the UA determine, before fetching this <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a>, if it can play it). A string that identifies a valid MIME media type as defined in [<a href="http://www.w3.org/TR/html-markup/references.html#refsRFC2046">RFC 2046</a>].</li>
+		    <li>media = <a href="http://www.w3.org/TR/html-markup/datatypes.html#common.data.mediaquery">media-query list</a> The intended media type of the <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a> (used for helping the UA determine, before fetching this <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a>, if it is useful to the user). A valid media query list as defined in [<a href="http://www.w3.org/TR/html-markup/references.html#refsMediaQueries">Media Queries</a>].</li>
+		    <li>srcset = list containing a single image at different resolutions</li>
+	    </ul>
+        </section><!-- source-permitted-attr -->
+
+        <section id="srcset-attribute">
+	    <h3 id="">Srcset attribute</h3>
+	    <p>The <code>srcset</code> attribute is based on the proposed CSS4 image-set property [<a href="http://dev.w3.org/csswg/css4-images/#image-set-notation">http://dev.w3.org/csswg/css4-images/#image-set-notation</a>] and follows the same syntax:</p>
+	    <p><em>srcset</em> = <code>srcset( [ &lt;srcset-decl&gt;, ]* [ &lt;srcset-decl&gt; | &lt;color&gt;] ) &lt;em&gt;srcset-decl&lt;/em&gt; = [ &lt;url&gt; | &lt;string&gt; ] &lt;resolution&gt;</code></p>
+
+	    <p><strong>Sample srcset attribute:</strong></p>
+	    <p><code>srcset="med-1.jpg 1x, med-2.jpg 2x"</code></p>
+        </section><!-- srcset-attribute -->
+
+    </section><!-- picture element -->
+
+    <section id="algorithms">
+	<h1>Algorithms</h1>
+	<p>The basic algorithm for processing the <code>picture</code> element is as follows:</p>
+
+	<ol style="list-style-type: decimal">
+		<li>Evaluate <code>media</code>/<code>src</code>/<code>srcset</code> attributes on the parent <code>picture</code> element first. ( <a href="http://lists.w3.org/Archives/Public/public-html/2012Jun/0116.html">http://lists.w3.org/Archives/Public/public-html/2012Jun/0116.html</a> )
+			<ol style="list-style-type: decimal">
+				<li>If the <code>media</code> attribute on the <code>picture</code> element should match, evaluate <code>srcset</code> ( per the algorithm defined in <a href="http://dev.w3.org/csswg/css4-images/#image-set-notation">http://dev.w3.org/csswg/css4-images/#image-set-notation</a> ) or the <code>src</code> attribute.</li>
+				<li>If not, continue to step two below.</li>
+			</ol>
+		</li>
+		<li>Evaluate <code>source</code> child elements per the algorithm already defined for the <code>media</code> attribute ( <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-video-element.html#concept-media-load-algorithm">http://www.whatwg.org/specs/web-apps/current-work/multipage/the-video-element.html#concept-media-load-algorithm</a> ) to select the appropriate source element.</li>
+		<li>Once the source element has been identified, look to see if the element has <code>srcset</code> defined. If <code>srcset</code> exists, follow the algorithm for image-set (<a href="http://dev.w3.org/csswg/css4-images/#image-set-notation">http://dev.w3.org/csswg/css4-images/#image-set-notation</a>). If <code>src</code> is specified on the source element, let that be the chosen <code>picture</code> source.</li>
+		<li>The user agent will ignore any <code>img</code> elements that are children of the picture element.</li>
+	</ol>
+    </section><!-- algorithms -->
+
+    <section id="fallback-behavior">
+	<h2>Fallback behavior</h2>
+	<p>User agents that do not natively support the <code>picture</code> element will render the child img element per the behavior of existing HTML5 media elements.</p>
+    </section><!-- fallback-behavior -->
+
+    <section id="accessibility">
+	<h1>Accessibility</h1>
+	<p>The picture element has an alternate text (alt) attribute. The alt attribute should be handled exactly the same way as the alt attribute on the img element. <a href="http://dev.w3.org/html5/alt-techniques/#secm1">http://dev.w3.org/html5/alt-techniques/#secm1</a></p>
+	<p>In order to fall back gracefully, the <code>alt</code> attribute and its value should be repeated on the child img element.</p>
+	<p>The alt attribute is NOT permissible on source elements. If the alternate text description of a source element differs from other source elements, it would suggest that the listed sources are not different versions of the same image, but are likely to be different images entirely.</p>
+	<p class="issue">It should be noted that the above represents an absolute minimum in terms of the accessibility of the proposed element. Further a11y discussion at <a href="http://lists.w3.org/Archives/Public/public-html/2012Jun/0118.html">http://lists.w3.org/Archives/Public/public-html/2012Jun/0118.html</a> and <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384">https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384</a>.
+    </section><!-- accessibility -->
+
+    <section id="examples" class="informative">
+	<h1>Examples</h1>
+	<p>TODO: add examples</p>
+    </section><!-- examples -->
+
+    <section id="faq" class="appendix informative">
+	<h1>FAQ</h1>
+	<p>TODO: add FAQs</p>
+    </section><!-- faq -->
+
+    <section id="use-cases" class="appendix informative">
+	<h1>Use Cases</h1>
+	<p>What use cases does this support?</p>
+
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+	</ul>
+    </section><!-- use-cases -->
+
+    <section id="polyfills" class="appendix informative">
+	<h3>Pre-existing Polyfills</h3>
+	<ul>
+		<li>Picturefill, demo</li>
+	</ul>
+    </section><!-- polyfills -->
+
+    <section class='appendix'>
+      <h1>Acknowledgements</h1>
+      <p>TODO: add thanks</p>
+    </section><!-- appendix -->
+
+  </body>
+</html>
