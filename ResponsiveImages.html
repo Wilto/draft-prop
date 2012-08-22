@@ -256,7 +256,7 @@ content should follow along. http://msdn.microsoft.com/en-us/library/windows/app
      
     </section><!-- use-cases -->
     
-    <section id="use-cases" class="appendix informative">
+    <section id="requirements" class="appendix informative">
 	<h1>Requirements</h1>
 	<p>A conforming user agent must meet the following requirements:</p>
 	<ul>
@@ -264,13 +264,14 @@ content should follow along. http://msdn.microsoft.com/en-us/library/windows/app
 		<li>As with the <video> and <audio> tags, this solution MUST NOT require any client-side scripting, server-side technologies, or headers to reliably deliver content tailored for the end user’s context.</li>
 		<li>Similar to the <video> tag, fallback markup MUST be rendered in any browser that does not recognize the <picture> element. The example in 3.1 uses the “mobile”-sized image as the fallback content, which is the recommended approach: barring the use of a polyfill, the smaller/low-res image should be provided as a fallback to prevent incurring a costly download in contexts that may see no benefit.</li>
 		<li>The proposed element MUST provide at least the same level of accessibility as <img>, with an alt attribute readily accessible to assistive technology.</li>
+		<li>To address potential bandwidth concerns, the UA SHOULD be able to override requests for higher-resolution images based on proposed user settings, for example: “always request high-resolution images,” “always request low-resolution images,” and “request high-resolution images as bandwidth permits” based on the bandwidth information available to the browser.</li>
 	</ul>
     </section><!-- use-cases -->
 
     <section id="polyfills" class="appendix informative">
 	<h3>Pre-existing Polyfills</h3>
 	<ul>
-		<li>[[ This version of Picturefill most closely matches the proposed syntax: https://github.com/scottjehl/picturefill/tree/div-markup-currentprop ]]/li>
+		<li>This version of Scott Jehl’s Picturefill closely matches the proposed syntax, albiet using <code>div</code> elements in order to be used today: <a href="https://github.com/scottjehl/picturefill/tree/div-markup-currentprop">https://github.com/scottjehl/picturefill/tree/div-markup-currentprop</a></li>
 	</ul>
     </section><!-- polyfills -->
 
