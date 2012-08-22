@@ -175,11 +175,22 @@
 		<li>3</li>
 	</ul>
     </section><!-- use-cases -->
+    
+    <section id="use-cases" class="appendix informative">
+	<h1>Requirements</h1>
+	<p>A conforming user agent must meet the following requirements:</p>
+	<ul>
+		<li>The appropriate asset MUST be fetched by way of a single request, initially. A change in window size causing the media attribute to match an alternate source SHOULD trigger a request for said source (to be retrieved from the browser cache, if possible).</li>
+		<li>As with the <video> and <audio> tags, this solution MUST NOT require any client-side scripting, server-side technologies, or headers to reliably deliver content tailored for the end user’s context.</li>
+		<li>Similar to the <video> tag, fallback markup MUST be rendered in any browser that does not recognize the <picture> element. The example in 3.1 uses the “mobile”-sized image as the fallback content, which is the recommended approach: barring the use of a polyfill, the smaller/low-res image should be provided as a fallback to prevent incurring a costly download in contexts that may see no benefit.</li>
+		<li>The proposed element MUST provide at least the same level of accessibility as <img>, with an alt attribute readily accessible to assistive technology.</li>
+	</ul>
+    </section><!-- use-cases -->
 
     <section id="polyfills" class="appendix informative">
 	<h3>Pre-existing Polyfills</h3>
 	<ul>
-		<li>Picturefill, demo</li>
+		<li>[[ This version of Picturefill most closely matches the proposed syntax: https://github.com/scottjehl/picturefill/tree/div-markup-currentprop ]]/li>
 	</ul>
     </section><!-- polyfills -->
 
