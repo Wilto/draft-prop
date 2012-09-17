@@ -1,277 +1,318 @@
+
 <!DOCTYPE html>
 <!-- saved from url=(0014)about:internet -->
 <html>
-  <head>
-    <title>Responsive Images Extension</title>
-    <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
-    <script src='http://www.w3.org/Tools/respec/respec-w3c-common' class='remove' async></script>
-    <script type="text/javascript" class='remove'>
-      var respecConfig = {
-          specStatus:           "ED",
-          shortName:            "respimg",
-          noIDLSorting:         true,
-          edDraftURI:           "http://dvcs.w3.org/tbc.html",
+<head>
+	<title>HTML Responsive Images Extension</title>
+	<meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
 
-          editors:  [
-              { name: "Mat Marquis", company: "Responsive Images Community Group",
-                companyURL: "http://www.w3.org/community/respimg/" },
-              //{ name: "Adrian Bateman", url: "mailto:adrianba@microsoft.com",
-              //  company: "Microsoft Corporation", companyURL: "http://www.microsoft.com/" },
-          ],
+	<script src='http://www.w3.org/Tools/respec/respec-w3c-common' class='remove' async></script>
+	<script type="text/javascript" class='remove'>
+	var respecConfig = {
+		specStatus:           "ED",
+		shortName:            "respimg",
+		noIDLSorting:         true,
+		edDraftURI:           "http://dvcs.w3.org/hg/html-proposals/raw-file/tip/responsive-images/responsive-images.html",
 
-          wg:          "HTML Working Group",
-          wgURI:       "http://www.w3.org/html/wg/",
-          wgPublicList: "public-html",
-          wgPatentURI: "http://www.w3.org/2004/01/pp-impl/40318/status",
-          issueBase:   "http://www.w3.org/html/wg/tracker/issues",
-          noIDLSectionTitle: true,
-      };
-    </script>
-  </head>
-  <body>
-    <section id='abstract'>
-    This proposal adds new elements and attribute to [[!HTML5]] to enable different sources of images based on browser and display characteristics.
-    The proposal addresses multiple use cases such as images used in responsive web designs and different images needed for high density displays.
-    </section>
+		editors:  [{ 
+			name: "Mat Marquis",
+			company: "Responsive Images Community Group",
+			companyURL: "http://www.w3.org/community/respimg/"
+		},
+		{
+			name: "Adrian Bateman",
+			company: "Microsoft Corporation",
+			companyURL: "http://www.microsoft.com/"
+		}],
+		wg:          "HTML Working Group",
+		wgURI:       "http://www.w3.org/html/wg/",
+		wgPublicList: "public-html",
+		wgPatentURI: "http://www.w3.org/2004/01/pp-impl/40318/status",
+		issueBase:   "http://www.w3.org/html/wg/tracker/issues",
+		noIDLSectionTitle: true
+	};
+	</script>
 
-    <section id="sotd">
-    This document was proposed by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a> as a solution to
-    <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384">bug 18384</a>.
-    </section>
+	<style type="text/css">
+		.informative { background-color: rgb(233, 251, 233); }
+		ol > li { margin-bottom: 1em; }
+		#conformance dd {margin-bottom: 1em; }
+		pre { tab-size: 3; /* Reduce indentation. */ }
+		.informative-subhed { font-size: 120%; }
+	</style>
+</head>
+<body>
 
-    <section id="intro" class="informative">
-	<h1>Introduction</h1>
-	<p>This proposal allows content authors to provide user agents with the information they need to select the best image source. The current <code>img</code> element only allows for a single source of an image, but there are numerous use cases where document authors need to define different image sources depending on the factors such as the design, size resolution, and display density.</p>
-	<p>The best image source may be an image sized appropriately for the display size or pixel density. Or the best image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: art direction use case).</p>
+	<section id='abstract'>
+		<p>This proposal adds new elements and attribute to [[!HTML5]] to enable different sources of images based on browser and display characteristics.
+	The proposal addresses multiple use cases such as images used in responsive web designs and different images needed for high density displays.</p>
+	</section>
 
-    <section id="goals">
-	<h1>Goals</h1>
-	<p>This proposal was designed with the following goals in mind:</p>
-	<ul>
-		<li>Respond to different screen pixel width/height</li>
-		<li>Respond to different screen pixel densities</li>
-		<li>Respond to user zoom on image resource.</li>
-		<li>Provide user agents with information they need to select the most appropriate image source given low bandwidth situations</li>
-		<li>Will fallback gracefully on older user agents</li>
-		<li>Can be polyfilled effectively</li>
-		<li>Retains, at a minimum, the same level of accessibility as current <code>img</code> element</li>
-		<li>Preserves separation of content markup and styling</li>
-		<li>Provides a purely client-side solution which can include JavaScript, but doesn’t require it</li>
-		<li>Supports use cases where authors need to explicitly define different image versions as opposed to simply different resolutions of the same image</li>
-		<li>Provides a consistent and predictable pattern for delivering alternate media sources based on client context</li>
-	</ul>
-    </section><!-- goals -->
+	<section id="sotd">
+		<p>This document was proposed by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a> as a solution to <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384">bug 18384</a>.</p>
+	</section>
 
-    </section><!-- introduction -->
+	<section id="intro" class="informative">
+		<h1>Introduction</h1>
+		<p>This proposal allows content authors to provide user agents with the information they need to select the best image source. The current <code>img</code> element only allows for a single source of an image, but there are numerous use cases where document authors need to define different image sources depending on the factors such as the design, size resolution, and display density.</p>
+		<p>The best image source may be an image sized appropriately for the display size or pixel density. Or the best image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: art direction use case).</p>
 
-    <section id="definitions">
-	<h1>Definitions</h1>
-	<p><em>Text in this font and color is non-normative.</em></p>
-	<p>[[ Note: TBD ]]</p>
-    </section><!-- definitions -->
+		<section id="goals">
+			<h1>Goals</h1>
+			<p>This proposal was designed with the following goals in mind:</p>
+			<ul>
+				<li>Respond to different screen pixel width/height</li>
+				<li>Respond to different screen pixel densities</li>
+				<li>Respond to user zoom on image resource.</li>
+				<li>Provide user agents with information they need to select the most appropriate image source given low bandwidth situations</li>
+				<li>Will fallback gracefully on older user agents</li>
+				<li>Can be polyfilled effectively</li>
+				<li>Retains, at a minimum, the same level of accessibility as current <code>img</code> element</li>
+				<li>Preserves separation of content markup and styling</li>
+				<li>Provides a purely client-side solution which can include JavaScript, but doesn’t require it</li>
+				<li>Supports use cases where authors need to explicitly define different image versions as opposed to simply different resolutions of the same image</li>
+				<li>Provides a consistent and predictable pattern for delivering alternate media sources based on client context</li>
+				<li>Supports succinct but understandable mark-up</li>
+			</ul>
+			<p>Additionally, a conforming user agent must meet the following requirements:</p>
+			<ul>
+				<li>The appropriate asset MUST be fetched by way of a single request, initially. A change in window size causing the media attribute to match an alternate source SHOULD trigger a request for said source (to be retrieved from the browser cache, if possible).</li>
+				<li>As with the <code>video</code> and <code>audio</code> elements, this solution MUST NOT require any client-side scripting, server-side technologies, or headers to reliably deliver content tailored for the end user’s context.</li>
+				<li>Similar to the <code>video</code> tag, fallback markup MUST be rendered in any browser that does not recognize the <code>picture</code> element. The example in 3.1 uses the “mobile”-sized image as the fallback content, which is the recommended approach: barring the use of a polyfill, the smaller/low-res image should be provided as a fallback to prevent incurring a costly download in contexts that may see no benefit.</li>
+				<li>The proposed element MUST provide at least the same level of accessibility as <code>img</code>, with an <code>alt</code> attribute readily accessible to assistive technology.</li>
+				<li>To address potential bandwidth concerns, the user agent SHOULD be able to override requests for higher-resolution images based on proposed user settings, for example: “always request high-resolution images,” “always request low-resolution images,” and “request high-resolution images as bandwidth permits” based on the bandwidth information available to the browser.</li>
+			</ul>
+			<p>A detailed list of <a href="#use-cases">use cases</a> is provided as an appendix.</p>
+		</section><!-- / goals -->
 
-    <section>
-	<h1>Picture Element</h1>
-	<p>The Picture Element represents a list sources of image data and associated attributes that define when an image should be used. Image data sources may be explicitly declared based on media queries or can be suggested to the browser via the srcset attribute on the picture element.</p>
-	<p>Sample picture element markup:</p>
+	</section><!-- / introduction -->
 
-<pre class="example">&lt;picture alt=&quot;&quot;&gt;
+	<section id="conformance">
+		<section id="dependencies">
+			<h3>Dependencies</h3>
+			<p>This specification relies on the following specifications:</p>
+			<dl>
+				<dt>HTML5</dt>
+				<dd>The terms and algorithms <dfn><a href="http://www.w3.org/TR/html5/the-img-element.html#the-img-element">img element</a></dfn>,
+				<dfn><a href="http://www.w3.org/TR/html5/the-source-element.html#the-source-element">source element</a></dfn>,
+				<dfn><a href="http://www.w3.org/TR/html5/media-elements.html#media-resource">media resource</a></dfn>,
+				<dfn><a href="http://www.w3.org/TR/html5/media-elements.html#concept-media-load-algorithm">resource selection algorithm</a></dfn>,
+				<dfn><a href="http://www.w3.org/TR/html5/content-models.html#fallback-content">fallback content</a></dfn>,
+				<dfn><a href="http://www.w3.org/TR/html5/urls.html#valid-non-empty-url-potentially-surrounded-by-spaces">valid non-empty URL potentially surrounded by spaces</a></dfn>
+				and <dfn><a href="http://www.w3.org/TR/html5/common-microsyntaxes.html#valid-media-query">valid media query</a></dfn>
+				are defined by the HTML 5 specification [[!HTML5]].</dd>
+
+				<dt>RFC2046</dt>
+				<dd>The term <dfn>media type</dfn> is defined by the Media Queries Specification [[!RFC2046]].</dd>
+
+				<dt>CSS4-IMAGES</dt>
+				<dd>The term <dfn><a href="http://dev.w3.org/csswg/css4-images/#image-set-notation">image-set notation</a></dfn>
+is defined as proposed by the CSS Image Values and Replaced Content Module Level 4 Specification [CSS4-IMAGES].</dd>
+
+				<dt>ALT-TECHNIQUES</dt>
+				<dd>The term <dfn><a href="http://www.w3.org/TR/html-alt-techniques/#secm1">techniques for providing useful text alternatives for <code>img</code> elements</a></dfn> is defined by the HTML5: Techniques for providing useful text alternatives Specification [ALT-TECHNIQUES].</dd>
+
+				<!--dt>WebIDL</dt>
+<dd>Implementations that use ECMAScript to expose the APIs defined in this specification MUST implement them in a manner consistent with
+the ECMAScript Bindings defined in the Web IDL specification [[!WEBIDL]].</dd-->
+			</dl>
+		</section><!-- / dependencies -->
+	</section><!-- /conformance -->
+
+	<section>
+		<h1>Picture Element</h1>
+		<p>The <dfn><code>picture</code> element</dfn> represents a list of sources of image data and associated attributes that define when an image should be used. Image data sources may be explicitly declared based on media queries or can be suggested to the browser via the <a>srcset attribute</a> on the picture element.</p>
+		<p>Sample picture element markup:</p>
+
+<pre class="example">&lt;picture&gt;
 	&lt;source media=&quot;(min-width: 45em)&quot; srcset=&quot;large-1.jpg 1x, large-2.jpg 2x&quot;&gt;
 	&lt;source media=&quot;(min-width: 18em)&quot; srcset=&quot;med-1.jpg 1x, med-2.jpg 2x&quot;&gt;
 	&lt;source srcset=&quot;small-1.jpg 1x, small-2.jpg 2x&quot;&gt; 
-	&lt;img src=&quot;small-1.jpg&quot;&gt; 
+	&lt;img src=&quot;small-1.jpg&quot; alt=&quot;&quot;&gt; 
 &lt;/picture&gt;</pre>
 	
-        <section>
-	    <h1>Picture element permitted attributes</h1>
-	    <p>global attributes &amp; src &amp; srcset &amp; type &amp; media</p>
+		<section>
+			<h1>Picture element permitted attributes</h1>
+			<p>global attributes &amp; src &amp; srcset &amp; type &amp; media</p>
 
-	    <ul>
-		    <li>global attributes = Any attributes permitted globally.</li>
-		    <li>src = <a href="http://www.w3.org/TR/html-markup/datatypes.html#common.data.uri.non-empty">non-empty URL potentially surrounded by spaces</a> The address of the <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a>.</li>
-		    <li>type = MIME type The type of the <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a> (used for helping the UA determine, before fetching this <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a>, if it can play it). A string that identifies a valid MIME media type as defined in [<a href="http://www.w3.org/TR/html-markup/references.html#refsRFC2046">RFC 2046</a>].</li>
-		    <li>media = <a href="http://www.w3.org/TR/html-markup/datatypes.html#common.data.mediaquery">media-query list</a> The intended media type of the <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a> (used for helping the UA determine, before fetching this <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a>, if it is useful to the user). A valid media query list as defined in [<a href="http://www.w3.org/TR/html-markup/references.html#refsMediaQueries">Media Queries</a>].</li>
-		    <li><a href="#srcset-attribute">srcset</a> = Media source list A comma-separated list of <a href="http://www.w3.org/TR/html-markup/datatypes.html#common.data.uri.non-empty">non-empty URLs potentially surrounded by spaces</a> referring to alternate <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media sources</a> for a single image at different resolutions.</li>
-	    </ul>
-        </section><!-- picture permitted attributes -->
+			<ul>
+				<li>global attributes = Any attributes permitted globally.</li>
+				<li>src = <a>valid non-empty URL potentially surrounded by spaces</a> The address of the <a>media resource</a>.</li>
+				<li>type = MIME type The type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it can play it). A string that identifies a valid MIME <a>media type</a>.</li>
+				<li>media = <a>valid media query</a> The intended media type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it is useful to the user).</li>
+				<li><a href="#srcset-attribute">srcset</a> = Media source list A comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</li>
+			</ul>
+		</section><!-- / picture permitted attributes -->
 
-        <section>
-	    <h1>Source element</h1>
-	    <p>The <code>source</code> element is a child of the <code>picture</code> element and extends the existing <code>source</code> element [<a href="http://www.w3.org/TR/html-markup/source.html#source.attrs.media">http://www.w3.org/TR/html-markup/source.html#source.attrs.media</a>]. Each source defines one or more image data sources and the conditions under which that source should be utilized.</p>
-	    <p>Note that all supplied sources for a given <code>picture</code> element should represent the same subject matter, while cropping and zooming may differ. It should be codified that this is not a mechanism by which to swap disparate images depending on screen size. See: <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7">https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7</a></p>
-        </section><!-- source-element -->
+		<section>
+			<h1>Source element</h1>
+			<p>The <code>source</code> element is a child of the <a><code>picture</code> element</a> and extends the existing <a><code>source</code> element</a>. Each source defines one or more image data sources and the conditions under which that source should be utilized.</p>
+			<p>Note that all supplied sources for a given <a><code>picture</code> element</a> SHOULD represent the same subject matter, while cropping and zooming may differ.</p>
+			<div class="issue">It should be codified that this is not a mechanism by which to swap disparate images depending on screen size. See: <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7">https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7</a></div>
+		</section><!-- /source-element -->
 
-        <section id="source-permitted-attr">
-	    <h1>Source element permitted attributes</h1>
-	    <p>global attributes &amp; src &amp; srcset &amp; type &amp; media</p>
+		<section id="source-permitted-attr">
+			<h1>Source element permitted attributes</h1>
+			<p>global attributes &amp; src &amp; srcset &amp; type &amp; media</p>
 
-	    <ul>
-		    <li>global attributes = Any attributes permitted globally.</li>
-		    <li>src = <a href="http://www.w3.org/TR/html-markup/datatypes.html#common.data.uri.non-empty">non-empty URL potentially surrounded by spaces</a> The address of the <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a>.</li>
-		    <li>type = MIME type The type of the <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a> (used for helping the UA determine, before fetching this <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a>, if it can play it). A string that identifies a valid MIME media type as defined in [<a href="http://www.w3.org/TR/html-markup/references.html#refsRFC2046">RFC 2046</a>].</li>
-		    <li>media = <a href="http://www.w3.org/TR/html-markup/datatypes.html#common.data.mediaquery">media-query list</a> The intended media type of the <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a> (used for helping the UA determine, before fetching this <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media source</a>, if it is useful to the user). A valid media query list as defined in [<a href="http://www.w3.org/TR/html-markup/references.html#refsMediaQueries">Media Queries</a>].</li>
-		    <li><a href="#srcset-attribute">srcset</a> = Media source list A comma-separated list of <a href="http://www.w3.org/TR/html-markup/datatypes.html#common.data.uri.non-empty">non-empty URLs potentially surrounded by spaces</a> referring to alternate <a href="http://www.w3.org/TR/html-markup/source.html#media-source">media sources</a> for a single image at different resolutions.</li>
-	    </ul>
-        </section><!-- source-permitted-attr -->
+			<ul>
+				<li>global attributes = Any attributes permitted globally.</li>
+				<li>src = <a>valid non-empty URL potentially surrounded by spaces</a> The address of the <a>media resource</a>.</li>
+				<li>type = MIME type The type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it can play it). A string that identifies a valid MIME <a>media type</a>.</li>
+				<li>media = <a>valid media query</a> The intended media type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it is useful to the user).</li>
+				<li><a href="#srcset-attribute">srcset</a> = Media source list A comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</li>
+			</ul>
+		</section><!-- source-permitted-attr -->
 
-        <section id="srcset-attribute">
-	    <h3 id="">Srcset attribute</h3>
-	    <p>The <code>srcset</code> attribute is based on the proposed CSS4 image-set property [<a href="http://dev.w3.org/csswg/css4-images/#image-set-notation">http://dev.w3.org/csswg/css4-images/#image-set-notation</a>] and follows the same syntax:</p>
-	    <p><em>srcset</em> = <code>srcset( [ &lt;srcset-decl&gt;, ]* [ &lt;srcset-decl&gt; | &lt;color&gt;] ) &lt;em&gt;srcset-decl&lt;/em&gt; = [ &lt;url&gt; | &lt;string&gt; ] &lt;resolution&gt;</code></p>
+		<section id="srcset-attribute">
+			<h3>Srcset attribute</h3>
+			<p>The <dfn><code>srcset</code> attribute</dfn> is based on the proposed <a>image-set notation</a> and follows the same syntax:</p>
+			<p><em>srcset</em> = <code>srcset( [ &lt;srcset-decl&gt;, ]* [ &lt;srcset-decl&gt; | &lt;color&gt;] ) &lt;em&gt;srcset-decl&lt;/em&gt; = [ &lt;url&gt; | &lt;string&gt; ] &lt;resolution&gt;</code></p>
 
-	    <p><strong>Sample srcset attribute:</strong></p>
-	    <p><code>srcset="med-1.jpg 1x, med-2.jpg 2x"</code></p>
-        </section><!-- srcset-attribute -->
+			<p>Sample srcset attribute:</p>
+			<pre class="example">srcset="med-1.jpg 1x, med-2.jpg 2x"</pre>
+		</section><!-- srcset-attribute -->
 
-    </section><!-- picture element -->
+	</section><!-- picture element -->
 
-    <section id="algorithms">
-	<h1>Algorithms</h1>
-	<p>The basic algorithm for processing the <code>picture</code> element is as follows:</p>
+	<section id="algorithms">
+		<h1>Algorithms</h1>
+		<p>The basic algorithm for processing the <a><code>picture</code> element</a> is as follows:</p>
 
-	<ol style="list-style-type: decimal">
-		<li>Evaluate <code>media</code>/<code>src</code>/<code>srcset</code> attributes on the parent <code>picture</code> element first. ( <a href="http://lists.w3.org/Archives/Public/public-html/2012Jun/0116.html">http://lists.w3.org/Archives/Public/public-html/2012Jun/0116.html</a> )
-			<ol style="list-style-type: decimal">
-				<li>If the <code>media</code> attribute on the <code>picture</code> element should match, evaluate <code>srcset</code> ( per the algorithm defined in <a href="http://dev.w3.org/csswg/css4-images/#image-set-notation">http://dev.w3.org/csswg/css4-images/#image-set-notation</a> ) or the <code>src</code> attribute.</li>
-				<li>If not, continue to step two below.</li>
-			</ol>
-		</li>
-		<li>Evaluate <code>source</code> child elements per the algorithm already defined for the <code>media</code> attribute ( <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-video-element.html#concept-media-load-algorithm">http://www.whatwg.org/specs/web-apps/current-work/multipage/the-video-element.html#concept-media-load-algorithm</a> ) to select the appropriate source element.</li>
-		<li>Once the <code>source</code> element has been identified, look to see if the element has <code>srcset</code> defined. If <code>srcset</code> exists, follow the algorithm for image-set (<a href="http://dev.w3.org/csswg/css4-images/#image-set-notation">http://dev.w3.org/csswg/css4-images/#image-set-notation</a>). If <code>src</code> is specified on the <code>source</code> element, let that be the chosen <code>picture</code> source.</li>
-		<li>The user agent will ignore any <code>img</code> elements that are children of the <code>picture</code> element.</li>
-	</ol>
-    </section><!-- algorithms -->
+		<ol style="list-style-type: decimal">
+			<li>Evaluate <code>media</code>/<code>src</code>/<code>srcset</code> attributes on the parent <a><code>picture</code> element</a> first.
+				<div class="note">See <a href="http://lists.w3.org/Archives/Public/public-html/2012Jun/0116.html">http://lists.w3.org/Archives/Public/public-html/2012Jun/0116.html</a></div>
+				<ol style="list-style-type: decimal">
+					<li>If the <code>media</code> attribute on the <code>picture</code> element should match, evaluate <code>srcset</code> ( per the <a>image-set notation</a> algorithm ) or the <code>src</code> attribute.</li>
+					<li>If not, continue to step two below.</li>
+				</ol>
+			</li>
+			<li>Evaluate <code>source</code> child elements per the <a>resource selection algorithm</a> already defined for the <code>media</code> attribute to select the appropriate source element.</li>
+			<li>Once the <code>source</code> element has been identified, look to see if the element has <code>srcset</code> defined. If <code>srcset</code> exists, follow the the <a>image-set notation</a> algorithm. If <code>src</code> is specified on the <code>source</code> element, let that be the chosen <code>picture</code> source.</li>
+			<li>The user agent will ignore any <code>img</code> elements that are children of the <code>picture</code> element.</li>
+		</ol>
+		<div class="issue">It should be possible to determine from script which source was selected. For media elements, this is done with the <a href="http://www.w3.org/TR/html5/media-elements.html#dom-media-currentsrc"><code>currentSrc</code> IDL attribute.</a></div>
+	</section><!-- /algorithms -->
 
-    <section id="fallback-behavior">
-	<h2>Fallback behavior</h2>
-	<p>User agents that do not natively support the <code>picture</code> element will render the child <code>img</code> element per the behavior of existing HTML5 media elements [<a href="http://www.w3.org/TR/html5/content-models.html#fallback-content">http://www.w3.org/TR/html5/content-models.html#fallback-content</a>].</p>
-    </section><!-- fallback-behavior -->
+	<section id="fallback-behavior">
+		<h2>Fallback behavior</h2>
+		<p>User agents that do not natively support the <code>picture</code> element will render the <a>fallback content</a> (including any child <code>img</code> element) per the behavior of existing HTML5 media elements.</p>
+	</section><!-- /fallback-behavior -->
 
-    <section id="accessibility">
-	<h1>Accessibility</h1>
-	<p>The <code>picture</code> element has an alternate text (<code>alt</code>) attribute. The <code>alt</code> attribute should be handled exactly the same way as the <code>alt</code> attribute on the <code>img</code> element. <a href="http://dev.w3.org/html5/alt-techniques/#secm1">http://dev.w3.org/html5/alt-techniques/#secm1</a></p>
-	<p>In order to fall back gracefully, the <code>alt</code> attribute and its value should be repeated on the child <code>img</code> element.</p>
-	<p>The <code>alt</code> attribute is NOT permissible on <code>source</code> elements. If the alternate text description of a <code>source</code> element differs from other <code>source</code> elements, it would suggest that the listed sources are not different versions of the same image, but are likely to be different images entirely.</p>
-	<p class="issue">It should be noted that the above represents an absolute minimum in terms of the accessibility of the proposed element. Further accessibility discussion can be viewed at <a href="http://lists.w3.org/Archives/Public/public-html/2012Jun/0118.html">http://lists.w3.org/Archives/Public/public-html/2012Jun/0118.html</a> and <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384">https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384</a>.
-    </section><!-- accessibility -->
+	<section id="accessibility">
+		<h1>Accessibility</h1>
+		<p>The <code>picture</code> element relies on fallback content as representative alternate text, rather than calling for an <code>alt</code> attribute on both the parent <code>picture</code> element and the fallback <code>img</code>. This provides a method for specifying short alternative text without requiring authors to specify an identical attribute on both <code>picture</code> and the fallback <code>img</code>, with the potential to reach the greatest number of end users without requiring a redundant effort on the part of authors.</p>
+		
+		The <code>alt</code> attribute MUST be handled according to the <a href="http://www.w3.org/TR/html-alt-techniques/#secm1">techniques for providing useful text alternatives for <code>img</code> elements</a> no different from <code>alt</code> attributes on <code>img</code> elements outside of the <code>picture</code> context.</p>
+		<p>The <code>alt</code> attribute is NOT permissible on <code>source</code> elements. If the alternate text description of a <code>source</code> element differs from other <code>source</code> elements, it would suggest that the listed sources are not different versions of the same image, but are likely to be different images entirely.</p>
+		<div class="note">
+			<p>The eventual resolution of <a href="http://www.w3.org/html/wg/tracker/issues/30">ISSUE-30: Should HTML 5 include a longdesc attribute for images</a> will determine the method by which authors can provide semantically rich markup as accessible text.</p>
+			<p>Further accessibility discussion can be viewed at <a href="http://lists.w3.org/Archives/Public/public-html/2012Sep/0029.html">http://lists.w3.org/Archives/Public/public-html/2012Sep/0029.html</a>.</p>
+		</div>
+	</section><!-- accessibility -->
 
-    <section id="examples" class="informative">
-	<h1>Examples</h1>
-	<p>TODO: add examples</p>
-    </section><!-- examples -->
+	<section id="examples" class="informative">
+		<h1>Examples</h1>
+		<p>TODO: add examples</p>
+	</section><!-- examples -->
 
-    <section id="faq" class="appendix informative">
-	<h1>FAQ</h1>
-	<p>TODO: add FAQs</p>
-    </section><!-- faq -->
-
-    <section id="use-cases" class="appendix informative">
-	<h1>Use Cases</h1>
-	<p>What use cases does this support?</p>
-	<p>There are many use cases that are supported as listed below. There are two primary use cases.</p>
-
-	<ol>
-		<li>The need for different image sources at different viewport sizes in responsive web designs.</li>
-		<li>The need for different image sources depending on the pixel density of the display.</li>
-	</ol>
-    <p>Most of the more specific use cases fall under one of these two umbrella needs.</p>
+	<section id="use-cases" class="appendix informative">
+		<h1>Use Cases</h1>
+		<p>What use cases does this support?</p>
+		<p>There are many use cases that are supported as listed below. There are two primary use cases.</p>
+		<ol>
+			<li>The need for different image sources at different viewport sizes in responsive web designs.</li>
+			<li>The need for different image sources depending on the pixel density of the display.</li>
+		</ol>
+		<p>Most of the more specific use cases fall under one of these two umbrella needs.</p>
     
-    <h2>Viewport Sizes</h2>
-    <p>There are many different screen sizes that are in common daily usage, ranging from small phones to giant high-definition televisions. This change in how we access the web was the main reason for needing to make responsive websites in the first place.</p>
-     <p>A common practice in responsive design is delivering images without height and width attributes and letting the browser resize the image. This technique is commonly called flexible images or fluid images.</p>
-     <p>However, delivering an image at a size optimized for large displays to a small display is not ideal. Large images incur unnecessary download and processing time, slowing the experience for users.</p>
-     <p>To solve this problem, web authors will provide multiple sources of the same image at different resolutions and then pick the correct size image based on the viewport size. This is commonly done for CSS background images in responsive designs, but web authors lack the tools to do so for images in HTML without the use of JavaScript.</p>
+		<h2 class="informative-subhed">Viewport Sizes</h2>
+		<p>There are many different screen sizes that are in common daily usage, ranging from small phones to giant high-definition televisions. This change in how we access the web was the main reason for needing to make responsive websites in the first place.</p>
+		<p>A common practice in responsive design is delivering images without height and width attributes and letting the browser resize the image. This technique is commonly called flexible images or fluid images.</p>
+		<p>However, delivering an image at a size optimized for large displays to a small display is not ideal. Large images incur unnecessary download and processing time, slowing the experience for users.</p>
+		<p>To solve this problem, web authors will provide multiple sources of the same image at different resolutions and then pick the correct size image based on the viewport size. This is commonly done for CSS background images in responsive designs, but web authors lack the tools to do so for images in HTML without the use of JavaScript.</p>
 
-    <h2>Display Density</h2>
-    <p>Since the high-density devices (e.g., retina displays on Apple products) came out, the quality of images on the web has changed. Beforehand, even though we had a variety of device sizes, the DPI has always been the same. This is no longer the case and it is very likely that the current resolution/pixel density on retina devices will not be the only one.</p>
+		<h2 class="informative-subhed">Display Density</h2>
+		<p>Since the high-density devices (e.g., Retina&trade; displays on Apple products) came out, the quality of images on the web has changed. Beforehand, even though we had a variety of device sizes, the DPI has always been the same. This is no longer the case and it is very likely that the current resolution/pixel density on Retina&trade; devices will not be the only one.</p>
 
-    <p>We should be ready and able to support the current resolutions as well as any others that manufacturers may use in the future.</p>
+		<p>We should be ready and able to support the current resolutions as well as any others that manufacturers may use in the future.</p>
 
-    <h2>Mobile-first and desktop-first responsive design</h2>
-    <p>A common approach in sites that cater to a wide range of devices using a single codebase is a “mobile-first” development pattern—starting with a simple, linear layout and increasing layout and functional complexity for larger screen sizes using media queries.</p>
+		<h2 class="informative-subhed">Mobile-first and desktop-first responsive design</h2>
+		<p>A common approach in sites that cater to a wide range of devices using a single codebase is a “mobile-first” development pattern—starting with a simple, linear layout and increasing layout and functional complexity for larger screen sizes using media queries.</p>
+
+		<p>“Desktop-first” responsive design takes the opposite approach and starts from the desktop design and simplifies it using media queries to support small displays. Authors retrofitting existing sites often take a desktop-first approach out of necessity because changing to a mobile-first approach would be a significant undertaking.</p>
     
-    <p>“Desktop-first” responsive design takes the opposite approach and starts from the desktop design and simplifies it using media queries to support small displays. Authors retrofitting existing sites often take a desktop-first approach out of necessity because changing to a mobile-first approach would be a significant undertaking.</p>
+		<p>These two approaches require that a solution for images support the following:</p>
+		<ul>
+			<li>Authors need the ability to define fallback image as the smallest image (mobile first) or the largest image (desktop first).</li>
+			<li>Authors would like to define the breakpoints for images as either minimum values (mobile first) or maximum values (desktop first) to match the media queries used in their design.</li>
+		</ul>
+
+		<h2 class="informative-subhed">Relative Units</h2>
+		<p>A common practice in creating flexible layouts is to specify the size values in media queries as relative units: <code>em</code>, <code>rem</code>, <code>vw</code>/<code>vh</code> etc. This is most commonly seen using ems in order to reflow layouts based on users’ zoom preferences, or to resize elements through JavaScript by dynamically altering a font-size value.</p>
     
-    <p>These two approaches require that a solution for images support the following:</p>
-    <ul>
-        <li>Authors need the ability to define fallback image as the smallest image (mobile first) or the largest image (desktop first).</li>
-        <li>Authors would like to define the breakpoints for images as either minimum values (mobile first) or maximum values (desktop first) to match the media queries used in their design.</li>
-    </ul>
+		<h2 class="informative-subhed">Matching image source breakpoints to design breakpoints</h2>
+		<p>Web authors would like to be able to optionally match the breakpoints for images to the breakpoints that they have defined in their responsive designs. Being able to match the breakpoints ensures that images are operating under the same rules that define the layout. It also helps authors verify their approach by ensuring that the same viewport measurement tests are being used in both HTML and CSS.</p>
     
-    <h2>Relative Units</h2>
-    <p>A common practice in creating flexible layouts is to specify the size values in media queries as relative units: em, rem, vw/vh etc. This is most commonly seen using ems in order to reflow layouts based on users’ zoom preferences, or to resize elements through JavaScript by dynamically altering a font-size value.</p>
+		<p>This desire is a facet of the two preceding use cases (mobile/desktop-first responsive design and relative units). If a breakpoint in the design is defined as:</p>
     
-    <h2>Matching image source breakpoints to design breakpoints</h2>
-    <p>Web authors would like to be able to optionally match the breakpoints for images to the breakpoints that they have defined in their responsive designs. Being able to match the breakpoints ensures that images are operating under the same rules that define the layout. It also helps authors verify their approach by ensuring that the same viewport measurement tests are being used in both HTML and CSS.</p>
+		<p><code>@media screen (max-width: 41em) {}</code></p>
     
-    <p>This desire is a facet of the two preceding use cases (mobile/desktop-first responsive design and relative units). If a breakpoint in the design is defined as:</p>
+		<p>Then web authors would like to be able to define a similar breakpoint for images at a max-width of 41em and not have to translate that measurement into another unit like pixels even if it is possible to calculate that measurement:</p>
     
-    <p><code>@media screen (max-width: 41em) {}</code></p>
+		<ul>
+			<li>The default font size in most browsers is 16 pixels. So 41em can be calculated to be 41 * 16 = 656 pixels. Calculating this for every breakpoint, while possible, would be tedious and potentially error-prone for authors.</li>
+			<li>Unless the image break points support both max and min values, then the image breakpoint will need to be further modified from the layout breakpoint that it was derived from. For example, if the image format only supports minimum width tests, then instead of using a maximum width of 656 pixels, the document author would need to specify 657 pixels as a minimum width for the breakpoint.</li>
+		</ul>
     
-    <p>Then web authors would like to be able to define a similar breakpoint for images at a max-width of 41em and not have to translate that measurement into another unit like pixels even if it is possible to calculate that measurement:</p>
-    
-    <ul>
-        <li>The default font size in most browsers is 16 pixels. So 41em can be calculated to be 41 * 16 = 656 pixels. Calculating this for every breakpoint, while possible, would be tedious and potentially error-prone for authors.</li>
-        <li>Unless the image break points support both max and min values, then the image breakpoint will need to be further modified from the layout breakpoint that it was derived from. For example, if the image format only supports minimum width tests, then instead of using a maximum width of 656 pixels, the document author would need to specify 657 pixels as a minimum width for the breakpoint.</li>
-    </ul>
-    
-    <p>When debugging a document, if the author cannot specify breakpoints for images in the same manner that they are defined for the design, authors will need to convert the breakpoints back to the values specified in the layout in order to verify that they match. This increases authoring time and the likelihood that math errors on the part of authors (possibly due to a different rounding scheme in a particular user agent) cause unexpected behavior.</p>        
+		<p>When debugging a document, if the author cannot specify breakpoints for images in the same manner that they are defined for the design, authors will need to convert the breakpoints back to the values specified in the layout in order to verify that they match. This increases authoring time and the likelihood that math errors on the part of authors (possibly due to a different rounding scheme in a particular user agent) cause unexpected behavior.</p>        
             
-    <h2>Mobile Networks</h2>
-    <p>It should be noted that many devices are used on mobile networks which are often very slow or exhibit high latency. Often times conferences suffer from slow networks as well due to many users attempting to use a single network connection simultaneously. Many people also have very slow or erratic connections in their homes and workplaces. While it may not be possible for a solution to be based on bandwidth, anything that can be done to reduce latency and HTTP requests should be done.</p>
+		<h2 class="informative-subhed">Mobile Networks</h2>
+		<p>It should be noted that many devices are used on mobile networks which are often very slow or exhibit high latency. Often times conferences suffer from slow networks as well due to many users attempting to use a single network connection simultaneously. Many people also have very slow or erratic connections in their homes and workplaces. While it may not be possible for a solution to be based on bandwidth, anything that can be done to reduce latency and HTTP requests should be done.</p>
 
-    <p>Allowing authors to specify different images for different viewport sizes and display densities is one step towards providing a better experience on slow networks. In the future, user agents may be able to select different images based on network speed or user preference.</p>
+		<p>Allowing authors to specify different images for different viewport sizes and display densities is one step towards providing a better experience on slow networks. In the future, user agents may be able to select different images based on network speed or user preference.</p>
     
-    <h2>Zooming</h2>
-    <p>Images blur when the user resizes the page. Users may zoom an image in order to see more detail. In these cases, user agents could select a higher-resolution version of an image to display.</p>
+		<h2 class="informative-subhed">User Zoom</h2>
+		<p>Images blur when the user resizes the page. Users may zoom an image in order to see more detail. In these cases, user agents could select a higher-resolution version of an image to display.</p>
+		<div class="issue">It's not clear whether the picture element is prescriptive (i.e. the user agent MUST show a particular image given certain device properties) or suggestive (i.e. the user agent has control over picking the best image).</div>
     
-    <h2>Art Direction</h2>
-    <p>Web authors often want to provide different versions of the same image at different sizes depending on the viewport.</p>
-    <p>A simple example of this would be changing the crop of an image based on display area:</p>
-    <ul>
-        <li>a website wants to normally show a large image (e.g. of a figure with a broad background) on displays that are big enough.</li>
-        <li>when shown on a smaller device, simply shrinking the image may reduce its relevance, usefulness, or legibility, and thus the site may wish to show a different cropping or layout of the same image at the smaller size.</li>
-    </ul>
-    <p>Examples: <a href="http://blog.cloudfour.com/a-framework-for-discussing-responsive-images-solutions/#artdirection">Large photo of Obama at a Chrysler plant vs. tighter cropped thumbnail</a></p>
-    <p>A more complex example that changes orientation of the image, crop, and how text flows around an image based on the size of the viewport:</p>
-    <ul>
-        <li>On the Nokia Browser site where it describes the <a href="http://browser.nokia.com/smartphones.html">Meego browser</a>, the Nokia Lumia is shown <a href="http://browser.nokia.com/resources/images/home-feature.png">horizontally on wide screens</a>. As the screen narrows, the Nokia Lumia is then shown <a href="http://browser.nokia.com/resources/images/smartphones/choose-meego@320.png">vertically and cropped</a>. Bryan and Stephanie Rieger, the designers of the site, have talked about how on a wide screen, showing the full phone horizontally showed the browser best, but on small screens, changing the img to vertical made more sense because it allowed the reader to still make out the features of the browser in the image.</li>
-    </ul>
+		<h2 class="informative-subhed">Art Direction</h2>
+		<p>Web authors often want to provide different versions of the same image at different sizes depending on the viewport.</p>
+		<p>A simple example of this would be changing the crop of an image based on display area:</p>
+		<ul>
+			<li>a website wants to normally show a large image (e.g. of a figure with a broad background) on displays that are big enough.</li>
+			<li>when shown on a smaller device, simply shrinking the image may reduce its relevance, usefulness, or legibility, and thus the site may wish to show a different cropping or layout of the same image at the smaller size.</li>
+		</ul>
+		<p>Examples: <a href="http://blog.cloudfour.com/a-framework-for-discussing-responsive-images-solutions/#artdirection">Large photo of Obama at a Chrysler plant vs. tighter cropped thumbnail</a></p>
+		<p>A more complex example that changes orientation of the image, crop, and how text flows around an image based on the size of the viewport:</p>
+		<ul>
+			<li>On the Nokia Browser site where it describes the <a href="http://browser.nokia.com/smartphones.html">Meego browser</a>, the Nokia Lumia is shown <a href="http://browser.nokia.com/resources/images/home-feature.png">horizontally on wide screens</a>. As the screen narrows, the Nokia Lumia is then shown <a href="http://browser.nokia.com/resources/images/smartphones/choose-meego@320.png">vertically and cropped</a>. Bryan and Stephanie Rieger, the designers of the site, have talked about how on a wide screen, showing the full phone horizontally showed the browser best, but on small screens, changing the img to vertical made more sense because it allowed the reader to still make out the features of the browser in the image.</li>
+		</ul>
     
-    <h2>Alternate Print Sources</h2>
-    <p>Printed web documents generally have pixelated images due to printers having a higher DPI than most images currently served on the web. Defining higher resolution images for printing would increase the abilities of web authors to define great printed versions of their documents. For example, a photo sharing site could provide a bandwidth-optimized image for display on screen, but a high-resolution image for print.</p>
+		<h2 class="informative-subhed">Alternate Print Sources</h2>
+		<p>Printed web documents generally have pixelated images due to printers having a higher DPI than most images currently served on the web. Defining higher resolution images for printing would increase the abilities of web authors to define great printed versions of their documents. For example, a photo sharing site could provide a bandwidth-optimized image for display on screen, but a high-resolution image for print.</p>
     
-    <h2>Gray Scale and High Contrast Modes</h2>
-    <p>Displaying a color image on a monochrome display does not always work well, as two different colors of similar luminosity would be impossible to distinguish in a monochrome environment.</p>
-    <p>Microsoft is proposing a media query which lets you detect that the user agent has been put in high contrast mode (for accessibility reasons), and that the content should follow along [<a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh465764.aspx">http://msdn.microsoft.com/en-us/library/windows/apps/hh465764.aspx</a>]. Being able to switch images based on high contrast mode would be nice.</p>
-    <p>Extracted from <a href="http://lists.whatwg.org/pipermail/whatwg-whatwg.org/2012-August/036845.html">WhatWG mailing list thread</a>.</p>
+		<h2 class="informative-subhed">Gray Scale and High Contrast Modes</h2>
+		<p>Displaying a color image on a monochrome display does not always work well, as two different colors of similar luminosity would be impossible to distinguish in a monochrome environment.</p>
+		<p>Microsoft is proposing a media query which lets you detect that the user agent has been put in high contrast mode (for accessibility reasons), and that the content should follow along [<a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh465764.aspx">http://msdn.microsoft.com/en-us/library/windows/apps/hh465764.aspx</a>]. Being able to switch images based on high contrast mode would be nice.</p>
+		<p>Extracted from <a href="http://lists.whatwg.org/pipermail/whatwg-whatwg.org/2012-August/036845.html">WhatWG mailing list thread</a>.</p>
     
+		<h2>Support the DRY Principle (Don't Repeat Yourself)</h2>
+		<p>If the same image is used multiple times on a single page, it would be useful to define the resource selection in a single place in the document and have this affect all instances of the image.</p>
      
-    </section><!-- use-cases -->
+	</section><!-- use-cases -->
     
-    <section id="requirements" class="appendix informative">
-	<h1>Requirements</h1>
-	<p>A conforming user agent must meet the following requirements:</p>
-	<ul>
-		<li>The appropriate asset MUST be fetched by way of a single request, initially. A change in window size causing the media attribute to match an alternate source SHOULD trigger a request for said source (to be retrieved from the browser cache, if possible).</li>
-		<li>As with the <code>video</code> and <code>audio</code> elements, this solution MUST NOT require any client-side scripting, server-side technologies, or headers to reliably deliver content tailored for the end user’s context.</li>
-		<li>Similar to the <code>video</code> tag, fallback markup MUST be rendered in any browser that does not recognize the <code>picture</code> element. The example in 3.1 uses the “mobile”-sized image as the fallback content, which is the recommended approach: barring the use of a polyfill, the smaller/low-res image should be provided as a fallback to prevent incurring a costly download in contexts that may see no benefit.</li>
-		<li>The proposed element MUST provide at least the same level of accessibility as <code>img</code>, with an <code>alt</code> attribute readily accessible to assistive technology.</li>
-		<li>To address potential bandwidth concerns, the user agent SHOULD be able to override requests for higher-resolution images based on proposed user settings, for example: “always request high-resolution images,” “always request low-resolution images,” and “request high-resolution images as bandwidth permits” based on the bandwidth information available to the browser.</li>
-	</ul>
-    </section><!-- use-cases -->
+	<section id="polyfills" class="appendix informative">
+		<h3>Pre-existing Polyfills</h3>
+		<ul>
+			<li>This version of Scott Jehl’s Picturefill closely matches the proposed syntax, albiet using <code>div</code> elements in order to be used today: <a href="https://github.com/scottjehl/picturefill/tree/div-markup-currentprop">https://github.com/scottjehl/picturefill/tree/div-markup-currentprop</a></li>
+		</ul>
+	</section><!-- polyfills -->
 
-    <section id="polyfills" class="appendix informative">
-	<h3>Pre-existing Polyfills</h3>
-	<ul>
-		<li>This version of Scott Jehl’s Picturefill closely matches the proposed syntax, albiet using <code>div</code> elements in order to be used today: <a href="https://github.com/scottjehl/picturefill/tree/div-markup-currentprop">https://github.com/scottjehl/picturefill/tree/div-markup-currentprop</a></li>
-	</ul>
-    </section><!-- polyfills -->
+	<section class='appendix'>
+		<h1>Acknowledgements</h1>
+		<p>TODO: add thanks</p>
+	</section><!-- appendix -->
 
-    <section class='appendix'>
-      <h1>Acknowledgements</h1>
-      <p>TODO: add thanks</p>
-    </section><!-- appendix -->
-
-  </body>
+</body>
 </html>
