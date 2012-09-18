@@ -119,69 +119,97 @@ the ECMAScript Bindings defined in the Web IDL specification [[!WEBIDL]].</dd-->
 		</section><!-- / dependencies -->
 	</section><!-- /conformance -->
 
-	<section>
-		<h1>Picture Element</h1>
-		<p>The <dfn><code>picture</code> element</dfn> represents a list of sources of image data and associated attributes that define when an image should be used. Image data sources may be explicitly declared based on media queries or can be suggested to the browser via the <a>srcset attribute</a> on the picture element.</p>
-		<p>Sample picture element markup:</p>
+<section>
+  <h1>The <code>picture</code> element</h1>
+  <dl>
+    <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-categories" title="element-dfn-categories">Categories</a>:</dt>
+    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#flow-content-1">Flow content</a>.</dd>
+    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#phrasing-content-1">Phrasing content</a>.</dd>
+    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#embedded-content-2">Embedded content</a>.</dd>
+    <dd>&nbsp;</dd>
+    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#palpable-content-0">Palpable content</a>.</dd>
+    <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-contexts" title="element-dfn-contexts">Contexts in which this element can be used</a>:</dt>
+    <dd>Where <a href="http://dev.w3.org/html5/spec/single-page.html#embedded-content-2">embedded content</a> is expected.</dd>
+    <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-content-model" title="element-dfn-content-model">Content model</a>:</dt>
+    <dd>If the element has a <a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-src">src</a> attribute: </dd>
+    <dd>If the element does not have a <a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-src">src</a> attribute:.</dd>
+    <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-attributes" title="element-dfn-attributes">Content attributes</a>:</dt>
+    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#global-attributes">Global attributes</a></dd>
+    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-src">src</a></dd>
+    <dd>&nbsp;</dd>
+    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-video-poster">poster</a></dd>
+    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-preload">preload</a></dd>
+    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-autoplay">autoplay</a></dd>
+    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-mediagroup">mediagroup</a></dd>
+    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-loop">loop</a></dd>
+    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-muted">muted</a></dd>
+    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-controls">controls</a></dd>
+    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-dim-width">width</a></dd>
+    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-dim-height">height</a></dd>
+    <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-dom" title="element-dfn-dom">DOM interface</a>:</dt>
+    <dd>
+      <pre>interface HTMLVideoElement : <a href="http://dev.w3.org/html5/spec/single-page.html#htmlmediaelement">HTMLMediaElement</a> {            attribute unsigned long <a href="http://dev.w3.org/html5/spec/single-page.html#dom-dim-width" title="dom-dim-width">width</a>;            attribute unsigned long <a href="http://dev.w3.org/html5/spec/single-page.html#dom-dim-height" title="dom-dim-height">height</a>;   readonly attribute unsigned long <a href="http://dev.w3.org/html5/spec/single-page.html#dom-video-videowidth" title="dom-video-videoWidth">videoWidth</a>;   readonly attribute unsigned long <a href="http://dev.w3.org/html5/spec/single-page.html#dom-video-videoheight" title="dom-video-videoHeight">videoHeight</a>;            attribute DOMString <a href="http://dev.w3.org/html5/spec/single-page.html#dom-video-poster" title="dom-video-poster">poster</a>; };</pre>
+    </dd>
+  </dl>
+  <br>
+  <p>&nbsp;</p>
+	<p>The <code><dfn>picture</dfn></code> element represents a list of sources of image data and associated attributes that define when an image should be used. Image data sources may be explicitly declared based on media queries or can be suggested to the browser via the <a>srcset attribute</a> on the picture element.	</p>
+	<p>Sample picture element markup:</p>
 
 <pre class="example">&lt;picture&gt;
-	&lt;source media=&quot;(min-width: 45em)&quot; srcset=&quot;large-1.jpg 1x, large-2.jpg 2x&quot;&gt;
-	&lt;source media=&quot;(min-width: 18em)&quot; srcset=&quot;med-1.jpg 1x, med-2.jpg 2x&quot;&gt;
-	&lt;source srcset=&quot;small-1.jpg 1x, small-2.jpg 2x&quot;&gt; 
-	&lt;img src=&quot;small-1.jpg&quot; alt=&quot;&quot;&gt; 
 &lt;/picture&gt;</pre>
 	
-		<section>
-			<h1>Picture element permitted attributes</h1>
-			<p>global attributes &amp; src &amp; srcset &amp; type &amp; media</p>
+	<section>
+		<h1>Picture element permitted attributes</h1>
+		<p>global attributes &amp; src &amp; srcset &amp; type &amp; media</p>
 
-			<ul>
-				<li>global attributes = Any attributes permitted globally.</li>
-				<li>src = <a>valid non-empty URL potentially surrounded by spaces</a> The address of the <a>media resource</a>.</li>
-				<li>type = MIME type The type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it can play it). A string that identifies a valid MIME <a>media type</a>.</li>
-				<li>media = <a>valid media query</a> The intended media type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it is useful to the user).</li>
-				<li><a href="#srcset-attribute">srcset</a> = Media source list A comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</li>
-			</ul>
-		</section><!-- / picture permitted attributes -->
+		<ul>
+			<li>global attributes = Any attributes permitted globally.</li>
+			<li>src = <a>valid non-empty URL potentially surrounded by spaces</a> The address of the <a>media resource</a>.</li>
+			<li>type = MIME type The type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it can play it). A string that identifies a valid MIME <a>media type</a>.</li>
+			<li>media = <a>valid media query</a> The intended media type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it is useful to the user).</li>
+			<li><a href="#srcset-attribute">srcset</a> = Media source list A comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</li>
+	    </ul>
+    </section><!-- / picture permitted attributes -->
 
-		<section>
-			<h1>Source element</h1>
-			<p>The <code>source</code> element is a child of the <a><code>picture</code> element</a> and extends the existing <a><code>source</code> element</a>. Each source defines one or more image data sources and the conditions under which that source should be utilized.</p>
-			<p>Note that all supplied sources for a given <a><code>picture</code> element</a> SHOULD represent the same subject matter, while cropping and zooming may differ.</p>
-			<div class="issue">It should be codified that this is not a mechanism by which to swap disparate images depending on screen size. See: <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7">https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7</a></div>
-		</section><!-- /source-element -->
+	<section>
+		<h1>Source element</h1>
+		<p>The <code>source</code> element is a child of the <a><code>picture</code> element</a> and extends the existing <a><code>source</code> element</a>. Each source defines one or more image data sources and the conditions under which that source should be utilized.</p>
+		<p>Note that all supplied sources for a given <a><code>picture</code> element</a> SHOULD represent the same subject matter, while cropping and zooming may differ.</p>
+		<div class="issue">It should be codified that this is not a mechanism by which to swap disparate images depending on screen size. See: <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7">https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7</a></div>
+    </section><!-- /source-element -->
 
-		<section id="source-permitted-attr">
-			<h1>Source element permitted attributes</h1>
-			<p>global attributes &amp; src &amp; srcset &amp; type &amp; media</p>
+	<section id="source-permitted-attr">
+		<h1>Source element permitted attributes</h1>
+		<p>global attributes &amp; src &amp; srcset &amp; type &amp; media</p>
 
-			<ul>
-				<li>global attributes = Any attributes permitted globally.</li>
-				<li>src = <a>valid non-empty URL potentially surrounded by spaces</a> The address of the <a>media resource</a>.</li>
-				<li>type = MIME type The type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it can play it). A string that identifies a valid MIME <a>media type</a>.</li>
-				<li>media = <a>valid media query</a> The intended media type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it is useful to the user).</li>
-				<li><a href="#srcset-attribute">srcset</a> = Media source list A comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</li>
-			</ul>
-		</section><!-- source-permitted-attr -->
+		<ul>
+			<li>global attributes = Any attributes permitted globally.</li>
+			<li>src = <a>valid non-empty URL potentially surrounded by spaces</a> The address of the <a>media resource</a>.</li>
+			<li>type = MIME type The type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it can play it). A string that identifies a valid MIME <a>media type</a>.</li>
+			<li>media = <a>valid media query</a> The intended media type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it is useful to the user).</li>
+			<li><a>srcset</a> = Media source list A comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</li>
+	    </ul>
+    </section><!-- source-permitted-attr -->
 
-		<section id="srcset-attribute">
-			<h3>The <code>srcset</code> attribute</h3>
-			<p>The <dfn><code>srcset</code> attribute</dfn> is a comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</p>
-			<p>The value of the srcset attribute is  the <a><dfn>image-set notation</dfn></a> mico-syntax.</p>
-			<h3><a>The image-set notation</a> micosyntax </h3>
-			<p>The <a><dfn>image-set notation</dfn></a> micosyntax is defined by the following [[!ABNF]]:</p>
-			<pre><dfn id="srcset-abnf">srcset</dfn> = ( [ &lt;srcset-decl&gt;, ]* [ &lt;srcset-decl&gt; | &lt;color&gt;] ) 
+	<section>
+		<h3>The <code>srcset</code> attribute</h3>
+		<p>The <dfn><code>srcset</code> attribute</dfn> is a comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</p>
+		<p>The value of the srcset attribute is  the <a><dfn>image-set notation</dfn></a> mico-syntax.</p>
+		<h3><a>The image-set notation</a> micosyntax </h3>
+		<p>The <a><dfn>image-set notation</dfn></a> micosyntax is defined by the following [[!ABNF]]:</p>
+		<pre><dfn id="srcset-abnf">srcset</dfn> = ( [ &lt;srcset-decl&gt;, ]* [ &lt;srcset-decl&gt; | &lt;color&gt;] ) 
 srcset-decl = [ &lt;url&gt; | &lt;string&gt; ] &lt;resolution&gt;
 <dfn>color</dfn> = ??
 <dfn>url</dfn> = ??
 <dfn>string</dfn> = ??
 <dfn>resolution</dfn> = </pre>
 
-			<p>Sample of the image-set notation microsyntax:</p>
-			<pre class="example">srcset="med-1.jpg 1x, med-2.jpg 2x"</pre>
-		</section><!-- srcset-attribute -->
+		<p>Sample of the image-set notation microsyntax:</p>
+		<pre class="example">srcset="med-1.jpg 1x, med-2.jpg 2x"</pre>
+    </section><!-- srcset-attribute -->
 
-	</section><!-- picture element -->
+  </section><!-- picture element -->
 
 	<section id="algorithms">
 		<h1>Algorithms</h1>
@@ -284,7 +312,7 @@ srcset-decl = [ &lt;url&gt; | &lt;string&gt; ] &lt;resolution&gt;
 		<p>Images blur when the user resizes the page. Users may zoom an image in order to see more detail. In these cases, user agents could select a higher-resolution version of an image to display.</p>
 		<div class="issue">It's not clear whether the picture element is prescriptive (i.e. the user agent MUST show a particular image given certain device properties) or suggestive (i.e. the user agent has control over picking the best image).</div>
     
-		<h2 class="informative-subhed" id=""><dfn>Art Direction</dfn></h2>
+		<h2 class="informative-subhed"><dfn>Art Direction</dfn></h2>
 		<p>Web authors often want to provide different versions of the same image at different sizes depending on the viewport.</p>
 		<p>A simple example of this would be changing the crop of an image based on display area:</p>
 		<ul>
@@ -321,15 +349,7 @@ srcset-decl = [ &lt;url&gt; | &lt;string&gt; ] &lt;resolution&gt;
 		<h1>Acknowledgements</h1>
 		<p>TODO: add thanks</p>
 	</section><!-- appendix -->
-    
-    
-<script>
-	//Used by Live Reload ... we can trash this before we submit. 
-	//TODO: Create a hook for GIT to remove this stuff on commit  
-	if(location.host === "127.0.0.1:8888")
-		{	
-		document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
-		}</script>
+
     
 
 </body>
