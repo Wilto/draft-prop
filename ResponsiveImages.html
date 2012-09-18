@@ -100,7 +100,7 @@
 				<dfn><a href="http://www.w3.org/TR/html5/content-models.html#fallback-content">fallback content</a></dfn>,
 				<dfn><a href="http://www.w3.org/TR/html5/urls.html#valid-non-empty-url-potentially-surrounded-by-spaces">valid non-empty URL potentially surrounded by spaces</a></dfn>
 				and <dfn><a href="http://www.w3.org/TR/html5/common-microsyntaxes.html#valid-media-query">valid media query</a></dfn>
-				are defined by the HTML 5 specification [[!HTML5]].</dd>
+			  are defined by the HTML 5 specification [[!HTML5]].</dd>
 
 				<dt>RFC2046</dt>
 				<dd>The term <dfn>media type</dfn> is defined by the Media Queries Specification [[!RFC2046]].</dd>
@@ -165,11 +165,19 @@ the ECMAScript Bindings defined in the Web IDL specification [[!WEBIDL]].</dd-->
 		</section><!-- source-permitted-attr -->
 
 		<section id="srcset-attribute">
-			<h3>Srcset attribute</h3>
-			<p>The <dfn><code>srcset</code> attribute</dfn> is based on the proposed <a>image-set notation</a> and follows the same syntax:</p>
-			<p><em>srcset</em> = <code>srcset( [ &lt;srcset-decl&gt;, ]* [ &lt;srcset-decl&gt; | &lt;color&gt;] ) &lt;em&gt;srcset-decl&lt;/em&gt; = [ &lt;url&gt; | &lt;string&gt; ] &lt;resolution&gt;</code></p>
+			<h3>The <code>srcset</code> attribute</h3>
+			<p>The <dfn><code>srcset</code> attribute</dfn> is a comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</p>
+			<p>The value of the srcset attribute is  the <a><dfn>image-set notation</dfn></a> mico-syntax.</p>
+			<h3><a>The image-set notation</a> micosyntax </h3>
+			<p>The <a><dfn>image-set notation</dfn></a> micosyntax is defined by the following [[!ABNF]]:</p>
+			<pre><dfn id="srcset-abnf">srcset</dfn> = ( [ &lt;srcset-decl&gt;, ]* [ &lt;srcset-decl&gt; | &lt;color&gt;] ) 
+srcset-decl = [ &lt;url&gt; | &lt;string&gt; ] &lt;resolution&gt;
+<dfn>color</dfn> = ??
+<dfn>url</dfn> = ??
+<dfn>string</dfn> = ??
+<dfn>resolution</dfn> = </pre>
 
-			<p>Sample srcset attribute:</p>
+			<p>Sample of the image-set notation microsyntax:</p>
 			<pre class="example">srcset="med-1.jpg 1x, med-2.jpg 2x"</pre>
 		</section><!-- srcset-attribute -->
 
