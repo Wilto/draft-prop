@@ -55,7 +55,7 @@
 	<section id="intro" class="informative">
 		<h1>Introduction</h1>
 		<p>This proposal allows content authors to provide user agents with the information they need to select the best image source. The current <code>img</code> element only allows for a single source of an image, but there are numerous use cases where document authors need to define different image sources depending on the factors such as the design, size resolution, and display density.</p>
-		<p>The best image source may be an image sized appropriately for the display size or pixel density. Or the best image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: art direction use case).</p>
+		<p>The best image source may be an image sized appropriately for the display size or pixel density. Or the best image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: <a>art direction</a> use case).</p>
 
 		<section id="goals">
 			<h1>Goals</h1>
@@ -284,7 +284,7 @@ srcset-decl = [ &lt;url&gt; | &lt;string&gt; ] &lt;resolution&gt;
 		<p>Images blur when the user resizes the page. Users may zoom an image in order to see more detail. In these cases, user agents could select a higher-resolution version of an image to display.</p>
 		<div class="issue">It's not clear whether the picture element is prescriptive (i.e. the user agent MUST show a particular image given certain device properties) or suggestive (i.e. the user agent has control over picking the best image).</div>
     
-		<h2 class="informative-subhed">Art Direction</h2>
+		<h2 class="informative-subhed" id=""><dfn>Art Direction</dfn></h2>
 		<p>Web authors often want to provide different versions of the same image at different sizes depending on the viewport.</p>
 		<p>A simple example of this would be changing the crop of an image based on display area:</p>
 		<ul>
