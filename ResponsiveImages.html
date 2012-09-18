@@ -321,6 +321,16 @@ srcset-decl = [ &lt;url&gt; | &lt;string&gt; ] &lt;resolution&gt;
 		<h1>Acknowledgements</h1>
 		<p>TODO: add thanks</p>
 	</section><!-- appendix -->
+    
+    
+<script>
+	//Used by Live Reload ... we can trash this before we submit. 
+	//TODO: Create a hook for GIT to remove this stuff on commit  
+	if(location.host === "127.0.0.1:8888")
+		{	
+		document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+		}</script>
+    
 
 </body>
 </html>
