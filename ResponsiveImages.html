@@ -131,32 +131,28 @@ the ECMAScript Bindings defined in the Web IDL specification [[!WEBIDL]].</dd-->
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-contexts" title="element-dfn-contexts">Contexts in which this element can be used</a>:</dt>
     <dd>Where <a href="http://dev.w3.org/html5/spec/single-page.html#embedded-content-2">embedded content</a> is expected.</dd>
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-content-model" title="element-dfn-content-model">Content model</a>:</dt>
-    <dd>If the element has a <a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-src">src</a> attribute: </dd>
-    <dd>If the element does not have a <a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-src">src</a> attribute:.</dd>
+    <dd>TBD.</dd>
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-attributes" title="element-dfn-attributes">Content attributes</a>:</dt>
     <dd><a href="http://dev.w3.org/html5/spec/single-page.html#global-attributes">Global attributes</a></dd>
-    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-src">src</a></dd>
+    <dd>src</dd>
+    <dd>width</dd>
+    <dd>height </dd>
+    <dd>crossorigin</dd>
     <dd>&nbsp;</dd>
-    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-video-poster">poster</a></dd>
-    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-preload">preload</a></dd>
-    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-autoplay">autoplay</a></dd>
-    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-mediagroup">mediagroup</a></dd>
-    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-loop">loop</a></dd>
-    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-muted">muted</a></dd>
-    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-controls">controls</a></dd>
-    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-dim-width">width</a></dd>
-    <dd><a href="http://dev.w3.org/html5/spec/single-page.html#attr-dim-height">height</a></dd>
+    <dt><a href="http://dev.w3.org/html5/spec/single-page.html#attr-dim-height"></a></dt>
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-dom" title="element-dfn-dom">DOM interface</a>:</dt>
     <dd>
-      <pre>interface HTMLVideoElement : <a href="http://dev.w3.org/html5/spec/single-page.html#htmlmediaelement">HTMLMediaElement</a> {            attribute unsigned long <a href="http://dev.w3.org/html5/spec/single-page.html#dom-dim-width" title="dom-dim-width">width</a>;            attribute unsigned long <a href="http://dev.w3.org/html5/spec/single-page.html#dom-dim-height" title="dom-dim-height">height</a>;   readonly attribute unsigned long <a href="http://dev.w3.org/html5/spec/single-page.html#dom-video-videowidth" title="dom-video-videoWidth">videoWidth</a>;   readonly attribute unsigned long <a href="http://dev.w3.org/html5/spec/single-page.html#dom-video-videoheight" title="dom-video-videoHeight">videoHeight</a>;            attribute DOMString <a href="http://dev.w3.org/html5/spec/single-page.html#dom-video-poster" title="dom-video-poster">poster</a>; };</pre>
+      <pre>
+interface <dfn>HTMLPictureElement</dfn> : HTMLElement {
+	
+};</pre>
     </dd>
   </dl>
-  <br>
-  <p>&nbsp;</p>
-	<p>The <code><dfn>picture</dfn></code> element represents a list of sources of image data and associated attributes that define when an image should be used. Image data sources may be explicitly declared based on media queries or can be suggested to the browser via the <a>srcset attribute</a> on the picture element.	</p>
+
+	<p>The <code><dfn>picture</dfn></code> element represents an image. A picture element can optionally contain <code>source</code> elements, which rep. </p>
 	<p>Sample picture element markup:</p>
 
-<pre class="example">&lt;picture&gt;
+<pre class="example">&lt;picture src=&quot;cat.png&quot;&gt;
 &lt;/picture&gt;</pre>
 	
 	<section>
@@ -209,7 +205,7 @@ srcset-decl = [ &lt;url&gt; | &lt;string&gt; ] &lt;resolution&gt;
 		<pre class="example">srcset="med-1.jpg 1x, med-2.jpg 2x"</pre>
     </section><!-- srcset-attribute -->
 
-  </section><!-- picture element -->
+</section><!-- picture element -->
 
 	<section id="algorithms">
 		<h1>Algorithms</h1>
@@ -228,7 +224,7 @@ srcset-decl = [ &lt;url&gt; | &lt;string&gt; ] &lt;resolution&gt;
 			<li>The user agent will ignore any <code>img</code> elements that are children of the <code>picture</code> element.</li>
 		</ol>
 		<div class="issue">It should be possible to determine from script which source was selected. For media elements, this is done with the <a href="http://www.w3.org/TR/html5/media-elements.html#dom-media-currentsrc"><code>currentSrc</code> IDL attribute.</a></div>
-	</section><!-- /algorithms -->
+</section><!-- /algorithms -->
 
 	<section id="fallback-behavior">
 		<h2>Fallback behavior</h2>
