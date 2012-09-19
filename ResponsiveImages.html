@@ -90,7 +90,7 @@
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-contexts" title="element-dfn-contexts">Contexts in which this element can be used</a>:</dt>
     <dd>Where <a href="http://dev.w3.org/html5/spec/single-page.html#embedded-content-2">embedded content</a> is expected.</dd>
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-content-model" title="element-dfn-content-model">Content model</a>:</dt>
-    <dd>If zere decendents, then <a href="http://dev.w3.org/html5/spec/content-models.html#transparent">transparent</a>. </dd>
+    <dd>If zero descendents, then <a href="http://dev.w3.org/html5/spec/content-models.html#transparent">transparent</a>. </dd>
 
     <dd>One or more <code>source</code> elements.</dd>
 
@@ -106,30 +106,33 @@
 	
     <p>The <code><dfn>picture</dfn></code> element used for displaying an image that can come from a range of sources. Which image the user agent displays depends on [forthcoming algorithm].  </p>
   <p>For user agents that don't support the <code>picture</code> element, an author can provide an <code>img</code> element as <a>fallback content</a>. User agents SHOULD NOT show this content to the user: it is intended for legacy user agents that do not support <code>picture</code>, so that a legacy  <code>img</code> element can be shown instead.</p>
-	<p>Authoring requirement: The picture element must not be used as a layout tool. In particular, picture elements should not be used to display transparent images, as they rarely convey meaning and rarely add anything useful to the document.    </p>
+	<p>Authoring requirement: as with the <code>img</code> element, the <code>picture</code> element must not be used as a layout tool. In particular, picture elements should not be used to display transparent images, as they rarely convey meaning and rarely add anything useful to the document. </p>
+    <h3>Example of usage</h3>
 	<p>Sample picture element markup:</p>
 
 <pre class="example">&lt;picture&gt;
-   &lt;source&gt; 
+   &lt;source media="(min-width: 45em)" srcset="large-1.jpg 1x, large-2.jpg 2x"&gt;
+ 	&lt;source media="(min-width: 18em)" srcset="med-1.jpg 1x, med-2.jpg 2x"&gt;
+ 	&lt;source srcset="small-1.jpg 1x, small-2.jpg 2x"&gt;
+  	&lt;img src="small-1.jpg" alt=""&gt;
 &lt;/picture&gt;</pre>
 	
   <section>
-    <h3>Differeces from <code>img</code> element</h3>
-	  <p>Unlike the <code>picture</code> element, the <code>img</code> element is limited to a single image resoure, but  cases where an author need to define different image sources depending on the factors such as the design, size resolution, and display density. The most suitable image source may be an image sized appropriately for the display size or pixel density. Or the most suitable image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: <a>art direction</a> use case). </p>
-	  <p>It is also not possible to assign a source directly to a picture element. For that case, use an <code>img</code> element. </p>
+    <h3>Differences from <code>img</code> element</h3>
+	  <p>Unlike the <code>img</code> element, which is limited to pointing to a single image resource, the <code>picture</code> element is intended to allow an author to reference many different image sources that the browser can then choose based on a <a>media query</a> or some other relevant condition. This means that a user agent can best select an image source that is most suitable for available display size, pixel density, or possibly even network bandwidth. Or the most suitable image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: <a>art direction</a> use case). </p>
+	  <p>It is also not possible to assign a source directly to a picture element. For that case, an author needs to use an <code>img</code> element instead. </p>
   </section><!-- / picture permitted attributes -->
 
 	<section>
 		
 		<p>When used with the <code>picture</code> element, a <a>document</a> SHOULD only contain <code>source</code> elements need to represent the same subject matter, while cropping and zooming can differ.</p>
-		<div class="issue">It should be codified that this is not a mechanism by which to swap disparate images depending on screen size. See: <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7">https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7</a></div>
+		<div class="issue">It should be codified that this is not a mechanism by which to swap disparate images depending on screen size. See bug <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7">18384</a>.</div>
     </section><!-- /source-element -->
 
 	<section id="source-permitted-attr">
 		<h1>The <code>srcset</code> attribute	</h1>
-	  <p>The <dfn><code>srcset</code> attribute</dfn> of the <code>source</code> element is a comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</p>
-	<p>The value of the srcset attribute use the <a><dfn>image-set notation</dfn></a> micosyntax.  </p>
-  </section>
+	  <p>The <dfn><code>srcset</code> attribute</dfn> of the <code>source</code> element is is used to refer to alternate <a>media resource</a>s for a single image at different resolutions. The expected value of the attribute is a  comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> that makes use of the <a><dfn>image-set notation</dfn></a> micosyntax.  </p>
+</section>
   <!-- srcset-attribute -->
 
 </section><!-- picture element -->
