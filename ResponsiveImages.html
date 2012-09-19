@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0014)about:internet -->
 <html>
 <head>
 	<title>HTML Responsive Images Extension</title>
@@ -38,6 +37,8 @@
 		#conformance dd {margin-bottom: 1em; }
 		pre { tab-size: 3; /* Reduce indentation. */ }
 		.informative-subhed { font-size: 120%; }
+		
+		/* WYSIWYG help, so I can see what I've linked to ... yes, I use a WYSIWYG editor... stop laughing at me :) */
 		a{
 			color: blue;	
 		}
@@ -57,26 +58,23 @@
 
 	<section id="intro" class="informative">
 		<h1>Introduction</h1>
-		<p>This proposal allows content authors to provide user agents with the information they need to select the best image source. 
-
-		<!-- / goals -->	</p>
+		<p>This proposal allows content authors to provide user agents with the information they need to select the best image source. </p>
 	</section>
-	<!-- / introduction -->
-
+	
 	<section id="conformance">
     <p>This specification describes the conformance criteria for <dfn title="user agent">user agents</dfn> (relevant to implementors) and <dfn title="document">documents</dfn> (relevant to authors and authoring tool implementors).</p>
-    <p>Implementations that use ECMAScript to expose the APIs defined in this specification MUST implement them in a manner consistent with
-the ECMAScript Bindings defined in the Web IDL specification [[!WEBIDL]].</p>
-		<section id="dependencies">
+<p>Implementations that use ECMAScript to expose the APIs defined in this specification MUST implement them in a manner consistent with the ECMAScript Bindings defined in the Web IDL specification [[!WEBIDL]].</p>
+    
+<section id="definitions">
 			<h3>Definitions</h3>
-		  <p>The  <dfn><a href="http://www.w3.org/TR/html5/the-img-element.html#the-img-element">img element</a></dfn>,
-				<dfn><a href="http://www.w3.org/TR/html5/the-source-element.html#the-source-element">source element</a></dfn>,
-				<dfn><a href="http://www.w3.org/TR/html5/media-elements.html#media-resource">media resource</a></dfn>,
+			<p>The following terms are used throughout this specification so they are gathered here for the readers convenience. The following list of terms is not exhaustive; other terms are defined throughout this specification.</p>
+		  <p>The follow terms are defined by the<cite> </cite>[[!HTML5]] specification: <dfn><a href="http://www.w3.org/TR/html5/the-img-element.html#the-img-element"><code>img</code> element</a></dfn>,
+				<dfn><a href="http://www.w3.org/TR/html5/the-source-element.html#the-source-element"><code>source</code> element</a></dfn>,
+				<dfn><a href="http://www.w3.org/TR/html5/media-elements.html#media-resource"><code>media</code> resource</a></dfn>,  
 				<dfn><a href="http://www.w3.org/TR/html5/media-elements.html#concept-media-load-algorithm">resource selection algorithm</a></dfn>,
 				<dfn><a href="http://www.w3.org/TR/html5/content-models.html#fallback-content">fallback content</a></dfn>,
 				<dfn><a href="http://www.w3.org/TR/html5/urls.html#valid-non-empty-url-potentially-surrounded-by-spaces">valid non-empty URL potentially surrounded by spaces</a></dfn>
-			  and <dfn><a href="http://www.w3.org/TR/html5/common-microsyntaxes.html#valid-media-query">valid media query</a></dfn>
-		    are defined by the<cite> </cite>[[!HTML5]] specification.</p>
+			  and <dfn><a href="http://www.w3.org/TR/html5/common-microsyntaxes.html#valid-media-query">valid media query</a></dfn>.</p>
 <p>The term <dfn><a href="http://tools.ietf.org/html/rfc2046#section-2">media type</a></dfn> is defined by the <cite>Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types</cite> specification [[!RFC2046]].</p>
 			
 <p>The  <dfn><a href="http://dev.w3.org/csswg/css4-images/#image-set-notation">image-set notation</a></dfn>
@@ -97,34 +95,33 @@ the ECMAScript Bindings defined in the Web IDL specification [[!WEBIDL]].</p>
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-contexts" title="element-dfn-contexts">Contexts in which this element can be used</a>:</dt>
     <dd>Where <a href="http://dev.w3.org/html5/spec/single-page.html#embedded-content-2">embedded content</a> is expected.</dd>
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-content-model" title="element-dfn-content-model">Content model</a>:</dt>
-    <dd>If the element has a <a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-src">src</a> attribute:  <a href="http://dev.w3.org/html5/spec/single-page.html#transparent">transparent</a>, and no <code>source</code> descendants.</dd>
-    <dd>If the element has no <a href="http://dev.w3.org/html5/spec/single-page.html#attr-media-src">src</a> attribute: Zero or more <code>source</code> elements</dd>
+    <dd>If the element has a src attribute:  <a href="http://dev.w3.org/html5/spec/single-page.html#transparent">transparent</a>, and no <code>source</code> descendants.</dd>
+    <dd>If the element has no src attribute: Zero or more <code>source</code> elements</dd>
  
     <dd>Zero or one <code>img</code> element as <a>fallback content</a>.</dd>
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-attributes" title="element-dfn-attributes">Content attributes</a>:</dt>
     <dd><a href="http://dev.w3.org/html5/spec/single-page.html#global-attributes">Global attributes</a></dd>
-    <dd>src</dd>
+    <dd>&nbsp;</dd>
     <dd>width</dd>
-    <dd>height </dd>
+    <dd>height</dd>
     <dd>crossorigin</dd>
-    <dt><a href="http://dev.w3.org/html5/spec/single-page.html#attr-dim-height"></a></dt>
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-dom" title="element-dfn-dom">DOM interface</a>:</dt>
-    <dd>
-      <pre>
-interface <dfn>HTMLPictureElement</dfn> : HTMLImageElement {
-
-};</pre>
-    </dd>
+    <dd>Uses <a href="http://dev.w3.org/html5/spec/elements.html#htmlelement">HTMLElement</a>.</dd>
   </dl>
 
-	<p>The <code><dfn>picture</dfn></code> element used for displaying an image from a range of sources.</p>
-	<p>The image given by the src attributes is the embedded content; the value of the alt attribute provides equivalent content for those who cannot process images or who have image loading disabled. </p>
-	<p>For user agents that don't support picture, an author can provide an img element as fallback content. User agents SHOULD NOT show this content to the user: it is intended for Web browsers which do not support <code>picture</code>, so that a legacy  <code>img</code> element can be shown.</p>
-	<p>Sample picture element markup:</p>
+	
+    <p>The <code><dfn>picture</dfn></code> element used for displaying an image that can come from a range of sources.</p>
+  <p>The image given by the src attributes is the embedded content; the value of the alt attribute provides equivalent content for those who cannot process images or who have image loading disabled. </p>
+  <p>For user agents that don't support picture, an author can provide an img element as fallback content. User agents SHOULD NOT show this content to the user: it is intended for Web browsers which do not support <code>picture</code>, so that a legacy  <code>img</code> element can be shown.</p>
+	<p>The picture element must not be used as a layout tool. In particular, picture elements should not be used to display transparent images, as they rarely convey meaning and rarely add anything useful to the document.    </p>
+  <p>The <dfn id="attr-picture-src"><code>src</code></dfn> attribute...</p>
+    
+    <p>The <dfn id="attr-picture-width"><code>width</code></dfn> attribute and the <dfn id="attr-picture-height"><code>height</code></dfn> attributes   give the dimensions of the visual content of the element (the width and height respectively, relative to the nominal direction of the output medium), in CSS pixels. The expected value of the attributes is a <a href="http://dev.w3.org/html5/spec/common-microsyntaxes.html#valid-non-negative-integer" title="valid non-negative integer">valid non-negative integer</a>.</p>
+  <p>The <dfn id="attr-picture-crossorigin"><code>crossorigin</code></dfn>  attribute is a <a href="http://dev.w3.org/html5/spec/single-page.html#cors-settings-attribute">CORS settings attribute</a>.</p>
+    
+    <p>Sample picture element markup:</p>
 
-<pre class="example">&lt;picture src=&quot;cat.png&quot;&gt;
-
-&lt;/picture&gt;</pre>
+<pre class="example">&lt;picture src=&quot;cat.png&quot;&gt;&lt;/picture&gt;</pre>
 	
   <section>
 	  <p>The src attribute. <a>valid non-empty URL potentially surrounded by spaces</a> The address of the <a>media resource</a>.</p>
@@ -289,8 +286,8 @@ interface <dfn>HTMLPictureElement</dfn> : HTMLImageElement {
 		<p>Images blur when the user resizes the page. Users may zoom an image in order to see more detail. In these cases, user agents could select a higher-resolution version of an image to display.</p>
 		<div class="issue">It's not clear whether the picture element is prescriptive (i.e. the user agent MUST show a particular image given certain device properties) or suggestive (i.e. the user agent has control over picking the best image).</div>
     
-		<h2 class="informative-subhed"><dfn>Art Direction</dfn></h2>
-		<p>Web authors often want to provide different versions of the same image at different sizes depending on the viewport.</p>
+		<h2 class="informative-subhed">Art Direction</h2>
+		<p>Web authors often want to provide different versions of the same image at different sizes depending on the viewport. We refer to this as the <dfn>a rt direction</dfn> use case.</p>
 		<p>A simple example of this would be changing the crop of an image based on display area:</p>
 		<ul>
 			<li>a website wants to normally show a large image (e.g. of a figure with a broad background) on displays that are big enough.</li>
