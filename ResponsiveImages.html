@@ -49,18 +49,13 @@
 
 	<section id='abstract'>
 		<p>Through the introduction of a  <code>picture</code> element, this specification adds functionality to HTML that allows authors to list a range of images which may be suitable for a range of device capabilities and different usage scenarios. The ability to adapt content to the constraints and capabilities of devices and different usage scenarios is commonly referred to as &quot;responsive design&quot;.
-	This allows user agents to be more responsive to a wide spectrum of  browsing scenarios, ranging from simple mobile devices to desktop browsers scenarios, when selecting which image resources to download and display for an end-user. This includes, but is not limited to, the selection of images best suited for either high or low density displays and screen resolutions on range of devices, are well as responsive selection of images based on  printer's dpi and color reproduction capabilities.</p>
+	This allows user agents to be more responsive to a wide spectrum of  browsing scenarios, ranging from simple mobile devices to desktop browsers scenarios, when selecting which image resources to download and display for an end-user. This includes, but is not limited to, the selection of images most suited for either high or low density displays and screen resolutions on range of devices, are well as responsive selection of images based on  printer's dpi and color reproduction capabilities.</p>
 	</section>
 
 	<section id="sotd">
 	  <p>This document was proposed by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a> as a solution to <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384">bug 18384</a>.</p>
 </section>
 
-	<section id="intro" class="informative">
-		<h1>Introduction</h1>
-		<p>This proposal allows content authors to provide user agents with the information they need to select the best image source. </p>
-	</section>
-	
 	<section id="conformance">
     <p>This specification describes the conformance criteria for <dfn title="user agent">user agents</dfn> (relevant to implementors) and <dfn title="document">documents</dfn> (relevant to authors and authoring tool implementors).</p>
 <p>Implementations that use ECMAScript to expose the APIs defined in this specification MUST implement them in a manner consistent with the ECMAScript Bindings defined in the Web IDL specification [[!WEBIDL]].</p>
@@ -95,67 +90,45 @@
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-contexts" title="element-dfn-contexts">Contexts in which this element can be used</a>:</dt>
     <dd>Where <a href="http://dev.w3.org/html5/spec/single-page.html#embedded-content-2">embedded content</a> is expected.</dd>
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-content-model" title="element-dfn-content-model">Content model</a>:</dt>
-    <dd>If the element has a src attribute:  <a href="http://dev.w3.org/html5/spec/single-page.html#transparent">transparent</a>, and no <code>source</code> descendants.</dd>
-    <dd>If the element has no src attribute: Zero or more <code>source</code> elements</dd>
+    <dd>If zere decendents, then <a href="http://dev.w3.org/html5/spec/content-models.html#transparent">transparent</a>. </dd>
+
+    <dd>One or more <code>source</code> elements.</dd>
+
  
     <dd>Zero or one <code>img</code> element as <a>fallback content</a>.</dd>
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-attributes" title="element-dfn-attributes">Content attributes</a>:</dt>
     <dd><a href="http://dev.w3.org/html5/spec/single-page.html#global-attributes">Global attributes</a></dd>
-    <dd>&nbsp;</dd>
-    <dd>width</dd>
-    <dd>height</dd>
-    <dd>crossorigin</dd>
+    
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-dom" title="element-dfn-dom">DOM interface</a>:</dt>
-    <dd>Uses <a href="http://dev.w3.org/html5/spec/elements.html#htmlelement">HTMLElement</a>.</dd>
+    <dd>Uses <a href="http://dev.w3.org/html5/spec/elements.html#htmlelement">HTMLElement</a> (this will change as we start working on events!).</dd>
   </dl>
 
 	
-    <p>The <code><dfn>picture</dfn></code> element used for displaying an image that can come from a range of sources.</p>
-  <p>The image given by the src attributes is the embedded content; the value of the alt attribute provides equivalent content for those who cannot process images or who have image loading disabled. </p>
-  <p>For user agents that don't support picture, an author can provide an img element as fallback content. User agents SHOULD NOT show this content to the user: it is intended for Web browsers which do not support <code>picture</code>, so that a legacy  <code>img</code> element can be shown.</p>
-	<p>The picture element must not be used as a layout tool. In particular, picture elements should not be used to display transparent images, as they rarely convey meaning and rarely add anything useful to the document.    </p>
-  <p>The <dfn id="attr-picture-src"><code>src</code></dfn> attribute...</p>
-    
-    <p>The <dfn id="attr-picture-width"><code>width</code></dfn> attribute and the <dfn id="attr-picture-height"><code>height</code></dfn> attributes   give the dimensions of the visual content of the element (the width and height respectively, relative to the nominal direction of the output medium), in CSS pixels. The expected value of the attributes is a <a href="http://dev.w3.org/html5/spec/common-microsyntaxes.html#valid-non-negative-integer" title="valid non-negative integer">valid non-negative integer</a>.</p>
-  <p>The <dfn id="attr-picture-crossorigin"><code>crossorigin</code></dfn>  attribute is a <a href="http://dev.w3.org/html5/spec/single-page.html#cors-settings-attribute">CORS settings attribute</a>.</p>
-    
-    <p>Sample picture element markup:</p>
+    <p>The <code><dfn>picture</dfn></code> element used for displaying an image that can come from a range of sources. Which image the user agent displays depends on [forthcoming algorithm].  </p>
+  <p>For user agents that don't support the <code>picture</code> element, an author can provide an <code>img</code> element as <a>fallback content</a>. User agents SHOULD NOT show this content to the user: it is intended for legacy user agents that do not support <code>picture</code>, so that a legacy  <code>img</code> element can be shown instead.</p>
+	<p>Authoring requirement: The picture element must not be used as a layout tool. In particular, picture elements should not be used to display transparent images, as they rarely convey meaning and rarely add anything useful to the document.    </p>
+	<p>Sample picture element markup:</p>
 
-<pre class="example">&lt;picture src=&quot;cat.png&quot;&gt;&lt;/picture&gt;</pre>
+<pre class="example">&lt;picture&gt;
+   &lt;source&gt; 
+&lt;/picture&gt;</pre>
 	
   <section>
-	  <p>The src attribute. <a>valid non-empty URL potentially surrounded by spaces</a> The address of the <a>media resource</a>.</p>
-	  <p>type = MIME type The type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it can play it). A string that identifies a valid MIME <a>media type</a>.	  </p>
-    <p>media = <a>valid media query</a> The intended media type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it is useful to the user).</p>
-    <p><a href="#srcset-attribute">srcset</a> Media source list A comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</p>
-	  <h3>Differeces from <code>img</code> element</h3>
-	  <p>Unlike the <code>picture</code> element, the <code>img</code> element is limited to a single image resoure, but  cases where an author need to define different image sources depending on the factors such as the design, size resolution, and display density. The most suitable image source may be an image sized appropriately for the display size or pixel density. Or the most suitable image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: <a>art direction</a> use case)</p>
+    <h3>Differeces from <code>img</code> element</h3>
+	  <p>Unlike the <code>picture</code> element, the <code>img</code> element is limited to a single image resoure, but  cases where an author need to define different image sources depending on the factors such as the design, size resolution, and display density. The most suitable image source may be an image sized appropriately for the display size or pixel density. Or the most suitable image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: <a>art direction</a> use case). </p>
+	  <p>It is also not possible to assign a source directly to a picture element. For that case, use an <code>img</code> element. </p>
   </section><!-- / picture permitted attributes -->
 
 	<section>
-		<h1>Source element</h1>
-		<p>The <code>source</code> element is a child of the <a><code>picture</code> element</a> and extends the existing <a><code>source</code> element</a>. Each source defines one or more image data sources and the conditions under which that source should be utilized.</p>
-		<p>A <a>document</a> SHOULD only contain <code>source</code> elements need to epresent the same subject matter, while cropping and zooming may differ.</p>
+		
+		<p>When used with the <code>picture</code> element, a <a>document</a> SHOULD only contain <code>source</code> elements need to represent the same subject matter, while cropping and zooming can differ.</p>
 		<div class="issue">It should be codified that this is not a mechanism by which to swap disparate images depending on screen size. See: <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7">https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7</a></div>
     </section><!-- /source-element -->
 
 	<section id="source-permitted-attr">
-		<h1>Source element permitted attributes</h1>
-		<p>global attributes &amp; src &amp; srcset &amp; type &amp; media</p>
-
-		<ul>
-			<li>global attributes = Any attributes permitted globally.</li>
-			<li>src = <a>valid non-empty URL potentially surrounded by spaces</a> The address of the <a>media resource</a>.</li>
-			<li>type = MIME type The type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it can play it). A string that identifies a valid MIME <a>media type</a>.</li>
-			<li>media = <a>valid media query</a> The intended media type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it is useful to the user).</li>
-			<li><a>srcset</a> = Media source list A comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</li>
-	    </ul>
-    </section><!-- source-permitted-attr -->
-
-  <section>
-		<h3>The <code>srcset</code> attribute</h3>
-	<p>The <dfn><code>srcset</code> attribute</dfn> is a comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</p>
-	<p>The value of the srcset attribute is  the <a><dfn>image-set notation</dfn></a> micosyntax.  </p>
+		<h1>The <code>srcset</code> attribute	</h1>
+	  <p>The <dfn><code>srcset</code> attribute</dfn> of the <code>source</code> element is a comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</p>
+	<p>The value of the srcset attribute use the <a><dfn>image-set notation</dfn></a> micosyntax.  </p>
   </section>
   <!-- srcset-attribute -->
 
@@ -227,9 +200,8 @@
 				<li>Don't repeat yourself: If the same image is used multiple times on a single page, it would be useful to define the resource selection in a single place in the document and have this affect all instances of the image</li>
 			</ul>
 </section>
-		<h1>Use Cases</h1>
-		<p>What use cases does this support?</p>
-		<p>There are many use cases that are supported as listed below. There are two primary use cases.</p>
+		<h1>Use Cases		</h1>
+		<p>There are many use cases that are supported as listed below. There are two primary use cases:</p>
 		<ol>
 			<li>The need for different image sources at different viewport sizes in responsive web designs.</li>
 			<li>The need for different image sources depending on the pixel density of the display.</li>
