@@ -58,30 +58,28 @@
 
 	<section id="intro" class="informative">
 		<h1>Introduction</h1>
-		<p>This proposal allows content authors to provide user agents with the information they need to select the best image source. The current <code>img</code> element only allows for a single source of an image, but there are numerous use cases where document authors need to define different image sources depending on the factors such as the design, size resolution, and display density.</p>
-		<p>The best image source may be an image sized appropriately for the display size or pixel density. Or the best image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: <a>art direction</a> use case).</p>
+		<p>This proposal allows content authors to provide user agents with the information they need to select the best image source. 
 
-		
-		<!-- / goals -->
-
-	</section><!-- / introduction -->
+		<!-- / goals -->	</p>
+	</section>
+	<!-- / introduction -->
 
 	<section id="conformance">
     <p>This specification describes the conformance criteria for <dfn title="user agent">user agents</dfn> (relevant to implementors) and <dfn title="document">documents</dfn> (relevant to authors and authoring tool implementors).</p>
 		<section id="dependencies">
 			<h3>Definitions</h3>
-		  <p>The terms and algorithms <dfn><a href="http://www.w3.org/TR/html5/the-img-element.html#the-img-element">img element</a></dfn>,
+		  <p>The  <dfn><a href="http://www.w3.org/TR/html5/the-img-element.html#the-img-element">img element</a></dfn>,
 				<dfn><a href="http://www.w3.org/TR/html5/the-source-element.html#the-source-element">source element</a></dfn>,
 				<dfn><a href="http://www.w3.org/TR/html5/media-elements.html#media-resource">media resource</a></dfn>,
 				<dfn><a href="http://www.w3.org/TR/html5/media-elements.html#concept-media-load-algorithm">resource selection algorithm</a></dfn>,
 				<dfn><a href="http://www.w3.org/TR/html5/content-models.html#fallback-content">fallback content</a></dfn>,
 				<dfn><a href="http://www.w3.org/TR/html5/urls.html#valid-non-empty-url-potentially-surrounded-by-spaces">valid non-empty URL potentially surrounded by spaces</a></dfn>
 			  and <dfn><a href="http://www.w3.org/TR/html5/common-microsyntaxes.html#valid-media-query">valid media query</a></dfn>
-		    are defined by the <cite>HTML5</cite> specification [[!HTML5]].</p>
+		    are defined by the<cite> </cite>[[!HTML5]] specification.</p>
 <p>The term <dfn><a href="http://tools.ietf.org/html/rfc2046#section-2">media type</a></dfn> is defined by the <cite>Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types</cite> specification [[!RFC2046]].</p>
 			
-<p>The term <dfn><a href="http://dev.w3.org/csswg/css4-images/#image-set-notation">image-set notation</a></dfn>
-		  is defined as proposed by the<cite> CSS Image Values and Replaced Content Module Level 4 Specification</cite> [[!CSS4-IMAGES]].</p>
+<p>The  <dfn><a href="http://dev.w3.org/csswg/css4-images/#image-set-notation">image-set notation</a></dfn>
+		  microsyntax is defined by the<cite> CSS Image Values and Replaced Content Module Level 4 Specification</cite> [[!CSS4-IMAGES]].</p>
 <p>The  <dfn><a href="http://www.w3.org/TR/html-alt-techniques/#secm1">techniques for providing useful text alternatives for <code>img</code> elements</a></dfn> are defined by the <cite>HTML5: Techniques for providing useful text alternatives</cite> Specification [[!ALT-TECHNIQUES]].</p>
 		<!--dt>WebIDL</dt>
 <dd>Implementations that use ECMAScript to expose the APIs defined in this specification MUST implement them in a manner consistent with
@@ -120,18 +118,19 @@ interface <dfn>HTMLPictureElement</dfn> : HTMLElement {
     </dd>
   </dl>
 
-	<p>The <code><dfn>picture</dfn></code> element represents an image. A picture element can optionally contain <code>source</code> elements, which rep. </p>
+	<p>The <code><dfn>picture</dfn></code> element represents an image.</p>
 	<p>Sample picture element markup:</p>
 
 <pre class="example">&lt;picture src=&quot;cat.png&quot;&gt;
-
 &lt;/picture&gt;</pre>
 	
-	<section>
-	  <p>The src attribute . <a>valid non-empty URL potentially surrounded by spaces</a> The address of the <a>media resource</a>.</p>
+  <section>
+	  <p>The src attribute. <a>valid non-empty URL potentially surrounded by spaces</a> The address of the <a>media resource</a>.</p>
 	  <p>type = MIME type The type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it can play it). A string that identifies a valid MIME <a>media type</a>.	  </p>
-	  <p>media = <a>valid media query</a> The intended media type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it is useful to the user).</p>
-	  <p><a href="#srcset-attribute">srcset</a> Media source list A comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</p>
+    <p>media = <a>valid media query</a> The intended media type of the <a>media resource</a> (used for helping the UA determine, before fetching this <a>media resource</a>, if it is useful to the user).</p>
+    <p><a href="#srcset-attribute">srcset</a> Media source list A comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</p>
+	  <h3>Differeces from img element</h3>
+	  <p>Unlike picture, the <code>img</code> element is limited to a single image resoure, but  cases where an author need to define different image sources depending on the factors such as the design, size resolution, and display density. The most suitable image source may be an image sized appropriately for the display size or pixel density. Or the most suitable image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: <a>art direction</a> use case)</p>
   </section><!-- / picture permitted attributes -->
 
 	<section>
@@ -154,31 +153,22 @@ interface <dfn>HTMLPictureElement</dfn> : HTMLElement {
 	    </ul>
     </section><!-- source-permitted-attr -->
 
-	<section>
+  <section>
 		<h3>The <code>srcset</code> attribute</h3>
-		<p>The <dfn><code>srcset</code> attribute</dfn> is a comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</p>
-		<p>The value of the srcset attribute is  the <a><dfn>image-set notation</dfn></a> mico-syntax.</p>
-		<h3>The image-set notation micosyntax </h3>
-		<p>The <a><dfn>image-set notation</dfn></a> micosyntax is defined by the following [[!ABNF]]:</p>
-		<pre><dfn id="srcset-abnf">srcset</dfn> = ( [ &lt;srcset-decl&gt;, ]* [ &lt;srcset-decl&gt; | &lt;color&gt;] ) 
-srcset-decl = [ &lt;url&gt; | &lt;string&gt; ] &lt;resolution&gt;
-<dfn>color</dfn> = ??
-<dfn>url</dfn> = ??
-<dfn>string</dfn> = ??
-<dfn>resolution</dfn> = </pre>
-
-		<p>Sample of the image-set notation microsyntax:</p>
-		<pre class="example">srcset="med-1.jpg 1x, med-2.jpg 2x"</pre>
-    </section><!-- srcset-attribute -->
+	<p>The <dfn><code>srcset</code> attribute</dfn> is a comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> referring to alternate <a>media resource</a>s for a single image at different resolutions.</p>
+	<p>The value of the srcset attribute is  the <a><dfn>image-set notation</dfn></a> micosyntax.  </p>
+  </section>
+  <!-- srcset-attribute -->
 
 </section><!-- picture element -->
 
 	<section id="algorithms">
 		<h1>Algorithms</h1>
-		<p>Editorial note: goals for the algoritm </p>
+	  <p>Editorial note: goals for the algorithm</p>
 		<ul>
 		  <li>The appropriate asset MUST be fetched by way of a single request, initially. A change in window size causing the media attribute to match an alternate source SHOULD trigger a request for said source (to be retrieved from the browser cache, if possible).</li>
 		  <li>To address potential bandwidth concerns, the user agent SHOULD be able to override requests for higher-resolution images based on proposed user settings, for example: “always request high-resolution images,” “always request low-resolution images,” and “request high-resolution images as bandwidth permits” based on the bandwidth information available to the browser.</li>
+		  <li>User agents that do not natively support the <code>picture</code> element will render the <a>fallback content</a> (including any child <code>img</code> element) per the behavior of existing HTML5 media elements.</li>
       </ul>
 		
 		<p>The basic algorithm for processing the <a><code>picture</code> element</a> is as follows:</p>
@@ -198,13 +188,11 @@ srcset-decl = [ &lt;url&gt; | &lt;string&gt; ] &lt;resolution&gt;
 		<div class="issue">It should be possible to determine from script which source was selected. For media elements, this is done with the <a href="http://www.w3.org/TR/html5/media-elements.html#dom-media-currentsrc"><code>currentSrc</code> IDL attribute.</a></div>
 </section><!-- /algorithms -->
 
-	<section id="fallback-behavior">
-		<h2>Fallback behavior</h2>
-		<p>User agents that do not natively support the <code>picture</code> element will render the <a>fallback content</a> (including any child <code>img</code> element) per the behavior of existing HTML5 media elements.</p>
-	</section><!-- /fallback-behavior -->
+<section id="fallback-behavior"></section>
+<!-- /fallback-behavior -->
 
 	<section id="accessibility">
-		<h1>Accessibility</h1>
+	  <h1>Accessibility</h1>
 		<p>The <code>picture</code> element relies on fallback content as representative alternate text, rather than calling for an <code>alt</code> attribute on both the parent <code>picture</code> element and the fallback <code>img</code>. This provides a method for specifying short alternative text without requiring authors to specify an identical attribute on both <code>picture</code> and the fallback <code>img</code>, with the potential to reach the greatest number of end users without requiring a redundant effort on the part of authors.</p>
 		
 		The <code>alt</code> attribute MUST be handled according to the <a href="http://www.w3.org/TR/html-alt-techniques/#secm1">techniques for providing useful text alternatives for <code>img</code> elements</a> no different from <code>alt</code> attributes on <code>img</code> elements outside of the <code>picture</code> context.</p>
@@ -237,11 +225,9 @@ srcset-decl = [ &lt;url&gt; | &lt;string&gt; ] &lt;resolution&gt;
 				<li>Supports use cases where authors need to explicitly define different image versions as opposed to simply different resolutions of the same image.</li>
 				<li>Provides a consistent and predictable pattern for delivering alternate media sources based on client context.</li>
 				<li>Supports succinct but understandable mark-up.		        </li>
-	        </ul>
-			<blockquote>
-			  <p>A detailed list of <a href="#use-cases">use cases</a> is provided as an appendix.</p>
-		  </blockquote>
-      </section>
+				<li>Don't repeat yourself: If the same image is used multiple times on a single page, it would be useful to define the resource selection in a single place in the document and have this affect all instances of the image</li>
+			</ul>
+</section>
 		<h1>Use Cases</h1>
 		<p>What use cases does this support?</p>
 		<p>There are many use cases that are supported as listed below. There are two primary use cases.</p>
@@ -321,11 +307,8 @@ srcset-decl = [ &lt;url&gt; | &lt;string&gt; ] &lt;resolution&gt;
 		<p>Displaying a color image on a monochrome display does not always work well, as two different colors of similar luminosity would be impossible to distinguish in a monochrome environment.</p>
 		<p>Microsoft is proposing a media query which lets you detect that the user agent has been put in high contrast mode (for accessibility reasons), and that the content should follow along [<a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh465764.aspx">http://msdn.microsoft.com/en-us/library/windows/apps/hh465764.aspx</a>]. Being able to switch images based on high contrast mode would be nice.</p>
 		<p>Extracted from <a href="http://lists.whatwg.org/pipermail/whatwg-whatwg.org/2012-August/036845.html">WhatWG mailing list thread</a>.</p>
-    
-		<h2>Support the DRY Principle (Don't Repeat Yourself)</h2>
-		<p>If the same image is used multiple times on a single page, it would be useful to define the resource selection in a single place in the document and have this affect all instances of the image.</p>
-     
-	</section><!-- use-cases -->
+</section>
+	<!-- use-cases -->
     
 	<section id="polyfills" class="appendix informative">
 		<h3>Pre-existing Polyfills</h3>
