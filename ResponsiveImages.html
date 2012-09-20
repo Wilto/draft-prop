@@ -95,10 +95,10 @@ pre {
     <dd>Uses <a href="http://dev.w3.org/html5/spec/the-img-element.html#htmlimageelement"><code>HTMLImageElement</code></a>.</dd>
   </dl>
   <p>The <code><dfn>picture</dfn></code> element used for displaying an image that can come from a range of sources (see <code>srcset</code> attribute). Which image the user agent displays depends on the 
-        <a>algoithm for deriving the source image</a>. </p>
+        <a>algorithm for deriving the source image</a>. </p>
   <p>The <a>chosen image</a> is the embedded content.      </p>
       <p>The <code>crossorigin</code> attribute is a <a href="http://dev.w3.org/html5/spec/urls.html#cors-settings-attribute">CORS settings attribute</a>. Its purpose is to allow images from third-party sites that allow cross-origin access to be used with <a href="http://dev.w3.org/html5/spec/the-canvas-element.html#the-canvas-element">canvas</a>.</p>
-      <p>The <dfn>width</dfn> and <dfn>height</dfn> attributes represent the dimensions of the visual content of the element (the width and height respectively, relative to the nominal direction of the output medium), in CSS pixels. They are in everyway the same as those of an <code>img</code> element. The value of attributes, if specified, are <a href="http://dev.w3.org/html5/spec/single-page.html#valid-non-negative-integer" title="valid non-negative integer">valid non-negative integers</a>.</p>
+      <p>The <dfn>width</dfn> and <dfn>height</dfn> attributes represent the dimensions of the visual content of the element (the width and height respectively, relative to the nominal direction of the output medium), in CSS pixels. They are in every way the same as those of an <code>img</code> element. The value of attributes, if specified, are <a href="http://dev.w3.org/html5/spec/single-page.html#valid-non-negative-integer" title="valid non-negative integer">valid non-negative integers</a>.</p>
       <p>For user agents that don't support the <code>picture</code> element, an author can provide an <code>img</code> element as <a>fallback content</a>. User agents SHOULD NOT show this content to the user: it is intended for legacy user agents that do not support <code>picture</code>, so that a legacy <code>img</code> element can be shown instead.</p>
       <p>Authoring requirement: as with the <code>img</code> element, documents  must not use the <code>picture</code> element as a layout tool. In particular, picture elements should not be used to display transparent images, as they rarely convey meaning and rarely add anything useful to the document.      </p>
       <section><h2>Example of usage</h2>
@@ -112,8 +112,8 @@ pre {
 &lt;/picture&gt;</pre></section>
       <section>
     <section><h2>Differences from <code>img</code> element</h2>
-    <p>Unlike the <code>img</code> element, which is limited to pointing to a single image resource, the <code>picture</code> element is intended to allow an author to reference many different image sources that the browser can then choose based on a <a>media query</a> or some other relevant browsing situation or contraint. This means that a user agent can best select an image source that is most suitable for available display size, pixel density, or possibly even network bandwidth. Or the most suitable image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: <a>art direction</a> use case). </p>
-    <p>It is RECOMMENDED that for cases where a single image source is available, and where no responsive adaption is needed, authors  use the <code>img</code> element. </p></section>
+    <p>Unlike the <code>img</code> element, which is limited to pointing to a single image resource, the <code>picture</code> element is intended to allow an author to reference many different image sources that the browser can then choose based on a <a>media query</a> or some other relevant browsing situation or constraint. This means that a user agent can best select an image source that is most suitable for available display size, pixel density, or possibly even network bandwidth. Or the most suitable image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: <a>art direction</a> use case). </p>
+    <p>It is RECOMMENDED that for cases where a single image source is available, and where no responsive adoption is needed, authors  use the <code>img</code> element. </p></section>
   </section>
       <!-- / picture permitted attributes -->
       
@@ -129,16 +129,21 @@ pre {
 
     <section>
     <h1>The <code>srcset</code> attribute </h1>
-    <p>The <dfn><code>srcset</code> attribute</dfn> of the <code>source</code> element is is used to refer to alternate <a>media resource</a>s for a single image at different resolutions. The expected value of the attribute is a  comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> that matches the <code>valid-srcset</code> production: </p>
-    <pre><dfn>valid-srcset</dfn> = [ <a href="http://dev.w3.org/csswg/css4-images/#image-set-decl-type">&lt;image-set-decl&gt;</a>, ]* [ <a href="http://dev.w3.org/csswg/css4-images/#image-set-decl-type">&lt;image-set-decl&gt;</a> | &lt;color&gt;] ) 
-&lt;image-set-decl&gt; = [ <a href="http://dev.w3.org/csswg/css4-images/#image-type">&lt;image&gt;</a> | &lt;string&gt; ] &lt;resolution&gt;</pre>
-    <p>&nbsp;</p>
+    <p>The <dfn><code>srcset</code> attribute</dfn> of the <code>source</code> element is is used to refer to alternate <a>image resource</a> for a single image at different resolutions. The expected value of the attribute is a  comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> that matches the <code>valid-srcset</code> production: </p>
+    <pre><dfn>valid-srcset</dfn> = [ image-set-decl &quot;,&quot; ]* [ image-set-decl ] 
+image-set-decl = <a href="http://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.html#uri">uri</a> resolution</pre>
+    <p>The <code><a href="http://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.html#uri">uri</a></code> component is defined in [[!CSS21]] and the <code>resolution</code> component is defined in the<cite> CSS Image Values and Replaced Content Module Level 4 Specification</cite> [[!CSS4-IMAGES]].</p>
+    <section>
+    <h2>Example</h2>
+    <p>The following is an example of a <code>valid-srcset</code>.</p>
+    <pre class="example">large-1.jpg 1x, large-2.jpg 2x </pre>
+    </section>
     </section>
 
 
 <section id="algorithms">
   <h1>Algorithm for deriving the source image</h1>
-  <p>The <dfn>algoithm for deriving the source image</dfn> as follows. The result is the image source to be used by the <code>picture</code> element, which reflects  the <code>picture</code> element's <a><code>src</code> IDL attribute</a>: </p>
+  <p>The <dfn>algorithm for deriving the source image</dfn> as follows. The result is the image source to be used by the <code>picture</code> element, which reflects  the <code>picture</code> element's <a><code>src</code> IDL attribute</a>: </p>
 <div class="note">
 <p>What we want to do is have the <code>picture</code> behave exactly the same as an <code>img</code> element, but with the only difference being that it is <code>source</code> elements is used to determine the value of the <code>src</code> IDL attribute (and hence what image content is displayed). How that is determined is through  using the <code>media</code> attribute attribute of the <code>source</code> element. </p>
 <p>To avoid complexity, the <code>type</code> attribute is all child <code>source</code> elements is ignored in this context. </p>
@@ -154,10 +159,10 @@ pre {
 <span class="example">   &lt;source media=" is the massage " srcset=&quot;&quot;&gt;
       </span>
 &lt;/picture&gt;</pre>
-<p>Becomes the rough CSS equivelent of (a virtual stylesheet for the document?):</p>
+<p>Becomes the rough CSS equivalent of (a virtual stylesheet for the document?):</p>
 <pre>
 
-//assume #pictureElement is magically scoped to the correspoding element. 
+//assume #pictureElement is magically scoped to the corresponding element. 
 @media all{
    #pictureElement{
       background-image: image-set(<span class="example">small-1.jpg 1x, small-2.jpg 2x</span>);
@@ -279,7 +284,7 @@ pre {
 <section id="polyfills" class="appendix informative">
       <h3>Pre-existing Polyfills</h3>
       <ul>
-    <li><a href="https://github.com/scottjehl/picturefill/tree/div-markup-currentprop">Scott Jehl’s Picturefill</a> closely matches the proposed syntax, albiet using <code>div</code> elements in order to be used today:</li>
+    <li><a href="https://github.com/scottjehl/picturefill/tree/div-markup-currentprop">Scott Jehl’s Picturefill</a> closely matches the proposed syntax, albeit using <code>div</code> elements in order to be used today:</li>
   </ul>
     </section>
 <!-- polyfills -->
