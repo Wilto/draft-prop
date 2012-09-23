@@ -60,16 +60,36 @@ pre {
           <p>Through the combination of a new <code>picture</code> element and a new the <code>srcset</code> attribute for the existing <code>source</code> element, this specification adds functionality to HTML that allows authors to list a range of images which may be suitable for a range of device capabilities and different usage scenarios. The ability to adapt content to the constraints and capabilities of devices and different usage scenarios is commonly referred to as &quot;responsive design&quot;.
         This allows user agents to be more responsive to a wide spectrum of  browsing scenarios, ranging from simple mobile devices to desktop browsers scenarios, when selecting which image resources to download and display for an end-user. This includes, but is not limited to, the selection of images most suited for either high or low density displays and screen resolutions on range of devices, are well as responsive selection of images based on  printer's dpi and color reproduction capabilities.</p>    
     </section>
+
+   <section id="goals">
+    <h1>Goals</h1>
+    <p>The overarching goal is to  give  developers a way to provide user agents with sufficient information about each image, and applicable media, so that the user agent can select the most appropriate one for a dynamically changing browsing situations. This includes, but is not limited to, different screen pixel width/height, pixel densities, environmental lighting conditions, and potentially even situations where the network bandwith changes dymamically. By providing a graded set of image sources, UA discretion could similarly apply to situations where the network bandwith changes dymamically. Based on user settings and network latency calculated by the user agent, the UA may have the option of selecting lower density image sources.</p>
+    <p>In addition, this proposal is being worked on with the following goals in mind:</p>
+    <ul>
+          <li>Will degrade gracefully on older user agents.</li>
+          <li>Can be polyfilled.</li>
+          <li>Retains, at a minimum, the same level of accessibility as current <code>img</code> element - and we may even be able to do better! </li>
+          <li>Adhere to common conventions around for content, markup, behavior, and styling.</li>
+          <li>Provides a purely client-side solution that can rely on scripts, but doesn&rsquo;t require it. Similarly, this solution must not require the use of any server-side technologies to reliably deliver content tailored for the end user&rsquo;s browsing situation.</li>
+          <li>Supports use cases where authors need to explicitly define different image versions as opposed to simply different resolutions of the same image.</li>
+          <li>Provides a consistent and predictable pattern for delivering alternate media sources based on client context.</li>
+          <li>Supports succinct but understandable mark-up. </li>
+          <li>Don't repeat yourself: If the same image is used multiple times on a single page, it would be useful to define the resource selection in a single place in the document and have this affect all instances of the image</li>
+     </ul>
+  </section>    
+
     
 <section id="sotd">
       <p>This document was proposed by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a> as a solution to <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384">bug 18384</a>.</p>
     </section>
+
+
 <section id="conformance">
       <p>This specification describes the conformance criteria for <dfn title="user agent">user agents</dfn> (relevant to implementors) and <dfn title="document">documents</dfn> (relevant to authors and authoring tool implementors).</p>
       <p>Implementations that use ECMAScript to expose the APIs defined in this specification MUST implement them in a manner consistent with the ECMAScript Bindings defined in the Web IDL specification [[!WEBIDL]].</p>
     </section>
 <section id="definitions">
-      <h2>Definitions</h2>
+      <h1>Definitions</h1>
       <p>The following terms are used throughout this specification so they are gathered here for the readers convenience. The following list of terms is not exhaustive; other terms are defined throughout this specification.</p>
       <p>The follow terms are defined by the<cite> </cite>[[!HTML5]] specification: <dfn><a href="http://www.w3.org/TR/html5/the-img-element.html#the-img-element"><code>img</code> element</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/the-source-element.html#the-source-element"><code>source</code> element</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/media-elements.html#media-resource"><code>media</code> resource</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/content-models.html#fallback-content">fallback content</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/urls.html#valid-non-empty-url-potentially-surrounded-by-spaces">valid non-empty URL potentially surrounded by spaces</a></dfn> and <dfn><a href="http://www.w3.org/TR/html5/common-microsyntaxes.html#valid-media-query">valid media query</a></dfn>.</p>
       <p>The <dfn><a href="http://dev.w3.org/csswg/css4-images/#image-set-notation">image-set notation</a></dfn> microsyntax is defined by the<cite> CSS Image Values and Replaced Content Module Level 4 Specification</cite> [[!CSS4-IMAGES]].</p>
@@ -96,14 +116,21 @@ pre {
     <dd><code>width</code></dd>
     <dd><code>height</code></dd>
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-dom" title="element-dfn-dom">DOM interface</a>:</dt>
-    <dd>Uses <a href="http://dev.w3.org/html5/spec/the-img-element.html#htmlimageelement"><code>HTMLImageElement</code></a>.</dd>
+    <dd>
+      <pre>[NamedConstructor=Picture,
+ NamedConstructor=Picture(unsigned long width),
+ NamedConstructor=Picture(unsigned long width, unsigned long height)]
+HTMLPictureElement : HTMLImageElement{
+   readonly attribute DOMString media; 
+}</pre>
+    
+    </dd>
   </dl>
   <p>The <code><dfn>picture</dfn></code> element used for displaying an image that can come from a range of sources (see <code>srcset</code> attribute). Which image the user agent displays depends on the 
         <a>algorithm for deriving the source image</a>. </p>
-  <p>The <a>chosen image</a> is the embedded content.      </p>
-      <p>The <code>crossorigin</code> attribute is a <a href="http://dev.w3.org/html5/spec/urls.html#cors-settings-attribute">CORS settings attribute</a>. Its purpose is to allow images from third-party sites that allow cross-origin access to be used with <a href="http://dev.w3.org/html5/spec/the-canvas-element.html#the-canvas-element">canvas</a>.</p>
-      <p>The <dfn>width</dfn> and <dfn>height</dfn> attributes represent the dimensions of the visual content of the element (the width and height respectively, relative to the nominal direction of the output medium), in CSS pixels. They are in every way the same as those of an <code>img</code> element. The value of attributes, if specified, are <a href="http://dev.w3.org/html5/spec/single-page.html#valid-non-negative-integer" title="valid non-negative integer">valid non-negative integers</a>.</p>
-      <p>For user agents that don't support the <code>picture</code> element, an author can provide an <code>img</code> element as <a>fallback content</a>. User agents SHOULD NOT show this content to the user: it is intended for legacy user agents that do not support <code>picture</code>, so that a legacy <code>img</code> element can be shown instead.</p>
+  <p>On getting the <code>media</code> attribute, the user agent MUST return the </p>
+  <p>The <a>chosen image</a> is the embedded content.  </p>
+  <p>For user agents that don't support the <code>picture</code> element, an author can provide an <code>img</code> element as <a>fallback content</a>. User agents SHOULD NOT show this content to the user: it is intended for legacy user agents that do not support <code>picture</code>, so that a legacy <code>img</code> element can be shown instead.</p>
       <p>Authoring requirement: as with the <code>img</code> element, documents  must not use the <code>picture</code> element as a layout tool. In particular, picture elements should not be used to display transparent images, as they rarely convey meaning and rarely add anything useful to the document.      </p>
       <section><h2>Example of usage</h2>
       <p>Sample picture element markup:</p>
@@ -204,6 +231,7 @@ image-set-decl = <a href="http://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.ht
 <!-- examples -->
 
 <section id="use-cases" class="appendix informative">
+<<<<<<< HEAD
       <section id="goals">
     <h1>Goals</h1>
     <p>The overarching goal is to  give  developers a way to provide user agents with sufficient information about each image, and applicable media, so that the user agent can select the most appropriate one for a dynamically changing browsing situations. This includes, but is not limited to, different screen pixel width/height, pixel densities, environmental lighting conditions, and potentially even situations where the network bandwith changes dymamically. By providing a graded set of image sources, UA discretion could similarly apply to situations where the network bandwith changes dymamically. Based on user settings and network latency calculated by the user agent, the UA may have the option of selecting lower density image sources.</p>
@@ -224,6 +252,10 @@ image-set-decl = <a href="http://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.ht
         </ul>
   </section>
       <h1>Use Cases </h1>
+=======
+   
+  <h1>Use Cases </h1>
+>>>>>>> Cosmetic changes and removed some attribute defs that are not inherited from HTMLImageInterface
       <p>There are many use cases that are supported as listed below. There are two primary use cases:</p>
       <ol>
     <li>The need for different image sources at different viewport sizes in responsive web designs.</li>
@@ -290,11 +322,9 @@ image-set-decl = <a href="http://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.ht
 
 <section class='appendix'>
       <h1>Open Issues</h1>
-<dl>
-<dt><a href="https://github.com/Wilto/draft-prop/issues/29">ISSUE 29</a></dt>
-<dd>Not sure how to deal with image maps without scripts.</dd>
-</dl>
-      <h1>Acknowledgements</h1>
+		<p>...</p>
+		
+  <h1>Acknowledgements</h1>
       <p>TODO: add thanks</p>
     </section>
 <!-- appendix -->
