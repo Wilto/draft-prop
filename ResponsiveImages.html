@@ -211,14 +211,17 @@ image-set-decl = <a href="http://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.ht
     <p>The overarching goal is to  give  developers a way to provide user agents with sufficient information about each image, and applicable media, so that the user agent can select the most appropriate one for a dynamically changing browsing situations. This includes, but is not limited to, different screen pixel width/height, pixel densities, environmental lighting conditions, and potentially even situations where the network bandwith changes dymamically. By providing a graded set of image sources, UA discretion could similarly apply to situations where the network bandwith changes dymamically. Based on user settings and network latency calculated by the user agent, the UA may have the option of selecting lower density image sources.</p>
     <p>In addition, this proposal is being worked on with the following goals in mind:</p>
     <ul>
+          <li>Respond to different screen pixel width/height.</li>
+          <li>Respond to different screen pixel densities.</li>
+          <li>Allows developers to provide user agents with sufficient information about each image source, allowing the user agent to select the most appropriate one for dynamically changing browsing situations. This includes but is not limited to: differing screen/window widths and heights, pixel densities, environmental lighting conditions, and any combination of contextual cues provided by media queries.</li>
+          <li>Provides a graded set of image sources, allowing UA discretion to potentially be applied to situations where network bandwith is limited or variable. Based on user settings and network latency calculated by the user agent, the UA may have the option of selecting lower density image sources to conserve bandwidth.</li>
           <li>Will degrade gracefully on older user agents.</li>
           <li>Can be polyfilled.</li>
-          <li>Retains, at a minimum, the same level of accessibility as current <code>img</code> element - and we may even be able to do better! </li>
-          <li>Adhere to common conventions around for content, markup, behavior, and styling.</li>
-          <li>Provides a purely client-side solution that can rely on scripts, but doesn&rsquo;t require it. Similarly, this solution must not require the use of any server-side technologies to reliably deliver content tailored for the end user&rsquo;s browsing situation.</li>
-          <li>Supports use cases where authors need to explicitly define different image versions as opposed to simply different resolutions of the same image.</li>
-          <li>Provides a consistent and predictable pattern for delivering alternate media sources based on client context.</li>
-          <li>Supports succinct but understandable mark-up. </li>
+          <li>Retains, at a minimum, the same level of accessibility as current <code>img</code> element. The resolution of <a href="http://www.w3.org/html/wg/tracker/issues/30">ISSUE-30: Should HTML 5 include a longdesc attribute for images</a> will determine the method by which authors can provide semantically rich markup as accessible text. </li>
+          <li>Preserves separation of content markup and styling.</li>
+           <li>Provides a consistent and predictable pattern for delivering alternate media sources based on client context.</li>
+          <li>Provides a purely client-side solution which may include JavaScript, but doesn’t require it.</li>
+          <li>Supports succinct but understandable mark-up.</li>
           <li>Don't repeat yourself: If the same image is used multiple times on a single page, it would be useful to define the resource selection in a single place in the document and have this affect all instances of the image</li>
         </ul>
   </section>
