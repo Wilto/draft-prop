@@ -208,16 +208,14 @@ image-set-decl = <a href="http://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.ht
 <section id="use-cases" class="appendix informative">
       <section id="goals">
     <h1>Goals</h1>
-    <p>This proposal was designed with the following goals in mind:</p>
+    <p>The overarching goal is to  give  developers a way to provide user agents with sufficient information about each image, and applicable media, so that the user agent can select the most appropriate one for a dynamically changing browsing situations. This includes, but is not limited to, different screen pixel width/height, pixel densities, environmental lighting conditions, and potentially even situations where the network bandwith changes dymamically. By providing a graded set of image sources, UA discretion could similarly apply to situations where the network bandwith changes dymamically. Based on user settings and network latency calculated by the user agent, the UA may have the option of selecting lower density image sources.</p>
+    <p>In addition, this proposal is being worked on with the following goals in mind:</p>
     <ul>
-          <li>Respond to different screen pixel width/height.</li>
-          <li>Respond to different screen pixel densities.</li>
-          <li>Provide user agents with information they need to select the most appropriate image source given low bandwidth situations.</li>
-          <li>Will fallback gracefully on older user agents.</li>
-          <li>Can be polyfilled effectively.</li>
+          <li>Will degrade gracefully on older user agents.</li>
+          <li>Can be polyfilled.</li>
           <li>Retains, at a minimum, the same level of accessibility as current <code>img</code> element.</li>
-          <li>Preserves separation of content markup and styling.</li>
-          <li>Provides a purely client-side solution which can include JavaScript, but doesn’t require it.</li>
+          <li>Adhere to common conventions around for content, markup, behavior, and styling.</li>
+          <li>Provides a purely client-side solution that can rely on scripts, but doesn&rsquo;t require it. Similarly, this solution must not require the use of any server-side technologies to reliably deliver content tailored for the end user&rsquo;s browsing situation.</li>
           <li>Supports use cases where authors need to explicitly define different image versions as opposed to simply different resolutions of the same image.</li>
           <li>Provides a consistent and predictable pattern for delivering alternate media sources based on client context.</li>
           <li>Supports succinct but understandable mark-up. </li>
@@ -286,15 +284,15 @@ image-set-decl = <a href="http://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.ht
     </section>
 <!-- use-cases -->
 
-<section id="polyfills" class="appendix informative">
-      <h3>Pre-existing Polyfills</h3>
-      <ul>
-    <li><a href="https://github.com/scottjehl/picturefill/tree/div-markup-currentprop">Scott Jehl’s Picturefill</a> closely matches the proposed syntax, albeit using <code>div</code> elements in order to be used today:</li>
-  </ul>
-    </section>
+<section id="polyfills" class="appendix informative"></section>
 <!-- polyfills -->
 
 <section class='appendix'>
+      <h1>Open Issues</h1>
+<dl>
+<dt><a href="https://github.com/Wilto/draft-prop/issues/29">ISSUE 29</a></dt>
+<dd>Not sure how to deal with image maps without scripts.</dd>
+</dl>
       <h1>Acknowledgements</h1>
       <p>TODO: add thanks</p>
     </section>
