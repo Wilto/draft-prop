@@ -33,10 +33,10 @@ Assuming three image “breakpoints” intended to remain in sync with a media-q
 ```
 
 **Extended `srcset`**
-N/A
+*N/A*
 
 
-### Using relative units ###
+### Relative units ###
 Assuming three image “breakpoints” intended to remain in sync with a media-query-based layout specced in `em` units.
 
 **`picture` Element**
@@ -50,7 +50,7 @@ Assuming three image “breakpoints” intended to remain in sync with a media-q
 ```
 
 **Extended `srcset`**
-N/A
+*N/A*
 
 Note: the `em` values above could be manually converted to `px` by the author to ensure that the image breakpoints are within a few pixels of the `em`-based layout media queries, resulting in:
 
@@ -60,10 +60,11 @@ Note: the `em` values above could be manually converted to `px` by the author to
 
 While the `em`-based CSS layout will be reevaulated based on user zoom in all modern browsers (see http://blog.cloudfour.com/the-ems-have-it-proportional-media-queries-ftw/ for a description and functional example) and we can assume the same for the `em`-based image breakpoints, the `px`-based image breakpoints will fall out of sync with the layout when the user zooms in or out.
 
-## Portait vs. Landscape Orientation ##
-[ … ]
+## Portait vs. Landscape Orientation ## ##
 
 **`picture` Element**
+Assuming the author simply wants to preform image source swapping based on a device’s orientation. This would likely see use in a standalone mobile site catering to specific devices or in a combination web/native app.
+
 ```
 <picture>
     <source media="device-orientation: portrait" src="image1.jpg">
@@ -73,21 +74,12 @@ While the `em`-based CSS layout will be reevaulated based on user zoom in all mo
 ```
 
 **Extended `srcset`**
-N/A
+*N/A*
 
 
 ## Display Density
 The two proposals are functionally identical in terms of dealing with display density when independent of the “Viewport Sizes” use case:
 
-**`picture` Element**
-```
-<picture>
-    <source srcset="image1.jpg, image2.jpg 2x">
-    <img src="image1.jpg" alt="">
-</picture>
-```
-
-**Extended `srcset`**
 ```
 <img src="image1.jpg" srcset="image2.jpg 2x">
 ```
@@ -126,7 +118,8 @@ Assuming two image sources indended for display on screen depending on window si
 ```
 
 **Extended `srcset`**
-N/A
+*N/A*
+
 
 ## Color saturation/high-contrast mode
 This is based on the high-contrast mode and ambient light media queries currently being proposed in the CSS WG.
@@ -141,26 +134,46 @@ This is based on the high-contrast mode and ambient light media queries currentl
 ```
 
 **Extended `srcset`**
-N/A
+*N/A*
 
 
-## Potential for addressing bandwidth concerns
+## Potential for addressing bandwidth concerns ##
+[[ TODO: `srcset` as suggestion overrideable by UA, in both cases. Seperation of concerns (“art direction” vs. density cases) may make this simpler with `picture`, see writeup in http://www.w3.org/community/respimg/2012/06/18/florians-compromise/ ]]
 
 
-## Potential for future accessibility improvements
+## Potential for future accessibility improvements ##
 
-
-## Potential for addressing new image formats
+Both patterns are functionally identical in terms of _short_ descriptive text, though authoring differs. The `picture` pattern will allow fallback content to serve as the content exposed to assistive technologies (in this case, the fallback `img` alt tag would be used), while the extended `srcset` syntax would rely on the `img` element’s `alt` attribute.
 
 **`picture` Element**
 ```
 <picture>
-    <source src="image2.webp" type="image/webp">
-    <source src="image1.jpg">
-    <img src="image1.jpg" alt="">
+    [ … ]
+    <img src="image1.jpg" alt="Short descriptive text.">
 </picture>
 ```
 
 **Extended `srcset`**
-N/A
+```
+<img src="image1.jpg" srcset="[…]" alt="Short descriptive text.">
+```
+
+Further discussion: <a href="http://lists.w3.org/Archives/Public/public-html/2012Sep/0029.html">http://lists.w3.org/Archives/Public/public-html/2012Sep/0029.html</a>
+
+
+## Potential for addressing new image formats ##
+[[ TODO: Summary ]]
+
+**`picture` Element**
+```
+<picture>
+    <source src="image1.webp" type="image/webp">
+    <source src="image2.jpg" media="min-width: 20em">
+    <source src="image3.jpg" media="min-width: 40em">
+    <img src="image2.jpg" alt="">
+</picture>
+```
+
+**Extended `srcset`**
+*N/A*
 
