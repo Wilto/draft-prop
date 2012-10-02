@@ -146,7 +146,7 @@ This is based on the high-contrast mode and ambient light media queries currentl
 [[ TODO: `srcset` as suggestion overrideable by UA, in both cases. Seperation of concerns (“art direction” vs. density cases) may make this simpler with `picture`, see writeup in http://www.w3.org/community/respimg/2012/06/18/florians-compromise/ ]]
 
 
-## Potential for future accessibility improvements ##
+## Accessibility ##
 
 Both patterns are functionally identical in terms of _short_ descriptive text, though authoring differs. The `picture` pattern will allow fallback content to serve as the content exposed to assistive technologies (in this case, the fallback `img` alt tag would be used), while the extended `srcset` syntax would rely on the `img` element’s `alt` attribute.
 
