@@ -6,9 +6,9 @@ Assuming three image “breakpoints” based on maximum widths, using pixel-base
 **`picture` Element**
 ```
 <picture>
-    <source media="max-width: 400px" src="image1.jpg">
-    <source media="max-width: 600px" src="image2.jpg">
-    <source media="max-width: 800px" src="image3.jpg">
+    <source media="(max-width: 400px)" src="image1.jpg">
+    <source media="(max-width: 600px)" src="image2.jpg">
+    <source media="(max-width: 800px)" src="image3.jpg">
     <img src="image1.jpg" alt="">
 </picture>
 ```
@@ -25,9 +25,9 @@ Assuming three image “breakpoints” intended to remain in sync with a media-q
 **`picture` Element**
 ```
 <picture>
-    <source media="min-width: 400px" src="image1.jpg">
-    <source media="min-width: 600px" src="image2.jpg">
-    <source media="min-width: 800px" src="image3.jpg">
+    <source media="(min-width: 400px)" src="image1.jpg">
+    <source media="(min-width: 600px)" src="image2.jpg">
+    <source media="(min-width: 800px)" src="image3.jpg">
     <img src="image1.jpg" alt="">
 </picture>
 ```
@@ -43,9 +43,9 @@ Assuming three image “breakpoints” intended to remain in sync with a media-q
 **`picture` Element**
 ```
 <picture>
-    <source media="max-width: 20em" src="image1.jpg">
-    <source media="max-width: 40em" src="image2.jpg">
-    <source media="max-width: 60em" src="image3.jpg">
+    <source media="(max-width: 20em)" src="image1.jpg">
+    <source media="(max-width: 40em)" src="image2.jpg">
+    <source media="(max-width: 60em)" src="image3.jpg">
     <img src="image1.jpg" alt="">
 </picture>
 ```
@@ -69,8 +69,8 @@ Assuming the author simply wants to preform image source swapping based on a dev
 
 ```
 <picture>
-    <source media="device-orientation: portrait" src="image1.jpg">
-    <source media="device-orientation: landscape" src="image2.jpg">
+    <source media="(device-orientation: portrait)" src="image1.jpg">
+    <source media="(device-orientation: landscape)" src="image2.jpg">
     <img src="image1.jpg" alt="">
 </picture>
 ```
@@ -94,9 +94,9 @@ Assuming three image “breakpoints” based on maximum widths, using pixel-base
 **`picture` Element**
 ```
 <picture>
-    <source media="max-width: 400px" srcset="image1.jpg, image1-hd.jpg 2x">
-    <source media="max-width: 600px" srcset="image2.jpg, image2-hd.jpg 2x">
-    <source media="max-width: 800px" srcset="image3.jpg, image3-hd.jpg 2x">
+    <source media="(max-width: 400px)" srcset="image1.jpg, image1-hd.jpg 2x">
+    <source media="(max-width: 600px)" srcset="image2.jpg, image2-hd.jpg 2x">
+    <source media="(max-width: 800px)" srcset="image3.jpg, image3-hd.jpg 2x">
     <img src="image1.jpg" alt="">
 </picture>
 ```
@@ -113,8 +113,8 @@ Assuming two image sources indended for display on screen depending on window si
 **`picture` Element**
 ```
 <picture>
-    <source media="(screen and min-width: 20em)" srcset="image1.jpg, image1-hd.jpg 2x">
-    <source media="(screen and min-width: 40em)" srcset="image2.jpg, image2-hd.jpg 2x">
+    <source media="screen and (min-width: 20em)" srcset="image1.jpg, image1-hd.jpg 2x">
+    <source media="screen and (min-width: 40em)" srcset="image2.jpg, image2-hd.jpg 2x">
     <source media="print" src="image3.jpg">
     <img src="image1.jpg" alt="">
 </picture>
@@ -174,8 +174,8 @@ Further discussion: <a href="http://lists.w3.org/Archives/Public/public-html/201
 ```
 <picture>
     <source src="image1.webp" type="image/webp">
-    <source src="image2.jpg" media="min-width: 20em">
-    <source src="image3.jpg" media="min-width: 40em">
+    <source src="image2.jpg" media="(min-width: 20em)">
+    <source src="image3.jpg" media="(min-width: 40em)">
     <img src="image2.jpg" alt="">
 </picture>
 ```
