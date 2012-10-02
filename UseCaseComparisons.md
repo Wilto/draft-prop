@@ -167,8 +167,12 @@ Further discussion: <a href="http://lists.w3.org/Archives/Public/public-html/201
 
 
 ## Potential for addressing new image formats ##
+With the lack of a fallback mechanism browsers can rely on, web authors
+cannot reliably use image formats that are only supported by some
+browser vendors, but not all. (e.g. WebP, JPEG2K, JPEG-XR)
 
-[[ TODO: Summary ]]
+The `<picture>` element can provide such a fallback mechanism, that will
+enable usage and broader adoption of new, more efficient image formats.
 
 **`picture` Element**
 ```
