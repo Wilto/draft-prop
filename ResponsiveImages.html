@@ -160,10 +160,7 @@ HTMLPictureElement : HTMLImageElement{
 
     <section>
     <h1>The <code>srcset</code> attribute </h1>
-    <p>The <dfn><code>srcset</code> attribute</dfn> of the <code>source</code> element is is used to refer to alternate <a>image resource</a> for a single image at different resolutions. The expected value of the attribute is a  comma-separated list of <a>valid non-empty URL potentially surrounded by spaces</a> that matches the <code>valid-srcset</code> production: </p>
-    <pre><dfn>valid-srcset</dfn> = [ image-set-decl &quot;,&quot; ]* [ image-set-decl ] 
-image-set-decl = <a href="http://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.html#uri">uri</a> resolution</pre>
-    <p>The <code><a href="http://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.html#uri">uri</a></code> component is defined in [[!CSS21]] and the <code>resolution</code> component is defined in the<cite> CSS Image Values and Replaced Content Module Level 4 Specification</cite> [[!CSS4-IMAGES]].</p>
+    <p>The <dfn><code>srcset</code> attribute</dfn> of the <code>source</code> element is is used to refer to alternate <a>image resource</a> for a single image at different resolutions. The expected value is a <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/embedded-content-1.html#image-candidate-string">image candidate string</a>. </p>
     <section>
     <h2>Example</h2>
     <p>The following is an example of a <code>valid-srcset</code>.</p>
@@ -238,25 +235,25 @@ image-set-decl = <a href="http://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.ht
     <li>The need for different image sources depending on the pixel density of the display.</li>
   </ol>
       <p>Most of the more specific use cases fall under one of these two umbrella needs.</p>
-      <h2 class="informative-subhed">Viewport Sizes</h2>
+<section>      <h2 class="informative-subhed">Viewport Sizes</h2>
       <p>There are many different screen sizes that are in common daily usage, ranging from small phones to giant high-definition televisions. This change in how we access the web was the main reason for needing to make responsive websites in the first place.</p>
       <p>A common practice in responsive design is delivering images without height and width attributes and letting the browser resize the image. This technique is commonly called flexible images or fluid images.</p>
       <p>However, delivering an image at a size optimized for large displays to a small display is not ideal. Large images incur unnecessary download and processing time, slowing the experience for users.</p>
-      <p>To solve this problem, web authors will provide multiple sources of the same image at different resolutions and then pick the correct size image based on the viewport size. This is commonly done for CSS background images in responsive designs, but web authors lack the tools to do so for images in HTML without the use of JavaScript.</p>
-      <h2 class="informative-subhed">Display Density</h2>
+      <p>To solve this problem, web authors will provide multiple sources of the same image at different resolutions and then pick the correct size image based on the viewport size. This is commonly done for CSS background images in responsive designs, but web authors lack the tools to do so for images in HTML without the use of JavaScript.</p></section>
+      <section><h2 class="informative-subhed">Display Density</h2>
       <p>Since the high-density devices (e.g., Retina&trade; displays on Apple products) came out, the quality of images on the web has changed. Beforehand, even though we had a variety of device sizes, the DPI has always been the same. This is no longer the case and it is very likely that the current resolution/pixel density on Retina&trade; devices will not be the only one.</p>
-      <p>We should be ready and able to support the current resolutions as well as any others that manufacturers may use in the future.</p>
-      <h2 class="informative-subhed">Mobile-first and desktop-first responsive design</h2>
+      <p>We should be ready and able to support the current resolutions as well as any others that manufacturers may use in the future.</p></section>
+      <section><h2 class="informative-subhed">Mobile-first and desktop-first responsive design</h2>
       <p>A common approach in sites that cater to a wide range of devices using a single codebase is a “mobile-first” development pattern—starting with a simple, linear layout and increasing layout and functional complexity for larger screen sizes using media queries.</p>
       <p>“Desktop-first” responsive design takes the opposite approach and starts from the desktop design and simplifies it using media queries to support small displays. Authors retrofitting existing sites often take a desktop-first approach out of necessity because changing to a mobile-first approach would be a significant undertaking.</p>
       <p>These two approaches require that a solution for images support the following:</p>
       <ul>
     <li>Authors need the ability to define fallback image as the smallest image (mobile first) or the largest image (desktop first).</li>
     <li>Authors would like to define the breakpoints for images as either minimum values (mobile first) or maximum values (desktop first) to match the media queries used in their design.</li>
-  </ul>
-      <h2 class="informative-subhed">Relative Units</h2>
-      <p>A common practice in creating flexible layouts is to specify the size values in media queries as relative units: <code>em</code>, <code>rem</code>, <code>vw</code>/<code>vh</code> etc. This is most commonly seen using ems in order to reflow layouts based on users’ zoom preferences, or to resize elements through JavaScript by dynamically altering a font-size value.</p>
-      <h2 class="informative-subhed">Matching image source breakpoints to design breakpoints</h2>
+  </ul></section>
+      <section><h2 class="informative-subhed">Relative Units</h2>
+      <p>A common practice in creating flexible layouts is to specify the size values in media queries as relative units: <code>em</code>, <code>rem</code>, <code>vw</code>/<code>vh</code> etc. This is most commonly seen using ems in order to reflow layouts based on users’ zoom preferences, or to resize elements through JavaScript by dynamically altering a font-size value.</p></section>
+<section>      <h2 class="informative-subhed">Matching image source breakpoints to design breakpoints</h2>
       <p>Web authors would like to be able to optionally match the breakpoints for images to the breakpoints that they have defined in their responsive designs. Being able to match the breakpoints ensures that images are operating under the same rules that define the layout. It also helps authors verify their approach by ensuring that the same viewport measurement tests are being used in both HTML and CSS.</p>
       <p>This desire is a facet of the two preceding use cases (mobile/desktop-first responsive design and relative units). If a breakpoint in the design is defined as:</p>
       <p><code>@media screen (max-width: 41em) {}</code></p>
@@ -265,14 +262,15 @@ image-set-decl = <a href="http://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.ht
     <li>The default font size in most browsers is 16 pixels. So 41em can be calculated to be 41 * 16 = 656 pixels. Calculating this for every breakpoint, while possible, would be tedious and potentially error-prone for authors.</li>
     <li>Unless the image break points support both max and min values, then the image breakpoint will need to be further modified from the layout breakpoint that it was derived from. For example, if the image format only supports minimum width tests, then instead of using a maximum width of 656 pixels, the document author would need to specify 657 pixels as a minimum width for the breakpoint.</li>
   </ul>
-      <p>When debugging a document, if the author cannot specify breakpoints for images in the same manner that they are defined for the design, authors will need to convert the breakpoints back to the values specified in the layout in order to verify that they match. This increases authoring time and the likelihood that math errors on the part of authors (possibly due to a different rounding scheme in a particular user agent) cause unexpected behavior.</p>
-      <h2 class="informative-subhed">Mobile Networks</h2>
+      <p>When debugging a document, if the author cannot specify breakpoints for images in the same manner that they are defined for the design, authors will need to convert the breakpoints back to the values specified in the layout in order to verify that they match. This increases authoring time and the likelihood that math errors on the part of authors (possibly due to a different rounding scheme in a particular user agent) cause unexpected behavior.</p></section>
+<section>      <h2 class="informative-subhed">Mobile Networks</h2>
       <p>It should be noted that many devices are used on mobile networks which are often very slow or exhibit high latency. Often times conferences suffer from slow networks as well due to many users attempting to use a single network connection simultaneously. Many people also have very slow or erratic connections in their homes and workplaces. While it may not be possible for a solution to be based on bandwidth, anything that can be done to reduce latency and HTTP requests should be done.</p>
       <p>Allowing authors to specify different images for different viewport sizes and display densities is one step towards providing a better experience on slow networks. In the future, user agents may be able to select different images based on network speed or user preference.</p>
-      <h2 class="informative-subhed">User Zoom</h2>
+</section>
+<section><h2 class="informative-subhed">User Zoom</h2>
       <p>Images blur when the user resizes the page. Users may zoom an image in order to see more detail. In these cases, user agents could select a higher-resolution version of an image to display.</p>
-      <div class="issue">It's not clear whether the picture element is prescriptive (i.e. the user agent MUST show a particular image given certain device properties) or suggestive (i.e. the user agent has control over picking the best image).</div>
-      <h2 class="informative-subhed">Art Direction</h2>
+      <div class="issue">It's not clear whether the picture element is prescriptive (i.e. the user agent MUST show a particular image given certain device properties) or suggestive (i.e. the user agent has control over picking the best image).</div></section>
+      <section><h2 class="informative-subhed">Art Direction</h2>
       <p>Web authors often want to provide different versions of the same image at different sizes depending on the viewport. We refer to this as the <dfn>a rt direction</dfn> use case.</p>
       <p>A simple example of this would be changing the crop of an image based on display area:</p>
       <ul>
@@ -283,14 +281,14 @@ image-set-decl = <a href="http://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.ht
       <p>A more complex example that changes orientation of the image, crop, and how text flows around an image based on the size of the viewport:</p>
       <ul>
     <li>On the Nokia Browser site where it describes the <a href="http://browser.nokia.com/smartphones.html">Meego browser</a>, the Nokia Lumia is shown <a href="http://browser.nokia.com/resources/images/home-feature.png">horizontally on wide screens</a>. As the screen narrows, the Nokia Lumia is then shown <a href="http://browser.nokia.com/resources/images/smartphones/choose-meego@320.png">vertically and cropped</a>. Bryan and Stephanie Rieger, the designers of the site, have talked about how on a wide screen, showing the full phone horizontally showed the browser best, but on small screens, changing the img to vertical made more sense because it allowed the reader to still make out the features of the browser in the image.</li>
-  </ul>
-      <h2 class="informative-subhed">Alternate Print Sources</h2>
-      <p>Printed web documents generally have pixelated images due to printers having a higher DPI than most images currently served on the web. Defining higher resolution images for printing would increase the abilities of web authors to define great printed versions of their documents. For example, a photo sharing site could provide a bandwidth-optimized image for display on screen, but a high-resolution image for print.</p>
-      <h2 class="informative-subhed">Gray Scale and High Contrast Modes</h2>
+  </ul></section>
+      <section><h2 class="informative-subhed">Alternate Print Sources</h2>
+      <p>Printed web documents generally have pixelated images due to printers having a higher DPI than most images currently served on the web. Defining higher resolution images for printing would increase the abilities of web authors to define great printed versions of their documents. For example, a photo sharing site could provide a bandwidth-optimized image for display on screen, but a high-resolution image for print.</p></section>
+<section>      <h2 class="informative-subhed">Gray Scale and High Contrast Modes</h2>
       <p>Displaying a color image on a monochrome display does not always work well, as two different colors of similar luminosity would be impossible to distinguish in a monochrome environment.</p>
       <p>Microsoft is proposing a media query which lets you <a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh465764.aspx">detect that the user agent has been put in high contrast mode</a> (for accessibility reasons), and that the content should follow along. Being able to switch images based on high contrast mode would be nice.</p>
       <p>Extracted from <a href="http://lists.whatwg.org/pipermail/whatwg-whatwg.org/2012-August/036845.html">WhatWG mailing list thread</a>.</p>
-    </section>
+</section>    </section>
 <!-- use-cases -->
 
 <section id="polyfills" class="appendix informative"></section>
