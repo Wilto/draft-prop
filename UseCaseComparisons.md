@@ -3,7 +3,7 @@ This document is indended to address the use cases addressed by both the `pictur
 ## Viewport Sizes
 Assuming three image “breakpoints” based on maximum widths, using pixel-based values: 400px, 600px, and 800px. The smallest image source has been designated as fallback content.
 
-**`picture` Element*
+**`picture` Element**
 ```
 <picture>
     <source media="max-width: 400px" src="image1.jpg">
@@ -33,6 +33,7 @@ Assuming three image “breakpoints” intended to remain in sync with a media-q
 ```
 
 **Extended `srcset`**
+
 *N/A*
 
 
@@ -50,6 +51,7 @@ Assuming three image “breakpoints” intended to remain in sync with a media-q
 ```
 
 **Extended `srcset`**
+
 *N/A*
 
 Note: the `em` values above could be manually converted to `px` by the author to ensure that the image breakpoints are within a few pixels of the `em`-based layout media queries, resulting in:
@@ -74,6 +76,7 @@ Assuming the author simply wants to preform image source swapping based on a dev
 ```
 
 **Extended `srcset`**
+
 *N/A*
 
 
@@ -118,6 +121,7 @@ Assuming two image sources indended for display on screen depending on window si
 ```
 
 **Extended `srcset`**
+
 *N/A*
 
 
@@ -134,6 +138,7 @@ This is based on the high-contrast mode and ambient light media queries currentl
 ```
 
 **Extended `srcset`**
+
 *N/A*
 
 
@@ -175,5 +180,6 @@ Further discussion: <a href="http://lists.w3.org/Archives/Public/public-html/201
 ```
 
 **Extended `srcset`**
+
 *N/A*
 
