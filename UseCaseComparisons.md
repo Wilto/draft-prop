@@ -62,7 +62,7 @@ Note: the `em` values above could be manually converted to `px` by the author to
 
 While the `em`-based CSS layout will be reevaulated based on user zoom in all modern browsers (see http://blog.cloudfour.com/the-ems-have-it-proportional-media-queries-ftw/ for a description and functional example) and we can assume the same for the `em`-based image breakpoints, the `px`-based image breakpoints will fall out of sync with the layout when the user zooms in or out.
 
-## Portait vs. Landscape Orientation ## ##
+## Portait vs. Landscape Orientation ##
 
 **`picture` Element**
 Assuming the author simply wants to preform image source swapping based on a device’s orientation. This would likely see use in a standalone mobile site catering to specific devices or in a combination web/native app.
@@ -167,6 +167,7 @@ Further discussion: <a href="http://lists.w3.org/Archives/Public/public-html/201
 
 
 ## Potential for addressing new image formats ##
+
 [[ TODO: Summary ]]
 
 **`picture` Element**
