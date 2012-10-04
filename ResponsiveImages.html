@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>The picture element and the srcset attribute</title>
+    <title>The picture element</title>
     <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
     <script src='http://www.w3.org/Tools/respec/respec-w3c-common' class='remove' async></script>
     <script type="text/javascript" class='remove'>
@@ -57,13 +57,13 @@ pre {
     </head>
     <body>
     <section id='abstract'>
-          <p>Through the combination of a new <code>picture</code> element and a new the <code>srcset</code> attribute for the existing <code>source</code> element, this specification adds functionality to HTML that allows authors to list a range of images which may be suitable for a range of device capabilities and different usage scenarios. The ability to adapt content to the constraints and capabilities of devices and different usage scenarios is commonly referred to as &quot;responsive design&quot;.
-        This allows user agents to be more responsive to a wide spectrum of  browsing scenarios, ranging from simple mobile devices to desktop browsers scenarios, when selecting which image resources to download and display for an end-user. This includes, but is not limited to, the selection of images most suited for either high or low density displays and screen resolutions on range of devices, are well as responsive selection of images based on  printer's dpi and color reproduction capabilities.</p>    
+   	  <p>The  <code>picture</code> element is an image whose source content is determined by one or more media queries.</p>
+        <p>Through the combination of a <code>picture</code> element and the  <code>source</code> element, this specification adds functionality to HTML that allows authors to list a range of image sources and associated CSS media queries, which the user agent then displays by matching media queries to the browser's environment.    </p>
     </section>
 
-   <section id="goals">
+   <section id="goals" class="informative">
     <h1>Goals</h1>
-    <p>The overarching goal is to  give  developers a way to provide user agents with sufficient information about each image, and applicable media, so that the user agent can select the most appropriate one for a dynamically changing browsing situations. This includes, but is not limited to, different screen pixel width/height, pixel densities, environmental lighting conditions, and potentially even situations where the network bandwith changes dymamically. By providing a graded set of image sources, UA discretion could similarly apply to situations where the network bandwith changes dymamically. Based on user settings and network latency calculated by the user agent, the UA may have the option of selecting lower density image sources.</p>
+    <p>This specificaiton aims to  provide developers with a means to declare multiple image sources and applicable <cite>CSS Media Queries</cite> [[!CSS3-MEDIAQUERIES]], so that the user agent can select the most appropriate image for a dynamically changing browsing environment. This includes, but is not limited to, different screen pixel width/height, orientation changes, pixel densities, environmental lighting conditions, and even changes in  CSS media type (e.g., going from screen to print).</p>
     <p>In addition, this proposal is being worked on with the following goals in mind:</p>
     <ul>
           <li>Will degrade gracefully on older user agents.</li>
@@ -80,21 +80,20 @@ pre {
 
     
 <section id="sotd">
-      <p>This document was proposed by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a> as a solution to <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384">bug 18384</a>.</p>
+  <p>This document was proposed by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a> as a solution to <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384">bug 18384</a>.</p>
     </section>
 
 
 <section id="conformance">
-      <p>This specification describes the conformance criteria for <dfn title="user agent">user agents</dfn> (relevant to implementors) and <dfn title="document">documents</dfn> (relevant to authors and authoring tool implementors).</p>
-      <p>Implementations that use ECMAScript to expose the APIs defined in this specification MUST implement them in a manner consistent with the ECMAScript Bindings defined in the Web IDL specification [[!WEBIDL]].</p>
+	  <p>This specification has the same <a href="http://dev.w3.org/html5/spec/single-page.html#conformance-requirements">conformance requirements</a> and applies to the same <a href="http://dev.w3.org/html5/spec/single-page.html#conformance-classes">conformance classes</a> as [[!HTML5]]. 
+      
+  <p>Implementations that use ECMAScript to expose the APIs defined in this specification MUST implement them in a manner consistent with the ECMAScript Bindings defined in the [[!WEBIDL]] specification.</p>
     </section>
 <section id="definitions">
-      <h1>Definitions</h1>
+  <h1>Definitions</h1>
       <p>The following terms are used throughout this specification so they are gathered here for the readers convenience. The following list of terms is not exhaustive; other terms are defined throughout this specification.</p>
-      <p>The follow terms are defined by the<cite> </cite>[[!HTML5]] specification: <dfn><a href="http://www.w3.org/TR/html5/the-img-element.html#the-img-element"><code>img</code> element</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/the-source-element.html#the-source-element"><code>source</code> element</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/media-elements.html#media-resource"><code>media</code> resource</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/content-models.html#fallback-content">fallback content</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/urls.html#valid-non-empty-url-potentially-surrounded-by-spaces">valid non-empty URL potentially surrounded by spaces</a></dfn> and <dfn><a href="http://www.w3.org/TR/html5/common-microsyntaxes.html#valid-media-query">valid media query</a></dfn>.</p>
-      <p>The <dfn><a href="http://dev.w3.org/csswg/css4-images/#image-set-notation">image-set notation</a></dfn> microsyntax is defined by the<cite> CSS Image Values and Replaced Content Module Level 4 Specification</cite> [[!CSS4-IMAGES]].</p>
-      <p>The <dfn><a href="http://www.w3.org/TR/html-alt-techniques/#secm1">techniques for providing useful text alternatives for <code>img</code> elements</a></dfn> are defined by the <cite>HTML5: Techniques for providing useful text alternatives</cite> Specification [[!ALT-TECHNIQUES]].</p>
-    </section>
+      <p>The follow terms are defined by the<cite> </cite>[[!HTML5]] specification: <dfn><a href="http://www.w3.org/TR/html5/the-img-element.html#the-img-element"><code>img</code> element</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/the-source-element.html#the-source-element"><code>source</code> element</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/media-elements.html#media-resource"><code>media</code> resource</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/content-models.html#fallback-content">fallback content</a></dfn>, <dfn><a href="http://www.w3.org/TR/html5/urls.html#valid-non-empty-url-potentially-surrounded-by-spaces">valid non-empty URL potentially surrounded by spaces</a></dfn> and <dfn><a href="http://www.w3.org/TR/html5/common-microsyntaxes.html#valid-media-query">valid media query</a></dfn>.    </p>
+</section>
 <section>
       <h1>The <code>picture</code> element</h1>
       <dl>
@@ -128,26 +127,26 @@ HTMLPictureElement : HTMLImageElement{
   </dl>
   <p>The <code><dfn>picture</dfn></code> element used for displaying an image that can come from a range of sources (see <code>srcset</code> attribute). Which image the user agent displays depends on the 
         <a>algorithm for deriving the source image</a>. </p>
-  <p>On getting the <code>media</code> attribute, the user agent MUST return the </p>
+  <p>On getting the <code>media</code> IDL attribute, the user agent MUST return the media query that matches the current environment. </p>
+   <p>It is RECOMMENDED that for cases where a single image source is available, and where no responsive adoption is needed, authors  use the <code>img</code> element. </p></section>
   <p>The <a>chosen image</a> is the embedded content.  </p>
   <p>For user agents that don't support the <code>picture</code> element, an author can provide an <code>img</code> element as <a>fallback content</a>. User agents SHOULD NOT show this content to the user: it is intended for legacy user agents that do not support <code>picture</code>, so that a legacy <code>img</code> element can be shown instead.</p>
       <p>Authoring requirement: as with the <code>img</code> element, documents  must not use the <code>picture</code> element as a layout tool. In particular, picture elements should not be used to display transparent images, as they rarely convey meaning and rarely add anything useful to the document.      </p>
       <section><h2>Example of usage</h2>
       <p>Sample picture element markup:</p>
       <pre class="example">&lt;picture width=&quot;500&quot; height=&quot;500&quot;&gt;
-   &lt;source media="(min-width: 45em)" srcset="large-1.jpg 1x, large-2.jpg 2x"&gt;
- 	&lt;source media="(min-width: 18em)" srcset="med-1.jpg 1x, med-2.jpg 2x"&gt;
- 	&lt;source srcset="small-1.jpg 1x, small-2.jpg 2x"&gt;
+   &lt;source media="(min-width: 45em)" src="large-1.jpg 1x, large-2.jpg 2x"&gt;
+ 	&lt;source media="(min-width: 18em)" src="med-1.jpg 1x, med-2.jpg 2x"&gt;
+ 	&lt;source src="small-1.jpg 1x, small-2.jpg 2x"&gt;
   	&lt;img src="small-1.jpg" alt=""&gt;
    &lt;p&gt;Accessible text&lt;/p&gt;
 &lt;/picture&gt;</pre></section>
       <section>
-    <section><h2>Differences from <code>img</code> element</h2>
+    <section class="informative"><h2>Differences from <code>img</code> element</h2>
     <p>Unlike the <code>img</code> element, which is limited to pointing to a single image resource, the <code>picture</code> element is intended to allow an author to reference many different image sources that the browser can then choose based on a <a>media query</a> or some other relevant browsing situation or constraint. This means that a user agent can best select an image source that is most suitable for available display size, pixel density, or possibly even network bandwidth. Or the most suitable image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: <a>art direction</a> use case). </p>
-    <p>It is RECOMMENDED that for cases where a single image source is available, and where no responsive adoption is needed, authors  use the <code>img</code> element. </p></section>
+   
   </section>
-      <!-- / picture permitted attributes -->
-      
+
       <section>
     <p>When used with the <code>picture</code> element, a <a>document</a> SHOULD only contain <code>source</code> elements need to represent the same subject matter, but cropping and zooming can differ.</p>
     <div class="issue">It should be codified that this is not a mechanism by which to swap disparate images depending on screen size. See bug <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7">18384</a>.</div>
