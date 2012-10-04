@@ -68,7 +68,7 @@ pre {
     <p>This specification aims was developed with the following goals in mind. The following lists the goals and how those goals are met:</p>
     <dl>
           <dt>Will degrade gracefully on older user agents:</dt>
-          <dd>Using the <code>img</code> element, and by relying on [[!HTML]] built in fallback mechnisms, the proposed solution degrades gracefully on legacy user agents. </dd>
+          <dd>Using the <code>img</code> element, and by relying on [[!HTML5]] built in fallback mechnisms, the proposed solution degrades gracefully on legacy user agents. </dd>
           <dt>Can be polyfilled.</dt>
           <dd>Polifills exist and are documented on our <a href="https://github.com/Wilto/draft-prop/wiki/Polyfills,-prototypes,-and-reference-imps">wiki</a>. </dd>
           <dt>Retains, at a minimum, the same level of accessibility as current <code>img</code> element</dt>
@@ -81,7 +81,6 @@ pre {
           <dd>This is achieved through reliance on the <code>source</code> element's <code>media</code> attribute. </dd>
           <dt>Provides a consistent and predictable pattern for delivering alternate media sources based on the browsing environment:</dt>
           <dd>This is achieved through reliance on the <code>source</code> element's <code>media</code> attribute.</dd>
-          <dt>Don't repeat yourself: If the same image is used multiple times on a single page, it would be useful to define the resource selection in a single place in the document and have this affect all instances of the image</dt>
      </dl>
      <h2>Differences from <code>img</code> element</h2>
     <p>Unlike the <code>img</code> element and its <a href="http://dev.w3.org/html5/srcset/"><code>srcset</code> attribute</a>,  the <code>picture</code> element is intended to allow an author to reference many different image sources and associate those image sources with  a media query. The <code>srcset</code> attribute of the <code>img</code> element only allows matching on display dimensions and pixel densities, and the user agent is not required to respect the author's declared desires. </p>
