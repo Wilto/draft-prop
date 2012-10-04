@@ -59,7 +59,7 @@ pre {
     <section id='abstract'>
    	  <p>The  <code>picture</code> element is an image whose source content is determined by one or more media queries.</p>
     <p>This specification aims to  provide developers with a means to declare multiple sources for an image and control, through CSS Media Queries, when those images are to be presented to the user. By using CSS Media Queries, the user agent selects the source for an image which most closely matches the browsing environment. This includes, but is not limited to, different screen pixel width and height, orientation changes, pixel densities, environmental lighting conditions, and even changes in   media type (e.g., going from screen to print).</p>
-        <p>This is achieved through the combination of a the <code>picture</code> element and using  <code>source</code> element as it's children. The picture element remain backwards compatible with older user agents, by degrading gracefully through fallback content (e.g., the img element) and provides better accessiblity than the exisiting <code>img</code> element. </p>
+        <p>This is achieved through the combination of a the <code>picture</code> element and using  <code>source</code> element as it's children. The picture element remain backwards compatible with older user agents, by degrading gracefully through fallback content (e.g., the img element) and provides better accessibility than the existing <code>img</code> element. </p>
     </section>
 
    <section id="goals" class="informative">
@@ -68,14 +68,14 @@ pre {
     <p>This specification aims was developed with the following goals in mind. The following lists the goals and how those goals are met:</p>
     <dl>
           <dt>Will degrade gracefully on older user agents:</dt>
-          <dd>Using the <code>img</code> element, and by relying on [[!HTML5]] built in fallback mechnisms, the proposed solution degrades gracefully on legacy user agents. </dd>
+          <dd>Using the <code>img</code> element, and by relying on [[!HTML5]] built in fallback mechanisms, the proposed solution degrades gracefully on legacy user agents. </dd>
           <dt>Can be polyfilled.</dt>
-          <dd>Polifills exist and are documented on our <a href="https://github.com/Wilto/draft-prop/wiki/Polyfills,-prototypes,-and-reference-imps">wiki</a>. </dd>
+          <dd>Polyfills exist and are documented on our <a href="https://github.com/Wilto/draft-prop/wiki/Polyfills,-prototypes,-and-reference-imps">wiki</a>. </dd>
           <dt>Retains, at a minimum, the same level of accessibility as current <code>img</code> element</dt>
           <dd>TODO: need Steve Faulkner and others to help here. </dd>
           <dt>Adhere to common conventions around for content, markup, behavior, and styling:</dt>
           <dd>Follows conventions set <code>audio</code> and <code>video</code> elements. </dd>
-          <dt>Provides a purely client-side solution that can rely on scripts, but doesn&rsquo;t require it: </dt>
+          <dt>Provides a purely client-side solution that can rely on scripts, but does not require it: </dt>
           <dd>Currently solution is markup based, and  it does not require the use of any server-side technologies to reliably deliver content tailored for the end user’s browsing situation.</dd>
           <dt>Supports use cases where authors need to explicitly define different image versions as opposed to simply different resolutions of the same image:</dt>
           <dd>This is achieved through reliance on the <code>source</code> element's <code>media</code> attribute. </dd>
@@ -292,7 +292,7 @@ HTMLPictureElement : HTMLImageElement{
 
 <section class='appendix'>
       <h1>Open Issues</h1>
-		<p>We are <a href="https://github.com/Wilto/draft-prop/issues">tracking issues</a> on GitHub. Please help us out by filing bugs there! </p>
+		<p>We are <a href="https://github.com/Wilto/draft-prop/issues">tracking issues</a> on Github. Please help us out by filing bugs there! </p>
 		
   <h1>Reference implementations</h1>
   <p>We have a list of <a href="https://github.com/Wilto/draft-prop/wiki/Polyfills,-prototypes,-and-reference-imps">polyfills, prototypes, and reference implementations</a> on GitHub. </p>
