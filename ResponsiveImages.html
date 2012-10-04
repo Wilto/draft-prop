@@ -58,25 +58,35 @@ pre {
     <body>
     <section id='abstract'>
    	  <p>The  <code>picture</code> element is an image whose source content is determined by one or more media queries.</p>
-        <p>Through the combination of a <code>picture</code> element and the  <code>source</code> element, this specification adds functionality to HTML that allows authors to list a range of image sources and associated CSS media queries, which the user agent then displays by matching media queries to the browser's environment.    </p>
+    <p>This specification aims to  provide developers with a means to declare multiple sources for an image and control, through CSS Media Queries, when those images are to be presented to the user. By using CSS Media Queries, the user agent selects the source for an image which most closely matches the browsing environment. This includes, but is not limited to, different screen pixel width and height, orientation changes, pixel densities, environmental lighting conditions, and even changes in   media type (e.g., going from screen to print).</p>
+        <p>This is achieved through the combination of a the <code>picture</code> element and using  <code>source</code> element as it's children. The picture element remain backwards compatible with older user agents, by degrading gracefully through fallback content (e.g., the img element) and provides better accessiblity than the exisiting <code>img</code> element. </p>
     </section>
 
    <section id="goals" class="informative">
     <h1>Goals</h1>
-    <p>This specificaiton aims to  provide developers with a means to declare multiple image sources and applicable <cite>CSS Media Queries</cite> [[!CSS3-MEDIAQUERIES]], so that the user agent can select the most appropriate image for a dynamically changing browsing environment. This includes, but is not limited to, different screen pixel width/height, orientation changes, pixel densities, environmental lighting conditions, and even changes in  CSS media type (e.g., going from screen to print).</p>
-    <p>In addition, this proposal is being worked on with the following goals in mind:</p>
-    <ul>
-          <li>Will degrade gracefully on older user agents.</li>
-          <li>Can be polyfilled.</li>
-          <li>Retains, at a minimum, the same level of accessibility as current <code>img</code> element - and we may even be able to do better! </li>
-          <li>Adhere to common conventions around for content, markup, behavior, and styling.</li>
-          <li>Provides a purely client-side solution that can rely on scripts, but doesn&rsquo;t require it. Similarly, this solution must not require the use of any server-side technologies to reliably deliver content tailored for the end user&rsquo;s browsing situation.</li>
-          <li>Supports use cases where authors need to explicitly define different image versions as opposed to simply different resolutions of the same image.</li>
-          <li>Provides a consistent and predictable pattern for delivering alternate media sources based on client context.</li>
-          <li>Supports succinct but understandable mark-up. </li>
-          <li>Don't repeat yourself: If the same image is used multiple times on a single page, it would be useful to define the resource selection in a single place in the document and have this affect all instances of the image</li>
-     </ul>
-  </section>    
+
+    <p>This specification aims was developed with the following goals in mind. The following lists the goals and how those goals are met:</p>
+    <dl>
+          <dt>Will degrade gracefully on older user agents:</dt>
+          <dd>Using the <code>img</code> element, and by relying on [[!HTML]] built in fallback mechnisms, the proposed solution degrades gracefully on legacy user agents. </dd>
+          <dt>Can be polyfilled.</dt>
+          <dd>Polifills exist and are documented on our <a href="https://github.com/Wilto/draft-prop/wiki/Polyfills,-prototypes,-and-reference-imps">wiki</a>. </dd>
+          <dt>Retains, at a minimum, the same level of accessibility as current <code>img</code> element</dt>
+          <dd>TODO: need Steve Faulkner and others to help here. </dd>
+          <dt>Adhere to common conventions around for content, markup, behavior, and styling:</dt>
+          <dd>Follows conventions set <code>audio</code> and <code>video</code> elements. </dd>
+          <dt>Provides a purely client-side solution that can rely on scripts, but doesn&rsquo;t require it: </dt>
+          <dd>Currently solution is markup based, and  it does not require the use of any server-side technologies to reliably deliver content tailored for the end user’s browsing situation.</dd>
+          <dt>Supports use cases where authors need to explicitly define different image versions as opposed to simply different resolutions of the same image:</dt>
+          <dd>This is achieved through reliance on the <code>source</code> element's <code>media</code> attribute. </dd>
+          <dt>Provides a consistent and predictable pattern for delivering alternate media sources based on the browsing environment:</dt>
+          <dd>This is achieved through reliance on the <code>source</code> element's <code>media</code> attribute.</dd>
+          <dt>Don't repeat yourself: If the same image is used multiple times on a single page, it would be useful to define the resource selection in a single place in the document and have this affect all instances of the image</dt>
+     </dl>
+     <h2>Differences from <code>img</code> element</h2>
+    <p>Unlike the <code>img</code> element and its <a href="http://dev.w3.org/html5/srcset/"><code>srcset</code> attribute</a>,  the <code>picture</code> element is intended to allow an author to reference many different image sources and associate those image sources with  a media query. The <code>srcset</code> attribute of the <code>img</code> element only allows matching on display dimensions and pixel densities, and the user agent is not required to respect the author's declared desires. </p>
+    <p>The browser dynamically updates the displayed image based on the browsing environment. This means that the developer determines the most suitable image for the browsing environment. Or the most suitable image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: <a>art direction</a> use case). </p>
+   </section>    
 
     
 <section id="sotd">
@@ -110,7 +120,7 @@ pre {
     <dd>Zero or one <code>img</code> element, serving as <a>fallback content</a>.</dd>
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-attributes" title="element-dfn-attributes">Content attributes</a>:</dt>
     <dd><a href="http://dev.w3.org/html5/spec/single-page.html#global-attributes">Global attributes</a></dd>
-    <dd><code>crossorigin</code></dd>
+    <dd>&nbsp;</dd>
     <dd><code>width</code></dd>
     <dd><code>height</code></dd>
     
@@ -142,10 +152,6 @@ HTMLPictureElement : HTMLImageElement{
    &lt;p&gt;Accessible text&lt;/p&gt;
 &lt;/picture&gt;</pre></section>
       <section>
-    <section class="informative"><h2>Differences from <code>img</code> element</h2>
-    <p>Unlike the <code>img</code> element, which is limited to pointing to a single image resource, the <code>picture</code> element is intended to allow an author to reference many different image sources that the browser can then choose based on a <a>media query</a> or some other relevant browsing situation or constraint. This means that a user agent can best select an image source that is most suitable for available display size, pixel density, or possibly even network bandwidth. Or the most suitable image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: <a>art direction</a> use case). </p>
-   
-  </section>
 
       <section>
     <p>When used with the <code>picture</code> element, a <a>document</a> SHOULD only contain <code>source</code> elements need to represent the same subject matter, but cropping and zooming can differ.</p>
@@ -157,14 +163,6 @@ HTMLPictureElement : HTMLImageElement{
     </section>
 
 
-    <section>
-    <h1>The <code>srcset</code> attribute </h1>
-    <p>The <dfn><code>srcset</code> attribute</dfn> of the <code>source</code> element is is used to refer to alternate <a>image resource</a> for a single image at different resolutions. The expected value is a <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/embedded-content-1.html#image-candidate-string">image candidate string</a>. </p>
-    <section>
-    <h2>Example</h2>
-    <p>The following is an example of a <code>valid-srcset</code>.</p>
-    <pre class="example">large-1.jpg 1x, large-2.jpg 2x </pre>
-    </section>
     </section>
 
 
@@ -176,8 +174,8 @@ HTMLPictureElement : HTMLImageElement{
 <p>To avoid complexity, the <code>type</code> attribute is all child <code>source</code> elements is ignored in this context. </p>
 <p>So, to derive the <dfn>source image</dfn>: we gather all the media queries from the <code>source</code> elements' <code>media</code> attributes into a &quot;stylesheet&quot;, in document order. Any missing <code>media</code> attributes are just assumed to mean &quot;all&quot;. Any media attributes that are not valid media queries are ignored. So, given the following: </p>
 <pre>&lt;picture id=&quot;pictureElement&quot;&gt;
-<span class="example">   &lt;source media="(min-width: 45em)" srcset="large-1.jpg 1x, large-2.jpg 2x"&gt;
- 	&lt;source media="(min-width: 18em)" srcset="med-1.jpg 1x, med-2.jpg 2x"&gt;
+<span class="example">   &lt;source media="(min-width: 45em)" src="large-1.jpg 1x, large-2.jpg 2x"&gt;
+ 	&lt;source media="(min-width: 18em)" src="med-1.jpg 1x, med-2.jpg 2x"&gt;
    
    &lt;!-- assume media all --&gt; 
  	&lt;source srcset="small-1.jpg 1x, small-2.jpg 2x"&gt;</span>
