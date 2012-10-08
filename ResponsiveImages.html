@@ -63,12 +63,39 @@ pre {
     </head>
     <body>
     <section id='abstract'>
-   	  <p>The  <code>picture</code> element is an image whose source content is determined by one or more CSS media queries.</p>
-    <p>This specification   provides developers with a means to declare multiple sources for an image - and through CSS Media Queries, it gives developers control as to when those images are to be presented to the user. By relying on CSS Media Queries, the user agent &quot;responds&quot;  to the browsing environment to select the image source that most closely matches the browsing environment - thus embodying a technique known as <a href="http://en.wikipedia.org/wiki/Responsive_web_design">responsive web design</a> direclty into HTML markup. Potential media quiries that a browser can respond to include, but are not limited to,  pixel widths and heights, and pixel densities, as well as environmental lighting conditions, changes in orientation, and even changes in   media type (e.g., going from screen to print).</p>
-        <p>This is achieved by introducing a new a  <code>picture</code> element and using  <code>source</code> element as its children. The <code>picture</code> element remain backwards compatible with legacy user agents, by degrading gracefully through fallback content (e.g., the img element) while also providing better accessibility than the existing <code>img</code> element. </p>
+   	  <p>The  <code>picture</code> element is an image whose source content is determined    by one or more CSS media queries.</p> 
     </section>
 
-   <section id="goals" class="informative">
+   <section id="introduction" class="informative">
+	<h1>Introduction</h1>
+    <p>This specification   provides developers with a means to declare multiple sources for an image - and through CSS Media Queries, it gives developers control as to when those images are to be presented to the user. By relying on CSS Media Queries, the user agent &quot;responds&quot;  to the browsing environment to select the image source that most closely matches the browsing environment - thus embodying a technique known as <a href="http://en.wikipedia.org/wiki/Responsive_web_design">responsive web design</a> direclty into HTML markup. Potential media quiries that a browser can respond to include, but are not limited to,  pixel widths and heights, and pixel densities, as well as environmental lighting conditions, changes in orientation, and even changes in   media type (e.g., going from screen to print).</p>
+        <p>This is achieved by introducing a new a  <code>picture</code> element and using  <code>source</code> element as its children. The <code>picture</code> element remain backwards compatible with legacy user agents, by degrading gracefully through fallback content (e.g., the img element) while also providing better accessibility than the existing <code>img</code> element. </p>
+   
+   <section><h2>Example of usage</h2>
+      <p>This first sample shows how to combine the <code>picture</code>: element with the source element, while also providing fallback content for legacy user agents through the <code>img</code> element. </p>
+      <pre class="example">&lt;picture width=&quot;500&quot; height=&quot;500&quot;&gt;
+   &lt;source media="(min-width: 45em)" src="large.jpg"&gt;
+ 	&lt;source media="(min-width: 18em)" src="med.jpg"&gt;
+ 	&lt;source srcset="small.jpg"&gt;
+  	&lt;img src="smal.jpg" alt=""&gt;
+   &lt;p&gt;Accessible text&lt;/p&gt;
+&lt;/picture&gt;
+</pre></section>
+            
+     <div class="issue">
+       <p>The following example assumes we can get the srcset attribute supported on HTML's source element. See <a href="https://github.com/Wilto/draft-prop/issues/64">Issue 64</a>.</p></div>
+     <p>This second example shows :</p>
+      <pre class="example">&lt;picture width=&quot;500&quot; height=&quot;500&quot;&gt;
+   &lt;source media="(min-width: 45em)" srcset="large-1.jpg 1x, large-2.jpg 2x"&gt;
+ 	&lt;source media="(min-width: 18em)" srcset="med-1.jpg 1x, med-2.jpg 2x"&gt;
+ 	&lt;source srcset="small-1.jpg 1x, small-2.jpg 2x"&gt;
+  	&lt;img src="small-1.jpg" alt=""&gt;
+   &lt;p&gt;Accessible text&lt;/p&gt;
+&lt;/picture&gt;</pre></section>
+      <section>
+      
+      
+      
     <h1>Goals</h1>
 
     <p>This specification aims was written to meet the following goals. The following lists the goals and how those goals are met by this, or by depedent, specifications:</p>
@@ -161,20 +188,11 @@ HTMLPictureElement : HTMLImageElement{
   <p>The <a>chosen image</a> is the embedded content.  </p>
   <p>For user agents that don't support the <code>picture</code> element, an author can provide an <code>img</code> element as <a>fallback content</a>. User agents SHOULD NOT show this content to the user: it is intended for legacy user agents that do not support <code>picture</code>, so that a legacy <code>img</code> element can be shown instead.</p>
       <p>Authoring requirement: as with the <code>img</code> element, documents  must not use the <code>picture</code> element as a layout tool. In particular, picture elements should not be used to display transparent images, as they rarely convey meaning and rarely add anything useful to the document.      </p>
-      <section><h2>Example of usage</h2>
-      <p>Sample picture element markup:</p>
-      <pre class="example">&lt;picture width=&quot;500&quot; height=&quot;500&quot;&gt;
-   &lt;source media="(min-width: 45em)" src="large-1.jpg 1x, large-2.jpg 2x"&gt;
- 	&lt;source media="(min-width: 18em)" src="med-1.jpg 1x, med-2.jpg 2x"&gt;
- 	&lt;source src="small-1.jpg 1x, small-2.jpg 2x"&gt;
-  	&lt;img src="small-1.jpg" alt=""&gt;
-   &lt;p&gt;Accessible text&lt;/p&gt;
-&lt;/picture&gt;</pre></section>
-      <section>
+      
 
       <section>
     <p>When used with the <code>picture</code> element, a <a>document</a> SHOULD only contain <code>source</code> elements need to represent the same subject matter, but cropping and zooming can differ.</p>
-    <div class="issue">It should be codified that this is not a mechanism by which to swap disparate images depending on screen size. See bug <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7">18384</a>.</div>
+    <div class="issue"><p>It should be codified that this is not a mechanism by which to swap disparate images depending on screen size. See bug <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7">18384</a>.</p></div>
   </section>
       
 
@@ -193,8 +211,8 @@ HTMLPictureElement : HTMLImageElement{
 <p>To avoid complexity, the <code>type</code> attribute is all child <code>source</code> elements is ignored in this context. </p>
 <p>So, to derive the <dfn>source image</dfn>: we gather all the media queries from the <code>source</code> elements' <code>media</code> attributes into a &quot;stylesheet&quot;, in document order. Any missing <code>media</code> attributes are just assumed to mean &quot;all&quot;. Any media attributes that are not valid media queries are ignored. So, given the following: </p>
 <pre>&lt;picture id=&quot;pictureElement&quot;&gt;
-<span class="example">   &lt;source media="(min-width: 45em)" src="large-1.jpg 1x, large-2.jpg 2x"&gt;
- 	&lt;source media="(min-width: 18em)" src="med-1.jpg 1x, med-2.jpg 2x"&gt;
+<span class="example">   &lt;source media="(min-width: 45em)" srcset="large-1.jpg 1x, large-2.jpg 2x"&gt;
+ 	&lt;source media="(min-width: 18em)" srcset="med-1.jpg 1x, med-2.jpg 2x"&gt;
    
    &lt;!-- assume media all --&gt; 
  	&lt;source srcset="small-1.jpg 1x, small-2.jpg 2x"&gt;</span>
@@ -233,15 +251,6 @@ HTMLPictureElement : HTMLImageElement{
 <p>A user agent MAY  override requests for higher-resolution images based on  user preferences. For example: “always request high-resolution images,” “always request low-resolution images,” and “request high-resolution images as bandwidth permits” based on the bandwidth information available to the browser.</p>
 
     </section>
-<!-- /algorithms -->
-
-
-
-<section id="examples" class="informative">
-    <h1>Examples</h1>
-      <p>TODO: add examples</p>
-    </section>
-<!-- examples -->
 
 <section id="use-cases" class="appendix informative">   
   <h1>Use cases </h1>
