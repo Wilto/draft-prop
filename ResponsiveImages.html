@@ -332,31 +332,21 @@ HTMLPictureElement : HTMLImageElement{
 </section>
 
 <script>
-	window.addEventListener("DOMContentLoaded",	function getGithubIssues() {
-			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "https://api.github.com/repos/Wilto/draft-prop/issues?state=open", true);
-			xhr.onreadystatechange = processResponse; 
-    		xhr.send();
-			
-			function processResponse() {
-				var issues_html, issues;
-				if (this.readyState === 4) {
-					if (this.status >= 200 && this.status < 400) {
-						issues = JSON.parse(xhr.responseText);
-				
-						if (issues && issues.length === 0) {
-							issues_html = '<p>None open. Yay!</p>';
-						} else {
-							for (var i=0; i<issues.length; i++) {
-								issues_html += '<li><a href="' + issues[i]['html_url'] + '">' + issues[i]['title'] + '</a></li>';
-							}	
-							issues_html = '<ul>' + issues_html + '</ul>';
-						}
-						document.getElementById('open-issues-xhr').innerHTML = issues_html;
-					}
-				}
-	    	};
-		}, false);
-	</script>
+function processResponse(obj) {
+    var issues = obj.data, issues_html = '<li>No issues are open. Yay!</li>';
+    if(issues.errors){
+		console.warn("There was a problem getting the issues from github: " + issues.message, issues.errors)	
+		return;
+	}
+	if(issues && issues.length > 0){
+		for (var i = 0, issues_html = ''; i < issues.length; i++) {
+		   issues_html += '<li><a href="' + issues[i]['html_url'] + '">' + issues[i]['title'] + '</a></li>';
+		}
+	}
+	issues_html = '<ul>' + issues_html + '</ul>';
+    document.getElementById('open-issues-xhr').innerHTML = issues_html;
+}
+</script>
+<script src="https://api.github.com/repos/Wilto/draft-prop/issues?state=ff&amp;callback=processResponse"></script>
 </body>
 </html>
