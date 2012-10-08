@@ -112,7 +112,8 @@ a:not([href]) {
       </dd>
       <dt>Retains, at a minimum, the same level of accessibility as current <code>img</code> element:</dt>
       <dd>
-        <p>TODO: need Steve Faulkner and others to help here. </p>
+        <div class="issue">
+          <p class="TODO"><strong>TODO</strong>: need Steve Faulkner and others to confirm we have met this goal. </p></div>
       </dd>
       <dt>Adhere to common conventions around for content, markup, behavior, and styling:</dt>
       <dd>
@@ -134,11 +135,14 @@ a:not([href]) {
   </section>
   <section>
     <h2>Differences from <code>img</code> element</h2>
-    <p>Unlike the <code>img</code> element and its <a href="http://dev.w3.org/html5/srcset/"><code>srcset</code> attribute</a>,  the <code>picture</code> element is intended to allow an author to reference many different image sources and associate those image sources with  a CSS media query [[!CSS3-MEDIAQUERIES]]. The <code>srcset</code> attribute of the <code>img</code> element only allows matching on display dimensions and pixel densities, and the user agent is not required to respect the author's declared desires. </p>
+    <p>Unlike the <code>img</code> element and its current <a href="http://dev.w3.org/html5/srcset/"><code>srcset</code> attribute</a>,  the <code>picture</code> element is intended to allow an author to reference many different image sources and associate those image sources with  a CSS media query [[!CSS3-MEDIAQUERIES]]. The <code>srcset</code> attribute of the <code>img</code> element only allows matching on display dimensions and pixel densities, and the user agent is not required to respect the author's declared desires. </p>
     <p>The browser dynamically updates the displayed image based on the browsing environment. This means that the developer determines the most suitable image for the browsing environment. Or the most suitable image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: <a>art direction</a> use case). </p>
   </section>
 </section>
 <section id="sotd">
+  <div class="note">
+  	<p>This specification is under active development and changing frequently. Please see the list of <a>open issues</a>.</p>
+  </div>
   <p>This document was proposed by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a> as a solution to <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384">bug 18384</a>.</p>
 </section>
 <section id="conformance">
@@ -323,7 +327,7 @@ HTMLPictureElement : HTMLImageElement{
 <!-- appendix --> 
 <section class='appendix'>
   <h1>Open Issues</h1>
-  <p>We are <a href="https://github.com/Wilto/draft-prop/issues">tracking issues</a> on Github. Please help us out by filing bugs there! </p>
+  <p>We are tracking <dfn>open issues</dfn> on Github. <a href="https://github.com/Wilto/draft-prop/issues">Please help close them</a>! </p>
   <div id="open-issues-xhr"></div>
   <h1>Reference implementations</h1>
   <p>We have a list of <a href="https://github.com/Wilto/draft-prop/wiki/Current-users,-polyfills,-prototypes,-and-implementations">current users, polyfills, prototypes, and implementations</a> on Github. </p>
@@ -333,14 +337,15 @@ HTMLPictureElement : HTMLImageElement{
 
 <script>
 function processResponse(obj) {
-    var issues = obj.data, issues_html = '<li>No issues are open. Yay!</li>';
+    var issue, issues = obj.data, issues_html = '<li>No issues are open. Yay!</li>';
     if(issues.errors){
 		console.warn("There was a problem getting the issues from github: " + issues.message, issues.errors)	
 		return;
 	}
 	if(issues && issues.length > 0){
 		for (var i = 0, issues_html = ''; i < issues.length; i++) {
-		   issues_html += '<li><a href="' + issues[i]['html_url'] + '">' + issues[i]['title'] + '</a></li>';
+		   issue = issues[i]; 
+		   issues_html += '<li><a href="' + issue['html_url'] + '">Issue ' + issue['number'] + '</a> - ' +  issue['title']+  '</li>';
 		}
 	}
 	issues_html = '<ul>' + issues_html + '</ul>';
