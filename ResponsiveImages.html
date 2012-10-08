@@ -313,6 +313,7 @@ HTMLPictureElement : HTMLImageElement{
 <section class='appendix'>
       <h1>Open Issues</h1>
 		<p>We are <a href="https://github.com/Wilto/draft-prop/issues">tracking issues</a> on Github. Please help us out by filing bugs there! </p>
+		<div id="open-issues-xhr"></div>
 		
   <h1>Reference implementations</h1>
   <p>We have a list of <a href="https://github.com/Wilto/draft-prop/wiki/Current-users,-polyfills,-prototypes,-and-implementations">current users, polyfills, prototypes, and implementations</a> on Github. </p>
@@ -320,6 +321,28 @@ HTMLPictureElement : HTMLImageElement{
       <p>TODO: add thanks</p>
     </section>
 <!-- appendix -->
+
+	<script>
+		var openIssues = function() {
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "https://api.github.com/repos/Wilto/draft-prop/issues?state=open", false);
+			xhr.send(null);
+			var issues = JSON.parse(xhr.responseText);
+			
+			var issues_html = '';
+			for (var i=0; i<issues.length; i++) {
+				issues_html += '<li><a href="' + issues[i]['html_url'] + '">' + issues[i]['title'] + '</a></li>';
+			}
+			
+			if (issues_html == '') {
+				issues_html = '<p>None</p>';
+			} else {
+				issues_html = '<ul>' + issues_html + '</ul>';
+			}
+
+			document.getElementById('open-issues-xhr').innerHTML = issues_html;
+		}();
+	</script>
 
 </body>
 </html>
