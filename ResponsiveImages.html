@@ -91,8 +91,8 @@ a:not([href]) {
 </section>
 <section id="introduction" class="informative">
   <h1>Introduction</h1>
-  <p>This specification   provides developers with a means to declare multiple sources for an image - and through <cite>CSS Media Queries</cite> ([[!CSS3-MEDIAQUERIES]]), it gives developers control as to when those images are to be presented to the user. By relying on [[!CSS3-MEDIAQUERIES]], the user agent &quot;responds&quot;  to the browsing environment to select the image source that most closely matches the browsing environment - thus embodying a technique known as <a href="http://en.wikipedia.org/wiki/Responsive_web_design">responsive web design</a> directly into HTML markup. Potential media quires that a browser can respond to include, but are not limited to,  pixel widths and heights, and pixel densities, as well as environmental lighting conditions, changes in orientation, and even changes in   media type (e.g., going from screen to print).</p>
-  <p>This is achieved by introducing a new a <code>picture</code> element and using <code>source</code> element as its children. The <code>picture</code> element remain backwards compatible with legacy user agents, by degrading gracefully through fallback content (e.g., the img element) while also providing better accessibility than the existing <code>img</code> element. </p>
+  <p>This specification   provides developers with a means to declare multiple sources for an image, and, through <cite>CSS Media Queries</cite> ([[!CSS3-MEDIAQUERIES]]), it gives developers control as to when those images are to be presented to the user. By relying on [[!CSS3-MEDIAQUERIES]], the user agent &quot;responds&quot;  to the browsing environment to select the image source that most closely matches the browsing environment - thus embodying a technique known as <a href="http://en.wikipedia.org/wiki/Responsive_web_design">responsive web design</a> directly into HTML markup. Potential media quires that a browser can respond to include, but are not limited to,  pixel widths and heights, and pixel densities, as well as environmental lighting conditions, changes in orientation, and even changes in   media type (e.g., going from screen to print).</p>
+  <p>This is achieved by introducing a new  <code>picture</code> element and using <code>source</code> element as its children. The <code>picture</code> element remain backwards compatible with legacy user agents, by degrading gracefully through fallback content (e.g., the img element) while also providing better accessibility than the existing <code>img</code> element. </p>
   <section>
     <h2>Example of usage</h2>
     <p>This first sample shows how to combine the <code>picture</code> element with the source element, while also providing fallback content for legacy user agents through the <code>img</code> element. </p>
@@ -151,6 +151,18 @@ a:not([href]) {
       <dd>
         <p>This is achieved through reliance on the <code>source</code> element's <code>media</code> attribute.</p>
       </dd>
+    </dl>
+  </section>
+  <section>
+    <h2>Problems this specification addresses</h2>
+    <p>The following is the list of problems this specification seeks to address.</p>
+    <dl>
+    <dt>Flexible images reflow:</dt> 
+    <dd><p>There are many different screen sizes that are in common daily usage, ranging from small phones to giant high-definition televisions. A common practice in responsive design is delivering images without height and width attributes and letting the browser resize the image. This technique is commonly called flexible images or fluid images, but is problematic in that it forces the browser to reflow all the content once the intrisic size of the image becomes known.</p></dd>
+    <dt>Reliance on unsemantic elements: </dt>
+    <dd>
+      <p> Large images incur unnecessary download and processing time, slowing the experience for users. To solve this problem, web authors  provide multiple sources of the same image at different resolutions and then pick the correct size image based on the viewport size. This is commonly done for CSS background images in responsive designs, but web authors lack the markup to do so for images in HTML without hacking around a solution. This means that authors end up relying on <code>div</code> or other container elements to achieve the desired design. </p>
+    </dd>
     </dl>
   </section>
   <section>
@@ -262,23 +274,16 @@ HTMLPictureElement : HTMLImageElement{
   </div>
   <p>A user agent MAY  override requests for higher-resolution images based on  user preferences. For example: “always request high-resolution images,” “always request low-resolution images,” and “request high-resolution images as bandwidth permits” based on the bandwidth information available to the browser.</p>
 </section>
+
 <section id="use-cases" class="appendix informative">
   <h1>Use cases </h1>
-  <p>There are many use cases that are supported as listed below. There are two primary use cases:</p>
+  <p> There are two primary use cases:</p>
   <ol>
     <li>The need for different image sources at different viewport sizes in responsive web designs.</li>
     <li>The need for different image sources depending on the pixel density of the display.</li>
   </ol>
-  <p>Most of the more specific use cases fall under one of these two umbrella needs.</p>
-  <section>
-    <h2 class="informative-subhed">Viewport Sizes</h2>
-    <p>There are many different screen sizes that are in common daily usage, ranging from small phones to giant high-definition televisions. This change in how we access the web was the main reason for needing to make responsive websites in the first place.</p>
-    <p>A common practice in responsive design is delivering images without height and width attributes and letting the browser resize the image. This technique is commonly called flexible images or fluid images.</p>
-    <p>However, delivering an image at a size optimized for large displays to a small display is not ideal. Large images incur unnecessary download and processing time, slowing the experience for users.</p>
-    <p>To solve this problem, web authors will provide multiple sources of the same image at different resolutions and then pick the correct size image based on the viewport size. This is commonly done for CSS background images in responsive designs, but web authors lack the tools to do so for images in HTML without the use of JavaScript.</p>
-  </section>
-  <section>
-    <h2 class="informative-subhed">Display Density</h2>
+	<section> 
+    <h2 class="informative-subhed">High Density and High Resolution</h2>
     <p>Since the high-density devices (e.g., Retina&trade; displays on Apple products) came out, the quality of images on the web has changed. Beforehand, even though we had a variety of device sizes, the DPI has always been the same. This is no longer the case and it is very likely that the current resolution/pixel density on Retina&trade; devices will not be the only one.</p>
     <p>We should be ready and able to support the current resolutions as well as any others that manufacturers may use in the future.</p>
   </section>
@@ -316,7 +321,7 @@ HTMLPictureElement : HTMLImageElement{
   <section>
     <h2 class="informative-subhed">User Zoom</h2>
     <p>Images blur when the user resizes the page. Users may zoom an image in order to see more detail. In these cases, user agents could select a higher-resolution version of an image to display.</p>
-    <div class="issue">It's not clear whether the picture element is prescriptive (i.e. the user agent MUST show a particular image given certain device properties) or suggestive (i.e. the user agent has control over picking the best image).</div>
+
   </section>
   <section>
     <h2 class="informative-subhed">Art Direction</h2>
