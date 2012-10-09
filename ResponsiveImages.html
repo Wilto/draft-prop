@@ -63,6 +63,26 @@ a {
 a:not([href]) {
 	color: red
 }
+
+#open-issues-xhr {
+  font-size: .9em;
+}
+#open-issues-xhr li {
+  padding: .25em 0;
+}
+#open-issues-xhr .meta {
+  display: block;
+  font: normal .8em/1 sans-serif;
+  padding: .35em 0 0 0;
+}
+#open-issues-xhr .meta b {
+  font-weight: normal;
+}
+#open-issues-xhr .meta span {
+  display: block;
+  float: left;
+  width: 5.5em;
+}
 </style>
 </head>
 <body>
@@ -79,7 +99,7 @@ a:not([href]) {
     <pre class="example">&lt;picture width=&quot;500&quot; height=&quot;500&quot;&gt;
    &lt;source media="(min-width: 45em)" src="large.jpg"&gt;
  	&lt;source media="(min-width: 18em)" src="med.jpg"&gt;
- 	&lt;source srcset="small.jpg"&gt;
+ 	&lt;source src="small.jpg"&gt;
   	&lt;img src="small.jpg" alt=""&gt;
    &lt;p&gt;Accessible text&lt;/p&gt;
 &lt;/picture&gt;
@@ -213,7 +233,7 @@ HTMLPictureElement : HTMLImageElement{
  	&lt;source srcset="small-1.jpg 1x, small-2.jpg 2x"&gt;</span>
    
    &lt;!-- the following are ignored --&gt;
-<span class="example">   &lt;source media=" is the massage " srcset=&quot;&quot;&gt;
+<span class="example">   &lt;source media=" is the message " srcset=&quot;&quot;&gt;
       </span>
 &lt;/picture&gt;</pre>
     <p>Becomes the rough CSS equivalent of (a virtual stylesheet for the document?):</p>
@@ -344,8 +364,18 @@ function processResponse(obj) {
 	}
 	if(issues && issues.length > 0){
 		for (var i = 0, issues_html = ''; i < issues.length; i++) {
-		   issue = issues[i]; 
-		   issues_html += '<li><a href="' + issue['html_url'] + '">Issue ' + issue['number'] + '</a> - ' +  issue['title']+  '</li>';
+		   var issue = issues[i],
+          labelcount = issue['labels'].length,
+          assigned = issue['assignee'] ? "<b class='meta'><span>Assigned:</span> <a href='" + issue['assignee'].url + "'>" + issue['assignee'].login + "</a></b>" : '',
+          labels = [];
+
+        if( labelcount !== 0 ) {
+          for (var j = 0; j < labelcount; j++) {
+            labels.push( "[ <b style='color: #" + issue['labels'][j].color + "'>" + issue['labels'][j].name + "</b> ]" );
+          }
+        }
+
+		   issues_html += '<li><a href="' + issue['html_url'] + '">Issue ' + issue['number'] + '</a> - ' +  issue['title'] + assigned + ( labelcount ? "<b class='meta'><span>Labels:</span> " + labels.join(" ") + "</b>" : '') + '</li>';
 		}
 	}
 	issues_html = '<ul>' + issues_html + '</ul>';
