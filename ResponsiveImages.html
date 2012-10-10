@@ -92,6 +92,7 @@ a:not([href]) {
 
 <section id="introduction" class="informative">
   <h1>Introduction</h1>
+  <p>With the increasing commodification of high-density screens on  mobile devices, and with a trend towards  increasing screen resolutions, web developers have had to created a range of custom solutions to for serving images that best match a user's browsing enviroment. For a list of examples of the range of techniques in use in 2012, see Chris Coyier's article "<a href="http://css-tricks.com/which-responsive-images-solution-should-you-use/">Which responsive images solution should you use?</a>". </p>
   <p>This specification   provides developers with a means to declare multiple sources for an image, and, through <cite>CSS Media Queries</cite> ([[!CSS3-MEDIAQUERIES]]), it gives developers control as to when those images are to be presented to a user. This is achieved by introducing a new <code>picture</code> element to [[!HTML5]] that makes use of the  <code> source</code> element. The <code>picture</code> element remains backwards compatible with legacy user agents by degrading gracefully through <a>fallback content</a> (i.e., through the <code>img</code> element) while also potentially providing better accessibility than the existing <code>img</code> element. </p>
   <p>By relying on [[!CSS3-MEDIAQUERIES]], a user agent can <em>respond</em> to changes in the browsing environment by selecting the image source that most closely matches the browsing environment - thus embodying a technique known as <a href="http://en.wikipedia.org/wiki/Responsive_web_design">responsive web design</a> directly in the HTML markup. <a href="http://www.w3.org/TR/css3-mediaqueries/#media1">Media features</a> that a user agent can potentially respond to include, but are not limited to,  pixel widths and heights, and pixel densities, as well as environmental lighting conditions, changes in orientation, and  changes in   media type such as going from screen to print. </p>
   <p>This specification also defines the <code>HTMLPictureElement</code> programming interface, which affords developers a set of attributes and methods for interacting with  <code>picture</code> elements through ECMAScript.</p>
@@ -137,7 +138,7 @@ a:not([href]) {
       </dd>
       <dt>Retains, at a minimum, the same level of accessibility as current <code>img</code> element:</dt>
       <dd>
-        <p>By allowing both <a>fallback content</a> within the <code>picture</code> element, authors can provide textual descriptions of text content for images using standard [[!HTML]] markup. This helps overcome some of the limitaitons inherent in the image element's <code>alt</code> attribute, particuarly relating to internationalization. </p> 
+        <p>By allowing both <a>fallback content</a> within the <code>picture</code> element, authors can provide textual descriptions of text content for images using standard [[!HTML]] markup. This helps overcome some of the limitations inherent in the image element's <code>alt</code> attribute, particularly relating to internationalization. </p> 
         
         <div class="issue">
           <p class="TODO"><strong>TODO</strong>: need Steve Faulkner and others to confirm we have met this goal. </p>
@@ -151,9 +152,17 @@ a:not([href]) {
       <dd>
         <p>The picture element, together with the source element, provide a complete solution for meeting the <a>use cases</a>.</p>
       </dd>
-      <dt>Supports  cases where authors need to explicitly define different image versions as opposed to simply different resolutions of the same image:</dt>
+      <dt>Supports  <a>art direction</a>, where authors need to explicitly define different image versions as opposed to simply different resolutions of the same image:</dt>
       <dd>
-        <p>This is achieved through reliance on the <code>source</code> element's <code>media</code> attribute. </p>
+        <p>This is achieved through reliance on the <code>source</code> element's <code>media</code> attribute, for example: </p>
+        <pre>&lt;picture&gt;
+<br>    &lt;!-- Cropped/zoomed to better frame the primary focus of the image on smaller displays. --&gt;
+    &lt;source media=&quot;(min-width: 400px)&quot; src=&quot;image1.jpg&quot;&gt;
+    
+    &lt;!-- Wider crop/zoom, potentially showing supplemental details. --&gt;<br>    &lt;source media=&quot;(min-width: 600px)&quot; src=&quot;image2.jpg&quot;&gt;
+    
+    &lt;!-- fallback content --&gt; <br>    &lt;img src=&quot;image1.jpg&quot; alt=&quot;&quot;&gt;
+    <br>&lt;/picture&gt;</pre>
       </dd>
       <dt>Provides a consistent and predictable pattern for delivering alternate media sources based on the browsing environment:</dt>
       <dd>
@@ -167,9 +176,9 @@ a:not([href]) {
     <dl>
       <dt>Flexible images reflow:</dt>
       <dd>
-        <p>There are many different screen sizes that are in common daily usage, ranging from small phones to giant high-definition televisions. A common practice in responsive design is delivering images without height and width attributes and letting the browser resize the image. This technique is commonly called flexible images or fluid images, but is problematic in that it forces the browser to reflow all the content once the intrisic size of the image becomes known.</p>
+        <p>There are many different screen sizes that are in common daily usage, ranging from small phones to giant high-definition televisions. A common practice in responsive design is delivering images without height and width attributes and letting the browser resize the image. This technique is commonly called flexible images or fluid images, but is problematic in that it forces the browser to reflow all the content once the intrinsic size of the image becomes known.</p>
       </dd>
-      <dt>Reliance on unsemantic elements: </dt>
+      <dt>Reliance on  semantically neutral elements: </dt>
       <dd>
         <p> Large images incur unnecessary download and processing time, slowing the experience for users. To solve this problem, web authors  provide multiple sources of the same image at different resolutions and then pick the correct size image based on the viewport size. This is commonly done for CSS background images in responsive designs, but web authors lack the markup to do so for images in HTML without hacking around a solution. This means that authors end up relying on <code>div</code> or other container elements to achieve the desired design.</p>
       </dd>
@@ -290,16 +299,9 @@ HTMLPictureElement : HTMLImageElement{
 </section>
 <section id="use-cases" class="appendix informative">
   <h1>Use cases and requirements</h1>
-  <p> There are two primary use cases:</p>
-  <ol>
-    <li>The need for different image sources at different viewport sizes in responsive web designs.</li>
-    <li>The need for different image sources depending on the pixel density of the display.</li>
-  </ol>
-  <section>
-    <h2 class="informative-subhed">High Density and High Resolution</h2>
-    <p>Since the high-density devices (e.g., Retina&trade; displays on Apple products) came out, the quality of images on the web has changed. Beforehand, even though we had a variety of device sizes, the DPI has always been the same. This is no longer the case and it is very likely that the current resolution/pixel density on Retina&trade; devices will not be the only one.</p>
-    <p>We should be ready and able to support the current resolutions as well as any others that manufacturers may use in the future.</p>
-  </section>
+  <p> The predominant use case for this specification is as follows: </p>
+  <blockquote><q>To visually communicate effectively, authors  require a means to explicitly control which image, from a set of images, is shown to a user  in response to the <dfn>environmental conditions</dfn> of the user agent. In a [[!HTML5]] user agent, environmental conditions are expressed as CSS media features (e.g., max-width, orientation, etc.) and CSS media types (e.g., print, screen, etc.). Many media features are dynamic in nature, and so developers require the user agent to be responsive to these changes by updating their designs dynamically as a media feature's   property change (e.g.,  as a window is re-sized, a device is rotated from portrait to landscape, etc.)</q>. </blockquote>
+
   <section>
     <h2 class="informative-subhed">Mobile-first and desktop-first responsive design</h2>
     <p>A common approach in sites that cater to a wide range of devices using a single codebase is a “mobile-first” development pattern—starting with a simple, linear layout and increasing layout and functional complexity for larger screen sizes using media queries.</p>
@@ -343,10 +345,15 @@ HTMLPictureElement : HTMLImageElement{
       <li>a website wants to normally show a large image (e.g. of a figure with a broad background) on displays that are big enough.</li>
       <li>when shown on a smaller device, simply shrinking the image may reduce its relevance, usefulness, or legibility, and thus the site may wish to show a different cropping or layout of the same image at the smaller size.</li>
     </ul>
-    <p>Examples: <a href="http://blog.cloudfour.com/a-framework-for-discussing-responsive-images-solutions/#artdirection">Large photo of Obama at a Chrysler plant vs. tighter cropped thumbnail</a></p>
+
+	<figure>
+    <img src="http://cdn.css-tricks.com/wp-content/uploads/2012/05/difimages.jpg" width="922" height="360">
+    <figcaption>Three images cropped differently to suit different screen sizes or PPI, yet all convey the same meaning.</figcaption>
+    </figure>
+	
     <p>A more complex example that changes orientation of the image, crop, and how text flows around an image based on the size of the viewport:</p>
     <ul>
-      <li>On the Nokia Browser site where it describes the <a href="http://browser.nokia.com/smartphones.html">Meego browser</a>, the Nokia Lumia is shown <a href="http://browser.nokia.com/resources/images/home-feature.png">horizontally on wide screens</a>. As the screen narrows, the Nokia Lumia is then shown <a href="http://browser.nokia.com/resources/images/smartphones/choose-meego@320.png">vertically and cropped</a>. Bryan and Stephanie Rieger, the designers of the site, have talked about how on a wide screen, showing the full phone horizontally showed the browser best, but on small screens, changing the img to vertical made more sense because it allowed the reader to still make out the features of the browser in the image.</li>
+      <li>For example, on the Nokia Browser site where it describes the <a href="http://browser.nokia.com/smartphones.html">Meego browser</a>, the Nokia Lumia is shown <a href="http://browser.nokia.com/resources/images/home-feature.png">horizontally on wide screens</a>. As the screen narrows, the Nokia Lumia is then shown <a href="http://browser.nokia.com/resources/images/smartphones/choose-meego@320.png">vertically and cropped</a>. Bryan and Stephanie Rieger, the designers of the site, have talked about how on a wide screen, showing the full phone horizontally showed the browser best, but on small screens, changing the image to vertical made more sense because it allowed the reader to still make out the features of the browser in the image.</li>
     </ul>
   </section>
   <section>
