@@ -63,25 +63,24 @@ a {
 a:not([href]) {
 	color: red
 }
-
 #open-issues-xhr {
-  font-size: .9em;
+	font-size: .9em;
 }
 #open-issues-xhr li {
-  padding: .25em 0;
+	padding: .25em 0;
 }
 #open-issues-xhr .meta {
-  display: block;
-  font: normal .8em/1 sans-serif;
-  padding: .35em 0 0 0;
+	display: block;
+	font: normal .8em/1 sans-serif;
+	padding: .35em 0 0 0;
 }
 #open-issues-xhr .meta b {
-  font-weight: normal;
+	font-weight: normal;
 }
 #open-issues-xhr .meta span {
-  display: block;
-  float: left;
-  width: 5.5em;
+	display: block;
+	float: left;
+	width: 5.5em;
 }
 </style>
 </head>
@@ -91,8 +90,12 @@ a:not([href]) {
 </section>
 <section id="introduction" class="informative">
   <h1>Introduction</h1>
-  <p>This specification   provides developers with a means to declare multiple sources for an image, and, through <cite>CSS Media Queries</cite> ([[!CSS3-MEDIAQUERIES]]), it gives developers control as to when those images are to be presented to the user. By relying on [[!CSS3-MEDIAQUERIES]], the user agent &quot;responds&quot;  to the browsing environment to select the image source that most closely matches the browsing environment - thus embodying a technique known as <a href="http://en.wikipedia.org/wiki/Responsive_web_design">responsive web design</a> directly into HTML markup. Potential media quires that a browser can respond to include, but are not limited to,  pixel widths and heights, and pixel densities, as well as environmental lighting conditions, changes in orientation, and even changes in   media type (e.g., going from screen to print).</p>
-  <p>This is achieved by introducing a new  <code>picture</code> element and using <code>source</code> element as its children. The <code>picture</code> element remain backwards compatible with legacy user agents, by degrading gracefully through fallback content (e.g., the img element) while also providing better accessibility than the existing <code>img</code> element. </p>
+  <p>This specification   provides developers with a means to declare multiple sources for an image, and, through <cite>CSS Media Queries</cite> ([[!CSS3-MEDIAQUERIES]]), it gives developers control as to when those images are to be presented to a user. This is achieved by introducing a new <code>picture</code> element to [[!HTML5]] and relying on the exisitng [[!HTML]]<code> source</code> element as its children. The <code>picture</code> element remains backwards compatible with legacy user agents, by degrading gracefully through <a>fallback content</a> (i.e., through the <code>img</code> element) while also potentially providing better accessibility than the existing <code>img</code> element. </p>
+  <p>By relying on [[!CSS3-MEDIAQUERIES]], the user agent can <em>respond</em> to changes in the browsing environment by selecting the image source that most closely matches the browsing environment - thus embodying a technique known as <a href="http://en.wikipedia.org/wiki/Responsive_web_design">responsive web design</a> directly in the HTML markup. Media queries that a user agent can potentially respond to include, but are not limited to,  pixel widths and heights, and pixel densities, as well as environmental lighting conditions, changes in orientation, and  changes in   media type such as going from screen to print.
+    <section>
+    </section>
+  </p>
+  <p>This specification also defines the <code>HTMLPictureElement</code> programming interface, which affords developers a set of attributes and methods for interacting with  <code>picture</code> elements through script.</p>
   <section>
     <h2>Example of usage</h2>
     <p>This first sample shows how to combine the <code>picture</code> element with the source element, while also providing fallback content for legacy user agents through the <code>img</code> element. </p>
@@ -108,7 +111,7 @@ a:not([href]) {
   <div class="issue">
     <p>The following example assumes we can get <a href="http://dev.w3.org/html5/srcset/">the <code>srcset</code> attribute</a> supported on HTML's <code>source</code> element. See <a href="https://github.com/Wilto/draft-prop/issues/64">issue 64</a>.</p>
   </div>
-  <p>This second example shows how the <code>picture</code> element can use used with <a href="http://dev.w3.org/html5/srcset/">the <code>srcset</code> attribute</a> to provide a range of sources suitable for a given media query:</p>
+  <p>This second example shows how the <code>picture</code> element can be used with <a href="http://dev.w3.org/html5/srcset/">the <code>srcset</code> attribute</a> to provide a range of sources suitable for a given media query:</p>
   <pre class="example">&lt;picture width=&quot;500&quot; height=&quot;500&quot;&gt;
    &lt;source media="(min-width: 45em)" srcset="large-1.jpg 1x, large-2.jpg 2x"&gt;
  	&lt;source media="(min-width: 18em)" srcset="med-1.jpg 1x, med-2.jpg 2x"&gt;
@@ -120,7 +123,7 @@ a:not([href]) {
 <section>
   <section>
     <h2>Goals</h2>
-    <p>This specification aims was written to meet the following goals. The following lists the goals and how those goals are met by this, or by dependent, specifications:</p>
+    <p>This specification aims was written to meet the following goals. The following also describes how those goals are met:</p>
     <dl>
       <dt>Will degrade gracefully on older user agents:</dt>
       <dd>
@@ -133,7 +136,8 @@ a:not([href]) {
       <dt>Retains, at a minimum, the same level of accessibility as current <code>img</code> element:</dt>
       <dd>
         <div class="issue">
-          <p class="TODO"><strong>TODO</strong>: need Steve Faulkner and others to confirm we have met this goal. </p></div>
+          <p class="TODO"><strong>TODO</strong>: need Steve Faulkner and others to confirm we have met this goal. </p>
+        </div>
       </dd>
       <dt>Adhere to common conventions around for content, markup, behavior, and styling:</dt>
       <dd>
@@ -157,12 +161,18 @@ a:not([href]) {
     <h2>Problems this specification addresses</h2>
     <p>The following is the list of problems this specification seeks to address.</p>
     <dl>
-    <dt>Flexible images reflow:</dt> 
-    <dd><p>There are many different screen sizes that are in common daily usage, ranging from small phones to giant high-definition televisions. A common practice in responsive design is delivering images without height and width attributes and letting the browser resize the image. This technique is commonly called flexible images or fluid images, but is problematic in that it forces the browser to reflow all the content once the intrisic size of the image becomes known.</p></dd>
-    <dt>Reliance on unsemantic elements: </dt>
-    <dd>
-      <p> Large images incur unnecessary download and processing time, slowing the experience for users. To solve this problem, web authors  provide multiple sources of the same image at different resolutions and then pick the correct size image based on the viewport size. This is commonly done for CSS background images in responsive designs, but web authors lack the markup to do so for images in HTML without hacking around a solution. This means that authors end up relying on <code>div</code> or other container elements to achieve the desired design. </p>
-    </dd>
+      <dt>Flexible images reflow:</dt>
+      <dd>
+        <p>There are many different screen sizes that are in common daily usage, ranging from small phones to giant high-definition televisions. A common practice in responsive design is delivering images without height and width attributes and letting the browser resize the image. This technique is commonly called flexible images or fluid images, but is problematic in that it forces the browser to reflow all the content once the intrisic size of the image becomes known.</p>
+      </dd>
+      <dt>Reliance on unsemantic elements: </dt>
+      <dd>
+        <p> Large images incur unnecessary download and processing time, slowing the experience for users. To solve this problem, web authors  provide multiple sources of the same image at different resolutions and then pick the correct size image based on the viewport size. This is commonly done for CSS background images in responsive designs, but web authors lack the markup to do so for images in HTML without hacking around a solution. This means that authors end up relying on <code>div</code> or other container elements to achieve the desired design.</p>
+      </dd>
+      <dt>Reliance on scripts and server side solutions: </dt>
+      <dd>
+        <p>Current solutions to this &quot;responsive images&quot; problem rely on either JavaScript or </p>
+      </dd>
     </dl>
   </section>
   <section>
@@ -173,7 +183,7 @@ a:not([href]) {
 </section>
 <section id="sotd">
   <div class="note">
-  	<p>This specification is under active development and changing frequently. Please see the list of <a>open issues</a>.</p>
+    <p>This specification is under active development and changing frequently. Please see the list of <a>open issues</a>.</p>
   </div>
   <p>This document was proposed by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a> as a solution to <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384">bug 18384</a>.</p>
 </section>
@@ -202,7 +212,6 @@ a:not([href]) {
     <dd>Zero or one <code>img</code> element, serving as <a>fallback content</a>.</dd>
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-attributes" title="element-dfn-attributes">Content attributes</a>:</dt>
     <dd><a href="http://dev.w3.org/html5/spec/single-page.html#global-attributes">Global attributes</a></dd>
-
     <dd><code>width</code></dd>
     <dd><code>height</code></dd>
     <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-dom" title="element-dfn-dom">DOM interface</a>:</dt>
@@ -274,7 +283,6 @@ HTMLPictureElement : HTMLImageElement{
   </div>
   <p>A user agent MAY  override requests for higher-resolution images based on  user preferences. For example: “always request high-resolution images,” “always request low-resolution images,” and “request high-resolution images as bandwidth permits” based on the bandwidth information available to the browser.</p>
 </section>
-
 <section id="use-cases" class="appendix informative">
   <h1>Use cases </h1>
   <p> There are two primary use cases:</p>
@@ -282,7 +290,7 @@ HTMLPictureElement : HTMLImageElement{
     <li>The need for different image sources at different viewport sizes in responsive web designs.</li>
     <li>The need for different image sources depending on the pixel density of the display.</li>
   </ol>
-	<section> 
+  <section>
     <h2 class="informative-subhed">High Density and High Resolution</h2>
     <p>Since the high-density devices (e.g., Retina&trade; displays on Apple products) came out, the quality of images on the web has changed. Beforehand, even though we had a variety of device sizes, the DPI has always been the same. This is no longer the case and it is very likely that the current resolution/pixel density on Retina&trade; devices will not be the only one.</p>
     <p>We should be ready and able to support the current resolutions as well as any others that manufacturers may use in the future.</p>
@@ -321,7 +329,6 @@ HTMLPictureElement : HTMLImageElement{
   <section>
     <h2 class="informative-subhed">User Zoom</h2>
     <p>Images blur when the user resizes the page. Users may zoom an image in order to see more detail. In these cases, user agents could select a higher-resolution version of an image to display.</p>
-
   </section>
   <section>
     <h2 class="informative-subhed">Art Direction</h2>
@@ -349,7 +356,7 @@ HTMLPictureElement : HTMLImageElement{
   </section>
 </section>
 
-<!-- appendix --> 
+<!-- appendix -->
 <section class='appendix'>
   <h1>Open Issues</h1>
   <p>We are tracking <dfn>open issues</dfn> on Github. <a href="https://github.com/Wilto/draft-prop/issues">Please help close them</a>! </p>
@@ -359,7 +366,6 @@ HTMLPictureElement : HTMLImageElement{
   <h1>Acknowledgements</h1>
   <p>TODO: add thanks</p>
 </section>
-
 <script>
 function processResponse(obj) {
     var issue, issues = obj.data, issues_html = '<li>No issues are open. Yay!</li>';
@@ -386,7 +392,7 @@ function processResponse(obj) {
 	issues_html = '<ul>' + issues_html + '</ul>';
     document.getElementById('open-issues-xhr').innerHTML = issues_html;
 }
-</script>
+</script> 
 <script src="https://api.github.com/repos/Wilto/draft-prop/issues?state=open&amp;callback=processResponse"></script>
 </body>
 </html>
