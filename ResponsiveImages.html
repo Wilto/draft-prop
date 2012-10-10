@@ -85,17 +85,19 @@ a:not([href]) {
 </style>
 </head>
 <body>
+
 <section id='abstract'>
   <p>The <code>picture</code> element is an image whose source content is determined    by one or more CSS media queries.</p>
 </section>
+
 <section id="introduction" class="informative">
   <h1>Introduction</h1>
-  <p>This specification   provides developers with a means to declare multiple sources for an image, and, through <cite>CSS Media Queries</cite> ([[!CSS3-MEDIAQUERIES]]), it gives developers control as to when those images are to be presented to a user. This is achieved by introducing a new <code>picture</code> element to [[!HTML5]] and relying on the exisitng [[!HTML]]<code> source</code> element as its children. The <code>picture</code> element remains backwards compatible with legacy user agents, by degrading gracefully through <a>fallback content</a> (i.e., through the <code>img</code> element) while also potentially providing better accessibility than the existing <code>img</code> element. </p>
-  <p>By relying on [[!CSS3-MEDIAQUERIES]], the user agent can <em>respond</em> to changes in the browsing environment by selecting the image source that most closely matches the browsing environment - thus embodying a technique known as <a href="http://en.wikipedia.org/wiki/Responsive_web_design">responsive web design</a> directly in the HTML markup. Media queries that a user agent can potentially respond to include, but are not limited to,  pixel widths and heights, and pixel densities, as well as environmental lighting conditions, changes in orientation, and  changes in   media type such as going from screen to print.
-    <section>
-    </section>
+  <p>This specification   provides developers with a means to declare multiple sources for an image, and, through <cite>CSS Media Queries</cite> ([[!CSS3-MEDIAQUERIES]]), it gives developers control as to when those images are to be presented to a user. This is achieved by introducing a new <code>picture</code> element to [[!HTML5]] and relying on the exisitng [[!HTML]]<code> source</code> element as its children. The <code>picture</code> element remains backwards compatible with legacy user agents by degrading gracefully through <a>fallback content</a> (i.e., through the <code>img</code> element) while also potentially providing better accessibility than the existing <code>img</code> element. </p>
+  <p>By relying on [[!CSS3-MEDIAQUERIES]], a user agent can <em>respond</em> to changes in the browsing environment by selecting the image source that most closely matches the browsing environment - thus embodying a technique known as <a href="http://en.wikipedia.org/wiki/Responsive_web_design">responsive web design</a> directly in the HTML markup. Media queries that a user agent can potentially respond to include, but are not limited to,  pixel widths and heights, and pixel densities, as well as environmental lighting conditions, changes in orientation, and  changes in   media type such as going from screen to print.
   </p>
-  <p>This specification also defines the <code>HTMLPictureElement</code> programming interface, which affords developers a set of attributes and methods for interacting with  <code>picture</code> elements through script.</p>
+  <p>This specification also defines the <code>HTMLPictureElement</code> programming interface, which affords developers a set of attributes and methods for interacting with  <code>picture</code> elements through ECMAScript.</p>
+  
+  
   <section>
     <h2>Example of usage</h2>
     <p>This first sample shows how to combine the <code>picture</code> element with the source element, while also providing fallback content for legacy user agents through the <code>img</code> element. </p>
@@ -107,10 +109,11 @@ a:not([href]) {
    &lt;p&gt;Accessible text&lt;/p&gt;
 &lt;/picture&gt;
 </pre>
-  </section>
+  
   <div class="issue">
     <p>The following example assumes we can get <a href="http://dev.w3.org/html5/srcset/">the <code>srcset</code> attribute</a> supported on HTML's <code>source</code> element. See <a href="https://github.com/Wilto/draft-prop/issues/64">issue 64</a>.</p>
   </div>
+  
   <p>This second example shows how the <code>picture</code> element can be used with <a href="http://dev.w3.org/html5/srcset/">the <code>srcset</code> attribute</a> to provide a range of sources suitable for a given media query:</p>
   <pre class="example">&lt;picture width=&quot;500&quot; height=&quot;500&quot;&gt;
    &lt;source media="(min-width: 45em)" srcset="large-1.jpg 1x, large-2.jpg 2x"&gt;
@@ -120,10 +123,10 @@ a:not([href]) {
    &lt;p&gt;Accessible text&lt;/p&gt;
 &lt;/picture&gt;</pre>
 </section>
-<section>
-  <section>
+
+ <section>
     <h2>Goals</h2>
-    <p>This specification aims was written to meet the following goals. The following also describes how those goals are met:</p>
+    <p>This specification aims to meet the following goals. The following also describes how those goals are met:</p>
     <dl>
       <dt>Will degrade gracefully on older user agents:</dt>
       <dd>
@@ -135,6 +138,8 @@ a:not([href]) {
       </dd>
       <dt>Retains, at a minimum, the same level of accessibility as current <code>img</code> element:</dt>
       <dd>
+        <p>By allowing both <a>fallback content</a> within the <code>picture</code> element, authors can provide textual descriptions of text content for images using standard [[!HTML]] markup. This helps overcome some of the limitaitons inherent in the image element's <code>alt</code> attribute, particuarly relating to internationalization. </p> 
+        
         <div class="issue">
           <p class="TODO"><strong>TODO</strong>: need Steve Faulkner and others to confirm we have met this goal. </p>
         </div>
@@ -181,6 +186,7 @@ a:not([href]) {
     <p>The browser dynamically updates the displayed image based on the browsing environment. This means that the developer determines the most suitable image for the browsing environment. Or the most suitable image source may be a different version of an image that has been modified by the author to be suitable for a particular use (see: <a>art direction</a> use case). </p>
   </section>
 </section>
+
 <section id="sotd">
   <div class="note">
     <p>This specification is under active development and changing frequently. Please see the list of <a>open issues</a>.</p>
@@ -284,7 +290,7 @@ HTMLPictureElement : HTMLImageElement{
   <p>A user agent MAY  override requests for higher-resolution images based on  user preferences. For example: “always request high-resolution images,” “always request low-resolution images,” and “request high-resolution images as bandwidth permits” based on the bandwidth information available to the browser.</p>
 </section>
 <section id="use-cases" class="appendix informative">
-  <h1>Use cases </h1>
+  <h1>Use cases and requirements</h1>
   <p> There are two primary use cases:</p>
   <ol>
     <li>The need for different image sources at different viewport sizes in responsive web designs.</li>
@@ -332,7 +338,7 @@ HTMLPictureElement : HTMLImageElement{
   </section>
   <section>
     <h2 class="informative-subhed">Art Direction</h2>
-    <p>Web authors often want to provide different versions of the same image at different sizes depending on the viewport. We refer to this as the <dfn>a rt direction</dfn> use case.</p>
+    <p>Web authors often want to provide different versions of the same image at different sizes depending on the viewport. We refer to this as the <dfn>art direction</dfn> use case.</p>
     <p>A simple example of this would be changing the crop of an image based on display area:</p>
     <ul>
       <li>a website wants to normally show a large image (e.g. of a figure with a broad background) on displays that are big enough.</li>
@@ -368,28 +374,28 @@ HTMLPictureElement : HTMLImageElement{
 </section>
 <script>
 function processResponse(obj) {
-    var issue, issues = obj.data, issues_html = '<li>No issues are open. Yay!</li>';
-    if(issues.errors){
-		console.warn("There was a problem getting the issues from github: " + issues.message, issues.errors)	
-		return;
-	}
-	if(issues && issues.length > 0){
-		for (var i = 0, issues_html = ''; i < issues.length; i++) {
-		   var issue = issues[i],
-          labelcount = issue['labels'].length,
-          assigned = issue['assignee'] ? "<b class='meta'><span>Assigned:</span> <a href='" + issue['assignee'].url + "'>" + issue['assignee'].login + "</a></b>" : '',
-          labels = [];
-
-        if( labelcount !== 0 ) {
-          for (var j = 0; j < labelcount; j++) {
-            labels.push( "[ <b style='color: #" + issue['labels'][j].color + "'>" + issue['labels'][j].name + "</b> ]" );
-          }
+	"use strict"; 
+    var issue, issues = obj.data,
+        issues_html = '<li>No issues are open. Yay!</li>';
+    if (issues.errors) {
+        console.warn("There was a problem getting the issues from github: " + issues.message, issues.errors)
+        return;
+    }
+    if (issues && issues.length > 0) {
+        for (var i = 0, issues_html = ''; i < issues.length; i++) {
+            var issue = issues[i],
+                labelcount = issue['labels'].length,
+                assigned = issue['assignee'] ? "<b class='meta'><span>Assigned:</span> <a href='" + issue['assignee'].url + "'>" + issue['assignee'].login + "</a></b>" : '',
+                labels = [];
+            if (labelcount !== 0) {
+                for (var j = 0; j < labelcount; j++) {
+                    labels.push("[ <b style='color: #" + issue['labels'][j].color + "'>" + issue['labels'][j].name + "</b> ]");
+                }
+            }
+            issues_html += '<li><a href="' + issue['html_url'] + '">Issue ' + issue['number'] + '</a> - ' + issue['title'] + assigned + (labelcount ? "<b class='meta'><span>Labels:</span> " + labels.join(" ") + "</b>" : '') + '</li>';
         }
-
-		   issues_html += '<li><a href="' + issue['html_url'] + '">Issue ' + issue['number'] + '</a> - ' +  issue['title'] + assigned + ( labelcount ? "<b class='meta'><span>Labels:</span> " + labels.join(" ") + "</b>" : '') + '</li>';
-		}
-	}
-	issues_html = '<ul>' + issues_html + '</ul>';
+    }
+    issues_html = '<ul>' + issues_html + '</ul>';
     document.getElementById('open-issues-xhr').innerHTML = issues_html;
 }
 </script> 
