@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>The picture element</title>
+<title>The picture element: An HTML extension for responsive images</title>
 <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
 <script src='http://www.w3.org/Tools/respec/respec-w3c-common' class='remove' async></script>
 <script type="text/javascript" class='remove'>
@@ -125,24 +125,7 @@ a:not([href]) {
 </section>
 
  
-  <section>
-    <h2>Problems this specification addresses</h2>
-    <p>The following is the list of problems this specification seeks to address.</p>
-    <dl>
-      <dt>Flexible images reflow:</dt>
-      <dd>
-        <p>There are many different screen sizes that are in common daily usage, ranging from small phones to giant high-definition televisions. A common practice in responsive design is delivering images without height and width attributes and letting the browser resize the image. This technique is commonly called flexible images or fluid images, but is problematic in that it forces the browser to reflow all the content once the intrinsic size of the image becomes known.</p>
-      </dd>
-      <dt>Reliance on  semantically neutral elements: </dt>
-      <dd>
-        <p> Large images incur unnecessary download and processing time, slowing the experience for users. To solve this problem, web authors  provide multiple sources of the same image at different resolutions and then pick the correct size image based on the viewport size. This is commonly done for CSS background images in responsive designs, but web authors lack the markup to do so for images in HTML without hacking around a solution. This means that authors end up relying on <code>div</code> or other container elements to achieve the desired design.</p>
-      </dd>
-      <dt>Reliance on scripts and server side solutions: </dt>
-      <dd>
-        <p>Current solutions to this &quot;responsive images&quot; problem rely on either JavaScript or </p>
-      </dd>
-    </dl>
-  </section>
+
   <section>
     <h2>Differences from <code>img</code> element</h2>
     <p>Unlike the <code>img</code> element and its current <a href="http://dev.w3.org/html5/srcset/"><code>srcset</code> attribute</a>,  the <code>picture</code> element is intended to allow an author to reference many different image sources and associate those image sources with  a CSS media query [[!CSS3-MEDIAQUERIES]]. The <code>srcset</code> attribute of the <code>img</code> element only allows matching on display dimensions and pixel densities, and the user agent is not required to respect the author's declared desires. </p>
@@ -252,89 +235,13 @@ HTMLPictureElement : HTMLImageElement{
   </div>
   <p>A user agent MAY  override requests for higher-resolution images based on  user preferences. For example: “always request high-resolution images,” “always request low-resolution images,” and “request high-resolution images as bandwidth permits” based on the bandwidth information available to the browser.</p>
 </section>
-<section id="use-cases" class="appendix informative">
-  <h1>Use cases and Requirements</h1>
-  <p> The predominant use case for this specification is as follows: </p>
-  <blockquote><q>To visually communicate effectively, authors  require a means to explicitly control which image, from a set of images, is shown to a user  in response to the <dfn>environmental conditions</dfn> of the user agent. In a [[!HTML5]] user agent, environmental conditions are expressed as CSS media features (e.g., max-width, orientation, monochrome, etc.) and CSS media types (e.g., print, screen, etc.). </q><q>Many media features are dynamic in nature (e.g.,  a browser window is re-sized, a device is rotated from portrait to landscape, and so on), thus a user agent constantly responds to events that cause the properties of media features to change</q>. In certain situations, these changes in  media featues and media type affect the ability for images to communicate effectively (e.g., they become blury or pixelated) hence impacting on an image's ability to communicate as the author intended. </blockquote>
-
- 
-	<p>The solution MUST afford authors the ability to match image sources with particular media features and/or media types - and have the user agent update the source of an image as the media features and media types of the browser environment change dynamically over time. 
-  <dt>The proposed solution MUST degrade gracefully on legacy user agents by, for example, falling back on the <code>img</code> element and by relying on [[!HTML5]] built-in fallback mechanisms. </p>
-      
-    <p>To provide compatibility with legacy user agents, it MUST be possible for the solution to be polyfilled. Polyfills exist and are documented on our <a href="https://github.com/Wilto/draft-prop/wiki/Polyfills,-prototypes,-and-reference-imps">wiki</a>. </p>
-
-        <p>By allowing both <a>fallback content</a> within the <code>picture</code> element, the solution MUST allow authors to provide textual descriptions of text content for images using  [[!HTML]] markup. This helps overcome some of the limitations inherent in the image element's <code>alt</code> attribute, particularly relating to internationalization.</p> 
-
-       <p>The solution MUST adhere to akin solutions already in [[!HTML5]], such as those used by <code>audio</code> and <code>video</code> elements.</p>
-      
-      <p>The solution MUST NOT require any server-side processing. </p>
-      <p>The solution MUST afford authors the ability to explicitly define different image versions as opposed to simply different resolutions of the same image.</p>
-       
-       <p>The solution MUST provide developers with a means to programmatically interface with the diplayed image, as well as access relavant properties and hook into relevant events (e.g., loading).</p>
-   
-    <p>The following use cases provide a set of specific requirements based on current Web design practices. </p>
-   
-   <section>
-    <h2 class="informative-subhed">Mobile-first and desktop-first responsive design</h2>
-    <p>A common approach in sites that cater to a wide range of devices using a single codebase is a “mobile-first” development pattern—starting with a simple, linear layout and increasing layout and functional complexity for larger screen sizes using media queries. “Desktop-first” responsive design takes the opposite approach and starts from the desktop design and simplifies it using media queries to support small displays. Authors retrofitting existing sites often take a desktop-first approach out of necessity because changing to a mobile-first approach would be a significant undertaking.</p>
-<p>The solution MUST afford authors  the ability to define fallback image as the smallest image (mobile first) or the largest image (desktop first).</p>
-<p> The solution MUST afford authors  the ability to  define the breakpoints for images as either minimum values (mobile first) or maximum values (desktop first) to match the media queries used in their design.</p>
-  </section>
   
-  <section>
-    <h2 class="informative-subhed">Relative Units</h2>
-    <p>A common practice in creating flexible layouts is to specify the size values in media queries as relative units: <code>em</code>, <code>rem</code>, <code>vw</code>/<code>vh</code> etc. See, for example, Lyza Gardner's article <a href="http://blog.cloudfour.com/the-ems-have-it-proportional-media-queries-ftw/">The EMs have it: Proportional Media Queries FTW!</a>. This approachmost commonly seen using <code>em</code>s in order to reflow layouts based on users’ zoom preferences, or to resize elements through JavaScript by dynamically altering a font-size value. </p>
-    <p>The solution MUST function in such a way that is is responsive to enviromental changes in relative units (e.g., when the user increases the base font size of the browser by pressing <kbd>ctrl+</kbd> or <kbd>ctrl-</kbd>).</p>
-  </section>
-  <section>
-    <h2 class="informative-subhed">Matching image source breakpoints to design breakpoints</h2>
-    <p>Web authors would like to be able to optionally match the breakpoints for images to the breakpoints that they have defined in their responsive designs. Being able to match the breakpoints ensures that images are operating under the same rules that define the layout. It also helps authors verify their approach by ensuring that the same viewport measurement tests are being used in both HTML and CSS.</p>
-    <p> If a breakpoint in the design is defined as:</p>
-    <p><code>@media screen (max-width: 41em) {}</code></p>
-    <p>Then web authors would like to be able to define a similar breakpoint for images at a max-width of 41em and not have to translate that measurement into another unit like pixels even if it is possible to calculate that measurement:</p>
-    <ul>
-      <li>The default font size in most browsers is 16 pixels. So 41em can be calculated to be 41 * 16 = 656 pixels. Calculating this for every breakpoint, while possible, would be tedious and potentially error-prone for authors.</li>
-      <li>Unless the image break points support both max and min values, then the image breakpoint will need to be further modified from the layout breakpoint that it was derived from. For example, if the image format only supports minimum width tests, then instead of using a maximum width of 656 pixels, the document author would need to specify 657 pixels as a minimum width for the breakpoint.</li>
-    </ul>
-    <p>When debugging a document, if the author cannot specify breakpoints for images in the same manner that they are defined for the design, authors will need to convert the breakpoints back to the values specified in the layout in order to verify that they match. This increases authoring time and the likelihood that math errors on the part of authors (possibly due to a different rounding scheme in a particular user agent) cause unexpected behavior.</p>
-  </section>
-
-
-  <section>
-    <h2 class="informative-subhed">Art Direction</h2>
-    <p>Web authors often want to provide different versions of the same image at different sizes depending on the viewport. We refer to this as the <dfn>art direction</dfn> use case. A simple example of this would be changing the crop of an image based on display area:</p>
-    <ul>
-      <li>a website wants to normally show a large image (e.g. of a figure with a broad background) on displays that are big enough.</li>
-      <li>when shown on a smaller device, simply shrinking the image may reduce its relevance, usefulness, or legibility, and thus the site may wish to show a different cropping or layout of the same image at the smaller size.</li>
-  </ul>
-
-	<figure>
-    <img src="http://cdn.css-tricks.com/wp-content/uploads/2012/05/difimages.jpg" width="922" height="360">
-    <figcaption>Three images cropped differently to suit different screen sizes or PPI, yet all convey the same meaning.</figcaption>
-    </figure>
-	
-    <p>Another use case is one where orientation determines the source of the image, the crop, and how text flows around an image based on the size of the viewport. For example, on the Nokia Browser site where it describes the <a href="http://browser.nokia.com/smartphones.html">Meego browser</a>, the Nokia Lumia is shown <a href="http://browser.nokia.com/resources/images/home-feature.png">horizontally on wide screens</a>. As the screen narrows, the Nokia Lumia is then shown <a href="http://browser.nokia.com/resources/images/smartphones/choose-meego@320.png">vertically and cropped</a>. Bryan and Stephanie Rieger, the designers of the site, have talked about how on a wide screen, showing the full phone horizontally showed the browser best, but on small screens, changing the image to vertical made more sense because it allowed the reader to still make out the features of the browser in the image.</p>
-</section>
-  <section>
-    <h2 class="informative-subhed">Alternate Media Sources</h2>
-    <p>Printed web documents generally have pixelated images due to printers having a higher DPI than most images currently served on the web. According to <cite>Wikipedia's</cite> article on "<a href="http://en.wikipedia.org/wiki/Dots_per_inch">Dots per inch</a>": </p>
-    <blockquote><p>&quot;An inkjet printer sprays ink through tiny nozzles, and is typically capable of 300-600 DPI. A laser printer applies toner through a controlled electrostatic charge, and may be in the range of 600 to 1,800 DPI.&quot;</p></blockquote>
-    <p>Defining higher resolution images for printing would increase the abilities of web authors to define  printed versions of their documents. For example, a photo sharing site could provide a bandwidth-optimized image for display on screen, but a high-resolution image for print.</p>
-    <p>The solution MUST  be responsive to changes in type of media. </p>
-  </section>
-  <section>
-    <h2 class="informative-subhed">Gray Scale and High Contrast Modes</h2>
-    <p>For monochrome eInk devices, displaying a color image on a monochrome is not always ideal. This is because two different colors of similar luminosity would be impossible to distinguish on a monochrome display.</p>
-    <p>The solution MUST be able to respond to media features. </p>
-    <p>Microsoft is proposing a media query which lets you <a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh465764.aspx">detect that the user agent has been put in high contrast mode</a> (for accessibility reasons), and that the content should follow along. </p>
-    <p></p>
-  </section>
 </section>
 
 <!-- appendix -->
 <section class='appendix'>
   <h1>Open Issues</h1>
-  <p>We are tracking <dfn>open issues</dfn> on Github. <a href="https://github.com/Wilto/draft-prop/issues">Please help close them</a>! </p>
+  <p>We are tracking <dfn>open issues</dfn> on Github. <a href="https://github.com/ResponsiveImagesCG/picture-element/issues">Please help close them</a>! </p>
   <div id="open-issues-xhr"></div>
   <h1>Reference implementations</h1>
   <p>We have a list of <a href="https://github.com/Wilto/draft-prop/wiki/Current-users,-polyfills,-prototypes,-and-implementations">current users, polyfills, prototypes, and implementations</a> on Github. </p>
@@ -368,6 +275,6 @@ function processResponse(obj) {
     document.getElementById('open-issues-xhr').innerHTML = issues_html;
 }
 </script> 
-<script src="https://api.github.com/repos/Wilto/draft-prop/issues?state=open&amp;callback=processResponse"></script>
+<script src="https://api.github.com/repos/ResponsiveImagesCG/picture-element/issues?state=open&amp;callback=processResponse"></script>
 </body>
 </html>
