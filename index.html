@@ -45,6 +45,23 @@
 .informative {
 	background-color: rgb(233, 251, 233);
 }
+figure {
+  display: block;
+  border: thin silver solid;
+  margin: 0.5em;
+  padding: 0.5em;
+  text-align: center;	
+}
+figcaption {
+  font-style: italic;
+  font-size: smaller;
+  text-indent: 0;
+}
+figcaption:before {
+  font-weight: bold;
+  counter-increment: figcaption;     
+  content: "Figure " counter(figcaption) ". "
+}
 ol > li {
 	margin-bottom: 1em;
 }
