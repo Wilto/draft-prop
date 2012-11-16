@@ -7,12 +7,15 @@
 		ASCIIDigits = /^[0-9]$/;
 
 	//Configure HTML object
-	Object.defineProperty(HTML, 'whitespace', {get: function(){return whitespace}});
-	Object.defineProperty(HTML, 'ASCIIDigits', {get: function(){return ASCIIDigits}});
+	Object.defineProperty(HTML, 'whitespace', {get: function() {return whitespace}});
+	Object.defineProperty(HTML, 'ASCIIDigits', {get: function() {return ASCIIDigits}});
+	Object.defineProperty(HTML, 'collectCharacters', {value: collectCharacters});
 	Object.defineProperty(HTML, 'skipWhiteSpace', {value: skipWhiteSpace});
 	Object.defineProperty(HTML, 'splitStringOnSpaces', {value: splitStringOnSpaces});
 	Object.defineProperty(HTML, 'parseNonNegInt', {value: parseNonNegInt});
 	Object.defineProperty(HTML, 'parseInteger', {value: parseInteger});
+	Object.defineProperty(HTML, 'parseFloat', {value: parseFloat});
+
 
 	if (debugging) {
 		Object.defineProperty(exports, 'HTML', {get: function() {return HTML}});
@@ -64,7 +67,7 @@
 			//Collect a sequence of characters that are not space characters.
 			if (ws.indexOf(input[position]) === -1) {
 				sequence += input[position++];
-			}else {
+			} else {
 				tokens.push(sequence);
 				sequence = '';
 				//Skip whitespace
@@ -96,87 +99,88 @@
 
 	window.collectCharacters = collectCharacters;
 
-	//The rules for parsing non-negative integers are as given in the following algorithm. 
-	//When invoked, the steps must be followed in the order given, 
-	//aborting at the first step that returns a value. 
+	//The rules for parsing non-negative integers are as given in the following algorithm.
+	//When invoked, the steps must be followed in the order given,
+	//aborting at the first step that returns a value.
 	//This algorithm will return either zero, a positive integer, or an error.
 	//Let input be the string being parsed.
-	function parseNonNegInt( input ){
-		var value = HTML.parseInteger(input); 
+	function parseNonNegInt(input ) {
+		var value = HTML.parseInteger(input);
 		//Let value be the result of parsing input using the rules for parsing integers.
 
 		//If value is an error, return an error.
 		//(Returing value is already an error)
 		//If value is less than zero, return an error.
-		if(value < 0){		
-			return new Error("Invalid input");
+		if (value < 0) {
+			return new Error('Invalid input');
 		}
 		//Return value.
-		return value; 
+		return value;
 	}
 
 
-	//The rules for parsing integers are as given in the following algorithm. 
+	//The rules for parsing integers are as given in the following algorithm.
 	//When invoked, the steps must be followed in the order given,
-	//aborting at the first step that returns a value. 
+	//aborting at the first step that returns a value.
 	//This algorithm will return either an integer or an error.
 	//Let input be the string being parsed.
-	function parseInteger( input ){
+	function parseInteger(input ) {
 		//Let position be a pointer into input, initially pointing at the start of the string.
-		var postion = 0, 
+		var position = 0,
 		//Let sign have the value "positive".
-		    sign = "positive",
+		    sign = 'positive',
 		    endOfInput = input.length - 1,
-		    collectedChars; 
+		    collectedChars,
+		    value = 0;
 		//Skip whitespace.
-		position = skipWhiteSpace(input); 
+		position = skipWhiteSpace(input);
 
 		//If position is past the end of input, return an error.
-		if(postion > endOfInput){
-			return new Error("Invlid input");
+		if (position > endOfInput) {
+			return new Error('Invlid input');
 		}
 
 		//If the character indicated by position (the first character) is a "-" (U+002D) character:
-		if(input[position] === "\u002D"){
+		if (input[position] === '\u002D') {
 			//Let sign be "negative".
-			sign = "negative"; 
+			sign = 'negative';
 			//Advance position to the next character.
-			position++; 
-			//If position is past the end of input, return an error.			
-			if(postion > endOfInput){
-				return new Error("Invlid input");
+			position++;
+			//If position is past the end of input, return an error.
+			if (position > endOfInput) {
+				return new Error('Invlid input');
 			}
 		//Otherwise, if the character indicated by position (the first character) is a "+" (U+002B) character:
-		}else if(input[position] === "\u002B"){
+		}else if (input[position] === '\u002B') {
 			//Advance position to the next character. (The "+" is ignored, but it is not conforming.)
-			position++
-			//If position is past the end of input, return an error.			
-			if(postion > endOfInput){
-				return new Error("Invlid input");
+			position++;
+			//If position is past the end of input, return an error.
+			if (position > endOfInput) {
+				return new Error('Invlid input');
 			}
 		}
 
 		//If the character indicated by position is not one of ASCII digits, then return an error.
-		if(!ASCIIDigits.test(input[position])){
-			return new Error("Invlid input");
+		if (!ASCIIDigits.test(input[position])) {
+			return new Error('Invlid input');
 		}
 
-		//Collect a sequence of characters in the range ASCII digits, 
-		//and interpret the resulting sequence as a base-ten integer. 
+		//Collect a sequence of characters in the range ASCII digits,
+		//and interpret the resulting sequence as a base-ten integer.
 		//Let value be that integer.
-		collectedChars = HTML.collectCharacters(input, position, ASCIIDigits); 
-		position = collectedChars.postion;
-		value = parseInt( collectedChars.result, 10);
+		collectedChars = HTML.collectCharacters(input, position, ASCIIDigits);
+		position = collectedChars.position;
+		value = parseInt(collectedChars.result, 10);
 		//If sign is "positive", return value, otherwise return the result of subtracting value from zero.
-		if(sign === "positive"){
-			return value; 	
+		if (sign === 'positive') {
+			return value;
 		}
 		return 0 - value;
 	}
 
 	//The rules for parsing floating-point number values are as given in the following algorithm. This algorithm must be aborted at the first step that returns something. This algorithm will return either a number or an error.
 	//Let input be the string being parsed.
-	function paserFloat(input ) {
+	function parseFloat(input) {
 		//Let position be a pointer into input, initially pointing at the start of the string.
 		var position = 0,
 		    value = 1, //Let value have the value 1.
@@ -216,7 +220,7 @@
 			//and that is not the last character in input,
 			&& position !== endOfInput
 			//and the character after the character indicated by position is one of ASCII digits,
-			&& ASCIIDigits.test(input[position + 1]) {
+			&& ASCIIDigits.test(input[position + 1])) {
 			//then set value to zero and jump to the step labeled fraction.
 			value = 0;
 			fraction();
@@ -234,24 +238,25 @@
 		position = collectedChars.position;
 
 		//If position is past the end of input, jump to the step labeled conversion.
-		if(position > endOfInput){
-			conversion(); 
+		if (position > endOfInput) {
+			conversion();
 		}
 
 		//Fraction: If the character indicated by position is a "." (U+002E), run these substeps:
-		function fraction(){
+		function fraction() {
 			//Advance position to the next character.
-			position++; 
-			 
-			if( 
+			position++;
+
+			if (
 				//If position is past the end of input,
-				position > endOfInput 
-				//or if the character indicated by position is not one of ASCII digits, 
-				|| (ASCIIDigits.test(input[position]) || input[position] === "\u0065" || "\u0045")  
-				//"e" (U+0065), or "E" (U+0045), 
-			){//then jump to the step labeled conversion.
-				conversion(); 
+				position > endOfInput
+				//or if the character indicated by position is not one of ASCII digits,
+				|| (ASCIIDigits.test(input[position]) || input[position] === '\u0065' || '\u0045')
+				//"e" (U+0065), or "E" (U+0045),
+			) {//then jump to the step labeled conversion.
+				conversion();
 			}
+		}
 			//If the character indicated by position is a "e" (U+0065) character or a "E" (U+0045) character, skip the remainder of these substeps.
 
 			//Fraction loop: Multiply divisor by ten.
@@ -295,10 +300,6 @@
 		//Return rounded-value.
 	}
 
-
-
-
-
 	/**
 	* @param input Let input be the value of the img element's srcset attribute.
 	**/
@@ -311,14 +312,14 @@
 		input = String(input);
 
 		//Let position be a pointer into input, initially pointing at the start of the string.
-		var position = 0
-		   , descriptors
-, l = input.length
+		var position = 0,
+		descriptors,
+		l = input.length,
 
 		//Let raw candidates be an initially empty ordered list of URLs with associated unparsed descriptors.
 		//The order of entries in the list is the order in which entries are added to the list.
-, rawCandidates = []
-		   , descParser = new DescriptorParser();
+		rawCandidates = [],
+		descParser = new DescriptorParser();
 
 		//Splitting loop: Skip whitespace.
 		while (position !== l) {
@@ -373,51 +374,46 @@
 		// in the order they were originally added to the list, run these substeps:
 		for (var i = 0, l = rawCandidates.length, descriptorList; i < l; i++) {
 			//Let descriptor list be the result of splitting unparsed descriptors on spaces.
-			var descriptorList = HTML.splitStringOnSpaces(rawCandidates[i].descriptors)
-			//Let error be no.
-				, error = 'no'
-			//Let width be absent.
-				, width = undefined
-			//Let height be absent.
-, height = undefined
-			//Let density be absent.
-, absent = undefined;
+			var descriptorList = HTML.splitStringOnSpaces(rawCandidates[i].descriptors),
+				error = 'no', //Let error be no.
+				width = undefined,//Let width be absent.
+				height = undefined,//Let height be absent.
+				absent = undefined;//Let density be absent.
+
 			//For each token in descriptor list, run the appropriate set of steps from the following list:
 			for (var j = 0, token, jl = descriptorList.length; j < jl; j++) {
 				token = descriptorList[j];
-				//If the token consists of a valid non-negative integer followed by a U+0077 LATIN SMALL LETTER W character
-				if (isValid(token, validWidth)) {
+				//If the token consists of a valid non-negative integer followed by
+				//a U+0077 LATIN SMALL LETTER W character
+				if (validWidth.test(token)) {
 					//If width is not absent, then let error be yes.
 					error = 'yes';
-					//Apply the rules for parsing non-negative integers to the token. 
+					//Apply the rules for parsing non-negative integers to the token.
 					//Let width be the result.
-					width = HTML.parseNonNegInt()
+					width = HTML.parseNonNegInt(token);
+				} else;
 
-				}
-				//If the token consists of a valid non-negative integer followed 
+				//If the token consists of a valid non-negative integer followed
 				//by a U+0068 LATIN SMALL LETTER H character
-				if (isValid(token, validHeight)) {
+				if (validHeight.test(token)) {
 					//Apply the rules for parsing non-negative integers to the token. Let height be the result.
+					height = HTML.parseNonNegInt(token);
 					//If height is not absent, then let error be yes.
+					error = 'yes';
+				} else;
 
-				}
-
-				//If the token consists of a valid floating-point number followed by a U+0078 LATIN SMALL LETTER X character
+				//If the token consists of a valid floating-point number followed
+				//by a U+0078 LATIN SMALL LETTER X character
+				if (validFloat.test(token)) {
 					//If density is not absent, then let error be yes.
-					//Apply the rules for parsing floating-point number values to the token. Let density be the result.
-
+					error = 'yes';
+					//Apply the rules for parsing floating-point number values to the token.
+					//Let density be the result.
+					density = HTML.parseFloat(token);
+				}
 			}
 		}
-
-		function isValid(value , regex ) {
-			//if(regex.exec(value) !=== null){
-			//	return true;
-			//	}
-			return false;
-		}
 	}
-
-
 }(this));
 
 //tests
