@@ -443,11 +443,44 @@
                     }
                 }
 
+                //Optionally, return the URL of an entry in candidates chosen by the user agent,
+                //and that entry's associated pixel density, and then abort these steps.
+                //The user agent may apply any algorithm or heuristic in its selection of an entry for the
+                //purposes of this step.
+
+                //Let max width be the width of the viewport, and let max height be the height of the viewport.[CSS]
+                var maxWidth = window.innerWidth;
+                var maxWidth = window.innerHeight;
+
+                //If there are any entries in candidates that have an associated width that
+                //is less than max width, then remove them, unless that would remove all the entries,
+                //in which case remove only the entries whose associated width is less than the greatest such width.
+                for (var i = 0, candidate; i < candidates.length; i++) {
+                    candidate = candidates[i];
+                   // if(candidate.hasOwnProperty("width") && candidate )
+                }
+
+                //If there are any entries in candidates that have an associated height that is less
+                //than max height, then remove them, unless that would remove all the entries,
+                //in which case remove only the entries whose associated height is less than the greatest
+                //such height.
+
+
+                //Remove all the entries in candidates that have an associated width that is greater than the smallest such width.
+
+                //Remove all the entries in candidates that have an associated height that is greater than the smallest such height.
+
+                //Remove all the entries in candidates that have an associated pixel density that is greater than the smallest such pixel density.
+
+                //Return the URL of the sole remaining entry in candidates, and that entry's associated pixel density.
+
+
                 //using code from: http://stackoverflow.com/questions/1068834/object-comparison-in-javascript
+                //TODO: Optimize this, most of this is not needed for our purposes.
                 function compare(x) {
                     var p;
                     for (p in this) {
-                        if (typeof (x[p]) == 'undefined') {
+                        if (typeof (x[p]) === 'undefined') {
                             return false;
                         }
                     }
