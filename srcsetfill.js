@@ -300,16 +300,15 @@
 		//Return rounded-value.
 	}
 
-	/**
-	* @param input Let input be the value of the img element's srcset attribute.
-	**/
-	SrcSetParser.prototype.parse = function parse(input) {
-
+	SrcSetParser.prototype.parse = function parse(img ) {
+		if (!(img.hasAttribute('srcset') && !(img instanceof HTMLImageElement)) {
+			return new Error('Invalid input');
+		}
+		//Let input be the value of the img element's srcset attribute.
+		var input = img.getAttribute('srcset');
 		if (input === null || input === undefined || input === '') {
 			throw new TypeError('Invalid input');
 		}
-
-		input = String(input);
 
 		//Let position be a pointer into input, initially pointing at the start of the string.
 		var position = 0,
@@ -360,15 +359,16 @@
 	};
 
 
+	//Descriptor parser:
 	function descriptorParser(rawCandidates) {
-		var validWidth = /^\d+\u0077$/,
+		//Let candidates be an initially empty ordered list of URLs each with an associated pixel density,
+		//and optionally an associated width and/or height.
+		//The order of entries in the list is the order in which entries are added to the list.
+		var	candidates = [],
+			validWidth = /^\d+\u0077$/,
 			validHeight = /^\d+\0068$/,
 			validFloat = /^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\u0078$/,
-
-		//Descriptor parser:
-		//Let candidates be an initially empty ordered list of URLs each with an associated pixel density,
-		//and optionally an associated width and/or height. The order of entries in the list is the order in which entries are added to the list.
-			candidates = [];
+			entry;
 
 		//For each entry in raw candidates with URL url associated with the unparsed descriptors unparsed descriptors,
 		// in the order they were originally added to the list, run these substeps:
@@ -391,27 +391,66 @@
 					//Apply the rules for parsing non-negative integers to the token.
 					//Let width be the result.
 					width = HTML.parseNonNegInt(token);
-				} else;
+				} else if (validHeight.test(token)) {
 
 				//If the token consists of a valid non-negative integer followed
 				//by a U+0068 LATIN SMALL LETTER H character
-				if (validHeight.test(token)) {
+
 					//Apply the rules for parsing non-negative integers to the token. Let height be the result.
 					height = HTML.parseNonNegInt(token);
 					//If height is not absent, then let error be yes.
 					error = 'yes';
-				} else;
+
+				} else if (validFloat.test(token)) {
 
 				//If the token consists of a valid floating-point number followed
 				//by a U+0078 LATIN SMALL LETTER X character
-				if (validFloat.test(token)) {
+
 					//If density is not absent, then let error be yes.
 					error = 'yes';
 					//Apply the rules for parsing floating-point number values to the token.
 					//Let density be the result.
 					density = HTML.parseFloat(token);
 				}
+
+				//If width is still absent, set it to Infinity.
+				if (!(width)) {
+					width = Infinity;
+				}
+
+				//If height is still absent, set it to Infinity.
+				if (!(height)) {
+					height = Infinity;
+				}
+
+				//If density is still absent, set it to 1.0.
+				if (!(density)) {
+					density = 1.0;
+				}
+				//If error is still no,
+				if (error === 'no') {
+					 //then add an entry to candidates whose URL is url,
+					 //associated with a width width, a height height, and a pixel density density.
+					 entry = {ulr: rawCandidates[i].url, width: width, height: height, density: density};
+					 candidates.push(entry);
+				}
 			}
+			//If the img element has a src attribute whose value is not the empty string,
+			//then run the following substeps:
+			if (img.hasAttribute('src') && img.getAttribute('src') !== '') {
+				entry = {};
+				//Let url be the value of the element's src attribute.
+				//Add an entry to candidates whose URL is url,
+				//associated with a width Infinity, a height Infinity, and a pixel density 1.0.
+				entry.url = img.getAttribute('src');
+				entry.width = Infinity;
+				entry.height = Infinity;
+				entry.density = 1.0;
+				candidates.push(entry);
+			}
+			//If candidates is empty, return null and undefined and abort these steps.
+			return;
+
 		}
 	}
 }(this));
