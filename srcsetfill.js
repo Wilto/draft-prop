@@ -257,6 +257,8 @@
 				conversion();
 			}
 		}
+
+		throw 'Not implemented yet, sorry!';
 			//If the character indicated by position is a "e" (U+0065) character or a "E" (U+0045) character, skip the remainder of these substeps.
 
 			//Fraction loop: Multiply divisor by ten.
@@ -300,12 +302,12 @@
 		//Return rounded-value.
 	}
 
-	SrcSetParser.prototype.parse = function parse(img ) {
-		if (!(img.hasAttribute('srcset') && (!(img instanceof HTMLImageElement) || !(img instanceof HTMLPictureElement)) ) {
+	SrcSetParser.prototype.parse = function parse(element ) {
+		if (!(element.hasAttribute('srcset') && (!(element instanceof HTMLImageElement) || !(element instanceof HTMLPictureElement) || !(element instanceof HTMLSourceElement))) {
 			return new Error('Invalid input');
 		}
 		//Let input be the value of the img element's srcset attribute.
-		var input = img.getAttribute('srcset');
+		var input = element.getAttribute('srcset');
 		if (input === null || input === undefined || input === '') {
 			throw new TypeError('Invalid input');
 		}
@@ -449,7 +451,54 @@
 				candidates.push(entry);
 			}
 			//If candidates is empty, return null and undefined and abort these steps.
-			return;
+			if (candidates.length === 0) {
+				return {url: null, density: undefined};
+			}
+
+			//If an entry b in candidates has the same associated width, height, and pixel density
+			//as an earlier entry a in candidates, then remove entry b.
+			//Repeat this step until none of the entries in candidates have the same associated width,
+			//height, and pixel density as an earlier entry.
+			if (candidates.length > 1) {
+				for (var i = 0; i < candidates.length - 1; i++) {
+					if (!(compare.call(candidates[i], candidates[i + 1])) {
+						delete candidates[i + 1];
+					}
+				}
+			}
+
+			//using code from: http://stackoverflow.com/questions/1068834/object-comparison-in-javascript
+			function compare(x)
+				{
+				  var p;
+				  for (p in this) {
+				      if (typeof(x[p]) == 'undefined') {return false;}
+				  }
+
+				  for (p in this) {
+				      if (this[p]) {
+				          switch (typeof(this[p])) {
+				              case 'object':
+				                  if (!this[p].equals(x[p])) { return false; } break;
+				              case 'function':
+				                  if (typeof(x[p]) == 'undefined' ||
+				                      (p != 'equals' && this[p].toString() != x[p].toString()))
+				                      return false;
+				                  break;
+				              default:
+				                  if (this[p] != x[p]) { return false; }
+				          }
+				      } else {
+				          if (x[p])
+				              return false;
+				      }
+				  }
+
+				  for (p in x) {
+				      if (typeof(this[p]) == 'undefined') {return false;}
+				  }
+				  return true;
+				}
 
 		}
 	}
