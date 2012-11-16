@@ -301,7 +301,7 @@
 	}
 
 	SrcSetParser.prototype.parse = function parse(img ) {
-		if (!(img.hasAttribute('srcset') && !(img instanceof HTMLImageElement)) {
+		if (!(img.hasAttribute('srcset') && (!(img instanceof HTMLImageElement) || !(img instanceof HTMLPictureElement)) ) {
 			return new Error('Invalid input');
 		}
 		//Let input be the value of the img element's srcset attribute.
