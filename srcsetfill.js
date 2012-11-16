@@ -53,6 +53,7 @@
     Object.defineProperty(DescriptorParser.prototype, 'parse', {
         value: descriptorParser
     });
+
     //"white space" per HTML5
     //Spec: http://www.whatwg.org/specs/web-apps/current-work/#space-character
     //The step skip whitespace means that the user agent must collect a sequence of characters that are space characters.
@@ -439,43 +440,43 @@
                         if (!(compare.call(candidates[i], candidates[i + 1])) {
                             delete candidates[i + 1];
                         }
+                    }
+                }
+
+                //using code from: http://stackoverflow.com/questions/1068834/object-comparison-in-javascript
+                function compare(x) {
+                    var p;
+                    for (p in this) {
+                        if (typeof (x[p]) == 'undefined') {
+                            return false;
                         }
                     }
-                    //using code from: http://stackoverflow.com/questions/1068834/object-comparison-in-javascript
-                    function compare(x) {
-                        var p;
-                        for (p in this) {
-                            if (typeof (x[p]) == 'undefined') {
-                                return false;
+                    for (p in this) {
+                        if (this[p]) {
+                            switch (typeof (this[p])) {
+                                case 'object':
+                                    if (!this[p].equals(x[p])) {
+                                        return false;
+                                    }
+                                    break;
+                                case 'function':
+                                    if (typeof (x[p]) == 'undefined' || (p != 'equals' && this[p].toString() != x[p].toString())) return false;
+                                    break;
+                                default:
+                                    if (this[p] != x[p]) {
+                                        return false;
+                                    }
                             }
+                        } else {
+                            if (x[p]) return false;
                         }
-                        for (p in this) {
-                            if (this[p]) {
-                                switch (typeof (this[p])) {
-                                    case 'object':
-                                        if (!this[p].equals(x[p])) {
-                                            return false;
-                                        }
-                                        break;
-                                    case 'function':
-                                        if (typeof (x[p]) == 'undefined' || (p != 'equals' && this[p].toString() != x[p].toString())) return false;
-                                        break;
-                                    default:
-                                        if (this[p] != x[p]) {
-                                            return false;
-                                        }
-                                }
-                            } else {
-                                if (x[p]) return false;
-                            }
-                        }
-                        for (p in x) {
-                            if (typeof (this[p]) == 'undefined') {
-                                return false;
-                            }
-                        }
-                        return true;
                     }
+                    for (p in x) {
+                        if (typeof (this[p]) == 'undefined') {
+                            return false;
+                        }
+                    }
+                    return true;
                 }
             }
         }(this));
