@@ -1,5 +1,5 @@
 'use strict';
-(function(exports) {
+(function(exports,window) {
     //The HTML contains definitions/algorithms from HTML5
     var HTML = Object.create(null),
         debugging = true,
@@ -349,7 +349,7 @@
         //The order of entries in the list is the order in which entries are added to the list.
         var candidates = [],
             validWidth = /^\d+\u0077$/,
-            validHeight = /^\d+\0068$/,
+            validHeight = /^\d+\u0068$/,
             validFloat = /^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\u0078$/,
             entry;
         //For each entry in raw candidates with URL url associated with the unparsed descriptors unparsed descriptors,
@@ -358,9 +358,9 @@
             //Let descriptor list be the result of splitting unparsed descriptors on spaces.
             var descriptorList = HTML.splitStringOnSpaces(rawCandidates[i].descriptors),
                 error = 'no', //Let error be no.
-                width = 'absent', //Let width be absent.
-                height = 'absent', //Let height be absent.
-                density = 'absent'; //Let density be absent.
+                width = undefined, //Let width be absent.
+                height = undefined, //Let height be absent.
+                density = undefined; //Let density be absent.
             //For each token in descriptor list, run the appropriate set of steps from the following list:
             for (var j = 0, token, jl = descriptorList.length; j < jl; j++) {
                 token = descriptorList[j];
@@ -368,7 +368,7 @@
                 //a U+0077 LATIN SMALL LETTER W character
                 if (validWidth.test(token)) {
                     //If width is not absent, then let error be yes.
-                    if (width !== 'absent') {
+                    if (width !== undefined) {
                         error = 'yes';
                     }
                     //Apply the rules for parsing non-negative integers to the token.
@@ -378,18 +378,16 @@
                     //If the token consists of a valid non-negative integer followed
                     //by a U+0068 LATIN SMALL LETTER H character
                     //I height is not absent, then let error be yes.
-                    if (height !== 'absent') {
+                    if (height !== undefined) {
                         error = 'yes';
                     }
-
                     //Apply the rules for parsing non-negative integers to the token. Let height be the result.
                     height = HTML.parseNonNegInt(token);
-
                 } else if (validFloat.test(token)) {
                     //If the token consists of a valid floating-point number followed
                     //by a U+0078 LATIN SMALL LETTER X character
                     //If density is not absent, then let error be yes.
-                    if (density !== 'absent') {
+                    if (density !== undefined) {
                         error = 'yes';
                     }
                     //Apply the rules for parsing floating-point number values to the token.
@@ -442,6 +440,7 @@
                 density: undefined
             };
         }
+
         //If an entry b in candidates has the same associated width, height, and pixel density
         //as an earlier entry a in candidates, then remove entry b.
         //Repeat this step until none of the entries in candidates have the same associated width,
@@ -455,10 +454,12 @@
                 }
             }
         }
+
         //Optionally, return the URL of an entry in candidates chosen by the user agent,
         //and that entry's associated pixel density, and then abort these steps.
         //The user agent may apply any algorithm or heuristic in its selection of an entry for the
         //purposes of this step.
+
         //Let max width be the width of the viewport, and let max height be the height of
         //the viewport.[CSS]
         var maxWidth = window.innerWidth;
@@ -466,7 +467,7 @@
         //If there are any entries in candidates that have an associated width that
         //is less than max width, then remove them,
         if (candidates.length > 1) {
-            for (var j = 0, next, biggest = candidates[0]; j < candidates.length; j++) {
+            for (var j = 0, next, biggest = candidates[j]; j < candidates.length; j++) {
                 if (candidates[j].hasOwnProperty('width') && candidates[j].width < maxWidth) {
                     //find the biggest
                     next = candidates[j + 1];
@@ -485,7 +486,7 @@
         //If there are any entries in candidates that have an associated height that is less
         //than max height, then remove them,
         if (candidates.length > 1) {
-            for (var j = 0, biggest = candidates[0]; j < candidates.length; j++) {
+            for (var j = 0, biggest = candidates[j]; j < candidates.length; j++) {
                 if (candidates[j].hasOwnProperty('height') && candidates[j].height < maxHeight) {
                     //find the biggest
                     biggest = (candidates[j + 1].height > biggest.height) ? candidates[j + 1] : biggest;
@@ -503,7 +504,7 @@
             }
             //Remove all the entries in candidates that have an associated width that is greater than
             //the smallest such width.
-            for (var j = 0, cl, smallest = candidates[0]; j < candidates.length; j++) {
+            for (var j = 0, smallest = candidates[0]; j < candidates.length; j++) {
                 if ((candidates[j + 1]) && candidates[j].hasOwnProperty('width')) {
                     if (candidates[j + 1].width > smallest.width) {
                         candidates.splice(++j, 1);
@@ -518,23 +519,23 @@
             for (var j = 0, smallest = candidates[0]; j < candidates.length; j++) {
                 if (candidates[j].hasOwnProperty('height')) {
                     if (candidates[j + 1].height > smallest.height) {
-                        candidates.splice(++j,1);
+                        candidates.splice(++j, 1);
                     } else {
                         smallest = candidates[j + 1];
-                        candidates.splice(j,1);
+                        candidates.splice(j, 1);
                     }
                 }
             }
-   
+
             //Remove all the entries in candidates that have an associated pixel density that
             //is greater than the smallest such pixel density.
-            for (var j = 0, cl = candidates.length, smallest = candidates[0], needsClean = false; j < cl; j++) {
+            for (var j = 0, smallest = candidates[0]; j < candidates.length; j++) {
                 if ((candidates[j + 1]) && candidates[j].hasOwnProperty('density')) {
                     if (candidates[j + 1].density > smallest.density) {
-                        candidates.splice(++j,1);
+                        candidates.splice(++j, 1);
                     } else {
                         smallest = candidates[j + 1];
-                        candidates.splice(j,1);
+                        candidates.splice(j, 1);
                     }
                 }
             }
@@ -548,8 +549,8 @@
 
         function arePropsEqual(x, y) {
             //type check for objects
-            if ((x instanceof Array) || (y instanceof Array) || (typeof x) + (typeof y) !== 'objectobject') {
-                return false;
+            if ((typeof x) + (typeof y) !== 'objectobject') {
+                throw new TypeError('Invalid input');
             }
             if (x !== y) {
                 var xProps = Object.getOwnPropertyNames(x).sort(),
@@ -567,24 +568,20 @@
             }
             return true;
         }
-
-        //removes undefined from an array
-        function clean(e) {
-            return e;
-        }
     }
-}(this));
+}(this, window));
 
 
 var img = new Image('');
 //img.setAttribute('src','default.png')
 //img.setAttribute('srcset', 'default.png 1x, default.png 1x');
 //img.setAttribute('srcset', 'a.png 1x, b.png 1x, b.png 1x,  a.png 1x');
-img.setAttribute('srcset', 'a.png 1x, b.png 1x, c.png 1x, c.png 1x, b.png 1x, a.png 1x, d.png 1x');
+//img.setAttribute('srcset', 'a.png 1x, b.png 1x, c.png 1x, c.png 1x, b.png 1x, a.png 1x, d.png 1x');
+
+img.setAttribute('srcset', 'a 1w, b 2h, c 3w');
+//img.setAttribute('srcset', 'a 100w, b 200w, c 300w');
 console.log(window.srcsetParser.parse(img));
 //img.setAttribute('srcset', 'pear-mobile.jpeg 720w, pear-tablet.jpeg 1280w, pear-desktop.jpeg 1x');
-
-
 
 //tests
 //window.srcsetParser.parse();
