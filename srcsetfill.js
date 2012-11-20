@@ -377,12 +377,14 @@
                 } else if (validHeight.test(token)) {
                     //If the token consists of a valid non-negative integer followed
                     //by a U+0068 LATIN SMALL LETTER H character
-                    //Apply the rules for parsing non-negative integers to the token. Let height be the result.
-                    height = HTML.parseNonNegInt(token);
                     //I height is not absent, then let error be yes.
                     if(height !== "absent"){
                         error = 'yes';
                     }
+
+                    //Apply the rules for parsing non-negative integers to the token. Let height be the result.
+                    height = HTML.parseNonNegInt(token);
+    
                 } else if (validFloat.test(token)) {
                     //If the token consists of a valid floating-point number followed
                     //by a U+0078 LATIN SMALL LETTER X character
