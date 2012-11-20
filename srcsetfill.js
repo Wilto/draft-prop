@@ -358,9 +358,9 @@
             //Let descriptor list be the result of splitting unparsed descriptors on spaces.
             var descriptorList = HTML.splitStringOnSpaces(rawCandidates[i].descriptors),
                 error = 'no', //Let error be no.
-                width = undefined, //Let width be absent.
-                height = undefined, //Let height be absent.
-                density = undefined; //Let density be absent.
+                width = 'absent', //Let width be absent.
+                height = 'absent', //Let height be absent.
+                density = 'absent'; //Let density be absent.
             //For each token in descriptor list, run the appropriate set of steps from the following list:
             for (var j = 0, token, jl = descriptorList.length; j < jl; j++) {
                 token = descriptorList[j];
@@ -368,7 +368,9 @@
                 //a U+0077 LATIN SMALL LETTER W character
                 if (validWidth.test(token)) {
                     //If width is not absent, then let error be yes.
-                    error = 'yes';
+                    if(!width !== "absent"){
+                        error = 'yes';
+                    }
                     //Apply the rules for parsing non-negative integers to the token.
                     //Let width be the result.
                     width = HTML.parseNonNegInt(token);
@@ -378,12 +380,16 @@
                     //Apply the rules for parsing non-negative integers to the token. Let height be the result.
                     height = HTML.parseNonNegInt(token);
                     //If height is not absent, then let error be yes.
-                    error = 'yes';
+                    if(!height !== "absent"){
+                        error = 'yes';
+                    }
                 } else if (validFloat.test(token)) {
                     //If the token consists of a valid floating-point number followed
                     //by a U+0078 LATIN SMALL LETTER X character
                     //If density is not absent, then let error be yes.
-                    error = 'yes';
+                    if(!density !== "absent"){
+                        error = 'yes';
+                    }
                     //Apply the rules for parsing floating-point number values to the token.
                     //Let density be the result.
                     density = HTML.parseFloat(token);
