@@ -1,5 +1,5 @@
 'use strict';
-(function (exports) {
+(function(exports) {
     //The HTML contains definitions/algorithms from HTML5
     var HTML = Object.create(null),
         debugging = true,
@@ -10,12 +10,12 @@
         ASCIIDigits = /^[0-9]$/;
     //Configure HTML object
     Object.defineProperty(HTML, 'whitespace', {
-        get: function () {
+        get: function() {
             return whitespace;
         }
     });
     Object.defineProperty(HTML, 'ASCIIDigits', {
-        get: function () {
+        get: function() {
             return ASCIIDigits;
         }
     });
@@ -39,7 +39,7 @@
     });
     if (debugging) {
         Object.defineProperty(exports, 'HTML', {
-            get: function () {
+            get: function() {
                 return HTML;
             }
         });
@@ -50,7 +50,7 @@
         value: parseElement
     });
     Object.defineProperty(exports, 'srcsetParser', {
-        get: function () {
+        get: function() {
             return srcsetParser;
         }
     });
@@ -87,7 +87,7 @@
             //Collect a sequence of characters that are not space characters.
             if (ws.indexOf(input[position]) === -1) {
                 sequence += input[position++];
-                if(position === l){
+                if (position === l) {
                     tokens.push(sequence);
                 }
             } else {
@@ -194,8 +194,8 @@
     //The rules for parsing floating-point number values are as given in the following algorithm. This algorithm must be aborted at the first step that returns something. This algorithm will return either a number or an error.
     //Let input be the string being parsed.
     function parseFloat(input) {
-        console.warn("Using ECMAScript parse float, as the HTML one is not done yet");
-        return window.parseFloat(input); 
+        console.warn('Using ECMAScript parse float, as the HTML one is not done yet');
+        return window.parseFloat(input);
 
         //Let position be a pointer into input, initially pointing at the start of the string.
         var position = 0,
@@ -230,7 +230,7 @@
         //and that is not the last character in input,
         //and the character after the character indicated by position is one of ASCII digits,
 
-        if ( input[position] === '\u002E' && position !== endOfInput && ASCIIDigits.test(input[position + 1])) {
+        if (input[position] === '\u002E' && position !== endOfInput && ASCIIDigits.test(input[position + 1])) {
             //then set value to zero and jump to the step labeled fraction.
             value = 0;
             fraction();
@@ -283,7 +283,7 @@
         //If the character indicated by position is not one of ASCII digits, then jump to the step labeled conversion.
         //Collect a sequence of characters in the range ASCII digits, and interpret the resulting sequence as a base-ten integer. Multiply exponent by that integer.
         //Multiply value by ten raised to the exponentth power.
-        //Conversion: Let S be the set of finite IEEE 754 double-precision floating-point values except −0, 
+        //Conversion: Let S be the set of finite IEEE 754 double-precision floating-point values except −0,
         //but with two special values added: 21024 and −21024.
         //Let rounded-value be the number in S that is closest to value, selecting the number with an even significand if there are two equally close values. (The two special values 21024 and −21024 are considered to have even significands for this purpose.)
         //If rounded-value is 21024 or −21024, return an error.
@@ -301,7 +301,7 @@
         var position = 0,
             descriptors,
             l = input.length,
-            endOfInput = l-1,
+            endOfInput = l - 1,
             //Let raw candidates be an initially empty ordered list of URLs with associated unparsed descriptors.
             //The order of entries in the list is the order in which entries are added to the list.
             rawCandidates = [];
@@ -319,7 +319,7 @@
             }
             //If url is empty, then jump to the step labeled descriptor parser.
             (url.length === 0) ? parseDescriptions(rawCandidates) : null;
-      
+
             //Collect a sequence of characters that are not "," (U+002C) characters, and let that be descriptors.
             for (var descriptors = ''; position < l; position++) {
                 if (input[position] !== '\u002C') {
@@ -368,7 +368,7 @@
                 //a U+0077 LATIN SMALL LETTER W character
                 if (validWidth.test(token)) {
                     //If width is not absent, then let error be yes.
-                    if(width !== "absent"){
+                    if (width !== 'absent') {
                         error = 'yes';
                     }
                     //Apply the rules for parsing non-negative integers to the token.
@@ -378,18 +378,18 @@
                     //If the token consists of a valid non-negative integer followed
                     //by a U+0068 LATIN SMALL LETTER H character
                     //I height is not absent, then let error be yes.
-                    if(height !== "absent"){
+                    if (height !== 'absent') {
                         error = 'yes';
                     }
 
                     //Apply the rules for parsing non-negative integers to the token. Let height be the result.
                     height = HTML.parseNonNegInt(token);
-    
+
                 } else if (validFloat.test(token)) {
                     //If the token consists of a valid floating-point number followed
                     //by a U+0078 LATIN SMALL LETTER X character
                     //If density is not absent, then let error be yes.
-                    if(density !== "absent"){
+                    if (density !== 'absent') {
                         error = 'yes';
                     }
                     //Apply the rules for parsing floating-point number values to the token.
@@ -448,7 +448,7 @@
         //height, and pixel density as an earlier entry.
         if (candidates.length > 1) {
             for (var i = 0; i <= candidates.length; i++) {
-                for (var b = candidates.length-1; b > i; b--) {
+                for (var b = candidates.length - 1; b > i; b--) {
                     if ((i !== b) && arePropsEqual(candidates[i], candidates[b])) {
                         candidates.splice(b, 1);
                     }
@@ -469,9 +469,9 @@
             for (var j = 0, next, biggest = candidates[0]; j < candidates.length; j++) {
                 if (candidates[j].hasOwnProperty('width') && candidates[j].width < maxWidth) {
                     //find the biggest
-                    next = candidates[j + 1]; 
+                    next = candidates[j + 1];
                     biggest = ((next) && next.width > biggest.width) ? next : biggest;
-                    candidates.splice(j,1);
+                    candidates.splice(j, 1);
                 }
             }
 
@@ -489,10 +489,10 @@
                 if (candidates[j].hasOwnProperty('height') && candidates[j].height < maxHeight) {
                     //find the biggest
                     biggest = (candidates[j + 1].height > biggest.height) ? candidates[j + 1] : biggest;
-                    candidates[j].splice(j,1);
+                    candidates[j].splice(j, 1);
                 }
             }
-            
+
             //unless that would remove all the entries,
             //in which case remove only the entries whose associated height is less than the greatest
             //such height.
@@ -506,10 +506,10 @@
             for (var j = 0, cl, smallest = candidates[0]; j < candidates.length; j++) {
                 if ((candidates[j + 1]) && candidates[j].hasOwnProperty('width')) {
                     if (candidates[j + 1].width > smallest.width) {
-                        candidates.splice(++j,1);
+                        candidates.splice(++j, 1);
                     } else {
                         smallest = candidates[j + 1];
-                        candidates.splice(j,1);
+                        candidates.splice(j, 1);
                     }
                 }
             }
@@ -525,10 +525,10 @@
                     }
                 }
             }
-            if(needsClean){
+            if (needsClean) {
               candidates = candidates.filter(clean);
             }
-          
+
             //Remove all the entries in candidates that have an associated pixel density that
             //is greater than the smallest such pixel density.
             for (var j = 0, cl = candidates.length, smallest = candidates[0], needsClean = false; j < cl; j++) {
@@ -542,7 +542,7 @@
                     needsClean = true;
                 }
             }
-            if(needsClean){
+            if (needsClean) {
               candidates = candidates.filter(clean);
             }
         }
@@ -583,12 +583,12 @@
 }(this));
 
 
-var img = new Image(""); 
+var img = new Image('');
 //img.setAttribute('src','default.png')
 //img.setAttribute('srcset', 'default.png 1x, default.png 1x');
 //img.setAttribute('srcset', 'a.png 1x, b.png 1x, b.png 1x,  a.png 1x');
 img.setAttribute('srcset', 'a.png 1x, b.png 1x, c.png 1x, c.png 1x, b.png 1x, a.png 1x, d.png 1x');
-console.log(window.srcsetParser.parse(img))
+console.log(window.srcsetParser.parse(img));
 //img.setAttribute('srcset', 'pear-mobile.jpeg 720w, pear-tablet.jpeg 1280w, pear-desktop.jpeg 1x');
 
 
