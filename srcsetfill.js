@@ -411,7 +411,7 @@
                     //then add an entry to candidates whose URL is url,
                     //associated with a width width, a height height, and a pixel density density.
                     entry = {
-                        ulr: rawCandidates[i].url,
+                        url: rawCandidates[i].url,
                         width: width,
                         height: height,
                         density: density
@@ -446,9 +446,9 @@
         //height, and pixel density as an earlier entry.
         if (candidates.length > 1) {
             for (var i = 0, areEqual, needsClean = false; i < candidates.length - 1; i++) {
-                for (var j = candidates.length; j !== 1; j--) {
+                for (var j = candidates.length-1; j !== 1; j--) {
                     if (i !== j) {
-                        areEqual = propCompre(candidates[i], candidates[j]);
+                        areEqual = propCompare(candidates[i], candidates[j]);
                         if (!(areEqual)) {
                             delete candidates[i + 1];
                             needsClean = true;
