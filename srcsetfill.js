@@ -515,35 +515,28 @@
             }
             //Remove all the entries in candidates that have an associated height that is greater than
             //the smallest such height.
-            for (var j = 0, cl = candidates.length, smallest = candidates[0], needsClean = true; j < cl; j++) {
-                if ((candidates[j + 1]) && candidates[j].hasOwnProperty('height')) {
+            for (var j = 0, smallest = candidates[0]; j < candidates.length; j++) {
+                if (candidates[j].hasOwnProperty('height')) {
                     if (candidates[j + 1].height > smallest.height) {
-                        delete candidates[++j];
+                        candidates.splice(++j,1);
                     } else {
                         smallest = candidates[j + 1];
-                        delete candidates[j];
+                        candidates.splice(j,1);
                     }
                 }
             }
-            if (needsClean) {
-              candidates = candidates.filter(clean);
-            }
-
+   
             //Remove all the entries in candidates that have an associated pixel density that
             //is greater than the smallest such pixel density.
             for (var j = 0, cl = candidates.length, smallest = candidates[0], needsClean = false; j < cl; j++) {
                 if ((candidates[j + 1]) && candidates[j].hasOwnProperty('density')) {
                     if (candidates[j + 1].density > smallest.density) {
-                        delete candidates[++j];
+                        candidates.splice(++j,1);
                     } else {
                         smallest = candidates[j + 1];
-                        delete candidates[j];
+                        candidates.splice(j,1);
                     }
-                    needsClean = true;
                 }
-            }
-            if (needsClean) {
-              candidates = candidates.filter(clean);
             }
         }
         //Return the URL of the sole remaining entry in candidates, and that entry's
