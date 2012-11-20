@@ -447,19 +447,13 @@
         //Repeat this step until none of the entries in candidates have the same associated width,
         //height, and pixel density as an earlier entry.
         if (candidates.length > 1) {
-            for (var i = 0, areEqual, needsClean = false; i < candidates.length - 1; i++) {
-                for (var j = candidates.length-1; j !== 1; j--) {
-                    if (i !== j) {
-                        areEqual = propCompare(candidates[i], candidates[j]);
-                        if (!(areEqual)) {
-                            delete candidates[i + 1];
-                            needsClean = true;
-                        }
+            for (var i = 0; i <= candidates.length; i++) {
+                for (var b = candidates.length-1;  b > i; b--) {
+                    if (arePropsEqual(candidates[i], candidates[b])) {
+                        candidates.splice(b, 1);
                     }
+                    
                 }
-            }
-            if(needsClean){
-              candidates = candidates.filter(clean);
             }
         }
         //Optionally, return the URL of an entry in candidates chosen by the user agent,
@@ -473,17 +467,15 @@
         //If there are any entries in candidates that have an associated width that
         //is less than max width, then remove them,
         if (candidates.length > 1) {
-            for (var j = 0, cl = candidates.length, biggest = candidates[0], needsClean = false; j < cl; j++) {
+            for (var j = 0, next, biggest = candidates[0]; j < candidates.length; j++) {
                 if (candidates[j].hasOwnProperty('width') && candidates[j].width < maxWidth) {
                     //find the biggest
-                    biggest = ((candidates[j + 1]) && candidates[j + 1].width > biggest.width) ? candidates[j + 1] : biggest;
-                    delete candidates[j];
-                    needsClean = true;
+                    next = candidates[j + 1]; 
+                    biggest = ((next) && next.width > biggest.width) ? next : biggest;
+                    candidates.splice(j,1);
                 }
             }
-            if(needsClean){
-              candidates = candidates.filter(clean);
-            }
+
             //unless that would remove all the entries,
             if (candidates.length === 0) {
                 //in which case remove only the entries whose associated width is less
@@ -494,17 +486,14 @@
         //If there are any entries in candidates that have an associated height that is less
         //than max height, then remove them,
         if (candidates.length > 1) {
-            for (var j = 0, cl = candidates.length, biggest = candidates[0], needsClean = false; j < cl; j++) {
+            for (var j = 0, biggest = candidates[0]; j < candidates.length; j++) {
                 if (candidates[j].hasOwnProperty('height') && candidates[j].height < maxHeight) {
                     //find the biggest
-                    biggest = ((candidates[j + 1]) && candidates[j + 1].height > biggest.height) ? candidates[j + 1] : biggest;
-                    delete candidates[j];
-                    needsClean = true;
+                    biggest = (candidates[j + 1].height > biggest.height) ? candidates[j + 1] : biggest;
+                    candidates[j].splice(j,1);
                 }
             }
-            if(needsClean){
-              candidates = candidates.filter(clean);
-            }
+            
             //unless that would remove all the entries,
             //in which case remove only the entries whose associated height is less than the greatest
             //such height.
@@ -515,19 +504,15 @@
             }
             //Remove all the entries in candidates that have an associated width that is greater than
             //the smallest such width.
-            for (var j = 0, cl = candidates.length, smallest = candidates[0], needsClean = false; j < cl; j++) {
+            for (var j = 0, cl, smallest = candidates[0]; j < candidates.length; j++) {
                 if ((candidates[j + 1]) && candidates[j].hasOwnProperty('width')) {
                     if (candidates[j + 1].width > smallest.width) {
-                        delete candidates[++j];
+                        candidates.splice(++j,1);
                     } else {
                         smallest = candidates[j + 1];
-                        delete candidates[j];
+                        candidates.splice(j,1);
                     }
-                    needsClean = true;
                 }
-            }
-            if(needsClean){
-              candidates = candidates.filter(clean);
             }
             //Remove all the entries in candidates that have an associated height that is greater than
             //the smallest such height.
@@ -569,7 +554,7 @@
             density: candidates[0].density
         };
 
-        function propCompare(x, y) {
+        function arePropsEqual(x, y) {
             //type check for objects
             if ((x instanceof Array) || (y instanceof Array) || (typeof x) + (typeof y) !== 'objectobject') {
                 return false;
@@ -578,7 +563,7 @@
                 var xProps = Object.getOwnPropertyNames(x).sort(),
                     yProps = Object.getOwnPropertyNames(y).sort();
                 //lengths or names differ
-                if ((xProps.length !== yProps.length) || (xProps.join('') !== yProps.join(''))) {
+                if ((xProps.length !== yProps.length) || (String(xProps.join('')) !== String(yProps.join('')))) {
                     return false;
                 }
                 //values differ
@@ -600,10 +585,13 @@
 
 
 var img = new Image(""); 
-img.setAttribute('src','default.png')
-img.setAttribute('srcset', 'pear-mobile.jpeg 720w, pear-tablet.jpeg 1280w, pear-desktop.jpeg 1x');
+//img.setAttribute('src','default.png')
+img.setAttribute('srcset', 'default.png 1x, default.png 1x');
+img.setAttribute('srcset', 'a.png 1x, a.png 1x,  a.png 1x,  a.png 1x');
+window.srcsetParser.parse(img)
+//img.setAttribute('srcset', 'pear-mobile.jpeg 720w, pear-tablet.jpeg 1280w, pear-desktop.jpeg 1x');
 
-window.srcsetParser.parse(img);
+
 
 //tests
 //window.srcsetParser.parse();
