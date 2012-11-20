@@ -401,7 +401,7 @@
                     density = 1.0;
                 }
                 //If error is still no,
-                if (error === 'yes') {
+                if (error === 'no') {
                     //then add an entry to candidates whose URL is url,
                     //associated with a width width, a height height, and a pixel density density.
                     entry = {
