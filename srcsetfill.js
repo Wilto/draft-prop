@@ -53,7 +53,6 @@
     Object.defineProperty(DescriptorParser.prototype, 'parse', {
         value: descriptorParser
     });
-
     //"white space" per HTML5
     //Spec: http://www.whatwg.org/specs/web-apps/current-work/#space-character
     //The step skip whitespace means that the user agent must collect a sequence of characters that are space characters.
@@ -437,89 +436,142 @@
                 //height, and pixel density as an earlier entry.
                 if (candidates.length > 1) {
                     for (var i = 0; i < candidates.length - 1; i++) {
-                        if (!(compare.call(candidates[i], candidates[i + 1])) {
+                        if (!(propCompre(candidates[i], candidates[i + 1])) {
                             delete candidates[i + 1];
                         }
-                    }
-                }
-
-                //Optionally, return the URL of an entry in candidates chosen by the user agent,
-                //and that entry's associated pixel density, and then abort these steps.
-                //The user agent may apply any algorithm or heuristic in its selection of an entry for the
-                //purposes of this step.
-
-                //Let max width be the width of the viewport, and let max height be the height of the viewport.[CSS]
-                var maxWidth = window.innerWidth;
-                var maxWidth = window.innerHeight;
-
-                //If there are any entries in candidates that have an associated width that
-                //is less than max width, then remove them, unless that would remove all the entries,
-                //in which case remove only the entries whose associated width is less than the greatest such width.
-                for (var i = 0, candidate; i < candidates.length; i++) {
-                    candidate = candidates[i];
-                   // if(candidate.hasOwnProperty("width") && candidate )
-                }
-
-                //If there are any entries in candidates that have an associated height that is less
-                //than max height, then remove them, unless that would remove all the entries,
-                //in which case remove only the entries whose associated height is less than the greatest
-                //such height.
-
-
-                //Remove all the entries in candidates that have an associated width that is greater than the smallest such width.
-
-                //Remove all the entries in candidates that have an associated height that is greater than the smallest such height.
-
-                //Remove all the entries in candidates that have an associated pixel density that is greater than the smallest such pixel density.
-
-                //Return the URL of the sole remaining entry in candidates, and that entry's associated pixel density.
-
-
-                //using code from: http://stackoverflow.com/questions/1068834/object-comparison-in-javascript
-                //TODO: Optimize this, most of this is not needed for our purposes.
-                function compare(x) {
-                    var p;
-                    for (p in this) {
-                        if (typeof (x[p]) === 'undefined') {
-                            return false;
                         }
                     }
-                    for (p in this) {
-                        if (this[p]) {
-                            switch (typeof (this[p])) {
-                                case 'object':
-                                    if (!this[p].equals(x[p])) {
-                                        return false;
-                                    }
-                                    break;
-                                case 'function':
-                                    if (typeof (x[p]) == 'undefined' || (p != 'equals' && this[p].toString() != x[p].toString())) return false;
-                                    break;
-                                default:
-                                    if (this[p] != x[p]) {
-                                        return false;
-                                    }
+                    //Optionally, return the URL of an entry in candidates chosen by the user agent,
+                    //and that entry's associated pixel density, and then abort these steps.
+                    //The user agent may apply any algorithm or heuristic in its selection of an entry for the
+                    //purposes of this step.
+                    //Let max width be the width of the viewport, and let max height be the height of
+                    //the viewport.[CSS]
+                    var maxWidth = window.innerWidth;
+                    var maxHeight = window.innerHeight;
+                    //If there are any entries in candidates that have an associated width that
+                    //is less than max width, then remove them,
+                    if (candidates.length > 1) {
+                        for (var j = 0,
+                        cl = candidates.length,
+                        biggest = candidates[0];
+                        j < cl; j++) {
+                            if (candidates[j].hasOwnProperty('width') && candidates[j].width < maxWidth) {
+                                //find the biggest
+                                biggest = ((candidates[j + 1]) && candidates[j + 1].width > biggest.width) ? candidates[j + 1] : biggest;
+                                delete candidates[j];
                             }
-                        } else {
-                            if (x[p]) return false;
+                        }
+                        //MC: filter out deleted slots in array
+                        candidates = candidates.filter(clean);
+                        //unless that would remove all the entries,
+                        if (candidates.length === 0) {
+                            //in which case remove only the entries whose associated width is less
+                            //than the greatest such width.
+                            candidates.push(biggest);
                         }
                     }
-                    for (p in x) {
-                        if (typeof (this[p]) == 'undefined') {
+                    //If there are any entries in candidates that have an associated height that is less
+                    //than max height, then remove them,
+                    if (candidates.length > 1) {
+                        for (var j = 0, cl = candidates.length, biggest = candidates[0]; j < cl; j++) {
+                            if (candidates[j].hasOwnProperty('height') && candidates[j].height < maxHeight) {
+                                //find the biggest
+                                biggest = ((candidates[j + 1]) && candidates[j + 1].height > biggest.height) ? candidates[j + 1] : biggest;
+                                delete candidates[j];
+                            }
+                        }
+                        //MC: filter out deleted slots in array
+                        candidates = candidates.filter(clean);
+                        //unless that would remove all the entries,
+                        //in which case remove only the entries whose associated height is less than the greatest
+                        //such height.
+                        if (candidates.length === 0) {
+                            //in which case remove only the entries whose associated width is less
+                            //than the greatest such width.
+                            candidates.push(biggest);
+                        }
+                        //Remove all the entries in candidates that have an associated width that is greater than
+                        //the smallest such width.
+                        for (var j = 0, cl = candidates.length, smallest = candidates[0]; j < cl; j++) {
+                            if ((candidates[j + 1]) && candidates[j].hasOwnProperty('width')) {
+                                if (candidates[j + 1].width > smallest.width) {
+                                    delete candidates[++j];
+                                } else {
+                                    smallest = candidates[j + 1];
+                                    delete candidates[j];
+                                }
+                            }
+                        }
+                        candidates = candidates.filter(clean);
+                        //Remove all the entries in candidates that have an associated height that is greater than
+                        //the smallest such height.
+                        for (var j = 0, cl = candidates.length, smallest = candidates[0]; j < cl; j++) {
+                            if ((candidates[j + 1]) && candidates[j].hasOwnProperty('height')) {
+                                if (candidates[j + 1].height > smallest.height) {
+                                    delete candidates[++j];
+                                } else {
+                                    smallest = candidates[j + 1];
+                                    delete candidates[j];
+                                }
+                            }
+                        }
+                        candidates = candidates.filter(clean);
+                        //Remove all the entries in candidates that have an associated pixel density that
+                        //is greater than the smallest such pixel density.
+                        for (var j = 0, cl = candidates.length, smallest = candidates[0]; j < cl; j++) {
+                            if ((candidates[j + 1]) && candidates[j].hasOwnProperty('density')) {
+                                if (candidates[j + 1].density > smallest.density) {
+                                    delete candidates[++j];
+                                } else {
+                                    smallest = candidates[j + 1];
+                                    delete candidates[j];
+                                }
+                            }
+                        }
+                    }
+                    candidates = candidates.filter(clean);
+                    console.log(candidates);
+                    //Return the URL of the sole remaining entry in candidates, and that entry's
+                    //associated pixel density.
+                    return {
+                        url: candidates[0].url,
+                        density: candidates[0].density
+                    };
+
+                    function clean(e) {
+                        return e;
+                    }
+                    //using code from: http://stackoverflow.com/questions/1068834/object-comparison-in-javascript
+                    function propCompare(x, y) {
+                        //type check for objects
+                        if ((x instanceof Array) || (y instanceof Array) || (typeof x) + (typeof y) !== 'objectobject') {
                             return false;
                         }
+                        if (x !== y) {
+                            var xProps = Object.getOwnPropertyNames(x).sort(),
+                                yProps = Object.getOwnPropertyNames(y).sort();
+                            //lengths or names differ
+                            if ((xProps.length !== yProps.length) || (xProps.join('') !== yProps.join(''))) {
+                                return false;
+                            }
+                            //values differ
+                            for (var i in x) {
+                                if (x[i] !== y[i]) {
+                                    return false;
+                                }
+                            }
+                        }
+                        return true;
                     }
-                    return true;
                 }
-            }
-        }(this));
-    //tests
-    //window.srcsetParser.parse();
-    //window.srcsetParser.parse("");
-    //window.srcsetParser.parse(Node);
-    //window.srcsetParser.parse(123);
-    //window.srcsetParser.parse("\u0020\u0009\u000A\u000C\u000D");
-    //window.srcsetParser.parse("banner-HD.jpeg 2x, banner-phone.jpeg 100w, banner-phone-HD.jpeg 100w 2x");
-    window.srcsetParser.parse('pear-mobile.jpeg 720w, pear-tablet.jpeg 1280w, pear-desktop.jpeg 1x');
-    //window.srcsetParser.parse("");
-
+            }(this));
+        //tests
+        //window.srcsetParser.parse();
+        //window.srcsetParser.parse("");
+        //window.srcsetParser.parse(Node);
+        //window.srcsetParser.parse(123);
+        //window.srcsetParser.parse("\u0020\u0009\u000A\u000C\u000D");
+        //window.srcsetParser.parse("banner-HD.jpeg 2x, banner-phone.jpeg 100w, banner-phone-HD.jpeg 100w 2x");
+        window.srcsetParser.parse('pear-mobile.jpeg 720w, pear-tablet.jpeg 1280w, pear-desktop.jpeg 1x');
+        //window.srcsetParser.parse("");
