@@ -448,11 +448,12 @@
         //height, and pixel density as an earlier entry.
         if (candidates.length > 1) {
             for (var i = 0; i <= candidates.length; i++) {
-                for (var b = candidates.length-1;  b > i; b--) {
-                    if (arePropsEqual(candidates[i], candidates[b])) {
-                        candidates.splice(b, 1);
+                for (var b = candidates.length-1; b > i; b--) {
+                    if(i !== b){
+                        if (arePropsEqual(candidates[i], candidates[b])) {
+                            candidates.splice(b, 1);
+                        }
                     }
-                    
                 }
             }
         }
@@ -568,7 +569,7 @@
                 }
                 //values differ
                 for (var i in x) {
-                    if (x[i] !== y[i]) {
+                    if (!(String(x[i]) === String(y[i]))) {
                         return false;
                     }
                 }
@@ -586,8 +587,9 @@
 
 var img = new Image(""); 
 //img.setAttribute('src','default.png')
-img.setAttribute('srcset', 'default.png 1x, default.png 1x');
-img.setAttribute('srcset', 'a.png 1x, a.png 1x,  a.png 1x,  a.png 1x');
+//img.setAttribute('srcset', 'default.png 1x, default.png 1x');
+//img.setAttribute('srcset', 'a.png 1x, b.png 1x, b.png 1x,  a.png 1x');
+img.setAttribute('srcset', 'a.png 1x, b.png 1x, c.png 1x, c.png 1x, b.png 1x, a.png 1x, d.png 1x');
 window.srcsetParser.parse(img)
 //img.setAttribute('srcset', 'pear-mobile.jpeg 720w, pear-tablet.jpeg 1280w, pear-desktop.jpeg 1x');
 
