@@ -359,7 +359,8 @@
             validFloat = /^[\-\+]?[0-9]*\.?[0-9]+([eE][\-\+]?[0-9]+)?\u0078$/,
             entry,
             maxWidth,
-            maxHeight;
+            maxHeight,
+            maxDensity;
         //For each entry in raw candidates with URL url associated with the unparsed descriptors unparsed descriptors,
         // in the order they were originally added to the list, run these substeps:
         for (var i = 0, l = rawCandidates.length, descriptorList; i < l; i++) {
@@ -467,18 +468,27 @@
         //purposes of this step.
         //Let max width be the width of the viewport, and let max height be the height of
         //the viewport.[CSS]
-        maxWidth =  1000; //window.innerWidth;
-        maxHeight = 1000; //window.innerHeight;
+        maxWidth = window.innerWidth;
+        maxHeight = window.innerHeight;
+        maxDensity = window.devicePixelRatio;
+
         //If there are any entries in candidates that have an associated width that
         //is less than max width, then remove them,
         //unless that would remove all the entries, in which case remove only
         //the entries whose associated width is less than the greatest such width.
-        discardDimensinalOutliers('width',candidates, maxWidth);
+        discardOutliers('width', candidates, maxWidth);
         //If there are any entries in candidates that have an associated height that is less
         //than max height, then remove them,unless that would remove all the entries,
         //in which case remove only the entries whose associated height is less than the greatest
         //such height.
-        discardDimensinalOutliers('height',candidates, maxHeight);
+        discardOutliers('height', candidates, maxHeight);
+
+        //If there are any entries in candidates that have an associated pixel density that
+        //is less than a user-agent-defined value giving the nominal pixel density of the display,
+        //then remove them, unless that would remove all the entries, in which case remove only
+        //the entries whose associated pixel density is less than the greatest such pixel density.
+        discardOutliers('density', candidates, maxDensity);
+
         //Remove all the entries in candidates that have an associated width that is greater than
         //the smallest such width.
         //Remove all the entries in candidates that have an associated height that is greater than
@@ -488,11 +498,11 @@
         ['width', 'height', 'density'].forEach(function(prop) {
                 findBestMatch(prop, candidates);
         });
-        
+
         //Return the URL of the sole remaining entry in candidates, and that entry's
         //associated pixel density.
         if (candidates.length > 1) {
-            window.console.warn('there was more than one candidate?');
+            window.console.warn('there was more than one candidate?', candidates);
         }
         return {
             url: candidates[0].url,
@@ -500,7 +510,7 @@
         };
     }
 
-    function discardDimensinalOutliers(prop, candidates, max) {
+    function discardOutliers(prop, candidates, max) {
         if (candidates.length > 1) {
             for (var i = 0, next = candidates[i + 1], biggest = candidates[i]; i < candidates.length; i++) {
                 if (candidates[i].hasOwnProperty(prop) && candidates[i][prop] < max) {
@@ -522,7 +532,7 @@
                     if (candidates[i + 1][prop] > smallest[prop]) {
                         candidates.splice(i + 1, 1);
                         i--;
-                    } else if(candidates[i + 1][prop] !== smallest[prop]){
+                    } else if (candidates[i + 1][prop] !== smallest[prop]) {
                         smallest = candidates[i + 1];
                         candidates.splice(i--, 1);
                     }
@@ -532,61 +542,184 @@
     }
 
     function arePropsEqual(x, y) {
-        //type check for objects
-        if ((typeof x) + (typeof y) !== 'objectobject') {
-            throw new TypeError('Invalid input');
-        }
-        if (x !== y) {
-            var xProps = Object.getOwnPropertyNames(x).sort(),
-                yProps = Object.getOwnPropertyNames(y).sort();
-            //lengths or names differ
-            if ((xProps.length !== yProps.length) || (String(xProps.join('')) !== String(yProps.join('')))) {
+        //values differ
+        for (var i in x) {
+            //check everything, except URL
+            if ((i !== 'url') && String(x[i]) !== String(y[i])) {
                 return false;
-            }
-            //values differ
-            for (var i in x) {
-                if (String(x[i]) !== String(y[i])) {
-                    return false;
-                }
             }
         }
         return true;
     }
 }(this, window));
-var img = new Image(''),
-    srcset,
-    parse = window.srcsetParser.parse;
-img.setAttribute('srcset', '');
-srcset = img.getAttributeNode('srcset');
-console.log(parse(srcset));
-
-//img.setAttribute('srcset', 'default.png 1x, default.png 1x');
-//img.setAttribute('srcset', 'a.png 1x, b.png 1x, b.png 1x,  a.png 1x');
-//img.setAttribute('srcset', 'a.png 1x, b.png 1x, c.png 1x, c.png 1x, b.png 1x, a.png 1x, d.png 1x');
-//img.setAttribute('srcset', 'a 1w, b 2h, c 3w');
-
-img.setAttribute('src','pass');
-img.setAttribute('srcset', 'fail 100w, fail 200w, fail 300w');
-console.log(parse(srcset));
-
-img.setAttribute('src','fail_default');
-img.setAttribute('srcset', 'pass 2000w, fail1 3000w, fail2 4000w');
-console.log(parse(srcset));
-
-img.setAttribute('srcset', 'fail1 3000h, fail2 4000h, pass 2000h');
-console.log(parse(srcset));
 
 
-img.setAttribute('srcset', 'fail1 3000h, pass 2000h, fail2 4000h');
-console.log(parse(srcset));
-img.setAttribute('srcset', 'pear-mobile.jpeg 320w, pear-tablet.jpeg 720w, pear-desktop.jpeg 1x');
-console.log(parse(srcset));
-//tests
-//window.srcsetParser.parse();
-//window.srcsetParser.parse("");
-//window.srcsetParser.parse(Node);
-//window.srcsetParser.parse(123);
-//window.srcsetParser.parse("\u0020\u0009\u000A\u000C\u000D");
-//window.srcsetParser.parse("banner-HD.jpeg 2x, banner-phone.jpeg 100w, banner-phone-HD.jpeg 100w 2x");
-//window.srcsetParser.parse("");
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('srcset', '');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, null);
+    assert_equals(result.density, undefined);
+}, 'If candidates is empty, return null and undefined.');
+
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('srcset', '\t \t\r\f\f\r \n \t');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, null);
+    assert_equals(result.density, undefined);
+}, 'Ignore whitespace at the attribute value.');
+
+
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('srcset', 'pass 1x, fail 1x');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'Ignore duplicates, even if the url is different.');
+
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('srcset', 'pass 0002.000x, b 02x, b 02.0000x, fail 2x');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 2);
+}, 'Ignore a long list of duplicates with different densities.');
+
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('srcset', 'pass 0002.000h, a 02h, c 02.0000h, fail 2h');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'Ignore a long list of duplicates with the same heights.');
+
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('srcset', 'pass 0002.000h 01w 1x, a 02h 001w, c 02.0000h, fail 2h 001w 1x');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'Ignore a long list of duplicates with the same width and height and density.');
+
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('srcset', 'fail 0002h 01w 1x, a 02h 001w 1x, c 02h 0001w 1x, fail 2h 001w 1x, pass 2000w');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'Ignore a long list of duplicates with the same width and height and density.');
+
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('srcset', 'fail 0002h 01w 1x, a 02h 001w 1x, c 02h 0001w 1x, fail 2h 001w 1x, pass 2000w');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'Ignore a long list of duplicates with the same width and height and density.');
+
+
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('src', 'pass');
+    img.setAttribute('srcset', 'fail 1w, fail 2w, fail 3w');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'Test that src attribute is selected as a candidate.');
+
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('src', 'fail_src');
+    img.setAttribute('srcset', 'fail1 1w, pass 2000w, fail2 2000w, fail3 3w');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'Test that src attribute is not selected as a candidate.');
+
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('src', 'fail_src');
+    img.setAttribute('srcset', 'pass 2000w, fail1 3000w, fail2 4000w');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'Test selection of smallest large width.');
+
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('src', 'fail_src');
+    img.setAttribute('srcset', 'pass 2000h, fail1 3000h, fail2 4000h');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'Test selection of smallest large height.');
+
+
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('src', 'fail_src');
+    img.setAttribute('srcset', 'fail1 3000h, fail2 4000h, pass 2000h');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'Test selection of smallest large height.');
+
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('src', 'fail_src');
+    img.setAttribute('srcset', 'fail1 3000h, fail2 4000h, pass 2000h, fail1 3000h, fail 2000h, fail2 4000h');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'Test selection of smallest large height, with redudant values.');
+
+test(function() {
+    var img = new Image(''),
+        result,
+        width = window.innerWidth + 'w';
+    img.setAttribute('src', 'fail_src');
+    img.setAttribute('srcset', 'pass ' + width, 'fail ' + width);
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, "Test selection of the right source when window's width is the same as the source.");
+
+test(function() {
+    var img = new Image(''),
+        result,
+        height = window.innerHeight;
+    img.setAttribute('src', 'fail_src');
+    img.setAttribute('srcset', 'pass ' + height + 'h', 'fail ' + (height - 1) + 'h', 'fail ' + (height + 1) + 'h');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, "Test selection of the right source when window's width is the same as the source and other bigger and smaller sources are available.");
+
+
+test(function() {
+    var img = new Image(''),
+        result,
+        height = window.innerHeight;
+    img.setAttribute('src', 'fail_src');
+    img.setAttribute('srcset', 'pass ' + height + 'h', 'fail ' + (height - 1) + 'h', 'fail ' + (height + 1) + 'h');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, "Test selection of the right source when window's height is the same as the source and other bigger and smaller sources are available.");
 
