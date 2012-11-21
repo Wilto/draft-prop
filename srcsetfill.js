@@ -469,12 +469,12 @@
         //is less than max width, then remove them,
         //unless that would remove all the entries, in which case remove only
         //the entries whose associated width is less than the greatest such width.
-        discardDimensinalOutliers(candidates, 'width', maxWidth);
+        discardDimensinalOutliers('width',candidates, maxWidth);
         //If there are any entries in candidates that have an associated height that is less
         //than max height, then remove them,unless that would remove all the entries,
         //in which case remove only the entries whose associated height is less than the greatest
         //such height.
-        discardDimensinalOutliers(candidates, 'height', maxHeight);
+        discardDimensinalOutliers('height',candidates, maxHeight);
         //Remove all the entries in candidates that have an associated width that is greater than
         //the smallest such width.
         //Remove all the entries in candidates that have an associated height that is greater than
