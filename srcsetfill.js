@@ -1,3 +1,7 @@
+/**
+* TODO: need a Viewport object to facilitate testing.
+**/
+
 (function(exports, window) {
     'use strict';
     //The HTML contains definitions/algorithms from HTML5
@@ -360,10 +364,10 @@
         // in the order they were originally added to the list, run these substeps:
         for (var i = 0, l = rawCandidates.length, descriptorList; i < l; i++) {
             //Let descriptor list be the result of splitting unparsed descriptors on spaces.
-            var error = 'no', //Let error be no.
-                width, //Let width be absent.
-                height, //Let height be absent.
-                density; //Let density be absent.
+            var error = false, //Let error be no.
+                width = null, //Let width be absent.
+                height = null, //Let height be absent.
+                density = null; //Let density be absent.
             descriptorList = HTML.splitStringOnSpaces(rawCandidates[i].descriptors);
             //For each token in descriptor list, run the appropriate set of steps from the following list:
             for (var j = 0, token, jl = descriptorList.length; j < jl; j++) {
@@ -372,8 +376,8 @@
                 //a U+0077 LATIN SMALL LETTER W character
                 if (validWidth.test(token)) {
                     //If width is not absent, then let error be yes.
-                    if (width !== undefined) {
-                        error = 'yes';
+                    if (width !== null) {
+                        error = true;
                     }
                     //Apply the rules for parsing non-negative integers to the token.
                     //Let width be the result.
@@ -382,8 +386,8 @@
                     //If the token consists of a valid non-negative integer followed
                     //by a U+0068 LATIN SMALL LETTER H character
                     //I height is not absent, then let error be yes.
-                    if (height !== undefined) {
-                        error = 'yes';
+                    if (height !== null) {
+                        error = true;
                     }
                     //Apply the rules for parsing non-negative integers to the token. Let height be the result.
                     height = HTML.parseNonNegInt(token);
@@ -391,8 +395,8 @@
                     //If the token consists of a valid floating-point number followed
                     //by a U+0078 LATIN SMALL LETTER X character
                     //If density is not absent, then let error be yes.
-                    if (density !== undefined) {
-                        error = 'yes';
+                    if (density !== null) {
+                        error = true;
                     }
                     //Apply the rules for parsing floating-point number values to the token.
                     //Let density be the result.
@@ -411,7 +415,7 @@
                     density = 1.0;
                 }
                 //If error is still no,
-                if (error === 'no') {
+                if (!error) {
                     //then add an entry to candidates whose URL is url,
                     //associated with a width width, a height height, and a pixel density density.
                     entry = {
@@ -431,7 +435,7 @@
             //Let url be the value of the element's src attribute.
             //Add an entry to candidates whose URL is url,
             //associated with a width Infinity, a height Infinity, and a pixel density 1.0.
-            entry.url = img.getAttribute('src');
+            entry.url = attr.ownerElement.getAttribute('src');
             entry.width = Infinity;
             entry.height = Infinity;
             entry.density = 1.0;
@@ -463,8 +467,8 @@
         //purposes of this step.
         //Let max width be the width of the viewport, and let max height be the height of
         //the viewport.[CSS]
-        maxWidth = window.innerWidth;
-        maxHeight = window.innerHeight;
+        maxWidth =  1000; //window.innerWidth;
+        maxHeight = 1000; //window.innerHeight;
         //If there are any entries in candidates that have an associated width that
         //is less than max width, then remove them,
         //unless that would remove all the entries, in which case remove only
@@ -555,16 +559,16 @@ var img = new Image(''),
 img.setAttribute('srcset', '');
 srcset = img.getAttributeNode('srcset');
 console.log(parse(srcset));
-//img.setAttribute('src','default.png')
+img.setAttribute('src','default');
 //img.setAttribute('srcset', 'default.png 1x, default.png 1x');
 //img.setAttribute('srcset', 'a.png 1x, b.png 1x, b.png 1x,  a.png 1x');
 //img.setAttribute('srcset', 'a.png 1x, b.png 1x, c.png 1x, c.png 1x, b.png 1x, a.png 1x, d.png 1x');
 //img.setAttribute('srcset', 'a 1w, b 2h, c 3w');
-img.setAttribute('srcset', 'pass 100w, fail 200w, fail 300w');
+img.setAttribute('srcset', 'fail 100w, fail 200w, fail 300w');
 console.log(parse(srcset));
 img.setAttribute('srcset', 'pass 2000w, fail1 3000w, fail2 4000w');
 console.log(parse(srcset));
-img.setAttribute('srcset', 'fail1 3000h, fail2 4000h,pass 2000h');
+img.setAttribute('srcset', 'fail1 3000h, fail2 4000h, pass 2000h');
 console.log(parse(srcset));
 img.setAttribute('srcset', 'fail1 3000h, pass 2000h, fail2 4000h');
 console.log(parse(srcset));
@@ -578,3 +582,4 @@ console.log(parse(srcset));
 //window.srcsetParser.parse("\u0020\u0009\u000A\u000C\u000D");
 //window.srcsetParser.parse("banner-HD.jpeg 2x, banner-phone.jpeg 100w, banner-phone-HD.jpeg 100w 2x");
 //window.srcsetParser.parse("");
+
