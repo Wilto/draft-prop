@@ -216,7 +216,7 @@
         }
         //If the character indicated by position is a "-" (U+002D) character:
         if (input[position] === '-') {
-            //Change value and divisor to −1.
+            //Change value and divisor to âˆ’1.
             divisor *= -1;
             //Advance position to the next character.
             position++;
@@ -278,7 +278,7 @@
         //Advance position to the next character.
         //If position is past the end of input, then jump to the step labeled conversion.
         //If the character indicated by position is a "-" (U+002D) character:
-        //Change exponent to −1.
+        //Change exponent to âˆ’1.
         //Advance position to the next character.
         //If position is past the end of input, then jump to the step labeled conversion.
         //Otherwise, if the character indicated by position is a "+" (U+002B) character:
@@ -289,10 +289,10 @@
         //Multiply value by ten raised to the exponentth power.
         //Conversion:
         function conversion() {}
-        // Let S be the set of finite IEEE 754 double-precision floating-point values except −0,
-        //but with two special values added: 21024 and −21024.
-        //Let rounded-value be the number in S that is closest to value, selecting the number with an even significand if there are two equally close values. (The two special values 21024 and −21024 are considered to have even significands for this purpose.)
-        //If rounded-value is 21024 or −21024, return an error.
+        // Let S be the set of finite IEEE 754 double-precision floating-point values except âˆ’0,
+        //but with two special values added: 21024 and âˆ’21024.
+        //Let rounded-value be the number in S that is closest to value, selecting the number with an even significand if there are two equally close values. (The two special values 21024 and âˆ’21024 are considered to have even significands for this purpose.)
+        //If rounded-value is 21024 or âˆ’21024, return an error.
         //Return rounded-value.
     }
 
@@ -485,15 +485,14 @@
         //the smallest such height.
         //Remove all the entries in candidates that have an associated pixel density that
         //is greater than the smallest such pixel density.
-        if (candidates.length > 1) {
-            ['width', 'height', 'density'].forEach(function(prop) {
+        ['width', 'height', 'density'].forEach(function(prop) {
                 findBestMatch(prop, candidates);
-            });
-        }
+        });
+        
         //Return the URL of the sole remaining entry in candidates, and that entry's
         //associated pixel density.
         if (candidates.length > 1) {
-            throw new Error('there was more than one candidate?');
+            window.console.warn('there was more than one candidate?');
         }
         return {
             url: candidates[0].url,
@@ -503,12 +502,11 @@
 
     function discardDimensinalOutliers(prop, candidates, max) {
         if (candidates.length > 1) {
-            for (var j = 0, next, biggest = candidates[j]; j < candidates.length; j++) {
-                if (candidates[j].hasOwnProperty(prop) && candidates[j][prop] < max) {
-                    //find the biggest
-                    next = candidates[j + 1];
+            for (var i = 0, next = candidates[i + 1], biggest = candidates[i]; i < candidates.length; i++) {
+                if (candidates[i].hasOwnProperty(prop) && candidates[i][prop] < max) {
                     biggest = ((next) && next[prop] > biggest[prop]) ? next : biggest;
-                    candidates.splice(j, 1);
+                    candidates.splice(i--, 1);
+                    next = candidates[i + 1];
                 }
             }
             if (candidates.length === 0) {
@@ -518,14 +516,16 @@
     }
 
     function findBestMatch(prop, candidates) {
-        for (var j = 0, smallest = candidates[0]; j < candidates.length; j++) {
-            if (candidates[j].hasOwnProperty(prop) && !! (candidates[j + 1])) {
-                if (candidates[j + 1][prop] > smallest[prop]) {
-                    candidates.splice(j + 1, 1);
-                    j--;
-                } else {
-                    smallest = candidates[j + 1];
-                    candidates.splice(j, 1);
+        if (candidates.length > 1) {
+            for (var i = 0, smallest = candidates[0]; i < candidates.length; i++) {
+                if (candidates[i].hasOwnProperty(prop) && !! (candidates[i + 1])) {
+                    if (candidates[i + 1][prop] > smallest[prop]) {
+                        candidates.splice(i + 1, 1);
+                        i--;
+                    } else if(candidates[i + 1][prop] !== smallest[prop]){
+                        smallest = candidates[i + 1];
+                        candidates.splice(i--, 1);
+                    }
                 }
             }
         }
@@ -559,17 +559,24 @@ var img = new Image(''),
 img.setAttribute('srcset', '');
 srcset = img.getAttributeNode('srcset');
 console.log(parse(srcset));
-img.setAttribute('src','default');
+
 //img.setAttribute('srcset', 'default.png 1x, default.png 1x');
 //img.setAttribute('srcset', 'a.png 1x, b.png 1x, b.png 1x,  a.png 1x');
 //img.setAttribute('srcset', 'a.png 1x, b.png 1x, c.png 1x, c.png 1x, b.png 1x, a.png 1x, d.png 1x');
 //img.setAttribute('srcset', 'a 1w, b 2h, c 3w');
+
+img.setAttribute('src','pass');
 img.setAttribute('srcset', 'fail 100w, fail 200w, fail 300w');
 console.log(parse(srcset));
+
+img.setAttribute('src','fail_default');
 img.setAttribute('srcset', 'pass 2000w, fail1 3000w, fail2 4000w');
 console.log(parse(srcset));
+
 img.setAttribute('srcset', 'fail1 3000h, fail2 4000h, pass 2000h');
 console.log(parse(srcset));
+
+
 img.setAttribute('srcset', 'fail1 3000h, pass 2000h, fail2 4000h');
 console.log(parse(srcset));
 img.setAttribute('srcset', 'pear-mobile.jpeg 320w, pear-tablet.jpeg 720w, pear-desktop.jpeg 1x');
