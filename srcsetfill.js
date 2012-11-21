@@ -1,12 +1,13 @@
-'use strict';
 (function(exports, window) {
+    'use strict';
     //The HTML contains definitions/algorithms from HTML5
     var HTML = Object.create(null),
         debugging = true,
         srcsetParser = new SrcSetParser(),
         //"white space" per HTML5
         //Spec: http://www.whatwg.org/specs/web-apps/current-work/#space-character
-        whitespace = '\u0020\u0009\u000A\u000C\u000D',
+        //\u0020\u0009\u000A\u000C\u000D
+        whitespace = ' \t\n\f\r',
         ASCIIDigits = /^[0-9]$/;
     //Configure HTML object
     Object.defineProperty(HTML, 'whitespace', {
@@ -78,9 +79,9 @@
             tokens = [],
             l = input.length,
             sequence = '',
-            ws = this.whitespace;
+            ws = HTML.whitespace;
         //Skip whitespace
-        position = this.skipWhiteSpace(input);
+        position = skipWhiteSpace(input);
         //While position is not past the end of input:
         while (position < l) {
             //Collect a sequence of characters that are not space characters.
@@ -93,7 +94,7 @@
                 tokens.push(sequence);
                 sequence = '';
                 //Skip whitespace
-                position += this.skipWhiteSpace(input.substr(position, l));
+                position += skipWhiteSpace(input.substr(position, l));
             }
         }
         //Return tokens.
@@ -156,7 +157,7 @@
             return new Error('Invlid input');
         }
         //If the character indicated by position (the first character) is a "-" (U+002D) character:
-        if (input[position] === '\u002D') {
+        if (input[position] === '-') {
             //Let sign be "negative".
             sign = 'negative';
             //Advance position to the next character.
@@ -166,7 +167,7 @@
                 return new Error('Invlid input');
             }
             //Otherwise, if the character indicated by position (the first character) is a "+" (U+002B) character:
-        } else if (input[position] === '\u002B') {
+        } else if (input[position] === '+') {
             //Advance position to the next character. (The "+" is ignored, but it is not conforming.)
             position++;
             //If position is past the end of input, return an error.
@@ -193,7 +194,7 @@
     //The rules for parsing floating-point number values are as given in the following algorithm. This algorithm must be aborted at the first step that returns something. This algorithm will return either a number or an error.
     //Let input be the string being parsed.
     function parseFloat(input) {
-        console.warn('Using ECMAScript parse float, as the HTML one is not done yet');
+        exports.console.warn('Using ECMAScript parse float, as the HTML one is not done yet');
         return window.parseFloat(input);
         //Let position be a pointer into input, initially pointing at the start of the string.
         var position = 0,
@@ -210,13 +211,13 @@
             return new Error('invalid input');
         }
         //If the character indicated by position is a "-" (U+002D) character:
-        if (input[position] === '\u002D') {
+        if (input[position] === '-') {
             //Change value and divisor to −1.
             divisor *= -1;
             //Advance position to the next character.
             position++;
             //Otherwise, if the character indicated by position (the first character) is a "+" (U+002B) character:
-        } else if (input[position] === '\u002B') {
+        } else if (input[position] === '+') {
             //Advance position to the next character. (The "+" is ignored, but it is not conforming.)
             position++;
         }
@@ -227,7 +228,7 @@
         //If the character indicated by position is a "." (U+002E),
         //and that is not the last character in input,
         //and the character after the character indicated by position is one of ASCII digits,
-        if (input[position] === '\u002E' && position !== endOfInput && ASCIIDigits.test(input[position + 1])) {
+        if (input[position] === '.' && position !== endOfInput && ASCIIDigits.test(input[position + 1])) {
             //then set value to zero and jump to the step labeled fraction.
             value = 0;
             fraction();
@@ -247,16 +248,18 @@
         }
         //Fraction: If the character indicated by position is a "." (U+002E), run these substeps:
         function fraction() {
+
             //Advance position to the next character.
             position++;
-            if (
+
             //If position is past the end of input,
-            position > endOfInput
+            var eoi = position > endOfInput,
+                isDigit = ASCIIDigits.test(input[position]),
+                chr = input[position];
             //or if the character indicated by position is not one of ASCII digits,
-            ||
-            (ASCIIDigits.test(input[position]) || input[position] === '\u0065' || '\u0045')
             //"e" (U+0065), or "E" (U+0045),
-            ) { //then jump to the step labeled conversion.
+            if (eoi || isDigit || chr === 'e' || chr === 'E') {
+                //then jump to the step labeled conversion.
                 conversion();
             }
         }
@@ -280,7 +283,9 @@
         //If the character indicated by position is not one of ASCII digits, then jump to the step labeled conversion.
         //Collect a sequence of characters in the range ASCII digits, and interpret the resulting sequence as a base-ten integer. Multiply exponent by that integer.
         //Multiply value by ten raised to the exponentth power.
-        //Conversion: Let S be the set of finite IEEE 754 double-precision floating-point values except −0,
+        //Conversion:
+        function conversion() {}
+        // Let S be the set of finite IEEE 754 double-precision floating-point values except −0,
         //but with two special values added: 21024 and −21024.
         //Let rounded-value be the number in S that is closest to value, selecting the number with an even significand if there are two equally close values. (The two special values 21024 and −21024 are considered to have even significands for this purpose.)
         //If rounded-value is 21024 or −21024, return an error.
@@ -290,10 +295,9 @@
     function parseSrcset(attr) {
         //Let input be the value of the img element's srcset attribute.
         var input = attr.value;
-        if (!(attr instanceof Attr)) {
+        if (!(attr instanceof window.Attr)) {
             throw new TypeError('Invalid input');
         }
-
         //Let position be a pointer into input, initially pointing at the start of the string.
         var position = 0,
             descriptors,
@@ -315,10 +319,12 @@
                 }
             }
             //If url is empty, then jump to the step labeled descriptor parser.
-            (url.length === 0) ? parseDescriptions(rawCandidates, attr) : null;
+            if (url.length === 0) {
+                parseDescriptions(rawCandidates, attr);
+            }
             //Collect a sequence of characters that are not "," (U+002C) characters, and let that be descriptors.
-            for (var descriptors = ''; position < l; position++) {
-                if (input[position] !== '\u002C') {
+            for (descriptors = ''; position < l; position++) {
+                if (input[position] !== ',') {
                     descriptors += input[position];
                 } else {
                     //Advance position to the next character in input (skipping past the "," (U+002C) character separating this candidate from the next).
@@ -346,17 +352,19 @@
         var candidates = [],
             validWidth = /^\d+\u0077$/,
             validHeight = /^\d+\u0068$/,
-            validFloat = /^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\u0078$/,
-            entry;
+            validFloat = /^[\-\+]?[0-9]*\.?[0-9]+([eE][\-\+]?[0-9]+)?\u0078$/,
+            entry,
+            maxWidth,
+            maxHeight;
         //For each entry in raw candidates with URL url associated with the unparsed descriptors unparsed descriptors,
         // in the order they were originally added to the list, run these substeps:
         for (var i = 0, l = rawCandidates.length, descriptorList; i < l; i++) {
             //Let descriptor list be the result of splitting unparsed descriptors on spaces.
-            var descriptorList = HTML.splitStringOnSpaces(rawCandidates[i].descriptors),
-                error = 'no', //Let error be no.
-                width = undefined, //Let width be absent.
-                height = undefined, //Let height be absent.
-                density = undefined; //Let density be absent.
+            var error = 'no', //Let error be no.
+                width, //Let width be absent.
+                height, //Let height be absent.
+                density; //Let density be absent.
+            descriptorList = HTML.splitStringOnSpaces(rawCandidates[i].descriptors);
             //For each token in descriptor list, run the appropriate set of steps from the following list:
             for (var j = 0, token, jl = descriptorList.length; j < jl; j++) {
                 token = descriptorList[j];
@@ -441,9 +449,9 @@
         //Repeat this step until none of the entries in candidates have the same associated width,
         //height, and pixel density as an earlier entry.
         if (candidates.length > 1) {
-            for (var i = 0; i <= candidates.length; i++) {
-                for (var b = candidates.length - 1; b > i; b--) {
-                    if ((i !== b) && arePropsEqual(candidates[i], candidates[b])) {
+            for (var h = 0; h <= candidates.length; h++) {
+                for (var b = candidates.length - 1; b > h; b--) {
+                    if ((h !== b) && arePropsEqual(candidates[h], candidates[b])) {
                         candidates.splice(b, 1);
                     }
                 }
@@ -455,45 +463,18 @@
         //purposes of this step.
         //Let max width be the width of the viewport, and let max height be the height of
         //the viewport.[CSS]
-        var maxWidth = window.innerWidth;
-        var maxHeight = window.innerHeight;
+        maxWidth = window.innerWidth;
+        maxHeight = window.innerHeight;
         //If there are any entries in candidates that have an associated width that
         //is less than max width, then remove them,
-        if (candidates.length > 1) {
-            for (var j = 0, next, biggest = candidates[j]; j < candidates.length; j++) {
-                if (candidates[j].hasOwnProperty('width') && candidates[j].width < maxWidth) {
-                    //find the biggest
-                    next = candidates[j + 1];
-                    biggest = ((next) && next.width > biggest.width) ? next : biggest;
-                    candidates.splice(j, 1);
-                }
-            }
-            //unless that would remove all the entries,
-            if (candidates.length === 0) {
-                //in which case remove only the entries whose associated width is less
-                //than the greatest such width.
-                candidates.push(biggest);
-            }
-        }
+        //unless that would remove all the entries, in which case remove only
+        //the entries whose associated width is less than the greatest such width.
+        discardDimensinalOutliers(candidates, 'width', maxWidth);
         //If there are any entries in candidates that have an associated height that is less
-        //than max height, then remove them,
-        if (candidates.length > 1) {
-            for (var j = 0, biggest = candidates[j]; j < candidates.length; j++) {
-                if (candidates[j].hasOwnProperty('height') && candidates[j].height < maxHeight) {
-                    //find the biggest
-                    biggest = (candidates[j + 1].height > biggest.height) ? candidates[j + 1] : biggest;
-                    candidates[j].splice(j, 1);
-                }
-            }
-            //unless that would remove all the entries,
-            //in which case remove only the entries whose associated height is less than the greatest
-            //such height.
-            if (candidates.length === 0) {
-                //in which case remove only the entries whose associated width is less
-                //than the greatest such width.
-                candidates.push(biggest);
-            }
-        }
+        //than max height, then remove them,unless that would remove all the entries,
+        //in which case remove only the entries whose associated height is less than the greatest
+        //such height.
+        discardDimensinalOutliers(candidates, 'height', maxHeight);
         //Remove all the entries in candidates that have an associated width that is greater than
         //the smallest such width.
         //Remove all the entries in candidates that have an associated height that is greater than
@@ -501,21 +482,38 @@
         //Remove all the entries in candidates that have an associated pixel density that
         //is greater than the smallest such pixel density.
         if (candidates.length > 1) {
-            ['width', 'height', 'density'].forEach(function(prop) {reduceCandidates(prop, candidates)});
+            ['width', 'height', 'density'].forEach(function(prop) {
+                findBestMatch(prop, candidates);
+            });
         }
         //Return the URL of the sole remaining entry in candidates, and that entry's
         //associated pixel density.
         if (candidates.length > 1) {
-            throw new Error("there was more than one candidate?") 
+            throw new Error('there was more than one candidate?');
         }
         return {
             url: candidates[0].url,
             density: candidates[0].density
         };
-        
     }
 
-    function reduceCandidates(prop,candidates) {
+    function discardDimensinalOutliers(prop, candidates, max) {
+        if (candidates.length > 1) {
+            for (var j = 0, next, biggest = candidates[j]; j < candidates.length; j++) {
+                if (candidates[j].hasOwnProperty(prop) && candidates[j][prop] < max) {
+                    //find the biggest
+                    next = candidates[j + 1];
+                    biggest = ((next) && next[prop] > biggest[prop]) ? next : biggest;
+                    candidates.splice(j, 1);
+                }
+            }
+            if (candidates.length === 0) {
+                candidates.unshift(biggest);
+            }
+        }
+    }
+
+    function findBestMatch(prop, candidates) {
         for (var j = 0, smallest = candidates[0]; j < candidates.length; j++) {
             if (candidates[j].hasOwnProperty(prop) && !! (candidates[j + 1])) {
                 if (candidates[j + 1][prop] > smallest[prop]) {
@@ -543,7 +541,7 @@
             }
             //values differ
             for (var i in x) {
-                if (!(String(x[i]) === String(y[i]))) {
+                if (String(x[i]) !== String(y[i])) {
                     return false;
                 }
             }
@@ -572,7 +570,6 @@ img.setAttribute('srcset', 'fail1 3000h, pass 2000h, fail2 4000h');
 console.log(parse(srcset));
 img.setAttribute('srcset', 'pear-mobile.jpeg 320w, pear-tablet.jpeg 720w, pear-desktop.jpeg 1x');
 console.log(parse(srcset));
-
 //tests
 //window.srcsetParser.parse();
 //window.srcsetParser.parse("");
