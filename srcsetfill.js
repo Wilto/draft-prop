@@ -1,5 +1,5 @@
 'use strict';
-(function(exports,window) {
+(function(exports, window) {
     //The HTML contains definitions/algorithms from HTML5
     var HTML = Object.create(null),
         debugging = true,
@@ -47,14 +47,13 @@
     //Constructors and interfaces
     function SrcSetParser() {}
     Object.defineProperty(SrcSetParser.prototype, 'parse', {
-        value: parseElement
+        value: parseSrcset
     });
     Object.defineProperty(exports, 'srcsetParser', {
         get: function() {
             return srcsetParser;
         }
     });
-
     //The step skip whitespace means that the user agent must collect a sequence of characters that are space characters.
     //Spec: http://www.whatwg.org/specs/web-apps/current-work/#skip-whitespace
     function skipWhiteSpace(str) {
@@ -196,7 +195,6 @@
     function parseFloat(input) {
         console.warn('Using ECMAScript parse float, as the HTML one is not done yet');
         return window.parseFloat(input);
-
         //Let position be a pointer into input, initially pointing at the start of the string.
         var position = 0,
             value = 1, //Let value have the value 1.
@@ -229,7 +227,6 @@
         //If the character indicated by position is a "." (U+002E),
         //and that is not the last character in input,
         //and the character after the character indicated by position is one of ASCII digits,
-
         if (input[position] === '\u002E' && position !== endOfInput && ASCIIDigits.test(input[position + 1])) {
             //then set value to zero and jump to the step labeled fraction.
             value = 0;
@@ -290,13 +287,13 @@
         //Return rounded-value.
     }
 
-    function parseElement(element) {
-        var validElem = element instanceof HTMLImageElement;
+    function parseSrcset(attr) {
         //Let input be the value of the img element's srcset attribute.
-        var input = element.getAttribute('srcset');
-        if (!(validElem) || input === null || input === undefined || input === '') {
+        var input = attr.value;
+        if (!(attr instanceof Attr)) {
             throw new TypeError('Invalid input');
         }
+
         //Let position be a pointer into input, initially pointing at the start of the string.
         var position = 0,
             descriptors,
@@ -318,8 +315,7 @@
                 }
             }
             //If url is empty, then jump to the step labeled descriptor parser.
-            (url.length === 0) ? parseDescriptions(rawCandidates) : null;
-
+            (url.length === 0) ? parseDescriptions(rawCandidates, attr) : null;
             //Collect a sequence of characters that are not "," (U+002C) characters, and let that be descriptors.
             for (var descriptors = ''; position < l; position++) {
                 if (input[position] !== '\u002C') {
@@ -339,11 +335,11 @@
         }
         //If position is past the end of input, then jump to the step labeled descriptor parser.
         if (position > endOfInput) {
-            return parseDescriptions(rawCandidates);
+            return parseDescriptions(rawCandidates, attr);
         }
     }
     //Descriptor parser:
-    function parseDescriptions(rawCandidates) {
+    function parseDescriptions(rawCandidates, attr) {
         //Let candidates be an initially empty ordered list of URLs each with an associated pixel density,
         //and optionally an associated width and/or height.
         //The order of entries in the list is the order in which entries are added to the list.
@@ -422,7 +418,7 @@
         }
         //If the img element has a src attribute whose value is not the empty string,
         //then run the following substeps:
-        if (img.hasAttribute('src') && img.getAttribute('src') !== '') {
+        if (attr.ownerElement.hasAttribute('src') && attr.ownerElement.getAttribute('src') !== '') {
             entry = {};
             //Let url be the value of the element's src attribute.
             //Add an entry to candidates whose URL is url,
@@ -440,7 +436,6 @@
                 density: undefined
             };
         }
-
         //If an entry b in candidates has the same associated width, height, and pixel density
         //as an earlier entry a in candidates, then remove entry b.
         //Repeat this step until none of the entries in candidates have the same associated width,
@@ -454,12 +449,10 @@
                 }
             }
         }
-
         //Optionally, return the URL of an entry in candidates chosen by the user agent,
         //and that entry's associated pixel density, and then abort these steps.
         //The user agent may apply any algorithm or heuristic in its selection of an entry for the
         //purposes of this step.
-
         //Let max width be the width of the viewport, and let max height be the height of
         //the viewport.[CSS]
         var maxWidth = window.innerWidth;
@@ -475,7 +468,6 @@
                     candidates.splice(j, 1);
                 }
             }
-
             //unless that would remove all the entries,
             if (candidates.length === 0) {
                 //in which case remove only the entries whose associated width is less
@@ -493,7 +485,6 @@
                     candidates[j].splice(j, 1);
                 }
             }
-
             //unless that would remove all the entries,
             //in which case remove only the entries whose associated height is less than the greatest
             //such height.
@@ -502,86 +493,85 @@
                 //than the greatest such width.
                 candidates.push(biggest);
             }
-            //Remove all the entries in candidates that have an associated width that is greater than
-            //the smallest such width.
-            for (var j = 0, smallest = candidates[0]; j < candidates.length; j++) {
-                if ((candidates[j + 1]) && candidates[j].hasOwnProperty('width')) {
-                    if (candidates[j + 1].width > smallest.width) {
-                        candidates.splice(++j, 1);
-                    } else {
-                        smallest = candidates[j + 1];
-                        candidates.splice(j, 1);
-                    }
-                }
-            }
-            //Remove all the entries in candidates that have an associated height that is greater than
-            //the smallest such height.
-            for (var j = 0, smallest = candidates[0]; j < candidates.length; j++) {
-                if (candidates[j].hasOwnProperty('height')) {
-                    if (candidates[j + 1].height > smallest.height) {
-                        candidates.splice(++j, 1);
-                    } else {
-                        smallest = candidates[j + 1];
-                        candidates.splice(j, 1);
-                    }
-                }
-            }
-
-            //Remove all the entries in candidates that have an associated pixel density that
-            //is greater than the smallest such pixel density.
-            for (var j = 0, smallest = candidates[0]; j < candidates.length; j++) {
-                if ((candidates[j + 1]) && candidates[j].hasOwnProperty('density')) {
-                    if (candidates[j + 1].density > smallest.density) {
-                        candidates.splice(++j, 1);
-                    } else {
-                        smallest = candidates[j + 1];
-                        candidates.splice(j, 1);
-                    }
-                }
-            }
+        }
+        //Remove all the entries in candidates that have an associated width that is greater than
+        //the smallest such width.
+        //Remove all the entries in candidates that have an associated height that is greater than
+        //the smallest such height.
+        //Remove all the entries in candidates that have an associated pixel density that
+        //is greater than the smallest such pixel density.
+        if (candidates.length > 1) {
+            ['width', 'height', 'density'].forEach(function(prop) {reduceCandidates(prop, candidates)});
         }
         //Return the URL of the sole remaining entry in candidates, and that entry's
         //associated pixel density.
+        if (candidates.length > 1) {
+            throw new Error("there was more than one candidate?") 
+        }
         return {
             url: candidates[0].url,
             density: candidates[0].density
         };
+        
+    }
 
-        function arePropsEqual(x, y) {
-            //type check for objects
-            if ((typeof x) + (typeof y) !== 'objectobject') {
-                throw new TypeError('Invalid input');
-            }
-            if (x !== y) {
-                var xProps = Object.getOwnPropertyNames(x).sort(),
-                    yProps = Object.getOwnPropertyNames(y).sort();
-                //lengths or names differ
-                if ((xProps.length !== yProps.length) || (String(xProps.join('')) !== String(yProps.join('')))) {
-                    return false;
-                }
-                //values differ
-                for (var i in x) {
-                    if (!(String(x[i]) === String(y[i]))) {
-                        return false;
-                    }
+    function reduceCandidates(prop,candidates) {
+        for (var j = 0, smallest = candidates[0]; j < candidates.length; j++) {
+            if (candidates[j].hasOwnProperty(prop) && !! (candidates[j + 1])) {
+                if (candidates[j + 1][prop] > smallest[prop]) {
+                    candidates.splice(j + 1, 1);
+                    j--;
+                } else {
+                    smallest = candidates[j + 1];
+                    candidates.splice(j, 1);
                 }
             }
-            return true;
         }
     }
+
+    function arePropsEqual(x, y) {
+        //type check for objects
+        if ((typeof x) + (typeof y) !== 'objectobject') {
+            throw new TypeError('Invalid input');
+        }
+        if (x !== y) {
+            var xProps = Object.getOwnPropertyNames(x).sort(),
+                yProps = Object.getOwnPropertyNames(y).sort();
+            //lengths or names differ
+            if ((xProps.length !== yProps.length) || (String(xProps.join('')) !== String(yProps.join('')))) {
+                return false;
+            }
+            //values differ
+            for (var i in x) {
+                if (!(String(x[i]) === String(y[i]))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }(this, window));
-
-
-var img = new Image('');
+var img = new Image(''),
+    srcset,
+    parse = window.srcsetParser.parse;
+img.setAttribute('srcset', '');
+srcset = img.getAttributeNode('srcset');
+console.log(parse(srcset));
 //img.setAttribute('src','default.png')
 //img.setAttribute('srcset', 'default.png 1x, default.png 1x');
 //img.setAttribute('srcset', 'a.png 1x, b.png 1x, b.png 1x,  a.png 1x');
 //img.setAttribute('srcset', 'a.png 1x, b.png 1x, c.png 1x, c.png 1x, b.png 1x, a.png 1x, d.png 1x');
-
-img.setAttribute('srcset', 'a 1w, b 2h, c 3w');
-//img.setAttribute('srcset', 'a 100w, b 200w, c 300w');
-console.log(window.srcsetParser.parse(img));
-//img.setAttribute('srcset', 'pear-mobile.jpeg 720w, pear-tablet.jpeg 1280w, pear-desktop.jpeg 1x');
+//img.setAttribute('srcset', 'a 1w, b 2h, c 3w');
+img.setAttribute('srcset', 'pass 100w, fail 200w, fail 300w');
+console.log(parse(srcset));
+img.setAttribute('srcset', 'pass 2000w, fail1 3000w, fail2 4000w');
+console.log(parse(srcset));
+img.setAttribute('srcset', 'fail1 3000h, fail2 4000h,pass 2000h');
+console.log(parse(srcset));
+img.setAttribute('srcset', 'fail1 3000h, pass 2000h, fail2 4000h');
+console.log(parse(srcset));
+img.setAttribute('srcset', 'pear-mobile.jpeg 320w, pear-tablet.jpeg 720w, pear-desktop.jpeg 1x');
+console.log(parse(srcset));
 
 //tests
 //window.srcsetParser.parse();
