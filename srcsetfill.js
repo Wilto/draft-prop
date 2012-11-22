@@ -551,51 +551,6 @@
             }
         }
         return true;
-    }
-
-    // //Asynchronously await a stable state. The synchronous section consists of all the remaining steps of this algorithm until the algorithm says the synchronous section has ended. (Steps in synchronous sections are marked with ⌛.)
-    window.addEventListener("load", function(elem){
-        watchForChange(elem);
-    });
-
-    function watchForChange(elem){
-        //⌛ If the img element does not have a srcset attribute specified,
-        //is not in the completely available state,
-        // has image data whose resource type is multipart/x-mixed-replace,
-        //or if its update the image data algorithm is running, then abort this algorithm.
-        
-        //⌛ Let selected source and selected pixel density be the URL and pixel density
-        //that results from processing the image candidates, respectively.
-        var result= parseSrcset(elem.getAttributeNode("srcset")),
-            selectedSource = result.url,
-            selectedDensity = result.density,
-            CORSMode;
-
-        //⌛ If selected source is null, then abort these steps.
-        if(selectedSource === null){
-            return;
-        }
-
-        //⌛ If selected source and selected pixel density are the same as
-        //the element's last selected source and current pixel density,
-        //then abort these steps.
-
-        //⌛ Resolve selected source, relative to the element.
-
-        //⌛ Let CORS mode be the state of the element's crossorigin content attribute.
-        CORSMode = elem.getAttribute("crossorigin"); 
-
-        //⌛ If the resolve a URL algorithm is not successful, abort these steps.
-
-        //End the synchronous section, continuing the remaining steps asynchronously.
-
-        //Do a potentially CORS-enabled fetch of the resulting absolute URL, with the mode being CORS mode, the origin being the origin of the img element's Document, and the default origin behaviour set to taint.
-
-        //If this download fails in any way (other than the response code not being a 2xx code, as mentioned earlier), or if the image format is unsupported (as determined by applying the image sniffing rules, again as mentioned earlier), or if the resource type is multipart/x-mixed-replace, then abort these steps.
-
-        //Otherwise, wait for the fetch algorithm to queue its last task, and then continue with these steps. The data obtained in this way is used in the steps below.
-
-        //Queue a task to run the following substeps:
-    }
+    }    
 }(this, window));
 
