@@ -1,8 +1,13 @@
 <!doctype html>
+<meta charset="utf-8">
 <title>srcset parser tester</title>
 <link rel='stylesheet' href='http://w3c-test.org/resources/testharness.css'>
+<style>
+ #output{ font-weight: bold}
+</style>
 <body>
-<h1>HTML Compliant <code>srcset</code> parser</h1>	
+<h1>A <code>srcset</code> parser</h1>
+<p>Set the src and srcset attributes and 	
 <form id="srcsetTester">
 	<fieldset>
 		<legend>Element</legend>
@@ -16,7 +21,7 @@
 		<label>Height: <input id="height" min="1" type="number" readonly></label>
 		<label>Density:<input id="density" min="0" step=".1" type="number" readonly></label>
 	</fieldset>
-	<fieldset><legend>Output</legend>
+	<fieldset id="output"><legend>Output</legend>
 		<label>Best match: 
 			<output id="out"></output>
 		</label>
@@ -57,7 +62,6 @@
         
         //run
         popualteForm();
-        findSrcset();
  
         function setupAttributes(prop) {
             var props = {
@@ -70,7 +74,7 @@
             }
             Object.defineProperty(elem, prop.name, props);
             srcsetTester[prop.name].addEventListener("keyup", function (e) {
-                elem[prop.name] = e.srcElement.value;
+                elem[prop.name] = e.target.value;
             });
         }
 
@@ -78,7 +82,8 @@
         function popualteForm() {
             srcsetTester.width.value = window.innerWidth;
             srcsetTester.height.value = window.innerHeight;
-            srcsetTester.density.value = window.devicePixelRatio;
+            srcsetTester.density.value = window.devicePixelRatio | 1.0;
+            findSrcset();
         }
 
         function findSrcset() {
@@ -94,7 +99,7 @@
 </script>
 
 <hr>
-<h1>Test suite for srcset parser</h1>
+<h2>Test suite</h2>
 <div id="log"></div>
 <script src="http://w3c-test.org/resources/testharness.js"></script>
 <script src="srcsetfill.js"></script>
