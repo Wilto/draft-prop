@@ -1,5 +1,100 @@
 <!doctype html>
-<link rel='stylesheet' href='/resource/testharness.css'>
+<title>srcset parser tester</title>
+<link rel='stylesheet' href='http://w3c-test.org/resources/testharness.css'>
+<body>
+<h1>HTML Compliant <code>srcset</code> parser</h1>	
+<form id="srcsetTester">
+	<fieldset>
+		<legend>Element</legend>
+	&lt;img|picture|source 
+		<label>src=<input id="src" value="default.png" placeholder="default.png"></label>
+		<label>srcset=<input id="srcset" placeholder="foo 2x, bar 200w, bas 400h"></label>&gt;
+	</fieldset>
+	<fieldset>
+		<legend>Viewport (read only!)</legend>
+		<label>Width:  <input id="width" min="1" type="number" readonly> </label>
+		<label>Height: <input id="height" min="1" type="number" readonly></label>
+		<label>Density:<input id="density" min="0" step=".1" type="number" readonly></label>
+	</fieldset>
+	<fieldset><legend>Output</legend>
+		<label>Best match: 
+			<output id="out"></output>
+		</label>
+	</fieldset>
+</form>
+
+<script>
+(function (window) {
+    "use strict";
+    window.addEventListener("DOMContentLoaded", setUpTester);
+
+    function setUpTester() {
+        var srcsetTester = document.getElementById("srcsetTester"),
+            elem = document.createElement("x-element"),
+            attrValues = [{
+                name: "srcset",
+                value: ""
+            }, {
+                name: "src",
+                value: "default.png"
+            }],
+            srcsetAttr;
+
+        //create fake IDL attributes for x-element
+        attrValues.forEach((function () {
+            return function (prop) {
+                setupAttributes(prop);
+                //initialize attribute
+                elem[prop.name] = prop.value;
+            }
+        }()));
+
+        srcsetAttr = elem.getAttributeNode("srcset");
+ 		
+ 		//Wire up events
+ 		window.addEventListener("resize", popualteForm)
+        srcsetTester.addEventListener("input", findSrcset);
+        
+        //run
+        popualteForm();
+        findSrcset();
+ 
+        function setupAttributes(prop) {
+            var props = {
+                get: function () {
+                    return prop.value;
+                },
+                set: function (value) {
+                    elem.setAttribute(prop.name, String(value));
+                }
+            }
+            Object.defineProperty(elem, prop.name, props);
+            srcsetTester[prop.name].addEventListener("keyup", function (e) {
+                elem[prop.name] = e.srcElement.value;
+            });
+        }
+
+        //populate form
+        function popualteForm() {
+            srcsetTester.width.value = window.innerWidth;
+            srcsetTester.height.value = window.innerHeight;
+            srcsetTester.density.value = window.devicePixelRatio;
+        }
+
+        function findSrcset() {
+            var result = window.srcsetParser.parse(srcsetAttr)
+            showResult(result);
+        }
+
+        function showResult(value) {
+            srcsetTester.out.value = JSON.stringify(value);
+        }
+    }
+}(window));
+</script>
+
+<hr>
+<h1>Test suite for srcset parser</h1>
 <div id="log"></div>
 <script src="http://w3c-test.org/resources/testharness.js"></script>
 <script src="srcsetfill.js"></script>
