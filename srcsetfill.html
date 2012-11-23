@@ -4,275 +4,285 @@
 <title>srcset parser tester</title>
 <link rel='stylesheet' href='http://w3c-test.org/resources/testharness.css'>
 <style>
- #output{ font-weight: bold}
- form {
- 	display: block;
- 	width: 90%;
- 	margin: auto;
- 	background-color: #ddd;
- 	border: thin solid black;
- }
- fieldset{
- 	border: none;
- 	margin: 1em;
- }
-
-  legend{
-
-
-  }
- input[type=number]{
- 	width: 4em;
-
- }
- #element label{
- 	font-family: monospace;
- }
+    #output {
+        font-weight: bold
+    }
+    form {
+        display: block;
+        width: 90%;
+        margin: auto;
+        background-color: #ddd;
+        border: thin solid black;
+    }
+    fieldset {
+        border: none;
+        margin: 1em;
+    }
+    legend {
+        font-weight: bold;
+    }
+    input[type=number] {
+        width: 4em;
+    }
+    #element label {
+        font-family: monospace;
+    }
 </style>
 <body>
+    
 <h1>A <code>srcset</code> parser</h1>
-<p>Set the src and srcset attributes (e.g., <samp>foo 2x, bar 200w, bas 400h</samp>) and resize your browser window.</p> 	
-<form id="srcsetTester">
-	<fieldset id="element">
-		<legend>Element</legend>
-		<label>&lt;img|picture|source src=<input id="src" value="default.png" placeholder="default.png"></label>
-		<label>srcset=<input id="srcset" placeholder="foo 2x, bar 200w, bas 400h"></label>&gt;
-	</fieldset>
-	<fieldset>
-		<legend>Viewport (resize your browser window to change)</legend>
-		<label>Width:  <input id="width" min="1" type="number" readonly> </label>
-		<label>Height: <input id="height" min="1" type="number" readonly></label>
-		<label>Density:<input id="density" min="0" step=".1" type="number" readonly></label>
-	</fieldset>
-	<fieldset id="output"><legend>Output</legend>
-		<label>Best match: 
-			<output id="out"></output>
-		</label>
-	</fieldset>
-</form>
 
-<script>
-(function (window) {
-    "use strict";
-    window.addEventListener("DOMContentLoaded", setUpTester);
+    <p>This is reference implementation of <cite><a href="http://dev.w3.org/html5/srcset/">The srcset Attribute</a></cite>.</p>
+    <p>Set the
+        <label for="src">src</label>and
+        <label for="srcset">srcset</label>attributes (e.g., <samp>foo 2x, bar 200w, bas 400h</samp>)
+        and resize your browser window.</p>
+    <form id="srcsetTester">
+        <fieldset id="element">
+            <legend>Element</legend>
+            <label>&lt;img|picture|source src=
+                <input id="src" value="default.png" placeholder="default.png">
+            </label>
+            <label>srcset=
+                <input id="srcset" placeholder="foo 2x, bar 200w, bas 400h">
+            </label>&gt;</fieldset>
+        <fieldset>
+            <legend>Viewport (resize your browser window to change)</legend>
+            <label>Width:
+                <input id="width" min="1" type="number" readonly>
+            </label>
+            <label>Height:
+                <input id="height" min="1" type="number" readonly>
+            </label>
+            <label>Density:
+                <input id="density" min="0" step=".1" type="number" readonly>
+            </label>
+        </fieldset>
+        <fieldset id="output">
+            <legend>Output</legend>
+            <label>Best match:
+                <output id="out"></output>
+            </label>
+        </fieldset>
+    </form>
+    <script>
+        (function (window) {
+            "use strict";
+            window.addEventListener("DOMContentLoaded", setUpTester);
 
-    function setUpTester() {
-        var srcsetTester = document.getElementById("srcsetTester"),
-            elem = document.createElement("x-element"),
-            attrValues = [{
-                name: "srcset",
-                value: ""
-            }, {
-                name: "src",
-                value: "default.png"
-            }],
-            srcsetAttr;
+            function setUpTester() {
+                var srcsetTester = document.getElementById("srcsetTester"),
+                    elem = document.createElement("x-element"),
+                    attrValues = [{
+                        name: "srcset",
+                        value: ""
+                    }, {
+                        name: "src",
+                        value: "default.png"
+                    }],
+                    srcsetAttr;
+                //create fake IDL attributes for x-element
+                attrValues.forEach((function () {
+                    return function (prop) {
+                        setupAttributes(prop);
+                        //initialize attribute
+                        elem[prop.name] = prop.value;
+                    }
+                }()));
+                srcsetAttr = elem.getAttributeNode("srcset");
+                //Wire up events
+                window.addEventListener("resize", popualteForm)
+                srcsetTester.addEventListener("input", findSrcset);
+                //run
+                popualteForm();
 
-        //create fake IDL attributes for x-element
-        attrValues.forEach((function () {
-            return function (prop) {
-                setupAttributes(prop);
-                //initialize attribute
-                elem[prop.name] = prop.value;
-            }
-        }()));
+                function setupAttributes(prop) {
+                    var props = {
+                        get: function () {
+                            return prop.value;
+                        },
+                        set: function (value) {
+                            elem.setAttribute(prop.name, String(value));
+                        }
+                    }
+                    Object.defineProperty(elem, prop.name, props);
+                    srcsetTester[prop.name].addEventListener("keyup", function (e) {
+                        elem[prop.name] = e.target.value;
+                    });
+                }
+                //populate form
+                function popualteForm() {
+                    srcsetTester.width.value = window.innerWidth;
+                    srcsetTester.height.value = window.innerHeight;
+                    srcsetTester.density.value = window.devicePixelRatio | 1.0;
+                    findSrcset();
+                }
 
-        srcsetAttr = elem.getAttributeNode("srcset");
- 		
- 		//Wire up events
- 		window.addEventListener("resize", popualteForm)
-        srcsetTester.addEventListener("input", findSrcset);
-        
-        //run
-        popualteForm();
- 
-        function setupAttributes(prop) {
-            var props = {
-                get: function () {
-                    return prop.value;
-                },
-                set: function (value) {
-                    elem.setAttribute(prop.name, String(value));
+                function findSrcset() {
+                    var result = window.srcsetParser.parse(srcsetAttr)
+                    showResult(result);
+                }
+
+                function showResult(value) {
+                    srcsetTester.out.value = JSON.stringify(value);
                 }
             }
-            Object.defineProperty(elem, prop.name, props);
-            srcsetTester[prop.name].addEventListener("keyup", function (e) {
-                elem[prop.name] = e.target.value;
-            });
-        }
-
-        //populate form
-        function popualteForm() {
-            srcsetTester.width.value = window.innerWidth;
-            srcsetTester.height.value = window.innerHeight;
-            srcsetTester.density.value = window.devicePixelRatio | 1.0;
-            findSrcset();
-        }
-
-        function findSrcset() {
-            var result = window.srcsetParser.parse(srcsetAttr)
-            showResult(result);
-        }
-
-        function showResult(value) {
-            srcsetTester.out.value = JSON.stringify(value);
-        }
-    }
-}(window));
-</script>
-
-<hr>
+        }(window));
+    </script>
+    <hr>
+    
 <h2>Test suite</h2>
-<div id="log"></div>
-<script src="http://w3c-test.org/resources/testharness.js"></script>
-<script src="srcsetfill.js"></script>
-<script>
-    test(function () {
-        var img = new Image(''),
-            result;
-        img.setAttribute('srcset', '');
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, null);
-        assert_equals(result.density, undefined);
-    }, 'If candidates is empty, return null and undefined.');
-    test(function () {
-        var img = new Image(''),
-            result;
-        img.setAttribute('srcset', '\t \t\r\f\f\r \n \t');
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, null);
-        assert_equals(result.density, undefined);
-    }, 'Ignore whitespace at the attribute value.');
-    test(function () {
-        var img = new Image(''),
-            result;
-        img.setAttribute('srcset', 'pass 1x, fail 1x');
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, 'pass');
-        assert_equals(result.density, 1);
-    }, 'Ignore duplicates, even if the url is different.');
-    test(function () {
-        var img = new Image(''),
-            result;
-        img.setAttribute('srcset', 'pass 0002.000x, b 02x, b 02.0000x, fail 2x');
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, 'pass');
-        assert_equals(result.density, 2);
-    }, 'Ignore a long list of duplicates with different densities.');
-    test(function () {
-        var img = new Image(''),
-            result;
-        img.setAttribute('srcset', 'pass 0002.000h, a 02h, c 02.0000h, fail 2h');
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, 'pass');
-        assert_equals(result.density, 1);
-    }, 'Ignore a long list of duplicates with the same heights.');
-    test(function () {
-        var img = new Image(''),
-            result;
-        img.setAttribute('srcset', 'pass 0002.000h 01w 1x, a 02h 001w, c 02.0000h, fail 2h 001w 1x');
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, 'pass');
-        assert_equals(result.density, 1);
-    }, 'Ignore a long list of duplicates with the same width and height and density.');
-    test(function () {
-        var img = new Image(''),
-            result;
-        img.setAttribute('srcset', 'fail 0002h 01w 1x, a 02h 001w 1x, c 02h 0001w 1x, fail 2h 001w 1x, pass 2000w');
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, 'pass');
-        assert_equals(result.density, 1);
-    }, 'Ignore a long list of duplicates with the same width and height and density.');
-    test(function () {
-        var img = new Image(''),
-            result;
-        img.setAttribute('srcset', 'fail 0002h 01w 1x, a 02h 001w 1x, c 02h 0001w 1x, fail 2h 001w 1x, pass 2000w');
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, 'pass');
-        assert_equals(result.density, 1);
-    }, 'Ignore a long list of duplicates with the same width and height and density.');
-    test(function () {
-        var img = new Image(''),
-            result;
-        img.setAttribute('src', 'pass');
-        img.setAttribute('srcset', 'fail 1w, fail 2w, fail 3w');
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, 'pass');
-        assert_equals(result.density, 1);
-    }, 'Test that src attribute is selected as a candidate.');
-    test(function () {
-        var img = new Image(''),
-            result;
-        img.setAttribute('src', 'fail_src');
-        img.setAttribute('srcset', 'fail1 1w, pass 2000w, fail2 2000w, fail3 3w');
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, 'pass');
-        assert_equals(result.density, 1);
-    }, 'Test that src attribute is not selected as a candidate.');
-    test(function () {
-        var img = new Image(''),
-            result;
-        img.setAttribute('src', 'fail_src');
-        img.setAttribute('srcset', 'pass 2000w, fail1 3000w, fail2 4000w');
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, 'pass');
-        assert_equals(result.density, 1);
-    }, 'Test selection of smallest large width.');
-    test(function () {
-        var img = new Image(''),
-            result;
-        img.setAttribute('src', 'fail_src');
-        img.setAttribute('srcset', 'pass 2000h, fail1 3000h, fail2 4000h');
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, 'pass');
-        assert_equals(result.density, 1);
-    }, 'Test selection of smallest large height.');
-    test(function () {
-        var img = new Image(''),
-            result;
-        img.setAttribute('src', 'fail_src');
-        img.setAttribute('srcset', 'fail1 3000h, fail2 4000h, pass 2000h');
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, 'pass');
-        assert_equals(result.density, 1);
-    }, 'Test selection of smallest large height.');
-    test(function () {
-        var img = new Image(''),
-            result;
-        img.setAttribute('src', 'fail_src');
-        img.setAttribute('srcset', 'fail1 3000h, fail2 4000h, pass 2000h, fail1 3000h, fail 2000h, fail2 4000h');
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, 'pass');
-        assert_equals(result.density, 1);
-    }, 'Test selection of smallest large height, with redudant values.');
-    test(function () {
-        var img = new Image(''),
-            result,
-            width = window.innerWidth + 'w';
-        img.setAttribute('src', 'fail_src');
-        img.setAttribute('srcset', 'pass ' + width, 'fail ' + width);
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, 'pass');
-        assert_equals(result.density, 1);
-    }, "Test selection of the right source when window\'s width is the same as the source.");
-    test(function () {
-        var img = new Image(''),
-            result,
-            height = window.innerHeight;
-        img.setAttribute('src', 'fail_src');
-        img.setAttribute('srcset', 'pass ' + height + 'h', 'fail ' + (height - 1) + 'h', 'fail ' + (height + 1) + 'h');
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, 'pass');
-        assert_equals(result.density, 1);
-    }, "Test selection of the right source when window\'s width is the same as the source and other bigger and smaller sources are available.");
-    test(function () {
-        var img = new Image(''),
-            result,
-            height = window.innerHeight;
-        img.setAttribute('src', 'fail_src');
-        img.setAttribute('srcset', 'pass ' + height + 'h', 'fail ' + (height - 1) + 'h', 'fail ' + (height + 1) + 'h');
-        result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-        assert_equals(result.url, 'pass');
-        assert_equals(result.density, 1);
-    }, 'Test selection of the right source when window\'s height is the same as the source and other bigger and smaller sources are available.');
-</script>
+
+    <div id="log"></div>
+    <script src="http://w3c-test.org/resources/testharness.js"></script>
+    <script src="srcsetfill.js"></script>
+    <script>
+        test(function () {
+            var img = new Image(''),
+                result;
+            img.setAttribute('srcset', '');
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, null);
+            assert_equals(result.density, undefined);
+        }, 'If candidates is empty, return null and undefined.');
+        test(function () {
+            var img = new Image(''),
+                result;
+            img.setAttribute('srcset', '\t \t\r\f\f\r \n \t');
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, null);
+            assert_equals(result.density, undefined);
+        }, 'Ignore whitespace at the attribute value.');
+        test(function () {
+            var img = new Image(''),
+                result;
+            img.setAttribute('srcset', 'pass 1x, fail 1x');
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, 'pass');
+            assert_equals(result.density, 1);
+        }, 'Ignore duplicates, even if the url is different.');
+        test(function () {
+            var img = new Image(''),
+                result;
+            img.setAttribute('srcset', 'pass 0002.000x, b 02x, b 02.0000x, fail 2x');
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, 'pass');
+            assert_equals(result.density, 2);
+        }, 'Ignore a long list of duplicates with different densities.');
+        test(function () {
+            var img = new Image(''),
+                result;
+            img.setAttribute('srcset', 'pass 0002.000h, a 02h, c 02.0000h, fail 2h');
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, 'pass');
+            assert_equals(result.density, 1);
+        }, 'Ignore a long list of duplicates with the same heights.');
+        test(function () {
+            var img = new Image(''),
+                result;
+            img.setAttribute('srcset', 'pass 0002.000h 01w 1x, a 02h 001w, c 02.0000h, fail 2h 001w 1x');
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, 'pass');
+            assert_equals(result.density, 1);
+        }, 'Ignore a long list of duplicates with the same width and height and density.');
+        test(function () {
+            var img = new Image(''),
+                result;
+            img.setAttribute('srcset', 'fail 0002h 01w 1x, a 02h 001w 1x, c 02h 0001w 1x, fail 2h 001w 1x, pass 2000w');
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, 'pass');
+            assert_equals(result.density, 1);
+        }, 'Ignore a long list of duplicates with the same width and height and density.');
+        test(function () {
+            var img = new Image(''),
+                result;
+            img.setAttribute('srcset', 'fail 0002h 01w 1x, a 02h 001w 1x, c 02h 0001w 1x, fail 2h 001w 1x, pass 2000w');
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, 'pass');
+            assert_equals(result.density, 1);
+        }, 'Ignore a long list of duplicates with the same width and height and density.');
+        test(function () {
+            var img = new Image(''),
+                result;
+            img.setAttribute('src', 'pass');
+            img.setAttribute('srcset', 'fail 1w, fail 2w, fail 3w');
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, 'pass');
+            assert_equals(result.density, 1);
+        }, 'Test that src attribute is selected as a candidate.');
+        test(function () {
+            var img = new Image(''),
+                result;
+            img.setAttribute('src', 'fail_src');
+            img.setAttribute('srcset', 'fail1 1w, pass 2000w, fail2 2000w, fail3 3w');
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, 'pass');
+            assert_equals(result.density, 1);
+        }, 'Test that src attribute is not selected as a candidate.');
+        test(function () {
+            var img = new Image(''),
+                result;
+            img.setAttribute('src', 'fail_src');
+            img.setAttribute('srcset', 'pass 2000w, fail1 3000w, fail2 4000w');
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, 'pass');
+            assert_equals(result.density, 1);
+        }, 'Test selection of smallest large width.');
+        test(function () {
+            var img = new Image(''),
+                result;
+            img.setAttribute('src', 'fail_src');
+            img.setAttribute('srcset', 'pass 2000h, fail1 3000h, fail2 4000h');
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, 'pass');
+            assert_equals(result.density, 1);
+        }, 'Test selection of smallest large height.');
+        test(function () {
+            var img = new Image(''),
+                result;
+            img.setAttribute('src', 'fail_src');
+            img.setAttribute('srcset', 'fail1 3000h, fail2 4000h, pass 2000h');
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, 'pass');
+            assert_equals(result.density, 1);
+        }, 'Test selection of smallest large height.');
+        test(function () {
+            var img = new Image(''),
+                result;
+            img.setAttribute('src', 'fail_src');
+            img.setAttribute('srcset', 'fail1 3000h, fail2 4000h, pass 2000h, fail1 3000h, fail 2000h, fail2 4000h');
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, 'pass');
+            assert_equals(result.density, 1);
+        }, 'Test selection of smallest large height, with redudant values.');
+        test(function () {
+            var img = new Image(''),
+                result,
+                width = window.innerWidth + 'w';
+            img.setAttribute('src', 'fail_src');
+            img.setAttribute('srcset', 'pass ' + width, 'fail ' + width);
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, 'pass');
+            assert_equals(result.density, 1);
+        }, "Test selection of the right source when window\'s width is the same as the source.");
+        test(function () {
+            var img = new Image(''),
+                result,
+                height = window.innerHeight;
+            img.setAttribute('src', 'fail_src');
+            img.setAttribute('srcset', 'pass ' + height + 'h', 'fail ' + (height - 1) + 'h', 'fail ' + (height + 1) + 'h');
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, 'pass');
+            assert_equals(result.density, 1);
+        }, "Test selection of the right source when window\'s width is the same as the source and other bigger and smaller sources are available.");
+        test(function () {
+            var img = new Image(''),
+                result,
+                height = window.innerHeight;
+            img.setAttribute('src', 'fail_src');
+            img.setAttribute('srcset', 'pass ' + height + 'h', 'fail ' + (height - 1) + 'h', 'fail ' + (height + 1) + 'h');
+            result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+            assert_equals(result.url, 'pass');
+            assert_equals(result.density, 1);
+        }, 'Test selection of the right source when window\'s height is the same as the source and other bigger and smaller sources are available.');
+    </script>
