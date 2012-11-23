@@ -1,22 +1,45 @@
 <!doctype html>
 <meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1" name=viewport>
 <title>srcset parser tester</title>
 <link rel='stylesheet' href='http://w3c-test.org/resources/testharness.css'>
 <style>
  #output{ font-weight: bold}
+ form {
+ 	display: block;
+ 	width: 90%;
+ 	margin: auto;
+ 	background-color: #ddd;
+ 	border: thin solid black;
+ }
+ fieldset{
+ 	border: none;
+ 	margin: 1em;
+ }
+
+  legend{
+
+
+  }
+ input[type=number]{
+ 	width: 4em;
+
+ }
+ #element label{
+ 	font-family: monospace;
+ }
 </style>
 <body>
 <h1>A <code>srcset</code> parser</h1>
 <p>Set the src and srcset attributes and 	
 <form id="srcsetTester">
-	<fieldset>
+	<fieldset id="element">
 		<legend>Element</legend>
-	&lt;img|picture|source 
-		<label>src=<input id="src" value="default.png" placeholder="default.png"></label>
+		<label>&lt;img|picture|source src=<input id="src" value="default.png" placeholder="default.png"></label>
 		<label>srcset=<input id="srcset" placeholder="foo 2x, bar 200w, bas 400h"></label>&gt;
 	</fieldset>
 	<fieldset>
-		<legend>Viewport (read only!)</legend>
+		<legend>Viewport (resize your browser window to change)</legend>
 		<label>Width:  <input id="width" min="1" type="number" readonly> </label>
 		<label>Height: <input id="height" min="1" type="number" readonly></label>
 		<label>Density:<input id="density" min="0" step=".1" type="number" readonly></label>
