@@ -307,12 +307,11 @@
         var position = 0,
             descriptors,
             l = input.length,
-            endOfInput = l - 1,
             //Let raw candidates be an initially empty ordered list of URLs with associated unparsed descriptors.
             //The order of entries in the list is the order in which entries are added to the list.
             rawCandidates = [];
         //Splitting loop: Skip whitespace.
-        while (position !== l) {
+        while (position < l) {
             position += HTML.skipWhiteSpace(input.substr(position, l));
             //Collect a sequence of characters that are not space characters, and let that be url.
             for (var ws = HTML.whitespace, url = '', chr; position < l; position++) {
@@ -325,7 +324,7 @@
             }
             //If url is empty, then jump to the step labeled descriptor parser.
             if (url.length === 0) {
-                parseDescriptions(rawCandidates, attr);
+                 return parseDescriptors(rawCandidates, attr);
             }
             //Collect a sequence of characters that are not "," (U+002C) characters, and let that be descriptors.
             for (descriptors = ''; position < l; position++) {
@@ -345,12 +344,10 @@
             });
         }
         //If position is past the end of input, then jump to the step labeled descriptor parser.
-        if (position > endOfInput) {
-            return parseDescriptions(rawCandidates, attr);
-        }
+        return parseDescriptors(rawCandidates, attr);
     }
     //Descriptor parser:
-    function parseDescriptions(rawCandidates, attr) {
+    function parseDescriptors(rawCandidates, attr) {
         //Let candidates be an initially empty ordered list of URLs each with an associated pixel density,
         //and optionally an associated width and/or height.
         //The order of entries in the list is the order in which entries are added to the list.
@@ -500,11 +497,13 @@
                 findBestMatch(prop, candidates);
         });
 
-        //Return the URL of the sole remaining entry in candidates, and that entry's
-        //associated pixel density.
-        if (candidates.length > 1) {
+        //Check that the algorithm       
+        if (candidates.length > 1 && debugging) {
             window.console.warn('there was more than one candidate?', candidates);
         }
+
+        //Return the URL of the sole remaining entry in candidates, and that entry's
+        //associated pixel density.
         return {
             url: candidates[0].url,
             density: candidates[0].density
@@ -543,7 +542,6 @@
     }
 
     function arePropsEqual(x, y) {
-        //values differ
         for (var i in x) {
             //check everything, except URL
             if ((i !== 'url') && String(x[i]) !== String(y[i])) {
