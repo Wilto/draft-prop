@@ -497,7 +497,7 @@
             findBestMatch(prop, candidates);
         });
 
-        //Check that the algorithm       
+        //MC: Check that the algorithm found the one and only match.     
         if (candidates.length > 1 && debugging) {
             window.console.warn('there was more than one candidate?', candidates);
         }
