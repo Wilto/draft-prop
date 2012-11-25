@@ -1,7 +1,7 @@
 /**
-* TODO: need a Viewport object to facilitate testing.
-**/
-(function(exports, window) {
+ * TODO: need a Viewport object to facilitate testing.
+ **/ 
+ (function (exports, window) {
     'use strict';
     //The HTML contains definitions/algorithms from HTML5
     var HTML = Object.create(null),
@@ -14,12 +14,12 @@
         ASCIIDigits = /^[0-9]$/;
     //Configure HTML object
     Object.defineProperty(HTML, 'whitespace', {
-        get: function() {
+        get: function () {
             return whitespace;
         }
     });
     Object.defineProperty(HTML, 'ASCIIDigits', {
-        get: function() {
+        get: function () {
             return ASCIIDigits;
         }
     });
@@ -43,7 +43,7 @@
     });
     if (debugging) {
         Object.defineProperty(exports, 'HTML', {
-            get: function() {
+            get: function () {
                 return HTML;
             }
         });
@@ -54,7 +54,7 @@
         value: parseSrcset
     });
     Object.defineProperty(exports, 'srcsetParser', {
-        get: function() {
+        get: function () {
             return srcsetParser;
         }
     });
@@ -324,7 +324,7 @@
             }
             //If url is empty, then jump to the step labeled descriptor parser.
             if (url.length === 0) {
-                 return parseDescriptors(rawCandidates, attr);
+                return parseDescriptors(rawCandidates, attr);
             }
             //Collect a sequence of characters that are not "," (U+002C) characters, and let that be descriptors.
             for (descriptors = ''; position < l; position++) {
@@ -493,8 +493,8 @@
         //the smallest such height.
         //Remove all the entries in candidates that have an associated pixel density that
         //is greater than the smallest such pixel density.
-        ['width', 'height', 'density'].forEach(function(prop) {
-                findBestMatch(prop, candidates);
+        ['width', 'height', 'density'].forEach(function (prop) {
+            findBestMatch(prop, candidates);
         });
 
         //Check that the algorithm       
@@ -508,47 +508,46 @@
             url: candidates[0].url,
             density: candidates[0].density
         };
-    }
 
-    function discardOutliers(prop, candidates, max) {
-        if (candidates.length > 1) {
-            for (var i = 0, next = candidates[i + 1], biggest = candidates[i]; i < candidates.length; i++) {
-                if (candidates[i].hasOwnProperty(prop) && candidates[i][prop] < max) {
-                    biggest = ((next) && next[prop] > biggest[prop]) ? next : biggest;
-                    candidates.splice(i--, 1);
-                    next = candidates[i + 1];
+        function arePropsEqual(x, y) {
+            for (var i in x) {
+                //check everything, except URL
+                if ((i !== 'url') && String(x[i]) !== String(y[i])) {
+                    return false;
                 }
             }
-            if (candidates.length === 0) {
-                candidates.unshift(biggest);
+            return true;
+        }
+
+        function discardOutliers(prop, candidates, max) {
+            if (candidates.length > 1) {
+                for (var i = 0, next = candidates[i + 1], biggest = candidates[i]; i < candidates.length; i++) {
+                    if (candidates[i].hasOwnProperty(prop) && candidates[i][prop] < max) {
+                        biggest = ((next) && next[prop] > biggest[prop]) ? next : biggest;
+                        candidates.splice(i--, 1);
+                        next = candidates[i + 1];
+                    }
+                }
+                if (candidates.length === 0) {
+                    candidates.unshift(biggest);
+                }
             }
         }
-    }
 
-    function findBestMatch(prop, candidates) {
-        if (candidates.length > 1) {
-            for (var i = 0, smallest = candidates[0]; i < candidates.length; i++) {
-                if (candidates[i].hasOwnProperty(prop) && !! (candidates[i + 1])) {
-                    if (candidates[i + 1][prop] > smallest[prop]) {
-                        candidates.splice(i + 1, 1);
-                        i--;
-                    } else if (candidates[i + 1][prop] !== smallest[prop]) {
-                        smallest = candidates[i + 1];
-                        candidates.splice(i--, 1);
+        function findBestMatch(prop, candidates) {
+            if (candidates.length > 1) {
+                for (var i = 0, smallest = candidates[0]; i < candidates.length; i++) {
+                    if (candidates[i].hasOwnProperty(prop) && !! (candidates[i + 1])) {
+                        if (candidates[i + 1][prop] > smallest[prop]) {
+                            candidates.splice(i + 1, 1);
+                            i--;
+                        } else if (candidates[i + 1][prop] !== smallest[prop]) {
+                            smallest = candidates[i + 1];
+                            candidates.splice(i--, 1);
+                        }
                     }
                 }
             }
         }
     }
-
-    function arePropsEqual(x, y) {
-        for (var i in x) {
-            //check everything, except URL
-            if ((i !== 'url') && String(x[i]) !== String(y[i])) {
-                return false;
-            }
-        }
-        return true;
-    }    
 }(this, window));
-
