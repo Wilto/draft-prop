@@ -5,14 +5,7 @@
     'use strict';
     var debugging = true,
         srcsetParser = new SrcSetParser(),
-        HTML;
-
-    window.require(['HTML'], function(HTMLExport) {
-        HTML = HTMLExport;
-        var evt = window.document.createEvent('CustomEvent');
-        evt.initCustomEvent('srcsetready', false, false, null);
-        window.dispatchEvent(evt);
-    });
+        HTML = window.HTML;
 
     //Constructors and interfaces
     function SrcSetParser() {}

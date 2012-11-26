@@ -1,5 +1,4 @@
 module.exports = function(grunt) {
-  grunt.loadNpmTasks('grunt-requirejs');
   grunt.initConfig({
     lint: { all: ['js/*.js', 'tests/*.js'] },
     concat: { 'build/srcset.js': [

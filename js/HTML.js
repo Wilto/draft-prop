@@ -1,4 +1,4 @@
-define("HTML",function(){
+(function(exports){
     //The HTML contains definitions/algorithms from HTML5
     var HTML = {},
         //"white space" per HTML5
@@ -6,6 +6,14 @@ define("HTML",function(){
         //\u0020\u0009\u000A\u000C\u000D
         whitespace = ' \t\n\f\r',
         ASCIIDigits = /^[0-9]$/;
+
+    //export HTML object
+    Object.defineProperty(exports, 'HTML', {
+        get: function() {
+            return HTML;
+        }
+    });
+
     //Configure HTML object
     Object.defineProperty(HTML, 'whitespace', {
         get: function() {
@@ -274,5 +282,4 @@ define("HTML",function(){
         //Return rounded-value.
         */
     }
-    return HTML;
-});
+}(this));
