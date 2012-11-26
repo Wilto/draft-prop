@@ -13,7 +13,7 @@ test(function () {
     result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
     assert_equals(result.url, null);
     assert_equals(result.density, undefined);
-}, 'Ignore whitespace at the attribute value.');
+}, 'Ignore whitespace as the attribute value.');
 test(function () {
     var img = new Image(''),
         result;
@@ -62,6 +62,15 @@ test(function () {
     assert_equals(result.url, 'pass');
     assert_equals(result.density, 1);
 }, 'Ignore a long list of duplicates with the same width and height and density.');
+test(function () {
+    var img = new Image(''),
+        result;
+    img.setAttribute('src', 'pass');
+    img.setAttribute('srcset', '\t \t\r\f\f\r \n \t');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'Test that src attribute is selected as the candidate when srcset is empty.');
 test(function () {
     var img = new Image(''),
         result;
@@ -146,3 +155,48 @@ test(function () {
     assert_equals(result.url, 'pass');
     assert_equals(result.density, 1);
 }, 'Test selection of the right source when window\'s height is the same as the source and other bigger and smaller sources are available.');
+test(function () {
+    var img = new Image(''),
+        result,
+        height = window.innerHeight;
+    img.setAttribute('src','fail');
+    img.setAttribute('srcset', 'fail ' + (0-height) + 'h, pass ' + height + 'h, fail -x');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'Test that parser ignores negative height');
+test(function () {
+    var img = new Image(''),
+        result,
+        width = window.innerWidth;
+    img.setAttribute('src','fail');
+    img.setAttribute('srcset', 'fail ' + (0-width) + 'w, pass ' + width + 'w, fail -x');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'Test that parser ignores negative width');
+test(function () {
+    var img = new Image(''),
+        result;
+    img.setAttribute('srcset', 'fail 2x, pass 1x 2x 3x 4x 5x 6x, fail 2x 2x 2x 1x');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'Test that duplicated desciptors are handled correctly');
+test(function () {
+    var img = new Image(''),
+        result;
+    img.setAttribute('srcset', 'pass');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'test that a single URL with no descriptors handled correctly');
+test(function () {
+    var img = new Image(''),
+        result;
+    img.setAttribute('srcset', ', , , pass');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'test that empty descriptors are handled correclty');
+

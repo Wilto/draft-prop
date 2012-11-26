@@ -1,0 +1,46 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1" name=viewport>
+<title>srcset parser tester</title>
+<link rel="stylesheet" href="style/form.css">
+<body>
+    
+<h1>A <code>srcset</code> parser</h1>
+
+<p>This is reference implementation of <cite><a href="http://dev.w3.org/html5/srcset/">The srcset Attribute</a></cite>.</p>
+
+<p>Set the
+    <label for="src">src</label>and
+    <label for="srcset">srcset</label>attributes (e.g., <samp>foo 2x, bar 200w, bas 400h</samp>)
+    and resize your browser window.</p>
+<form id="srcsetTester">
+    <fieldset id="element">
+        <legend>Element</legend>
+        <label>&lt;img|picture|source src=
+            <input id="src" value="default.png" placeholder="default.png">
+        </label>
+        <label>srcset=
+            <input id="srcset" placeholder="foo 2x, bar 200w, bas 400h">
+        </label>&gt;</fieldset>
+    <fieldset>
+        <legend>Viewport (resize your browser window to change)</legend>
+        <label>Width:
+            <input id="width" min="1" type="number" readonly>
+        </label>
+        <label>Height:
+            <input id="height" min="1" type="number" readonly>
+        </label>
+        <label>Density:
+            <input id="density" min="0" step=".1" type="number" readonly>
+        </label>
+    </fieldset>
+    <fieldset id="output">
+        <legend>Output</legend>
+        <label>Best match:
+            <output id="out"></output>
+        </label>
+    </fieldset>
+	<p>Bug? <a href="https://github.com/ResponsiveImagesCG/picture-refimp/issues">report it!</a></p> 
+</form>
+<script src="form_controller.js"></script>
+<script src="../build/srcsetfill.js"></script>
