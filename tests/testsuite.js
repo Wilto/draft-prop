@@ -186,15 +186,15 @@ test(function () {
 test(function () {
     var img = new Image(''),
         result;
-    img.setAttribute('srcset', 'pass');
+    img.setAttribute('srcset', 'fail');
     result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
-    assert_equals(result.url, 'pass');
-    assert_equals(result.density, 1);
-}, 'test that a single URL with no descriptors handled correctly');
+    assert_equals(result.url, null);
+    assert_equals(result.density, undefined);
+}, 'test that a single URL with no descriptors is ignored.');
 test(function () {
     var img = new Image(''),
         result;
-    img.setAttribute('srcset', ', , , pass');
+    img.setAttribute('srcset', ', , , pass 1x');
     result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
     assert_equals(result.url, 'pass');
     assert_equals(result.density, 1);

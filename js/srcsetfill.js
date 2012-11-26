@@ -355,11 +355,17 @@
             maxWidth,
             maxHeight,
             maxDensity;
+
         //For each entry in raw candidates with URL url associated with the unparsed descriptors unparsed descriptors,
         // in the order they were originally added to the list, run these substeps:
-        for (var i = 0, descriptorList, l = rawCandidates.length; i < l; i++) {
+        for (var i = 0, l = rawCandidates.length; i < l; i++) {
             //Let descriptor list be the result of splitting unparsed descriptors on spaces.
-            descriptorList = HTML.splitStringOnSpaces(rawCandidates[i].descriptors);
+            var descriptorList = HTML.splitStringOnSpaces(rawCandidates[i].descriptors),
+                error = false, //Let error be no.
+                width = null, //Let width be absent.
+                height = null, //Let height be absent.
+                density = null; //Let density be absent.
+            
             //For each token in descriptor list, run the appropriate set of steps from the following list:
             for (var j = 0, jl = descriptorList.length; j < jl; j++) {
                 parseToken(descriptorList[j], rawCandidates[i].url);
@@ -399,17 +405,17 @@
         //is less than max width, then remove them,
         //unless that would remove all the entries, in which case remove only
         //the entries whose associated width is less than the greatest such width.
-        discardOutliers('width', candidates, maxWidth);
         //If there are any entries in candidates that have an associated height that is less
         //than max height, then remove them,unless that would remove all the entries,
         //in which case remove only the entries whose associated height is less than the greatest
         //such height.
-        discardOutliers('height', candidates, maxHeight);
-
         //If there are any entries in candidates that have an associated pixel density that
         //is less than a user-agent-defined value giving the nominal pixel density of the display,
         //then remove them, unless that would remove all the entries, in which case remove only
         //the entries whose associated pixel density is less than the greatest such pixel density.
+        
+        discardOutliers('width', candidates, maxWidth);
+        discardOutliers('height', candidates, maxHeight);
         discardOutliers('density', candidates, maxDensity);
 
         //Remove all the entries in candidates that have an associated width that is greater than
@@ -460,11 +466,7 @@
         function parseToken(token,url){
             var validWidth = /^\d+\u0077$/,
                 validHeight = /^\d+\u0068$/,
-                validFloat = /^[\-\+]?[0-9]*\.?[0-9]+([eE][\-\+]?[0-9]+)?\u0078$/,
-                error = false, //Let error be no.
-                width = null, //Let width be absent.
-                height = null, //Let height be absent.
-                density = null; //Let density be absent.
+                validFloat = /^[\-\+]?[0-9]*\.?[0-9]+([eE][\-\+]?[0-9]+)?\u0078$/;
 
             //If the token consists of a valid non-negative integer followed by
             //a U+0077 LATIN SMALL LETTER W character
