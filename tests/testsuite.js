@@ -195,7 +195,25 @@ test(function() {
 test(function() {
     var img = new Image(''),
         result;
-    img.setAttribute('srcset', ', , , pass 1x');
+    img.setAttribute('srcset', ' , , , ');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, null);
+    assert_equals(result.density,undefined);
+}, 'test that empty descriptors are handled correclty');
+
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('srcset', ', 2x, fail');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, ',');
+    assert_equals(result.density, 2);
+}, 'test that empty descriptors are handled correclty');
+
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('srcset', ', 2x, pass x1');
     result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
     assert_equals(result.url, 'pass');
     assert_equals(result.density, 1);
