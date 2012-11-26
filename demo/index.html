@@ -1,46 +1,69 @@
 <!doctype html>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1" name=viewport>
-<title>srcset parser tester</title>
-<link rel="stylesheet" href="style/form.css">
+<!--[if lte IE 8]>
+<html lang="en" class="ie-lte8">
+<![endif]-->
+<!--[if (gt IE 9)|!(IE)]>
+<!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>ResponsiveImages.org</title>
+    <meta name="description" content="Our goal is a markup-based means of delivering alternate image sources based on device capabilities.">
+    <meta property="og:url" content="http://responsiveimages.org">
+    <meta property="og:site_name" content="Responsive Images Community Group">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Responsive Images Community Group">
+    <meta property="og:image" content="http://responsiveimages.org/img/ricg-icon.png">
+    <meta property="og:description" content="Read the latest news on responsive images, and get involved!">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="http://responsiveimages.org/css/enhanced.css"
+    media="only all">
+</head>
+        
 <body>
-    
-<h1>A <code>srcset</code> parser</h1>
+<header class="doc-head">
+     <h1 class="logo"><a href="http://responsiveimages.org"><img src="http://responsiveimages.org/img/logo.png" alt="Responsive Images Community Group logo"></a></h1>
 
-<p>This is reference implementation of <cite><a href="http://dev.w3.org/html5/srcset/">The srcset Attribute</a></cite>.</p>
+    <p>This is reference implementation of <cite><a href="http://dev.w3.org/html5/srcset/">The srcset Attribute</a></cite>.</p>
+</header>
+<div class="main srcsetfill">
+     <h1 class="hed">An <code>srcset</code> parser</h1>
 
-<p>Set the
-    <label for="src">src</label>and
-    <label for="srcset">srcset</label>attributes (e.g., <samp>foo 2x, bar 200w, bas 400h</samp>)
-    and resize your browser window.</p>
-<form id="srcsetTester">
-    <fieldset id="element">
-        <legend>Element</legend>
-        <label>&lt;img|picture|source src=
-            <input id="src" value="default.png" placeholder="default.png">
-        </label>
-        <label>srcset=
-            <input id="srcset" placeholder="foo 2x, bar 200w, bas 400h">
-        </label>&gt;</fieldset>
-    <fieldset>
-        <legend>Viewport (resize your browser window to change)</legend>
-        <label>Width:
-            <input id="width" min="1" type="number" readonly>
-        </label>
-        <label>Height:
-            <input id="height" min="1" type="number" readonly>
-        </label>
-        <label>Density:
-            <input id="density" min="0" step=".1" type="number" readonly>
-        </label>
-    </fieldset>
-    <fieldset id="output">
-        <legend>Output</legend>
-        <label>Best match:
-            <output id="out"></output>
-        </label>
-    </fieldset>
-	<p>Bug? <a href="https://github.com/ResponsiveImagesCG/picture-refimp/issues">report it!</a></p> 
-</form>
+    <p>Set the
+        <label for="src">src</label>and
+        <label for="srcset">srcset</label>attributes (e.g., <samp>foo 2x, bar 200w, bas 400h</samp>)
+        and resize your browser window.</p>
+    <form id="srcsetTester">
+        <fieldset id="element">
+            <legend>Element</legend>
+            <label>&lt;img|picture|source src=
+                <input id="src" value="default.png" placeholder="default.png">
+            </label>
+            <label>srcset=
+                <input id="srcset" placeholder="foo 2x, bar 200w, bas 400h">
+            </label>&gt;</fieldset>
+        <fieldset>
+            <legend>Viewport (resize your browser window to change)</legend>
+            <label>Width:
+                <input id="width" min="1" type="number" readonly>
+            </label>
+            <label>Height:
+                <input id="height" min="1" type="number" readonly>
+            </label>
+            <label>Density:
+                <input id="density" min="0" step=".1" type="number" readonly>
+            </label>
+        </fieldset>
+        <fieldset id="output">
+            <legend>Output</legend>
+            <label>Best match:
+                <output id="out"></output>
+            </label>
+        </fieldset>
+        <p>Bug? <a href="https://github.com/ResponsiveImagesCG/picture-refimp/issues">report it!</a>
+        </p>
+    </form>
+</div>
 <script src="form_controller.js"></script>
 <script src="../build/srcsetfill.js"></script>
