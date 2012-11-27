@@ -38,15 +38,18 @@
         and resize your browser window.</p>
     <form id="srcsetTester">
         <fieldset id="element">
-            <legend>Element</legend>
-            <label>&lt;img|picture|source src=
-                <input id="src" value="default.png" placeholder="default.png">
-            </label>
-            <label>srcset=
-                <input id="srcset" placeholder="foo 2x, bar 200w, bas 400h">
-            </label>&gt;</fieldset>
+				<legend class="demo-hed">Element</legend>
+				<code>&lt;img|picture|source </code>
+				<label><code>src=</code>
+					<input id="src" value="default.png" placeholder="default.png">
+				</label>
+				<label>
+					<code>srcset=</code>
+					<input id="srcset" placeholder="foo 2x, bar 200w, bas 400h">
+			</label><code>&gt;</code>
+        </fieldset>
         <fieldset>
-            <legend>Viewport (resize your browser window to change)</legend>
+            <legend class="demo-hed">Viewport (resize your browser window to change)</legend>
             <label>Width:
                 <input id="width" min="1" type="number" readonly>
             </label>
@@ -58,7 +61,7 @@
             </label>
         </fieldset>
         <fieldset id="output">
-            <legend>Output</legend>
+            <legend class="demo-hed">Output</legend>
             <label>Best match:
                 <output id="out"></output>
             </label>
