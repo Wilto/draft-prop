@@ -218,3 +218,23 @@ test(function() {
     assert_equals(result.url, 'pass');
     assert_equals(result.density, 1);
 }, 'test that empty descriptors are handled correclty');
+
+test(function() {
+    var img = new Image(''),
+        result;
+    img.setAttribute('srcset', 'pass 5x 1x');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 5);
+}, 'test that empty descriptors are handled correclty');
+
+test(function() {
+    var img = new Image(''),
+        result,
+        width = window.innerWidth;
+    img.setAttribute('src', 'fail');
+    img.setAttribute('srcset', 'fail 1w ' +  width + 'w, pass ' + width + 10 + 'w, fail 2w ' +  width + 'w');
+    result = window.srcsetParser.parse(img.getAttributeNode('srcset'));
+    assert_equals(result.url, 'pass');
+    assert_equals(result.density, 1);
+}, 'Test the parser ignores subsequent descriptors');
