@@ -1,5 +1,6 @@
 /**
  * TODO: need a Viewport object to facilitate testing.
+ * TODO: need to add license file
  **/
  (function(exports, window) {
     'use strict';
