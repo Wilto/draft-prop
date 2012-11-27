@@ -1,4 +1,4 @@
-(function(exports){
+(function(exports) {
     //The HTML contains definitions/algorithms from HTML5
     var HTML = {},
         //"white space" per HTML5
@@ -43,7 +43,7 @@
     Object.defineProperty(HTML, 'parseFloat', {
         value: parseFloatingPoint
     });
-   
+
     //The step skip whitespace means that the user agent must collect a sequence of characters that are space characters.
     //Spec: http://www.whatwg.org/specs/web-apps/current-work/#skip-whitespace
     function skipWhiteSpace(str) {
@@ -298,6 +298,8 @@
     Object.defineProperty(SrcSetParser.prototype, 'parse', {
         value: parseSrcset
     });
+
+    //Export public interface
     Object.defineProperty(exports, 'srcsetParser', {
         get: function() {
             return srcsetParser;
@@ -353,6 +355,7 @@
         //If position is past the end of input, then jump to the step labeled descriptor parser.
         return parseDescriptors(rawCandidates, attr);
     }
+
     //Descriptor parser:
     function parseDescriptors(rawCandidates, attr) {
         //Let candidates be an initially empty ordered list of URLs each with an associated pixel density,
