@@ -46,7 +46,7 @@
         function popualteForm() {
             srcsetTester.width.value = window.innerWidth;
             srcsetTester.height.value = window.innerHeight;
-            srcsetTester.density.value = window.devicePixelRatio | 1.0;
+            srcsetTester.density.value = window.devicePixelRatio || 1.0;
             findSrcset();
         }
 
