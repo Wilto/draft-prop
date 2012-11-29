@@ -8,7 +8,7 @@
 <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-    <title>ResponsiveImages.org</title>
+    <title>A srcset parser</title>
     <meta name="description" content="Our goal is a markup-based means of delivering alternate image sources based on device capabilities.">
     <meta property="og:url" content="http://responsiveimages.org">
     <meta property="og:site_name" content="Responsive Images Community Group">
@@ -19,6 +19,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="http://responsiveimages.org/css/enhanced.css"
     media="only all">
+    <style>
+        label{
+            display: inline-block;
+        }
+    </style>
 </head>
         
 <body>
@@ -39,7 +44,7 @@
     <form id="srcsetTester">
         <fieldset id="element">
 				<legend class="demo-hed">Element</legend>
-				<code>&lt;img|picture|source </code>
+				<code>&lt;img </code>
 				<label><code>src=</code>
 					<input id="src" value="default.png" placeholder="default.png">
 				</label>
@@ -48,27 +53,31 @@
 					<input id="srcset" placeholder="foo 2x, bar 200w, bas 400h">
 			</label><code>&gt;</code>
         </fieldset>
+    </form>
+    <form id="viewportUI"> 
         <fieldset>
-            <legend class="demo-hed">Viewport (resize your browser window to change)</legend>
+            <legend class="demo-hed">Viewport</legend>
             <label>Width:
-                <input id="width" min="1" type="number" readonly>
+                <input id="width" min="1" type="number">
             </label>
             <label>Height:
-                <input id="height" min="1" type="number" readonly>
+                <input id="height" min="1" type="number">
             </label>
             <label>Density:
-                <input id="density" min="0" step=".1" type="number" readonly>
+                <input id="density" min="0" step=".1" type="number">
             </label>
         </fieldset>
-        <fieldset id="output">
+    </form>
+    <form id="outputform">
+        <fieldset >
             <legend class="demo-hed">Output</legend>
             <label>Best match:
                 <output id="out"></output>
             </label>
         </fieldset>
+    </form>
         <p>Bug? <a href="https://github.com/ResponsiveImagesCG/picture-refimp/issues">report it!</a>. <a href="https://github.com/ResponsiveImagesCG/picture-refimp">Code is on Github</a>.
         </p>
-    </form>
 </div>
 <script src="form_controller.js"></script>
-<script src="../build/srcsetfill.js"></script>
+<script src="../build/srcset.js"></script>

@@ -3,6 +3,7 @@ module.exports = function(grunt) {
     lint: { all: ['js/*.js', 'tests/*.js'] },
     concat: { 'build/srcset.js': [
       'js/libs/*',
+      'js/Viewport.js',
       'js/*.js'
       ]
     },

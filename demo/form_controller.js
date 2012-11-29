@@ -4,7 +4,15 @@
 
     function setUpTester() {
         var srcsetTester = document.getElementById('srcsetTester'),
+            viewportUI = document.getElementById('viewportUI'),
+            output = document.getElementById('outputform'),
+            
+            //this is the fake element that is evaluated
+            //we don't use an img because we don't want to load
+            //real images yet
             elem = document.createElement('x-element'),
+            //attributes we are interested in adding to our fake
+            //element
             attrValues = [{
                 name: 'srcset',
                 value: ''
@@ -23,10 +31,18 @@
         }()));
         srcsetAttr = elem.getAttributeNode('srcset');
         //Wire up events
-        window.addEventListener('resize', popualteForm);
+        window.customViewport.on('change', popualteForm);
+        
         srcsetTester.addEventListener('input', findSrcset);
+        viewportUI.addEventListener('change', updateViewport);
         //run
         popualteForm();
+
+        function updateViewport(e){
+            var prop = e.target.id;
+            window.customViewport[e.target.id] = e.target.value;
+        }
+
 
         function setupAttributes(prop) {
             var props = {
@@ -44,9 +60,9 @@
         }
         //populate form
         function popualteForm() {
-            srcsetTester.width.value = window.innerWidth;
-            srcsetTester.height.value = window.innerHeight;
-            srcsetTester.density.value = window.devicePixelRatio || 1.0;
+            viewportUI.width.value = window.customViewport.width;
+            viewportUI.height.value = window.customViewport.height;
+            viewportUI.density.value = window.customViewport.density;
             findSrcset();
         }
 
@@ -56,7 +72,7 @@
         }
 
         function showResult(value) {
-            srcsetTester.out.value = JSON.stringify(value);
+            output.out.value = JSON.stringify(value);
         }
     }
 }(window));

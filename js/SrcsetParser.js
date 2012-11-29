@@ -1,8 +1,4 @@
-/**
- * TODO: need a Viewport object to facilitate testing.
- * TODO: need to add license file
- **/
- (function(exports, window) {
+(function(exports, window, viewport) {
     'use strict';
     var debugging = true,
         srcsetParser = new SrcSetParser(),
@@ -122,9 +118,9 @@
         //purposes of this step.
         //Let max width be the width of the viewport, and let max height be the height of
         //the viewport.[CSS]
-        maxWidth = window.innerWidth;
-        maxHeight = window.innerHeight;
-        maxDensity = window.devicePixelRatio;
+        maxWidth = viewport.width;
+        maxHeight = viewport.height;
+        maxDensity = viewport.density;
 
         //If there are any entries in candidates that have an associated width that
         //is less than max width, then remove them,
@@ -269,4 +265,4 @@
             }
         }
     }
-}(this, window));
+}(this, window, window.customViewport));
