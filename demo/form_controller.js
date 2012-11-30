@@ -3,10 +3,8 @@
     window.addEventListener('DOMContentLoaded', setUpTester);
 
     function setUpTester() {
+            //form element
         var srcsetTester = document.getElementById('srcsetTester'),
-            viewportUI = document.getElementById('viewportUI'),
-            output = document.getElementById('outputform'),
-            
             //this is the fake element that is evaluated
             //we don't use an img because we don't want to load
             //real images yet
@@ -32,9 +30,15 @@
         srcsetAttr = elem.getAttributeNode('srcset');
         //Wire up events
         window.customViewport.on('change', popualteForm);
+        srcsetTester.lock.checked = window.customViewport.locked;
+
+        window.customViewport.on('lockchange', function(){
+            srcsetTester.lock.checked = window.customViewport.locked;
+            }
+        );
         
         srcsetTester.addEventListener('input', findSrcset);
-        viewportUI.addEventListener('change', updateViewport);
+        srcsetTester.addEventListener('change', updateViewport);
         //run
         popualteForm();
 
@@ -60,9 +64,9 @@
         }
         //populate form
         function popualteForm() {
-            viewportUI.width.value = window.customViewport.width;
-            viewportUI.height.value = window.customViewport.height;
-            viewportUI.density.value = window.customViewport.density;
+            srcsetTester.width.value = window.customViewport.width;
+            srcsetTester.height.value = window.customViewport.height;
+            srcsetTester.density.value = window.customViewport.density;
             findSrcset();
         }
 
@@ -72,7 +76,7 @@
         }
 
         function showResult(value) {
-            output.out.value = JSON.stringify(value);
+            srcsetTester.out.value = value.url + " (" + value.density + "x)";
         }
     }
 }(window));
