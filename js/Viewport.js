@@ -1,29 +1,11 @@
 (function(exports, window) {
-    var uri = decodeURIComponent(window.location),
-        query = uri.split("?")[1],
-        props = {},
-        vp,
-        w,
-        h,
-        x;
-
-    for (var component, qcomponents = query.split('&'); qcomponents.length > 0;) {
-        component = qcomponents.pop().split('=');
-        if (component.length === 2) {
-            props[component[0]] = component[1];
-        }
-    }
-
-    w = parseInt(props.vpwidth, 10);
-    h = parseInt(props.vpheight, 10);
-    x = parseFloat(props.vpdensity);
-
-    vp = new CustomViewport(w, h, x);
-
-    if(Boolean(props.vplocked)){
-        vp.lock(w,h,x);
-    }
-
+    var uri = new URI(window.location.href),
+        props = uri.search(true),
+        w = parseInt(props.vpwidth, 10),
+        h = parseInt(props.vpheight, 10),
+        x = parseFloat(props.vpdensity),
+        locked = Boolean(props.vplocked),
+        vp = new CustomViewport(w, h, x, locked);
     //Export the viewport as exports.customViewport;
     Object.defineProperty(exports, 'customViewport', {
         get: function() {
@@ -31,17 +13,14 @@
         }
     });
 
-    function CustomViewport(w, h, x) {
+    function CustomViewport(w, h, x, initiaLlock) {
         if (!(this instanceof CustomViewport)) {
-            return new Viewport();
+            return new Viewport(w, h, x);
         }
-
-        var width,
-            height,
-            density,
-            metatag,
+        var dimensions = new Dimensions(),
+            metatag = addMetaviewport(),
             isReady = false,
-            locked = false,
+            isLocked = true,
             self = this,
             dispatcher = window.document.createElement('x-dispatcher'),
             props;
@@ -49,16 +28,28 @@
         //public interfaces
         props = {
             height: {
-                get: heightGetter,
-                set: heightSetter
+                get: function() {
+                    return dimensionGetter('height');
+                },
+                set: function(h) {
+                    dimensionSetter(undefined, h, undefined);
+                }
             },
             width: {
-                get: widthGetter,
-                set: widthSetter
+                get: function() {
+                    return dimensionGetter('width');
+                },
+                set: function(w) {
+                    dimensionSetter(w, undefined, undefined);
+                }
             },
             density: {
-                get: densityGetter,
-                set: densitySetter
+                get: function() {
+                    return dimensionGetter('density');
+                },
+                set: function(x) {
+                    dimensionSetter(undefined, undefined, x);
+                }
             },
             dimensions: {
                 value: copyDimensions
@@ -86,20 +77,31 @@
             },
             locked: {
                 get: function() {
-                    return locked;
+                    return isLocked;
+                },
+                set: function(value) {
+                    if (Boolean(value)) {
+                        self.lock();
+                    }else {
+                        self.unlock();
+                    }
                 }
             }
         };
-
         Object.defineProperties(this, props);
-        init.call(this);
+        init(w, h, x, initiaLlock);
 
-        function init() {
-            addMetaviewport();
-            this.width = w;
-            this.height = h;
-            this.density = x;
-            window.addEventListener('resize', setToWindowSize, false);
+        function init(w, h, x, lock) {
+            if (Boolean(lock)) {
+                self.lock(w, h, x);
+            }else {
+                dimensionSetter(w, h, x);
+                unlock();
+            }
+            setupDone();
+        }
+
+        function setupDone() {
             isReady = true;
             dispatchEvent('ready');
         }
@@ -112,113 +114,94 @@
         }
 
         function copyDimensions() {
-            return new Dimensions();
-            function Dimensions() {
-                this.width = width;
-                this.height = height;
-                this.density = density;
-                this.viewport = self;
-            }
+            var w = dimensions.width,
+                h = dimensions.height,
+                x = dimensions.density;
+            return new Dimensions(w, h, x);
+        }
+
+        function Dimensions(w, h, x) {
+            this.width = w;
+            this.height = h;
+            this.density = x;
         }
 
         function lock(w, h, x) {
             dimensionSetter(w, h, x);
-            if (!locked) {
+            if (!isLocked) {
                 window.removeEventListener('resize', setToWindowSize, false);
-                locked = true;
+                isLocked = true;
                 dispatchEvent('lockchange');
             }
         }
 
         function unlock() {
-            if (locked) {
+            if (isLocked) {
                 window.addEventListener('resize', setToWindowSize, false);
-                locked = false;
+                isLocked = false;
                 dispatchEvent('lockchange');
             }
         }
 
         function addMetaviewport() {
-            var observer;
-            metatag = window.document.querySelector('head > meta[name=viewport]');
-            if (!(metatag)) {
-                metatag = document.createElement('meta');
-                metatag.setAttribute('name', 'viewport');
+            var meta = window.document.querySelector('head > meta[name=viewport]');
+            if (!(meta)) {
+                meta = document.createElement('meta');
+                meta.setAttribute('name', 'viewport');
                 document.head.appendElement(metatag);
             }
+            return meta;
         }
 
-        function dimensionSetter(w,h,x) {
-            var newWidth = (parseInt(w, 10)) || width || window.innerWidth,
-                newHeight = (parseInt(h, 10)) || height || window.innerHeight,
-                newDensity = (parseFloat(x)) || (window.devicePixelRatio) || 1,
+        function dimensionSetter(w, h, x) {
+            var newWidth = (parseInt(w, 10)) || dimensions.width || window.innerWidth,
+                newHeight = (parseInt(h, 10)) || dimensions.height || window.innerHeight,
+                newDensity = (parseFloat(x)) || dimensions.density || (window.devicePixelRatio) || 1,
                 changed = false;
-            if (newWidth !== width) {
-                width = newWidth;
+            if (newWidth !== dimensions.width) {
+                dimensions.width = newWidth;
                 changed = true;
             }
-
-            if (newHeight !== height) {
-                height = newHeight;
+            if (newHeight !== dimensions.height) {
+                dimensions.height = newHeight;
                 changed = true;
             }
-
-            if (newDensity !== density) {
-                density = newDensity;
+            if (newDensity !== dimensions.density) {
+                dimensions.density = newDensity;
                 changed = true;
             }
-
-            if (metatag && changed) {
-                //only update if we are still interactive
-                //otherwise, it doesn't really help
-                if(window.document.readyState !== "complete"){
-                    updateMeta();
-                }
+            if (changed) {
+                updateMeta();
                 dispatchEvent('change');
             }
         }
 
         function updateMeta() {
-            var content = '';
-            content += (!(isNaN(width))) ? 'width=' + width + ',' : '';
-            content += (!(isNaN(height))) ? 'height=' + height + ',' : '';
-            content += (!(isNaN(density))) ? 'target-densitydpi=' + density : '';
-            //remove trailing ",", as browser whinge about it.
-            if (/,$/.test(content)) {
-                content = content.substr(0, content.length - 1);
+            var content = '',
+                w = dimensions.width,
+                h = dimensions.height,
+                x = dimensions.density;
+            //only update if document is still interactive
+            //otherwise, it doesn't really help
+            if (window.document.readyState !== 'complete') {
+                content += (!(isNaN(w))) ? 'width=' + w + ',' : '';
+                content += (!(isNaN(h))) ? 'height=' + h + ',' : '';
+                content += (!(isNaN(x))) ? 'target-densitydpi=' + x : '';
+                //remove trailing ",", as browser whinge about it.
+                if (/,$/.test(content)) {
+                    content = content.substr(0, content.length - 1);
+                }
+                metatag.content = content;
             }
-            metatag.content = content;
         }
 
-        function widthSetter(w) {
-             dimensionSetter(w, height, density);
-        }
-
-        function heightSetter(h) {
-             dimensionSetter(width, h, density);
-        }
-
-        function densitySetter(x) {
-            dimensionSetter(width, height, x);
-        }
-
-        function heightGetter() {
-            return height;
-        }
-
-        function densityGetter() {
-            return density;
-        }
-
-        function widthGetter() {
-            return width;
+        function dimensionGetter(prop) {
+            return dimensions[prop];
         }
 
         function dispatchEvent(type) {
-            var e = document.createEvent('CustomEvent');
-            e.initEvent(type, false, false, null);
+            var e = new CustomEvent(type);
             dispatcher.dispatchEvent(e);
         }
     }
-
 }(this, window));
