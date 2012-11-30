@@ -1,14 +1,15 @@
-(function (exports, window) {
-    var query = window.location.search.substring(1,window.location.search.length),
+(function(exports, window) {
+    var uri = decodeURIComponent(window.location),
+        query = uri.split("?")[1],
         props = {},
         vp,
         w,
         h,
         x;
 
-    for(var component, qcomponents = query.split("&"); qcomponents.length > 0;){
-        component = qcomponents.pop().split("=");
-        if(component.length === 2 ){
+    for (var component, qcomponents = query.split('&'); qcomponents.length > 0;) {
+        component = qcomponents.pop().split('=');
+        if (component.length === 2) {
             props[component[0]] = component[1];
         }
     }
@@ -17,11 +18,15 @@
     h = parseInt(props.vpheight, 10);
     x = parseFloat(props.vpdensity);
 
-    vp = new CustomViewport(w,h,x);
-    
+    vp = new CustomViewport(w, h, x);
+
+    if(Boolean(props.vplocked)){
+        vp.lock(w,h,x);
+    }
+
     //Export the viewport as exports.customViewport;
     Object.defineProperty(exports, 'customViewport', {
-        get: function () {
+        get: function() {
             return vp;
         }
     });
@@ -40,7 +45,7 @@
             self = this,
             dispatcher = window.document.createElement('x-dispatcher'),
             props;
-        
+
         //public interfaces
         props = {
             height: {
@@ -59,17 +64,17 @@
                 value: copyDimensions
             },
             on: {
-                value: function (type, callback) {
+                value: function(type, callback) {
                     dispatcher.addEventListener(type, callback, false);
                 }
             },
             removeListener: {
-                value: function (type, callback) {
+                value: function(type, callback) {
                     dispatcher.removeEventListener(type, callback, false);
                 }
             },
             ready: {
-                get: function () {
+                get: function() {
                     return isReady;
                 }
             },
@@ -80,7 +85,7 @@
                 value: unlock
             },
             locked: {
-                get: function(){
+                get: function() {
                     return locked;
                 }
             }
@@ -99,16 +104,16 @@
             dispatchEvent('ready');
         }
 
-        function setToWindowSize(){
+        function setToWindowSize() {
             var w = window.innerWidth,
                 h = window.innerHeight,
                 x = (window.devicePixelRatio) || 1;
-            dimensionSetter(w,h,x);
+            dimensionSetter(w, h, x);
         }
 
         function copyDimensions() {
             return new Dimensions();
-            function Dimensions(){
+            function Dimensions() {
                 this.width = width;
                 this.height = height;
                 this.density = density;
@@ -117,17 +122,19 @@
         }
 
         function lock(w, h, x) {
-            if(!locked){
+            dimensionSetter(w, h, x);
+            if (!locked) {
                 window.removeEventListener('resize', setToWindowSize, false);
+                locked = true;
+                dispatchEvent('lockchange');
             }
-            dimensionSetter(w,h,x);
-            locked = true;
         }
 
-        function unlock(){
-            if(locked){
+        function unlock() {
+            if (locked) {
                 window.addEventListener('resize', setToWindowSize, false);
                 locked = false;
+                dispatchEvent('lockchange');
             }
         }
 
@@ -139,31 +146,9 @@
                 metatag.setAttribute('name', 'viewport');
                 document.head.appendElement(metatag);
             }
-            if ((window.MutationObserver) || (window.WebKitMutationObserver)) {
-                if (window.WebKitMutationObserver) {
-                    window.MutationObserver = window.WebKitMutationObserver;
-                }
-                observer = observe(metatag, watchMeta);
-            }
-
-            //currently does nothing
-            function watchMeta(mutations) {
-                mutations.forEach(function (mutation) {
-                    //console.log(mutation);
-                });
-            }
         }
 
-        function observe(element, callback) {
-            var config = {
-                attributes: true
-            },
-            observer = new MutationObserver(callback);
-            observer.observe(element, config);
-            return observer;
-        }
-
-        function dimensionSetter(w,h,x){
+        function dimensionSetter(w,h,x) {
             var newWidth = (parseInt(w, 10)) || width || window.innerWidth,
                 newHeight = (parseInt(h, 10)) || height || window.innerHeight,
                 newDensity = (parseFloat(x)) || (window.devicePixelRatio) || 1,
@@ -182,8 +167,13 @@
                 density = newDensity;
                 changed = true;
             }
+
             if (metatag && changed) {
-                updateMeta();
+                //only update if we are still interactive
+                //otherwise, it doesn't really help
+                if(window.document.readyState !== "complete"){
+                    updateMeta();
+                }
                 dispatchEvent('change');
             }
         }
@@ -201,15 +191,15 @@
         }
 
         function widthSetter(w) {
-             dimensionSetter(w,height,density);
+             dimensionSetter(w, height, density);
         }
 
         function heightSetter(h) {
-             dimensionSetter(width,h,density);
+             dimensionSetter(width, h, density);
         }
 
         function densitySetter(x) {
-            dimensionSetter(width,height,x);
+            dimensionSetter(width, height, x);
         }
 
         function heightGetter() {
@@ -232,6 +222,7 @@
     }
 
 }(this, window));
+
 (function(exports) {
     //The HTML contains definitions/algorithms from HTML5
     var HTML = {},
