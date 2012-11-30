@@ -46,36 +46,43 @@
 				<legend class="demo-hed">Element</legend>
 				<code>&lt;img </code>
 				<label><code>src=</code>
-					<input id="src" value="default.png" placeholder="default.png">
+					<input id="src" name="src" value="default.png" placeholder="default.png">
 				</label>
 				<label>
 					<code>srcset=</code>
-					<input id="srcset" placeholder="foo 2x, bar 200w, bas 400h">
+					<input id="srcset" name="srcset" placeholder="foo 2x, bar 200w, bas 400h">
 			</label><code>&gt;</code>
         </fieldset>
-    </form>
-    <form id="viewportUI"> 
-        <fieldset>
-            <legend class="demo-hed">Viewport</legend>
-            <label>Width:
-                <input id="width" min="1" type="number">
-            </label>
-            <label>Height:
-                <input id="height" min="1" type="number">
-            </label>
-            <label>Density:
-                <input id="density" min="0" step=".1" type="number">
-            </label>
-        </fieldset>
-    </form>
-    <form id="outputform">
-        <fieldset >
-            <legend class="demo-hed">Output</legend>
-            <label>Best match:
+        <fieldset id="outputform">
+            <legend class="demo-hed">Best match</legend>
+            <label>URL:
                 <output id="out"></output>
             </label>
+        </fieldset> 
+
+        <fieldset id="viewportUI">
+            <p>This box tells you the dimensions of the viewport. It can also be used to set the virtual viewport of the app. </p>
+            <legend class="demo-hed">Custom Viewport</legend>
+            <label>Width:
+                <input id="width" name="vpwidth" min="1" type="number">
+            </label>
+            <label>Height:
+                <input id="height" name="vpheight" min="1" type="number">
+            </label>
+            <label>Density:
+                <input id="density" name="vpdensity" min="0" step=".1" type="number">
+            </label>
+            <label>locked:
+                <input id="lock" name="vplocked" type="checkbox" value="true">
+            </label>
+
+            <div>
+            <label><button>Make it so!*</button> <small>*(mobile only)</small></label>
+            </div>
         </fieldset>
     </form>
+
+
         <p>Bug? <a href="https://github.com/ResponsiveImagesCG/picture-refimp/issues">report it!</a>. <a href="https://github.com/ResponsiveImagesCG/picture-refimp">Code is on Github</a>.
         </p>
 </div>
