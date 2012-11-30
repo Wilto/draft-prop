@@ -1,5 +1,6 @@
 (function(exports, window) {
-    var query = window.location.search.substring(1, window.location.search.length),
+    var uri = decodeURIComponent(window.location),
+        query = uri.split("?")[1],
         props = {},
         vp,
         w,
@@ -18,6 +19,10 @@
     x = parseFloat(props.vpdensity);
 
     vp = new CustomViewport(w, h, x);
+
+    if(Boolean(props.vplocked)){
+        vp.lock(w,h,x);
+    }
 
     //Export the viewport as exports.customViewport;
     Object.defineProperty(exports, 'customViewport', {
@@ -117,17 +122,19 @@
         }
 
         function lock(w, h, x) {
+            dimensionSetter(w, h, x);
             if (!locked) {
                 window.removeEventListener('resize', setToWindowSize, false);
+                locked = true;
+                dispatchEvent('lockchange');
             }
-            dimensionSetter(w, h, x);
-            locked = true;
         }
 
         function unlock() {
             if (locked) {
                 window.addEventListener('resize', setToWindowSize, false);
                 locked = false;
+                dispatchEvent('lockchange');
             }
         }
 
@@ -139,28 +146,6 @@
                 metatag.setAttribute('name', 'viewport');
                 document.head.appendElement(metatag);
             }
-            if ((window.MutationObserver) || (window.WebKitMutationObserver)) {
-                if (window.WebKitMutationObserver) {
-                    window.MutationObserver = window.WebKitMutationObserver;
-                }
-                observer = observe(metatag, watchMeta);
-            }
-
-            //currently does nothing
-            function watchMeta(mutations) {
-                mutations.forEach(function(mutation) {
-                    //console.log(mutation);
-                });
-            }
-        }
-
-        function observe(element, callback) {
-            var config = {
-                attributes: true
-            },
-            observer = new MutationObserver(callback);
-            observer.observe(element, config);
-            return observer;
         }
 
         function dimensionSetter(w,h,x) {
@@ -182,8 +167,13 @@
                 density = newDensity;
                 changed = true;
             }
+
             if (metatag && changed) {
-                updateMeta();
+                //only update if we are still interactive
+                //otherwise, it doesn't really help
+                if(window.document.readyState !== "complete"){
+                    updateMeta();
+                }
                 dispatchEvent('change');
             }
         }
