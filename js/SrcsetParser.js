@@ -118,9 +118,9 @@
         //purposes of this step.
         //Let max width be the width of the viewport, and let max height be the height of
         //the viewport.[CSS]
-        maxWidth = (viewport)? viewport.width : window.innerWidth;
-        maxHeight = (viewport)? viewport.height : window.innerHeight;
-        maxDensity = (viewport)? viewport.density : window.devicePixelRatio || 1;
+        maxWidth = (viewport) ? viewport.width : window.innerWidth;
+        maxHeight = (viewport) ? viewport.height : window.innerHeight;
+        maxDensity = (viewport) ? viewport.density : window.devicePixelRatio || 1;
 
         //If there are any entries in candidates that have an associated width that
         //is less than max width, then remove them,

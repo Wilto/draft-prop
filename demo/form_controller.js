@@ -7,7 +7,7 @@
     initializeFormValues();
 
     //Wire up events
-    vp.on('change', function(){ 
+    vp.on('change', function() {
         updateDimensionInputs();
         findSrcset();
     });
@@ -25,13 +25,13 @@
     form.addEventListener('keyup', findSrcset);
     form.addEventListener('change', findSrcset);
 
-    var vpElems = ["width","height","density"]; 
+    var vpElems = ['width', 'height', 'density'];
     for (var vpElem, i = vpElems.length - 1; i >= 0; i--) {
-        vpElem = vpElems[i]; 
-        form[vpElems[i]].addEventListener("change", syncViewport);
-    };
-    
-    function syncViewport(e){
+        vpElem = vpElems[i];
+        form[vpElems[i]].addEventListener('change', syncViewport);
+    }
+
+    function syncViewport(e) {
         vp[e.target.id] = e.target.value;
     }
 
