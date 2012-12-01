@@ -1,4 +1,5 @@
 (function(exports, window) {
+    //Configure through URL query params
     var uri = new URI(window.location.href),
         props = uri.search(true),
         w = parseInt(props.vpwidth, 10),
@@ -6,6 +7,7 @@
         x = parseFloat(props.vpdensity),
         locked = Boolean(props.vplocked),
         vp = new CustomViewport(w, h, x, locked);
+
     //Export the viewport as exports.customViewport;
     Object.defineProperty(exports, 'customViewport', {
         get: function() {
@@ -21,7 +23,6 @@
             metatag = addMetaviewport(),
             isReady = false,
             isLocked = true,
-            self = this,
             dispatcher = window.document.createElement('x-dispatcher'),
             props;
 
@@ -81,19 +82,19 @@
                 },
                 set: function(value) {
                     if (Boolean(value)) {
-                        self.lock();
+                        this.lock();
                     }else {
-                        self.unlock();
+                        this.unlock();
                     }
                 }
             }
         };
         Object.defineProperties(this, props);
-        init(w, h, x, initiaLlock);
+        init.call(this, w, h, x, initiaLlock);
 
         function init(w, h, x, lock) {
             if (Boolean(lock)) {
-                self.lock(w, h, x);
+                this.lock(w, h, x);
             }else {
                 dimensionSetter(w, h, x);
                 unlock();

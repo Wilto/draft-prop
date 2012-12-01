@@ -1,29 +1,38 @@
 (function (window) {
     'use strict';
     var form = document.getElementById('srcsetTester'),
-        srcsetAttr = createSrcsetAttr(form);
+        srcsetAttr = createSrcsetAttr(form),
+        vp = window.customViewport;
     
     initializeFormValues();
 
     //Wire up events
-    window.customViewport.on('change', updateDimensionInputs);
-    window.customViewport.on('lockchange', function () {
-        form.locked.checked = window.customViewport.locked;
+    vp.on('change', updateDimensionInputs);
+    
+    //Lock form through API
+    vp.on('lockchange', function () {
+        form.locked.checked = vp.locked;
     });
+    
+    //lock viewport through form
+    form.locked.addEventListener("click", function(){
+         vp.locked = form.locked.checked;
+    });
+
     form.addEventListener('keyup', findSrcset);
-    form.addEventListener('update', findSrcset);
     form.addEventListener('change', updateViewport);
     window.addEventListener("DOMContentLoaded", findSrcset);
-    if (!window.customViewport.ready) {
-        window.customViewport.on('ready', updateDimensionInputs);
+
+    if (!vp.ready) {
+        vp.on('ready', updateDimensionInputs);
     } else {
         updateDimensionInputs();
     }
 
     function updateViewport(e) {
         var prop = e.target.id;
-        if(window.customViewport[prop]){
-            window.customViewport[prop] = e.target.value;
+        if(vp[prop]){
+            vp[prop] = e.target.value;
         }
     }
 
@@ -42,16 +51,18 @@
                 srcsetAttr.ownerElement[prop] = value;
             }
         }
+        updateDimensionInputs();
     }
 
     function updateDimensionInputs() {
-        form.width.value = window.customViewport.width;
-        form.height.value = window.customViewport.height;
-        form.density.value = window.customViewport.density;
+        form.width.value = vp.width;
+        form.height.value = vp.height;
+        form.density.value = vp.density;
+        form.locked.checked = vp.locked;
     }
 
     function findSrcset(e) {
-        console.log(e);
+        console.log(e.type);
         var result = window.srcsetParser.parse(srcsetAttr);
         showResult(result);
     }

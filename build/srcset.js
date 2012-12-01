@@ -71,6 +71,7 @@ this.cache[f])return this.cache[f];this.cache[f]=g;c="[object Function]"===Strin
 (void 0!==c[i]&&null!==c[i])&&g.val.push([i,String(c[i])]);g.val.length&&(g.type=2)}else g.type=1,g.val.push([void 0,String(c)]);return g};f.expand=function(d,c){var i=(new g(d)).expand(c);return new f(i)};return g});
 
 (function(exports, window) {
+    //Configure through URL query params
     var uri = new URI(window.location.href),
         props = uri.search(true),
         w = parseInt(props.vpwidth, 10),
@@ -78,6 +79,7 @@ this.cache[f])return this.cache[f];this.cache[f]=g;c="[object Function]"===Strin
         x = parseFloat(props.vpdensity),
         locked = Boolean(props.vplocked),
         vp = new CustomViewport(w, h, x, locked);
+
     //Export the viewport as exports.customViewport;
     Object.defineProperty(exports, 'customViewport', {
         get: function() {
@@ -93,7 +95,6 @@ this.cache[f])return this.cache[f];this.cache[f]=g;c="[object Function]"===Strin
             metatag = addMetaviewport(),
             isReady = false,
             isLocked = true,
-            self = this,
             dispatcher = window.document.createElement('x-dispatcher'),
             props;
 
@@ -153,19 +154,19 @@ this.cache[f])return this.cache[f];this.cache[f]=g;c="[object Function]"===Strin
                 },
                 set: function(value) {
                     if (Boolean(value)) {
-                        self.lock();
+                        this.lock();
                     }else {
-                        self.unlock();
+                        this.unlock();
                     }
                 }
             }
         };
         Object.defineProperties(this, props);
-        init(w, h, x, initiaLlock);
+        init.call(this, w, h, x, initiaLlock);
 
         function init(w, h, x, lock) {
             if (Boolean(lock)) {
-                self.lock(w, h, x);
+                this.lock(w, h, x);
             }else {
                 dimensionSetter(w, h, x);
                 unlock();
