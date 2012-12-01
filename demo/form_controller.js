@@ -68,7 +68,8 @@
     }
 
     function showResult(value) {
-        form.out.value = value.url + ' (' + value.density + 'x)';
+        form.out.value = (value.url) ? value.url : 'none';
+        form.out.value += (value.density) ? ' (' + value.density + 'x)' : '';
     }
 
     function createSrcsetAttr(form) {

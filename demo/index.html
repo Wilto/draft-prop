@@ -6,78 +6,90 @@
 <!-->
 <html lang="en">
 <!--<![endif]-->
+
 <head>
-<meta name="generator" content=
-"HTML Tidy for HTML5 (experimental) for Mac OS X https://github.com/w3c/tidy-html5/tree/68a9e74">
-<meta charset="utf-8">
-<title>A srcset parser</title>
-<meta name="description" content=
-"Our goal is a markup-based means of delivering alternate image sources based on device capabilities.">
-<meta property="og:url" content="http://responsiveimages.org">
-<meta property="og:site_name" content=
-"Responsive Images Community Group">
-<meta property="og:type" content="website">
-<meta property="og:title" content=
-"Responsive Images Community Group">
-<meta property="og:image" content=
-"http://responsiveimages.org/img/ricg-icon.png">
-<meta property="og:description" content=
-"Read the latest news on responsive images, and get involved!">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href=
-"http://responsiveimages.org/css/enhanced.css" media="only all">
-<style>
-        label{
+    <meta name="generator" content="HTML Tidy for HTML5 (experimental) for Mac OS X https://github.com/w3c/tidy-html5/tree/68a9e74">
+    <meta charset="utf-8">
+    <title>A srcset parser</title>
+    <meta name="description" content="Our goal is a markup-based means of delivering alternate image sources based on device capabilities.">
+    <meta property="og:url" content="http://responsiveimages.org">
+    <meta property="og:site_name" content="Responsive Images Community Group">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Responsive Images Community Group">
+    <meta property="og:image" content="http://responsiveimages.org/img/ricg-icon.png">
+    <meta property="og:description" content="Read the latest news on responsive images, and get involved!">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="http://responsiveimages.org/css/enhanced.css"
+    media="only all">
+    <style>
+        label {
             display: inline-block;
         }
-</style>
+    </style>
 </head>
+
 <body>
-<header class="doc-head">
+    <header class="doc-head">
+        
 <h1 class="logo"><a href="http://responsiveimages.org"><img src=
 "http://responsiveimages.org/img/logo.png" alt=
 "Responsive Images Community Group logo"></a></h1>
-<p>This is reference implementation of <cite><a href=
+
+        <p>This is reference implementation of <cite><a href=
 "http://dev.w3.org/html5/srcset/">The srcset
 Attribute</a></cite>.</p>
-</header>
-<div class="main srcsetfill">
+    </header>
+    <div class="main srcsetfill">
+        
 <h1 class="hed">A <code>srcset</code> parser</h1>
-<p>Set the <label for="src">src</label> and <label for=
-"srcset">srcset</label> attributes (e.g., <samp>foo 2x, bar 200w,
+
+        <p>Set the
+            <label for="src">src</label>and
+            <label for="srcset">srcset</label>attributes (e.g., <samp>foo 2x, bar 200w,
 bas 400h</samp>) and resize your browser window.</p>
-<form id="srcsetTester" name="srcsetTester">
-<fieldset id="element"><legend class="demo-hed">Element</legend>
-<code>&lt;img</code> <label><code>src=</code> <input id="src" name=
-"src" value="default.png" placeholder="default.png"></label>
-<label><code>srcset=</code> <input id="srcset" name="srcset"
-placeholder="foo 2x, bar 200w, bas 400h"></label>
-<code>&gt;</code></fieldset>
-<fieldset id="outputform"><legend class="demo-hed">Best
-match</legend> <label>URL: <output id=
-"out"></output></label></fieldset>
-<fieldset id="viewportUI">
-<p>Set the values of <code>&lt;meta viewport&gt;</code>. It can
-also be used to set the virtual viewport of the app.</p>
-<legend class="demo-hed">Meta Viewport</legend> <label>Width:
-<input id="width" name="vpwidth" min="1" type="number"></label>
-<label>Height: <input id="height" name="vpheight" min="1" type=
-"number"></label> <label>Density: <input id="density" name=
-"vpdensity" min="0" step=".1" type="number"></label> <label>Lock
-viewport: <input id="locked" name="vplocked" type="checkbox" value=
-"true"></label>
-<div><button>Make it so!<sup>*</sup></button> <small>*(mobile
-only)</small></label></div>
-</fieldset>
-</form>
-<p>Bug? <a href=
-"https://github.com/ResponsiveImagesCG/picture-refimp/issues">report
-it!</a>. <a href=
-"https://github.com/ResponsiveImagesCG/picture-refimp">Code is on
+        <form id="srcsetTester"
+        name="srcsetTester">
+            <fieldset id="element">
+                <legend class="demo-hed">Element</legend>
+<code>&lt;img</code> 
+                <label><code>src=</code> 
+                    <input id="src" name="src" value="" placeholder="default.png">
+                </label>
+                <label><code>srcset=</code> 
+                    <input id="srcset" name="srcset" placeholder="foo 2x, bar 200w, bas 400h">
+                </label>
+<code>&gt;</code>
+                <div id="output">
+                <label>Best Match:
+                    <output id="out"></output>
+                </label>
+                </div>
+            </fieldset>
+            <fieldset id="viewportUI">
+                <p>Set the values of <code>&lt;meta viewport&gt;</code>.</p>
+                <legend class="demo-hed">Meta Viewport</legend>
+                <label>Width:
+                    <input id="width" name="vpwidth" min="1" type="number">
+                </label>
+                <label>Height:
+                    <input id="height" name="vpheight" min="1" type="number">
+                </label>
+                <label>Density:
+                    <input id="density" name="vpdensity" min="0" step=".1" type="number">
+                </label>
+                <label>Lock viewport:
+                    <input id="locked" name="vplocked" type="checkbox" value="true">
+                </label>
+                <div>
+                    <button>Make it so!<sup>*</sup>
+                    </button> <small>*(mobile
+only)</small>
+                </div>
+            </fieldset>
+        </form>
+        <p>Bug? <a href="https://github.com/ResponsiveImagesCG/picture-refimp/issues">report
+it!</a>. <a href="https://github.com/ResponsiveImagesCG/picture-refimp">Code is on
 Github</a>.</p>
 </div>
-<script src="../build/srcset.js">
-</script> <script src="form_controller.js">
-</script>
-</body>
-</html>
+<script src="../build/srcset.js"></script>
+<script src="form_controller.js"></script>
