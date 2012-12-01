@@ -1,13 +1,16 @@
 (function(window) {
     'use strict';
     var form = document.getElementById('srcsetTester'),
-        srcsetAttr = createSrcsetAttr(form),
+        srcsetAttr = createSrcsetAttr(),
         vp = window.customViewport;
 
     initializeFormValues();
 
     //Wire up events
-    vp.on('change', updateDimensionInputs);
+    vp.on('change', function(){ 
+        updateDimensionInputs();
+        findSrcset();
+    });
 
     //Lock form through API
     vp.on('lockchange', function() {
@@ -20,7 +23,19 @@
     });
 
     form.addEventListener('keyup', findSrcset);
-    form.addEventListener('change', updateViewport);
+    form.addEventListener('change', findSrcset);
+
+    var vpElems = ["width","height","density"]; 
+    for (var vpElem, i = vpElems.length - 1; i >= 0; i--) {
+        vpElem = vpElems[i]; 
+        form[vpElems[i]].addEventListener("change", syncViewport);
+    };
+    
+    function syncViewport(e){
+        vp[e.target.id] = e.target.value;
+    }
+
+
     window.addEventListener('DOMContentLoaded', findSrcset);
 
     if (!vp.ready) {
@@ -39,7 +54,6 @@
     function initializeFormValues() {
         var props = new window.URI(window.location.href).search(true),
             elem,
-            e,
             value;
         for (var prop in props) {
             value = window.URI.decodeQuery(props[prop]);
@@ -62,7 +76,6 @@
     }
 
     function findSrcset(e) {
-        console.log(e.type);
         var result = window.srcsetParser.parse(srcsetAttr);
         showResult(result);
     }
@@ -72,7 +85,7 @@
         form.out.value += (value.density) ? ' (' + value.density + 'x)' : '';
     }
 
-    function createSrcsetAttr(form) {
+    function createSrcsetAttr() {
         var elem = document.createElement('x-element'),
             attrValues = [{
                 name: 'srcset',
@@ -102,6 +115,9 @@
             };
             Object.defineProperty(elem, prop.name, props);
             form[prop.name].addEventListener('keyup', function(e) {
+                elem[prop.name] = e.target.value;
+            }, true);
+            form[prop.name].addEventListener('change', function(e) {
                 elem[prop.name] = e.target.value;
             }, true);
         }
