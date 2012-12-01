@@ -1,27 +1,27 @@
-(function (window) {
+(function(window) {
     'use strict';
     var form = document.getElementById('srcsetTester'),
         srcsetAttr = createSrcsetAttr(form),
         vp = window.customViewport;
-    
+
     initializeFormValues();
 
     //Wire up events
     vp.on('change', updateDimensionInputs);
-    
+
     //Lock form through API
-    vp.on('lockchange', function () {
+    vp.on('lockchange', function() {
         form.locked.checked = vp.locked;
     });
-    
+
     //lock viewport through form
-    form.locked.addEventListener("click", function(){
+    form.locked.addEventListener('click', function() {
          vp.locked = form.locked.checked;
     });
 
     form.addEventListener('keyup', findSrcset);
     form.addEventListener('change', updateViewport);
-    window.addEventListener("DOMContentLoaded", findSrcset);
+    window.addEventListener('DOMContentLoaded', findSrcset);
 
     if (!vp.ready) {
         vp.on('ready', updateDimensionInputs);
@@ -31,7 +31,7 @@
 
     function updateViewport(e) {
         var prop = e.target.id;
-        if(vp[prop]){
+        if (vp[prop]) {
             vp[prop] = e.target.value;
         }
     }
@@ -41,13 +41,13 @@
             elem,
             e,
             value;
-        for(var prop in props){
+        for (var prop in props) {
             value = window.URI.decodeQuery(props[prop]);
-            elem = form.querySelector("#" + prop);
-            if(elem){
+            elem = form.querySelector('#' + prop);
+            if (elem) {
                 elem.value = value;
             }
-            if(prop === "src" || prop === "srcset"){
+            if (prop === 'src' || prop === 'srcset') {
                 srcsetAttr.ownerElement[prop] = value;
             }
         }
@@ -68,7 +68,7 @@
     }
 
     function showResult(value) {
-        form.out.value = value.url + " (" + value.density + "x)";
+        form.out.value = value.url + ' (' + value.density + 'x)';
     }
 
     function createSrcsetAttr(form) {
@@ -81,8 +81,8 @@
                 value: ''
             }],
             srcsetAttr;
-        attrValues.forEach((function () {
-            return function (prop) {
+        attrValues.forEach((function() {
+            return function(prop) {
                 setupAttributes(prop);
                 //initialize attribute
                 elem[prop.name] = prop.value;
@@ -92,15 +92,15 @@
 
         function setupAttributes(prop) {
             var props = {
-                get: function () {
+                get: function() {
                     return prop.value;
                 },
-                set: function (value) {
+                set: function(value) {
                     elem.setAttribute(prop.name, String(value));
                 }
             };
             Object.defineProperty(elem, prop.name, props);
-            form[prop.name].addEventListener('keyup', function (e) {
+            form[prop.name].addEventListener('keyup', function(e) {
                 elem[prop.name] = e.target.value;
             }, true);
         }
