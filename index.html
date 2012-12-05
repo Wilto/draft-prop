@@ -195,7 +195,7 @@ span.note, span.issue {
   <p><a href="http://responsiveimages.org"><img alt="Responsive Images Community Group" src="https://raw.github.com/ResponsiveImagesCG/meta/master/logo/Web/RICG_logo_small.png" style="float:right"></a> <a href="http://www.w3.org/"><img alt="W3C" height="48" src="http://www.w3.org/Icons/w3c_home" width="72"></a> </p>
   <h1>The picture element	</h1>
   <h2 class="no-num no-toc" id="an-html-extension-for-adaptive-images">An HTML extension for adaptive images</h2>
-  <h2 class="no-num no-toc" id="living-document-last-updated-28-october-2012">Living document - Last updated 28 October 2012 </h2>
+  <h2 class="no-num no-toc" id="living-document-last-updated-5-december-2012">Living document - Last updated 5 December 2012 </h2>
   <dl>
     <dt>Latest  version:</dt>
     <dd><a href="http://picture.responsiveimages.org">http://picture.responsiveimages.org</a></dd>
@@ -341,9 +341,8 @@ HTMLPictureElement : HTMLImageElement{
 <div class="note">
   <div class="note-title"><span>Note</span></div>
   <div class="">
-    <p>What we want to do is have the <code><a href="#dfn-picture">picture</a></code> behave exactly the same as an <code>img</code> element, but with the only difference being that it is <code>source</code> elements is used to determine the value of the <code>src</code> IDL attribute (and hence what image content is displayed). How that is determined is through  using the <code>media</code> attribute attribute of the <code>source</code> element. </p>
-    <p>To avoid complexity, the <code>type</code> attribute is all child <code>source</code> elements is ignored in this context. </p>
-    <p>So, to derive the <dfn id="dfn-source-image">source image</dfn>: we gather all the media queries from the <code>source</code> elements' <code>media</code> attributes into a "stylesheet", in document order. Any missing <code>media</code> attributes are just assumed to mean "all". Any media attributes that are not valid media queries are ignored. So, given the following: </p>
+    <p>What we want to do is have the <code><a href="#dfn-picture">picture</a></code> behave exactly the same as an <code>img</code> element, but with the only difference being that it is <code>source</code> elements is used to determine the value of the <code>src</code> IDL attribute (and hence what image content is displayed). How that is determined is through  using the <code>media</code> attribute attribute of the <code>source</code> element.    </p>
+    <p>So, to derive the <dfn id="dfn-source-image">source image</dfn>: ignoring any sources whose <code>type</code> is not supported by the browser, gather all the media queries from the <code>source</code> elements' <code>media</code> attributes into a "stylesheet", in document order. Any missing <code>media</code> attributes are just assumed to mean "all". Any media attributes that are not valid media queries are ignored. So, given the following: </p>
     <pre>&lt;picture id="pictureElement"&gt;
 <span class="example">   &lt;source media="(min-width: 45em)" srcset="large-1.jpg 1x, large-2.jpg 2x"&gt;
    &lt;source media="(min-width: 18em)" srcset="med-1.jpg 1x, med-2.jpg 2x"&gt;
