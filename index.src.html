@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <head>
-<title>The picture element: An HTML extension for responsive images</title>
+<title>The picture element</title>
 <style>
 .informative {
 	background-color: rgb(233, 251, 233);
@@ -62,13 +62,6 @@ a:not([href]) {
 	float: left;
 	width: 5.5em;
 }
-</style>
-<style type="text/css"></style>
-<style>
-/*****************************************************************
- * ReSpec 3 CSS
- * Robin Berjon - http://berjon.com/
- *****************************************************************/
 
 /* --- INLINES --- */
 em.rfc2119 {
@@ -77,7 +70,7 @@ em.rfc2119 {
 	font-style:         normal;
 	color:              #900;
 }
-h1 acronym, h2 acronym, h3 acronym, h4 acronym, h5 acronym, h6 acronym, a acronym, h1 abbr, h2 abbr, h3 abbr, h4 abbr, h5 abbr, h6 abbr, a abbr {
+h1 abbr, h2 abbr, h3 abbr, h4 abbr, h5 abbr, h6 abbr, a abbr, h1 abbr, h2 abbr, h3 abbr, h4 abbr, h5 abbr, h6 abbr, a abbr {
 	border: none;
 }
 dfn {
@@ -118,6 +111,10 @@ ol.algorithm li:before {
 /* --- TOC --- */
 .toc a, .tof a {
 	text-decoration:    none;
+}
+.toc li{
+	list-style-type: none;
+	padding: .1em 0;
 }
 a .secno, a .figno {
 	color:  #000;
@@ -245,21 +242,64 @@ span.note, span.issue {
 	border-color: #52e052;
 	background: #e9fbe9;
 }
+.stability {
+     position: fixed;
+     bottom: 0;
+     left: 0; right: 0;
+     margin: 0 auto 0 auto;
+     width: 50%;
+     background: maroon; color: yellow;
+     -webkit-border-radius: 1em 1em 0 0;
+     -moz-border-radius: 1em 1em 0 0;
+     border-radius: 1em 1em 0 0;
+     -moz-box-shadow: 0 0 1em #500;
+     -webkit-box-shadow: 0 0 1em #500;
+     box-shadow: 0 0 1em red;
+     padding: 0.5em 1em;
+     text-align: center;
+   }
+.stability strong {
+ display: block;
+}
+.stability input {
+ -moz-appearance: none; -webkit-appearance: none; margin: 0; 
+ border: 0; padding: 0.25em 0.5em; background: transparent; color: black;
+ position: absolute; top: -0.5em; right: 0; font: 1.25em sans-serif; text-align: center;
+}
+.stability input:hover {
+ color: white;
+ text-shadow: 0 0 2px black;
+}
+.stability input:active {
+ padding: 0.3em 0.45em 0.2em 0.55em;
+}
+.stability :link, .stability :visited,
+.stability :link:hover, .stability :visited:hover {
+ background: transparent;
+ color: white;
+}
 </style>
-<link rel="stylesheet" href="http://www.w3.org/StyleSheets/TR/w3c-unofficial">
+<link rel="stylesheet" href="http://www.w3.org/StyleSheets/TR/W3C-[STATUS]">
 
 <!--[if lt IE 9]><script src='http://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]-->
 
 </head>
 <body>
-<header class="head">
-  <p><a href="http://responsiveimages.org"><img style="float:right" src="https://raw.github.com/ResponsiveImagesCG/meta/master/logo/Web/RICG_logo_small.png" alt="Responsive Images Community Group"></a> <a href="http://www.w3.org/"><img alt="W3C" src="http://www.w3.org/Icons/w3c_home" 
-    height="48" width="72"></a> </p>
+<header><div class="head">
+  <p><a href="http://responsiveimages.org"><img style="float:right" src="https://raw.github.com/ResponsiveImagesCG/meta/master/logo/Web/RICG_logo_small.png" alt="Responsive Images Community Group"></a> 
+  <a href="http://www.w3.org/"><img height="48" width="72" alt="W3C" src="http://www.w3.org/Icons/w3c_home"></a></p>
   <h1>The picture element	</h1>
-  <h2 class="no-num no-toc" id="an-html-extension-for-adaptive-images">An HTML extension for adaptive images</h2>
-  <h2 class="no-num no-toc">Living document - Last updated [DATE] </h2>
+  <h2 class="no-num no-toc">An HTML extension for adaptive images</h2>
+  <h2 class="no-num no-toc w3c">W3C Working Draft [DATE]</h2>
+  <h2 class="no-num no-toc ricg">Living document - Last updated [DATE] </h2>
   <dl>
-    <dt>Latest  version:</dt>
+    <dt>This Version:</dt>
+    <dd class="ricg"><a href=
+      "http://picture.responsiveimages.org">http://picture.responsiveimages.org</a></dd>
+    <dd class="w3c"><a href="[VERSION]">[VERSION]</a></dd>
+    <dt>Latest W3C Published Version:</dt>
+    <dd><a href="http://www.w3.org/TR/html-picture/">http://www.w3.org/TR/html-picture/</a></dd>
+    <dt class="w3c">Latest Editor's draft:</dt>
     <dd><a href=
       "http://picture.responsiveimages.org">http://picture.responsiveimages.org</a></dd>
     <dt>Participate:</dt>
@@ -267,11 +307,12 @@ span.note, span.issue {
     <dd><a href="http://list.responsiveimages.org">Public mailing list</a></dd>
     <dd><a href="irc://irc.w3.org:6665/#respimg">IRC: #respimg on W3C's IRC server</a></dd>
     <dd><a href="https://twitter.com/respimg">Twitter</a></dd>
+    <dd><a href="http://gh.responsiveimages.org">Github</a></dd>
     <dt>Version history:</dt>
-    <dd><a href="https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages">Github commits</a> (<a href="https://github.com/ResponsiveImagesCG/An HTML extension for responsive images/commits/gh-pages.atom">RSS</a>)</dd>
+    <dd><a href="https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages">Github commits</a> (<a href="https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages.atom">RSS</a>)</dd>
     <dd><a href="https://twitter.com/respimg_commits">Github commits on Twitter</a></dd>
     <dt>Authors:</dt>
-    <dd>Participants of the  Responsive Images Community Group</dd>
+    <dd><span>Participants</span> of the  Responsive Images Community Group</dd>
     <dt>Editors:</dt>
     <dd>Marcos Cáceres</dd>
     <dd>Mat Marquis</dd>
@@ -280,21 +321,49 @@ span.note, span.issue {
     <dt>Final Specification Licensing Commitments:</dt>
     <dd><a href="http://www.w3.org/community/respimg/spec/26/commitments">http://www.w3.org/community/respimg/spec/26/commitments</a></dd>
   </dl>
-  <p class="copyright">Copyright &copy; [YEAR] the Contributors to the <cite>Use Cases and Requirements for Standardizing Responsive Images</cite> Specification, published by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.</p>
+  <p class="copyright w3c"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © [YEAR] <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p>
+  
+  <p class="copyright ricg">Copyright &copy; [YEAR] the Contributors to the <cite>Use Cases and Requirements for Standardizing Responsive Images</cite> Specification, published by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.</p>
+
+  </div>
+    <hr>
 </header>
-<hr>
 <h2 class="no-toc no-num">Abstract</h2>
 <p>The <code>picture</code> element is an image whose source content is determined    by one or more CSS media queries.</p>
-<p style="text-align: center; font-size: 1.5em; border: .2em dotted black; background-color: #E6E6E6; padding: 1em">Hi! If you find any bugs, typos, or issues please <a href=" https://github.com/ResponsiveImagesCG/picture-element/issues">file a bug on github</a> or <a href="mailto:public-respimg@w3.org">email us</a>! </p>
-<h2 class="no-toc no-num">Status of This Document</h2>
-<p>This specification was published by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a>. It is not a W3C Standard nor is it on the W3C Standards Track. Please note that under the <a href="http://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a> there is a limited opt-out and other conditions apply. Learn more about <a href="http://www.w3.org/community/">W3C Community and Business Groups</a>.</p>
-<div class="note">
+<h2 id="status" class="no-toc no-num">Status of This Document</h2>
+  <p><em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a> at http://www.w3.org/TR/.</em></p>
+<p class="ricg">This specification was published by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a>. It is not a W3C Standard nor is it on the W3C Standards Track. Please note that under the <a href="http://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a> there is a limited opt-out and other conditions apply. Learn more about <a href="http://www.w3.org/community/">W3C Community and Business Groups</a>.</p>
+<div class="note ricg">
   <div class="note-title"><span>Note</span></div>
   <div class="">
     <p>This specification is under active development and changing frequently. Please see the list of <a href="#dfn-open-issues" class="internalDFN">open issues</a>.</p>
   </div>
 </div>
-<p>This document was proposed by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a> as a solution to <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384">bug 18384</a>.</p>
+
+<div class="w3c">
+<p class="stability" id="wip"><strong>This is a work in
+  progress!</strong> For the latest updates from the HTML WG and RICG, possibly
+  including important bug fixes, please look at the <a href="http://usecases.responsiveimages.org">editor's draft</a> instead. If you find any bugs, typos, or issues please <a href="https://github.com/ResponsiveImagesCG/picture-element/issues">file a bug</a> on Github!
+  <input onclick="closeWarning(this.parentNode)" type="button" value="X"></p>
+<script>
+   function closeWarning(element) {
+     element.parentNode.removeChild(element);
+     var date = new Date();
+     date.setDate(date.getDate()+4);
+     document.cookie = 'hide-obsolescence-warning=1; expires=' + date.toGMTString();
+   }
+   if (getCookie('hide-obsolescence-warning') == '1')
+     setTimeout(function () { document.getElementById('wip').parentNode.removeChild(document.getElementById('wip')); }, 2000);
+  </script>
+
+
+  <p>This is a First Public Working Draft.</p>
+  <p>This document was published by the <A href="http://www.w3.org/html/wg/">HTML Working Group</A> as a Working Draft. If you are not a HTML working group member and wish to make comments regarding this document please send them to <A href="mailto:public-html-comments@w3.org">public-html-comments@w3.org</A> (<A href="mailto:public-html-comments-request@w3.org?subject=subscribe">subscribe</A>, <A href="http://lists.w3.org/Archives/Public/public-html-comments/">archives</A>). If you are a HTML working group member and wish to make comments regarding this document, please send them to <A href="mailto:public-html@w3.org">public-html@w3.org</A> (<A href="mailto:public-html-request@w3.org?subject=subscribe">subscribe</A>, <A href="http://lists.w3.org/Archives/Public/public-html/">archives</A>). All feedback is welcome.</p>
+
+  <p>Publication as a Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.</p>
+
+  <p>This document was produced by a group operating under the <A href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 W3C Patent Policy</A>. W3C maintains a <A href="http://www.w3.org/2004/01/pp-impl/40318/status" rel="disclosure">public list of any patent disclosures</A> made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains <A href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</A> must disclose the information in accordance with <A href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section 6 of the W3C Patent Policy</A>.</p>
+</div>
 <h2 class="no-num no-toc">Table of Contents</h2>
 <!-- toc -->
 
@@ -440,9 +509,12 @@ HTMLPictureElement : HTMLImageElement{
 <h2 class="no-toc no-num">Reference implementations</h2>
 <p>We have a list of <a href="https://github.com/Wilto/draft-prop/wiki/Current-users,-polyfills,-prototypes,-and-implementations">current users, polyfills, prototypes, and implementations</a> on Github. </p>
 <h2 class="no-num">Acknowledgements</h2>
-<p id="participants">A list of <a href="http://www.w3.org/community/respimg/participants">participants</a> is avialble at the W3C Community Group Website.</p>
-<script src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/show_issues.js"></script> 
-<script src="https://api.github.com/repos/ResponsiveImagesCG/picture-element/issues?state=open&amp;callback=processResponse"></script> 
+<p id="participants" class="ricg">A list of <a href="http://www.w3.org/community/respimg/participants">participants</a> is avialble at the W3C Community Group Website.</p>
+
+<p class="w3c"><dfn>Participants</dfn> of the Responsive Images Community Group are: George Adamson, Marie Alhomme, John Allan, Joshua Allen, Angely Alvarez, Aaryn Anderson, Philip Andrews, Phil Archer, Justin Avery, Michael Balensiefer, Toni Barrett, Bruno Barros, Paul Barton, Adrian Bateman, Jesse Renée Beach, Robin Berjon, Seth Bertalotto, Nicolaas Bijvoet, Andreas Bovens, J. Albert Bowden, Adam Bradley, Rodrigo Brancher, Gordon Brander, Paul Bridgestock, Aaron Brosey, Cory Brown, mairead buchan, Kris Bulman, Ariel Burone, Mathias Bynens, Marcos Caceres, Rusty Calder, Ben Callahan, Loïc Calvy, Chuck Carpenter, Brandon Carroll, Frederico Cerdeira, David Clements, Geri Coady, Anne-Gaelle Colom, Cyril Concolato, Pete Correia, Andy Crum, Jason Daihl, Francois Daoust, Kevin Davies, Robert Dawson, Ryan DeBeasi, Anna Debenham, Darryl deHaan, David Demaree, George DeMet, Ian Devlin, peter droogmans, Marlene Frykman, Dennis Gaebel, Nicolas Gallagher, Miguel Garcia, Rafael Garcia Lepper, Larry Garfield, Peter Gasston, David Goss, Chris Grant, Petra Gregorova, Jason Grigsby, Antoine Guergnon, Jeff Guntle, Aaron Gustafson, Jason Haag, Patrick Haney, Anselm Hannemann, chris hardy, Vincent Hardy, Dominique Hazaël-Massieux, Chris Hilditch, Nathan Hinshaw, Sean Hintz, John Holt Ripley, Shane Hudson, Tomomi Imura, Philip Ingrey, Brett Jankord, Scott Jehl, Dave Johnson, Nathanael Jones, Michael Jovel, Chao Ju, Tim Kadlec, Frédéric Kayser, Jin Kim, Andreas Klein, Peter Klein, John Kleinschmidt, Daniel Konopacki, Zoran Kurtin, Gerardo Lagger, Adam Lake, Chris Lamothe, Tom Lane, Matthieu Larcher, Bruce Lawson, Zach Leatherman, Silas Lepcha, Kornel Lesinski, Chris Lilley, grappler login, Tania Lopes, André Luís, Jacine Luisi, David Maciejewski, Kevin Mack, Ethan Malasky, Josh Marinacci, Eduardo Marques, Mathew Marquis, Daniel Martínez, Tom Maslen, Jacob Mather, Chris McAndrew, Denys Mishunov, Sabine Moebs, Ian Moffitt, Orestis Molopodis, jason morita, David Moulton, Brian Muenzenmeyer, Emi Myoudou, Irakli Nadareishvili, Christian Neuberger Jr, David Newton, Todd Nienkerk, Kothary Nishant, Ashley Nolan, Kenneth Nordahl, Lewis Nyman, Alejandro Oviedo, David Owens, Fernando Pasik, Andrew Pez Pengelly, Hassadee Pimsuwan, Manik Rathee, François REMY, Nestor Rojas, Adrian Roselli, Chris Ruppel, Oguzcan Sahin, Viljami Salminen, Luca Salvini, Luke Sands, aron santa, Jad Sarout, Brandon Satrom, Christoph Saxe, Doug Schepers, Jason Schmidt, Christopher Schmitt, Joe Schmitt, Boaz Sender, Tomoyuki Shimizu, Ariel Shkedi, Jen Simmons, Katerina Skotalova, Michael[tm] Smith, Ignacio Soriano Cano, Aaron Stanush, Jared Stilwell, Matt Stow, Kevin Suttle, Satoru Takagi, Philipp Tautz, James Tudsbury, Jacob van Zijp, Jitendra Vyas, Yoav Weiss, George White, Matt Wilcox, Richard Wild, John Albin Wilkins, Owen Winkler, Jeremy Worboys, Mike Wu, Carlos Zepeda, and jintian zheng.</p>
+
+<script class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/show_issues.js"></script> 
+<script  class="ricg" src="https://api.github.com/repos/ResponsiveImagesCG/picture-element/issues?state=open&amp;callback=processResponse"></script> 
 <script src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/ga.js"></script> 
 <script>
 //This script dynamically loads the participants of the CG and shows them in the spec. 
@@ -482,16 +554,16 @@ window.addEventListener("DOMContentLoaded", function requestParticipants(){
 <h2 class="no-num">Normative references</h2>
 <dl class="bibliography">
   <dt id="bib-CSS3-MEDIAQUERIES">[CSS3-MEDIAQUERIES]</dt>
-  <dd><a href="http://www.w3.org/TR/css3-mediaqueries/"><cite>Media Queries</cite></a>. (<a href="http://www.w3.org/TR/css3-mediaqueries/#status">status</a>)</dd>
+  <dd><a href="http://www.w3.org/TR/css3-mediaqueries/"><cite>Media Queries</cite></a>. (<a href="http://www.w3.org/TR/css3-mediaqueries/#status">status</a>).</dd>
   <dt id="bib-HTML5">[HTML]</dt>
-  <dd><a href="http://www.w3.org/TR/html5"><cite>HTML5.</cite></a> (<a href="http://www.w3.org/TR/html5#status-of-this-document">status</a>)</dd>
+  <dd><a href="http://www.w3.org/TR/html5"><cite>HTML5.</cite></a> (<a href="http://www.w3.org/TR/html5#status-of-this-document">status</a>).</dd>
   <dt id="bib-RFC2119">[RFC2119]</dt>
   <dd><a href="http://www.ietf.org/rfc/rfc2119.txt"><cite>Key words for use in RFCs to Indicate Requirement Levels.</cite></a></dd>
   <dt id="bib-WEBIDL">[WEBIDL]</dt>
-  <dd><a href="http://www.w3.org/TR/WebIDL/"><cite>Web IDL.</cite></a> (<a href="http://www.w3.org/TR/WebIDL/#sotd">status</a>)</dd>
+  <dd><a href="http://www.w3.org/TR/WebIDL/"><cite>Web IDL.</cite></a> (<a href="http://www.w3.org/TR/WebIDL/#sotd">status</a>).</dd>
 </dl>
 
-<script src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/show_issues.js"></script>
-<script src="https://api.github.com/repos/ResponsiveImagesCG/picture-element/issues?state=open&amp;callback=processResponse"></script>
-<script src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/ga.js"></script>
-<script src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/load_cg_participants.js"></script>
+<script class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/show_issues.js"></script>
+<script  class="ricg" src="https://api.github.com/repos/ResponsiveImagesCG/picture-element/issues?state=open&amp;callback=processResponse"></script>
+<script  class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/ga.js"></script>
+<script  class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/load_cg_participants.js"></script>
