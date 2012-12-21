@@ -282,6 +282,22 @@ span.note, span.issue {
 <link rel="stylesheet" href="http://www.w3.org/StyleSheets/TR/W3C-[STATUS]">
 
 <!--[if lt IE 9]><script src='http://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]-->
+<style class="w3c ricg">
+  .w3c{
+		border: 1px solid blue; 
+	}
+	
+.ricg{
+		border: 1px solid red; 
+}	
+
+span, cite{
+	border: 1px dotted green;
+}
+span span{
+	background-color: red;
+}
+</style>
 
 </head>
 <body>
@@ -319,13 +335,12 @@ span.note, span.issue {
     <dd>Mat Marquis</dd>
     <dd>Yoav Weiss</dd>
     <dd>Adrian Bateman, <a href="http://www.microsoft.com/">Microsoft Corporation</a></dd>
-    <dt>Final Specification Licensing Commitments:</dt>
+    <dt>RICG Final Specification Licensing Commitments:</dt>
     <dd><a href="http://www.w3.org/community/respimg/spec/26/commitments">http://www.w3.org/community/respimg/spec/26/commitments</a></dd>
   </dl>
   <p class="copyright w3c"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © [YEAR] <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p>
   
   <p class="copyright ricg">Copyright &copy; [YEAR] the Contributors to the <cite>Use Cases and Requirements for Standardizing Responsive Images</cite> Specification, published by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.</p>
-
   </div>
     <hr>
 </header>
@@ -370,7 +385,7 @@ span.note, span.issue {
 
 <h2>Introduction</h2>
 <p><em>This section is non-normative.</em></p>
-<p>This specification   provides developers with a means to declare multiple sources for an image, and, through <cite>CSS Media Queries</cite> ([<cite>CSS3-MEDIAQUERIES</cite>]), it gives developers control as to when those images are to be presented to a user. This is achieved by introducing a new <code>picture</code> element to [<cite>HTML</cite>] that makes use of the <code> source</code> element. The <code>picture</code> element remains backwards compatible with legacy user agents by degrading gracefully through <a href="#dfn-fallback-content" class="internalDFN">fallback content</a> (i.e., through the <code>img</code> element) while also potentially providing better accessibility than the existing <code>img</code> element. </p>
+<p>This specification   provides developers with a means to declare multiple sources for an image, and, through [<cite>CSS3-MEDIAQUERIES</cite>] (<cite>CSS Media Queries</cite>), it gives developers control as to when those images are to be presented to a user. This is achieved by introducing a new <code>picture</code> element to [<cite>HTML</cite>] that makes use of the <code> source</code> element. The <code>picture</code> element remains backwards compatible with legacy user agents by degrading gracefully through <a href="#dfn-fallback-content" class="internalDFN">fallback content</a> (i.e., through the <code>img</code> element) while also potentially providing better accessibility than the existing <code>img</code> element. </p>
 <p>By relying on [<cite>CSS3-MEDIAQUERIES</cite>], a user agent can <em>respond</em> to changes in the browsing environment by selecting the image source that most closely matches the browsing environment - thus embodying a technique known as <a href="http://en.wikipedia.org/wiki/Responsive_web_design">responsive web design</a> directly in the HTML markup. <a href="http://www.w3.org/TR/css3-mediaqueries/#media1">Media features</a> that a user agent can potentially respond to include, but are not limited to,  pixel widths and heights, and pixel densities, as well as environmental lighting conditions, changes in orientation, and  changes in   media type such as going from screen to print. </p>
 <p>This specification also defines the <code>HTMLPictureElement</code> programming interface, which affords developers a set of attributes and methods for interacting with <code>picture</code> elements through ECMAScript.</p>
 <h3>Example of usage</h3>
@@ -416,7 +431,7 @@ span.note, span.issue {
 <p>Implementations that use ECMAScript to expose the APIs defined in this specification <em class="rfc2119" title="must">must</em> implement them in a manner consistent with the ECMAScript Bindings defined in the [<cite><a class="bibref" href="#bib-WEBIDL">WEBIDL</a></cite>] specification.</p>
 <h2>Definitions</h2>
 <p>The following terms are used throughout this specification so they are gathered here for the readers convenience. The following list of terms is not exhaustive; other terms are defined throughout this specification.</p>
-<p>The follow terms are defined by the<cite> </cite>[<cite>HTML</cite>] specification: <dfn id="dfn-img-element"><a href="http://dev.w3.org/html5/spec/single-page.html#the-img-element"><code>img</code> element</a></dfn>, <dfn id="dfn-source-element"><a href="http://dev.w3.org/html5/spec/single-page.html#the-source-element"><code>source</code> element</a></dfn>, <dfn id="dfn-fallback-content"><a href="http://dev.w3.org/html5/spec/single-page.html#fallback-content">fallback content</a></dfn>, and <dfn id="dfn-valid-media-query"><a href="http://dev.w3.org/html5/spec/single-page.html#valid-media-query">valid media query</a></dfn>. </p>
+<p>The follow terms are defined by the [<cite>HTML</cite>] specification: <dfn id="dfn-img-element"><a href="http://dev.w3.org/html5/spec/single-page.html#the-img-element"><code>img</code> element</a></dfn>, <dfn id="dfn-source-element"><a href="http://dev.w3.org/html5/spec/single-page.html#the-source-element"><code>source</code> element</a></dfn>, <dfn id="dfn-fallback-content"><a href="http://dev.w3.org/html5/spec/single-page.html#fallback-content">fallback content</a></dfn>, and <dfn id="dfn-valid-media-query"><a href="http://dev.w3.org/html5/spec/single-page.html#valid-media-query">valid media query</a></dfn>. </p>
 <h2>The <code>picture</code> element</h2>
 <dl>
   <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-categories" title="element-dfn-categories">Categories</a>:</dt>
@@ -501,8 +516,6 @@ HTMLPictureElement : HTMLImageElement{
 </div>
 <p>A user agent <em class="rfc2119" title="may">may</em> override requests for higher-resolution images based on  user preferences. For example: “always request high-resolution images,” “always request low-resolution images,” and “request high-resolution images as bandwidth permits” based on the bandwidth information available to the browser.</p>
 
-<!-- appendix -->
-
 <h2  class="no-num">Open Issues</h2>
 <p>We are tracking <dfn id="dfn-open-issues">open issues</dfn> on Github. <a href="https://github.com/ResponsiveImagesCG/picture-element/issues">Please help close them</a>! </p>
 <div id="open-issues-xhr">
@@ -512,46 +525,8 @@ HTMLPictureElement : HTMLImageElement{
 <h2 class="no-num">Acknowledgements</h2>
 <p id="participants" class="ricg">A list of <a href="http://www.w3.org/community/respimg/participants">participants</a> is avialble at the W3C Community Group Website.</p>
 
-<p class="w3c"><dfn>Participants</dfn> of the Responsive Images Community Group are: George Adamson, Marie Alhomme, John Allan, Joshua Allen, Angely Alvarez, Aaryn Anderson, Philip Andrews, Phil Archer, Justin Avery, Michael Balensiefer, Toni Barrett, Bruno Barros, Paul Barton, Adrian Bateman, Jesse Renée Beach, Robin Berjon, Seth Bertalotto, Nicolaas Bijvoet, Andreas Bovens, J. Albert Bowden, Adam Bradley, Rodrigo Brancher, Gordon Brander, Paul Bridgestock, Aaron Brosey, Cory Brown, mairead buchan, Kris Bulman, Ariel Burone, Mathias Bynens, Marcos Caceres, Rusty Calder, Ben Callahan, Loïc Calvy, Chuck Carpenter, Brandon Carroll, Frederico Cerdeira, David Clements, Geri Coady, Anne-Gaelle Colom, Cyril Concolato, Pete Correia, Andy Crum, Jason Daihl, Francois Daoust, Kevin Davies, Robert Dawson, Ryan DeBeasi, Anna Debenham, Darryl deHaan, David Demaree, George DeMet, Ian Devlin, peter droogmans, Marlene Frykman, Dennis Gaebel, Nicolas Gallagher, Miguel Garcia, Rafael Garcia Lepper, Larry Garfield, Peter Gasston, David Goss, Chris Grant, Petra Gregorova, Jason Grigsby, Antoine Guergnon, Jeff Guntle, Aaron Gustafson, Jason Haag, Patrick Haney, Anselm Hannemann, chris hardy, Vincent Hardy, Dominique Hazaël-Massieux, Chris Hilditch, Nathan Hinshaw, Sean Hintz, John Holt Ripley, Shane Hudson, Tomomi Imura, Philip Ingrey, Brett Jankord, Scott Jehl, Dave Johnson, Nathanael Jones, Michael Jovel, Chao Ju, Tim Kadlec, Frédéric Kayser, Jin Kim, Andreas Klein, Peter Klein, John Kleinschmidt, Daniel Konopacki, Zoran Kurtin, Gerardo Lagger, Adam Lake, Chris Lamothe, Tom Lane, Matthieu Larcher, Bruce Lawson, Zach Leatherman, Silas Lepcha, Kornel Lesinski, Chris Lilley, grappler login, Tania Lopes, André Luís, Jacine Luisi, David Maciejewski, Kevin Mack, Ethan Malasky, Josh Marinacci, Eduardo Marques, Mathew Marquis, Daniel Martínez, Tom Maslen, Jacob Mather, Chris McAndrew, Denys Mishunov, Sabine Moebs, Ian Moffitt, Orestis Molopodis, jason morita, David Moulton, Brian Muenzenmeyer, Emi Myoudou, Irakli Nadareishvili, Christian Neuberger Jr, David Newton, Todd Nienkerk, Kothary Nishant, Ashley Nolan, Kenneth Nordahl, Lewis Nyman, Alejandro Oviedo, David Owens, Fernando Pasik, Andrew Pez Pengelly, Hassadee Pimsuwan, Manik Rathee, François REMY, Nestor Rojas, Adrian Roselli, Chris Ruppel, Oguzcan Sahin, Viljami Salminen, Luca Salvini, Luke Sands, aron santa, Jad Sarout, Brandon Satrom, Christoph Saxe, Doug Schepers, Jason Schmidt, Christopher Schmitt, Joe Schmitt, Boaz Sender, Tomoyuki Shimizu, Ariel Shkedi, Jen Simmons, Katerina Skotalova, Michael[tm] Smith, Ignacio Soriano Cano, Aaron Stanush, Jared Stilwell, Matt Stow, Kevin Suttle, Satoru Takagi, Philipp Tautz, James Tudsbury, Jacob van Zijp, Jitendra Vyas, Yoav Weiss, George White, Matt Wilcox, Richard Wild, John Albin Wilkins, Owen Winkler, Jeremy Worboys, Mike Wu, Carlos Zepeda, and jintian zheng.</p>
+<p class="w3c"><dfn>Participants</dfn> of the <a href="http://w3c.responsiveimages.org">Responsive Images Community Group</a> are: George Adamson, Marie Alhomme, John Allan, Joshua Allen, Angely Alvarez, Aaryn Anderson, Philip Andrews, Phil Archer, Justin Avery, Michael Balensiefer, Toni Barrett, Bruno Barros, Paul Barton, Adrian Bateman, Jesse Renée Beach, Robin Berjon, Seth Bertalotto, Nicolaas Bijvoet, Andreas Bovens, J. Albert Bowden, Adam Bradley, Rodrigo Brancher, Gordon Brander, Paul Bridgestock, Aaron Brosey, Cory Brown, mairead buchan, Kris Bulman, Ariel Burone, Mathias Bynens, Marcos Caceres, Rusty Calder, Ben Callahan, Loïc Calvy, Chuck Carpenter, Brandon Carroll, Frederico Cerdeira, David Clements, Geri Coady, Anne-Gaelle Colom, Cyril Concolato, Pete Correia, Andy Crum, Jason Daihl, Francois Daoust, Kevin Davies, Robert Dawson, Ryan DeBeasi, Anna Debenham, Darryl deHaan, David Demaree, George DeMet, Ian Devlin, peter droogmans, Marlene Frykman, Dennis Gaebel, Nicolas Gallagher, Miguel Garcia, Rafael Garcia Lepper, Larry Garfield, Peter Gasston, David Goss, Chris Grant, Petra Gregorova, Jason Grigsby, Antoine Guergnon, Jeff Guntle, Aaron Gustafson, Jason Haag, Patrick Haney, Anselm Hannemann, chris hardy, Vincent Hardy, Dominique Hazaël-Massieux, Chris Hilditch, Nathan Hinshaw, Sean Hintz, John Holt Ripley, Shane Hudson, Tomomi Imura, Philip Ingrey, Brett Jankord, Scott Jehl, Dave Johnson, Nathanael Jones, Michael Jovel, Chao Ju, Tim Kadlec, Frédéric Kayser, Jin Kim, Andreas Klein, Peter Klein, John Kleinschmidt, Daniel Konopacki, Zoran Kurtin, Gerardo Lagger, Adam Lake, Chris Lamothe, Tom Lane, Matthieu Larcher, Bruce Lawson, Zach Leatherman, Silas Lepcha, Kornel Lesinski, Chris Lilley, grappler login, Tania Lopes, André Luís, Jacine Luisi, David Maciejewski, Kevin Mack, Ethan Malasky, Josh Marinacci, Eduardo Marques, Mathew Marquis, Daniel Martínez, Tom Maslen, Jacob Mather, Chris McAndrew, Denys Mishunov, Sabine Moebs, Ian Moffitt, Orestis Molopodis, jason morita, David Moulton, Brian Muenzenmeyer, Emi Myoudou, Irakli Nadareishvili, Christian Neuberger Jr, David Newton, Todd Nienkerk, Kothary Nishant, Ashley Nolan, Kenneth Nordahl, Lewis Nyman, Alejandro Oviedo, David Owens, Fernando Pasik, Andrew Pez Pengelly, Hassadee Pimsuwan, Manik Rathee, François REMY, Nestor Rojas, Adrian Roselli, Chris Ruppel, Oguzcan Sahin, Viljami Salminen, Luca Salvini, Luke Sands, aron santa, Jad Sarout, Brandon Satrom, Christoph Saxe, Doug Schepers, Jason Schmidt, Christopher Schmitt, Joe Schmitt, Boaz Sender, Tomoyuki Shimizu, Ariel Shkedi, Jen Simmons, Katerina Skotalova, Michael[tm] Smith, Ignacio Soriano Cano, Aaron Stanush, Jared Stilwell, Matt Stow, Kevin Suttle, Satoru Takagi, Philipp Tautz, James Tudsbury, Jacob van Zijp, Jitendra Vyas, Yoav Weiss, George White, Matt Wilcox, Richard Wild, John Albin Wilkins, Owen Winkler, Jeremy Worboys, Mike Wu, Carlos Zepeda, and jintian zheng.</p>
 
-<script class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/show_issues.js"></script> 
-<script  class="ricg" src="https://api.github.com/repos/ResponsiveImagesCG/picture-element/issues?state=open&amp;callback=processResponse"></script> 
-<script src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/ga.js"></script> 
-<script>
-//This script dynamically loads the participants of the CG and shows them in the spec. 
-window.addEventListener("DOMContentLoaded", function requestParticipants(){
-  var xhr = new XMLHttpRequest(),
-  	  output = document.querySelector("#participants"), 
-      participantsURL = output.querySelector("a").getAttribute("href"),
-	  tempElem = document.createElement("temp"), 
-	  participants;
-  xhr.open("GET", participantsURL,true);
-  xhr.onreadystatechange= processParticipants; 
-  xhr.send(null); 
-  
-  function processParticipants(){
-	 if (xhr.readyState==4) {
-		//participants are in a table on the other website
-		tempElem.innerHTML = xhr.responseText;
-		participants = tempElem.querySelectorAll("td > h3");
-		if(participants.length > 0){
- 	  		showParticipants(participants)
-		}
- 	}
-  } 
-  
-  function showParticipants(){
-	var names  = [],
-		prefix = "Participants of the Responsive Images Community Group are: ";
-	if(participants.length){
-		for(var i = 0; i < participants.length; i++){
-			names.push(participants.item(i).textContent);
-		}
-		output.innerHTML = prefix + names.join(", ") + "."; 
-	}
-  }
- }, false); 
-</script>
 <h2 class="no-num">Normative references</h2>
 <dl class="bibliography">
   <dt id="bib-CSS3-MEDIAQUERIES">[CSS3-MEDIAQUERIES]</dt>
@@ -567,4 +542,3 @@ window.addEventListener("DOMContentLoaded", function requestParticipants(){
 <script class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/show_issues.js"></script>
 <script  class="ricg" src="https://api.github.com/repos/ResponsiveImagesCG/picture-element/issues?state=open&amp;callback=processResponse"></script>
 <script  class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/ga.js"></script>
-<script  class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/load_cg_participants.js"></script>

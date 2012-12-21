@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 var sys = require('sys'),
+	fs = require("fs"),
 	path = require('path'),
     exec = require('child_process').exec,
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -8,6 +9,7 @@ var sys = require('sys'),
 	filter = '.w3c',
 	shortName = path.basename(process.cwd()),
 	output = 'index.html',
+	pubDir = process.cwd() + '/pub',
     argv = require('optimist')
            .usage('Usage: $0 [-w3c] [-pubdate \"dd Mon yyy\"] [-type ED|WD|CR|PR|REC]')
            .default('pubdate', pubdate)
@@ -27,6 +29,11 @@ if (argv.hasOwnProperty('w3c') && argv.w3c) {
 
 	//e.g., "WD_21Dec2012.html"
 	output = 'pub/' + argv.type + '_' + argv.pubdate.split(' ').join('') + '.html';
+
+	//check that we have a pub directory
+	if(fs.existsSync(pubDir) === false){
+		fs.mkdirSync(pubDir);
+	}
 }
 
 anolis = 'anolis --w3c-compat --output-encoding=utf8' +
