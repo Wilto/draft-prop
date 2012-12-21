@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--[if lte IE 8]>
+<html lang="en" class="ie-lte8">
+<![endif]-->
+<!--[if (gt IE 9)|!(IE)]>
+<!-->
+<html lang="en">
+     
+    <!--<![endif]-->
+    <head>
+        <meta content="HTML Tidy for HTML5 (experimental) for Mac OS X https://github.com/w3c/tidy-html5/tree/68a9e74" name="generator">
+        <meta charset="utf-8">
+        <title>A srcset parser</title>
+        <meta content="Our goal is a markup-based means of delivering alternate image sources based on device capabilities." name="description">
+        <meta content="http://responsiveimages.org" property="og:url">
+        <meta content="Responsive Images Community Group" property="og:site_name">
+        <meta content="website" property="og:type">
+        <meta content="Responsive Images Community Group" property="og:title">
+        <meta content="http://responsiveimages.org/img/ricg-icon.png" property="og:image">
+        <meta content="Read the latest news on responsive images, and get involved!" property="og:description">
+        <meta content="width=device-width,initial-scale=1" name="viewport">
+        <link href="http://responsiveimages.org/css/enhanced.css" media="only all" rel="stylesheet">
+        <style>
+            label > span {
+                display: inline-block;
+                min-width: 3em;
+                padding-right: 0.5em;
+                text-align: right;
+                width: 10%;
+            }
+            input {
+                width: 70%;
+            }
+            input[type=number] {
+                width: 6em;
+            }
+            .output {
+                background-color: #ddd;
+                border-top: 0.1em solid #aaa;
+                font-weight: bold;
+                margin: 1em -.75em -.6em;
+                opacity: 0.7;
+                padding-bottom: 0.5em;
+                padding-left: 1em;
+                padding-top: 0.5em;
+            }
+            .field{
+                margin: .3em;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="doc-head">
+            <h1 class="logo"><a href="http://responsiveimages.org"><img alt="Responsive Images Community Group logo" src="http://responsiveimages.org/img/logo.png"></a></h1>
+            <p>This is reference implementation of
+                <cite><a href="http://dev.w3.org/html5/srcset/">The srcset Attribute</a></cite>.</p>
+        </header>
+        <div class="main srcsetfill">
+            <h1 class="hed">A <code>srcset</code> parser</h1>
+            <form id="srcsetTester" name="srcsetTester">
+                <fieldset id="element">
+                    <legend class="demo-hed">picture | source | img Element</legend>
+                    <p>Set the attributes and resize/rotate your browser window. Otherwise, use the Viewport controls below to see what matches.</p>
+                    <div class="field">
+                        <label><span>src</span>
+                            <input id="src" name="src" placeholder="default.png" value="">
+                        </label>
+                    </div>
+                    <div class="field">
+                        <label><span>srcset</span>
+                            <input id="srcset" name="srcset" placeholder="high 2x, small 320w, med 400h">
+                        </label>
+                    </div>
+                    <div class="output">
+                        <label>Best match:
+                            <output id="out"></output>
+                        </label>
+                    </div>
+                </fieldset>
+                <fieldset id="viewportUI">
+                    <legend class="demo-hed">Viewport</legend>
+                    <p>Set the values of viewport.</p>
+                    <div class="field">
+                        <label><span>Width:</span>
+                            <input id="width" min="1" name="vpwidth" type="number">
+                        </label>
+                    </div>
+                    <div class="field">
+                        <label><span>Height:</span>
+                            <input id="height" min="1" name="vpheight" type="number">
+                        </label>
+                    </div>
+                    <div class="field">
+                        <label><span>Density:</span>
+                            <input id="density" min="0" name="vpdensity" step="0.1" type="number">
+                        </label>
+                    </div>
+                    <div class="field">
+                        <label><span>Lock:</span>
+                            <input id="locked" name="vplocked" type="checkbox" value="true">
+                        </label>
+                    </div>
+                    <div class="output">
+                        <label><button>Create viewport</button>
+                            <small>(mobile only!)</small></label>
+                    </div>
+                </fieldset>
+            </form>
+            <p>Bug?
+                <a href="https://github.com/ResponsiveImagesCG/picture-refimp/issues">report
+                    it!</a>.
+                <a href="https://github.com/ResponsiveImagesCG/picture-refimp">Code is
+                    on Github</a>.</p>
+        </div>
+
+        <script src="../build/srcset.js"></script>
+        <script src="form_controller.js"></script>

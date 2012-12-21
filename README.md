@@ -4,4 +4,4 @@ This repo is indended solely for the sake of basic issue tracking, and public co
 
 **Issue tracking:** <a href="https://github.com/Wilto/draft-prop/issues/">https://github.com/Wilto/draft-prop/issues/</a>
 **Draft preview:** <a href="https://github.com/Wilto/draft-prop/issues/">http://wilto.github.com/draft-prop/ResponsiveImages.html</a>
-**Formally Published:** http://dvcs.w3.org/hg/html-proposals/raw-file/tip/responsive-images/responsive-images.html
+**Formally Published:** coming soon. 
