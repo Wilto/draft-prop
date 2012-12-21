@@ -1,64 +1,64 @@
 #!/usr/bin/env node
 var sys = require('sys'),
-	path = require("path"),
+	path = require('path'),
     exec = require('child_process').exec,
-    months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 	today = new Date(),
-	pubdate = today.getDate()+ " " + months[today.getMonth()] + " " + today.getFullYear(),
-	filter = ".w3c",
+	pubdate = today.getDate() + ' ' + months[today.getMonth()] + ' ' + today.getFullYear(),
+	filter = '.w3c',
 	shortName = path.basename(process.cwd()),
-	output = "index.html",
+	output = 'index.html',
     argv = require('optimist')
-           .usage("Usage: $0 [-w3c] [-pubdate \"dd Mon yyy\"] [-type ED|WD|CR|PR|REC]")
-           .default("pubdate",pubdate)
-           .default("type","ED")
-           .default("name", shortName)
+           .usage('Usage: $0 [-w3c] [-pubdate \"dd Mon yyy\"] [-type ED|WD|CR|PR|REC]')
+           .default('pubdate', pubdate)
+           .default('type', 'ED')
+           .default('name', shortName)
            .argv,
-    child,anolis;
+    child, anolis;
 
-if(argv.hasOwnProperty("w3c") && argv.w3c){
+if (argv.hasOwnProperty('w3c') && argv.w3c) {
 	//default to Working Draft
-	if(argv.type === "ED"){
-		argv.type = "WD";
+	if (argv.type === 'ED') {
+		argv.type = 'WD';
 	}
 
 	//Take out all RICG stuff if we are targetting W3C
-	filter=".ricg";
+	filter = '.ricg';
 
 	//e.g., "WD_21Dec2012.html"
-	output="pub/" + argv.type + "_" + argv.pubdate.split(" ").join("") + ".html";
+	output = 'pub/' + argv.type + '_' + argv.pubdate.split(' ').join('') + '.html';
 }
 
-anolis = "anolis --w3c-compat --output-encoding=utf8" +
-         " --omit-optional-tags --quote-attr-values" +
-         " --w3c-status=" + argv.type +
-         " --pubdate=\"" + argv.pubdate +"\""+
-         " --w3c-shortname=" + argv.name +
-         " --filter=\""+ filter +"\""+
-         " index.src.html " + output;
+anolis = 'anolis --w3c-compat --output-encoding=utf8' +
+         ' --omit-optional-tags --quote-attr-values' +
+         ' --w3c-status=' + argv.type +
+         ' --pubdate=\"' + argv.pubdate + '\"'+
+         ' --w3c-shortname=' + argv.name +
+         ' --filter=\"'+ filter + '\"'+
+         ' index.src.html ' + output;
 
-exec(anolis, function (error, stdout, stderr) {
-	if(error){
-		console.log("Something went wrong", error, stdout, stderr);
+exec(anolis, function(error, stdout, stderr) {
+	if (error) {
+		console.log('Something went wrong', error, stdout, stderr);
 		return;
 	}
 	showNotification();
 });
 
-function showNotification(){
-	var hasNotifier = "command -v terminal-notifier >/dev/null 2>&1"; 
-	exec(hasNotifier, function (error, stdout, stderr) {
+function showNotification() {
+	var hasNotifier = 'command -v terminal-notifier >/dev/null 2>&1';
+	exec(hasNotifier, function(error, stdout, stderr) {
 		var command;
 		//No notifier, so abort
 		if (error !== null) {
-			console.log("Missing optional dependency: sudo gem install terminal-notifier");
-			return; 
+			console.log('Missing optional dependency: sudo gem install terminal-notifier');
+			return;
 		}
-		command = "terminal-notifier "+ 
-                  "-message \"Finished processing document.\" "+
-                  "-title \"Anolis Processing done\" "+
-                  "-execute \"open "+process.cwd() + "/"+ output + "\" "+
-                  "-group \"Anolis\"";
+		command = 'terminal-notifier '+
+                  '-message \"Finished processing document.\" '+
+                  '-title \"Anolis Processing done\" '+
+                  '-execute \"open '+ process.cwd() + '/'+ output + '\" '+
+                  '-group \"Anolis\"';
     exec(command);
 	});
 }
