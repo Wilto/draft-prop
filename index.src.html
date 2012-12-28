@@ -298,7 +298,8 @@ span span{
 	background-color: red;
 }
 </style>
-
+<link class="w3c" rel="stylesheet" href="http://www.w3.org/StyleSheets/TR/W3C-[STATUS]">
+<link class="ricg" rel="stylesheet" href="http://www.w3.org/StyleSheets/TR/w3c-unofficial.css">
 </head>
 <body>
 <header><div class="head">
@@ -309,7 +310,8 @@ span span{
   <h2 class="no-num no-toc w3c">W3C Working Draft [DATE]</h2>
   <h2 class="no-num no-toc ricg">Living document - Last updated [DATE] </h2>
   <dl>
-    <dt class="w3c">This Version:</dt>
+    <dt>This Version:</dt>
+    <dd class="ricg"><a href="http://picture.responsiveimages.org/">http://picture.responsiveimages.org/</a></dd>
     <dd class="w3c"><a href="[VERSION]">[VERSION]</a></dd>
     <dt class="w3c">Latest version:</dt> 
     <dt class="ricg">Latest W3C Published Version:</dt>
@@ -331,9 +333,9 @@ span span{
     <dt>Authors:</dt>
     <dd><span>Participants</span> of the  Responsive Images Community Group</dd>
     <dt>Editors:</dt>
-    <dd>Marcos Cáceres</dd>
-    <dd>Mat Marquis</dd>
-    <dd>Yoav Weiss</dd>
+    <dd><a href="http://marcosc.com">Marcos Cáceres</a>, <a href="http://datadriven.com.au">Data.Driven</a></dd>
+    <dd><a href="http://matmarquis.com/">Mat Marquis</a></dd>
+    <dd><a href="http://blog.yoav.ws/">Yoav Weiss</a></dd>
     <dd>Adrian Bateman, <a href="http://www.microsoft.com/">Microsoft Corporation</a></dd>
     <dt>RICG Final Specification Licensing Commitments:</dt>
     <dd><a href="http://www.w3.org/community/respimg/spec/26/commitments">http://www.w3.org/community/respimg/spec/26/commitments</a></dd>
@@ -358,7 +360,7 @@ span span{
 
 <div class="w3c">
 <p class="stability" id="wip"><strong>This is a work in
-  progress!</strong> For the latest updates from the HTML WG and RICG, possibly
+  progress!</strong> For the latest updates from the HTML WG and <a href="http://responsiveimages.org">RICG</a>, possibly
   including important bug fixes, please look at the <a href="http://usecases.responsiveimages.org">editor's draft</a> instead. If you find any bugs, typos, or issues please <a href="https://github.com/ResponsiveImagesCG/picture-element/issues">file a bug</a> on Github!
   <input onclick="closeWarning(this.parentNode)" type="button" value="X"></p>
 <script>
@@ -374,9 +376,8 @@ span span{
 
 
   <p>This is a First Public Working Draft.</p>
-  <p>This document was published by the <A href="http://www.w3.org/html/wg/">HTML Working Group</A> as a Working Draft. If you are not a HTML working group member and wish to make comments regarding this document please send them to <A href="mailto:public-html-comments@w3.org">public-html-comments@w3.org</A> (<A href="mailto:public-html-comments-request@w3.org?subject=subscribe">subscribe</A>, <A href="http://lists.w3.org/Archives/Public/public-html-comments/">archives</A>). If you are a HTML working group member and wish to make comments regarding this document, please send them to <A href="mailto:public-html@w3.org">public-html@w3.org</A> (<A href="mailto:public-html-request@w3.org?subject=subscribe">subscribe</A>, <A href="http://lists.w3.org/Archives/Public/public-html/">archives</A>). All feedback is welcome.</p>
-
-  <p>Publication as a Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.</p>
+  <p>This document was published by the <A href="http://www.w3.org/html/wg/">HTML Working Group</A> as a Working Draft, but was  developed in collaboration with the <a href="http://responsiveimages.org">Responsive Images Community Group</a> (see <a href="http://www.w3.org/community/respimg/spec/26/commitments">licensing commitments</a>). If you are not a HTML working group member and wish to make comments regarding this document please send them to <A href="mailto:public-html-comments@w3.org">public-html-comments@w3.org</A> (<A href="mailto:public-html-comments-request@w3.org?subject=subscribe">subscribe</A>, <A href="http://lists.w3.org/Archives/Public/public-html-comments/">archives</A>). If you are a HTML working group member and wish to make comments regarding this document, please send them to <A href="mailto:public-html@w3.org">public-html@w3.org</A> (<A href="mailto:public-html-request@w3.org?subject=subscribe">subscribe</A>, <A href="http://lists.w3.org/Archives/Public/public-html/">archives</A>). All feedback is welcome.</p>
+<p>Publication as a Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.</p>
 
   <p>This document was produced by a group operating under the <A href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 W3C Patent Policy</A>. W3C maintains a <A href="http://www.w3.org/2004/01/pp-impl/40318/status" rel="disclosure">public list of any patent disclosures</A> made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains <A href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</A> must disclose the information in accordance with <A href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section 6 of the W3C Patent Policy</A>.</p>
 </div>
@@ -523,9 +524,10 @@ HTMLPictureElement : HTMLImageElement{
 <h2 class="no-toc no-num">Reference implementations</h2>
 <p>We have a list of <a href="https://github.com/Wilto/draft-prop/wiki/Current-users,-polyfills,-prototypes,-and-implementations">current users, polyfills, prototypes, and implementations</a> on Github. </p>
 <h2 class="no-num">Acknowledgements</h2>
-<p id="participants" class="ricg">A list of <a href="http://www.w3.org/community/respimg/participants">participants</a> is avialble at the W3C Community Group Website.</p>
+<p id="participants" class="ricg">A list of <a href="http://www.w3.org/community/respimg/participants">participants</a> is available at the W3C Community Group Website.</p>
 
-<p class="w3c"><dfn>Participants</dfn> of the <a href="http://w3c.responsiveimages.org">Responsive Images Community Group</a> are: George Adamson, Marie Alhomme, John Allan, Joshua Allen, Angely Alvarez, Aaryn Anderson, Philip Andrews, Phil Archer, Justin Avery, Michael Balensiefer, Toni Barrett, Bruno Barros, Paul Barton, Adrian Bateman, Jesse Renée Beach, Robin Berjon, Seth Bertalotto, Nicolaas Bijvoet, Andreas Bovens, J. Albert Bowden, Adam Bradley, Rodrigo Brancher, Gordon Brander, Paul Bridgestock, Aaron Brosey, Cory Brown, mairead buchan, Kris Bulman, Ariel Burone, Mathias Bynens, Marcos Caceres, Rusty Calder, Ben Callahan, Loïc Calvy, Chuck Carpenter, Brandon Carroll, Frederico Cerdeira, David Clements, Geri Coady, Anne-Gaelle Colom, Cyril Concolato, Pete Correia, Andy Crum, Jason Daihl, Francois Daoust, Kevin Davies, Robert Dawson, Ryan DeBeasi, Anna Debenham, Darryl deHaan, David Demaree, George DeMet, Ian Devlin, peter droogmans, Marlene Frykman, Dennis Gaebel, Nicolas Gallagher, Miguel Garcia, Rafael Garcia Lepper, Larry Garfield, Peter Gasston, David Goss, Chris Grant, Petra Gregorova, Jason Grigsby, Antoine Guergnon, Jeff Guntle, Aaron Gustafson, Jason Haag, Patrick Haney, Anselm Hannemann, chris hardy, Vincent Hardy, Dominique Hazaël-Massieux, Chris Hilditch, Nathan Hinshaw, Sean Hintz, John Holt Ripley, Shane Hudson, Tomomi Imura, Philip Ingrey, Brett Jankord, Scott Jehl, Dave Johnson, Nathanael Jones, Michael Jovel, Chao Ju, Tim Kadlec, Frédéric Kayser, Jin Kim, Andreas Klein, Peter Klein, John Kleinschmidt, Daniel Konopacki, Zoran Kurtin, Gerardo Lagger, Adam Lake, Chris Lamothe, Tom Lane, Matthieu Larcher, Bruce Lawson, Zach Leatherman, Silas Lepcha, Kornel Lesinski, Chris Lilley, grappler login, Tania Lopes, André Luís, Jacine Luisi, David Maciejewski, Kevin Mack, Ethan Malasky, Josh Marinacci, Eduardo Marques, Mathew Marquis, Daniel Martínez, Tom Maslen, Jacob Mather, Chris McAndrew, Denys Mishunov, Sabine Moebs, Ian Moffitt, Orestis Molopodis, jason morita, David Moulton, Brian Muenzenmeyer, Emi Myoudou, Irakli Nadareishvili, Christian Neuberger Jr, David Newton, Todd Nienkerk, Kothary Nishant, Ashley Nolan, Kenneth Nordahl, Lewis Nyman, Alejandro Oviedo, David Owens, Fernando Pasik, Andrew Pez Pengelly, Hassadee Pimsuwan, Manik Rathee, François REMY, Nestor Rojas, Adrian Roselli, Chris Ruppel, Oguzcan Sahin, Viljami Salminen, Luca Salvini, Luke Sands, aron santa, Jad Sarout, Brandon Satrom, Christoph Saxe, Doug Schepers, Jason Schmidt, Christopher Schmitt, Joe Schmitt, Boaz Sender, Tomoyuki Shimizu, Ariel Shkedi, Jen Simmons, Katerina Skotalova, Michael[tm] Smith, Ignacio Soriano Cano, Aaron Stanush, Jared Stilwell, Matt Stow, Kevin Suttle, Satoru Takagi, Philipp Tautz, James Tudsbury, Jacob van Zijp, Jitendra Vyas, Yoav Weiss, George White, Matt Wilcox, Richard Wild, John Albin Wilkins, Owen Winkler, Jeremy Worboys, Mike Wu, Carlos Zepeda, and jintian zheng.</p>
+<p class="w3c"><dfn>Participants</dfn> of the <a href="http://w3c.responsiveimages.org">Responsive Images Community Group</a> at the time of publication were: George Adamson, Marie Alhomme, John Allan, Joshua Allen, Angely Alvarez, Aaryn Anderson, Philip Andrews, Phil Archer, Justin Avery, Michael Balensiefer, Toni Barrett, Bruno Barros, Paul Barton, Adrian Bateman, Jesse Renée Beach, Robin Berjon, Seth Bertalotto, Nicolaas Bijvoet, Andreas Bovens, J. Albert Bowden, Adam Bradley, Rodrigo Brancher, Gordon Brander, Paul Bridgestock, Aaron Brosey, Cory Brown, mairead buchan, Kris Bulman, Ariel Burone, Mathias Bynens, Marcos Caceres, Rusty Calder, Ben Callahan, Loïc Calvy, Chuck Carpenter, Brandon Carroll, Frederico Cerdeira, David Clements, Geri Coady, Anne-Gaelle Colom, Cyril Concolato, Pete Correia, Andy Crum, Jason Daihl, Francois Daoust, Kevin Davies, Robert Dawson, Ryan DeBeasi, Anna Debenham, Darryl deHaan, David Demaree, George DeMet, Ian Devlin, peter droogmans, Marlene Frykman, Dennis Gaebel, Nicolas Gallagher, Miguel Garcia, Rafael Garcia Lepper, Larry Garfield, Peter Gasston, David Goss, Chris Grant, Petra Gregorova, Jason Grigsby, Antoine Guergnon, Jeff Guntle, Aaron Gustafson, Jason Haag, Patrick Haney, Anselm Hannemann, chris hardy, Vincent Hardy, Dominique Hazaël-Massieux, Chris Hilditch, Nathan Hinshaw, Sean Hintz, John Holt Ripley, Shane Hudson, Tomomi Imura, Philip Ingrey, Brett Jankord, Scott Jehl, Dave Johnson, Nathanael Jones, Michael Jovel, Chao Ju, Tim Kadlec, Frédéric Kayser, Jin Kim, Andreas Klein, Peter Klein, John Kleinschmidt, Daniel Konopacki, Zoran Kurtin, Gerardo Lagger, Adam Lake, Chris Lamothe, Tom Lane, Matthieu Larcher, Bruce Lawson, Zach Leatherman, Silas Lepcha, Kornel Lesinski, Chris Lilley, grappler login, Tania Lopes, André Luís, Jacine Luisi, David Maciejewski, Kevin Mack, Ethan Malasky, Josh Marinacci, Eduardo Marques, Mathew Marquis, Daniel Martínez, Tom Maslen, Jacob Mather, Chris McAndrew, Denys Mishunov, Sabine Moebs, Ian Moffitt, Orestis Molopodis, jason morita, David Moulton, Brian Muenzenmeyer, Emi Myoudou, Irakli Nadareishvili, Christian Neuberger Jr, David Newton, Todd Nienkerk, Kothary Nishant, Ashley Nolan, Kenneth Nordahl, Lewis Nyman, Alejandro Oviedo, David Owens, Fernando Pasik, Andrew Pez Pengelly, Hassadee Pimsuwan, Manik Rathee, François REMY, Nestor Rojas, Adrian Roselli, Chris Ruppel, Oguzcan Sahin, Viljami Salminen, Luca Salvini, Luke Sands, aron santa, Jad Sarout, Brandon Satrom, Christoph Saxe, Doug Schepers, Jason Schmidt, Christopher Schmitt, Joe Schmitt, Boaz Sender, Tomoyuki Shimizu, Ariel Shkedi, Jen Simmons, Katerina Skotalova, Michael[tm] Smith, Ignacio Soriano Cano, Aaron Stanush, Jared Stilwell, Matt Stow, Kevin Suttle, Satoru Takagi, Philipp Tautz, James Tudsbury, Jacob van Zijp, Jitendra Vyas, Yoav Weiss, George White, Matt Wilcox, Richard Wild, John Albin Wilkins, Owen Winkler, Jeremy Worboys, Mike Wu, Carlos Zepeda, and jintian zheng.</p>
+<p class="w3c">Contributions also from: Ilya Grigorik and Leon de Rijke.</p>
 
 <h2 class="no-num">Normative references</h2>
 <dl class="bibliography">

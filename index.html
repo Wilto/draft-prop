@@ -280,7 +280,7 @@ span.note, span.issue {
 <link href="http://www.w3.org/StyleSheets/TR/W3C-ED" rel="stylesheet">
 
 <!--[if lt IE 9]><script src='http://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]-->
-
+<link class="ricg" href="http://www.w3.org/StyleSheets/TR/w3c-unofficial.css" rel="stylesheet">
 </head>
 <body>
 <header><div class="head">
@@ -288,8 +288,10 @@ span.note, span.issue {
   <a href="http://www.w3.org/"><img alt="W3C" height="48" src="http://www.w3.org/Icons/w3c_home" width="72"></a></p>
   <h1>The picture element	</h1>
   <h2 class="no-num no-toc" id="an-html-extension-for-adaptive-images">An HTML extension for adaptive images</h2>
-  <h2 class="no-num no-toc ricg" id="living-document-last-updated-21-december-2012">Living document - Last updated 21 December 2012 </h2>
+  <h2 class="no-num no-toc ricg" id="living-document-last-updated-28-december-2012">Living document - Last updated 28 December 2012 </h2>
   <dl>
+    <dt>This Version:</dt>
+    <dd class="ricg"><a href="http://picture.responsiveimages.org/">http://picture.responsiveimages.org/</a></dd>
     <dt class="ricg">Latest W3C Published Version:</dt>
     <dd><a href="http://www.w3.org/TR/html-picture-element/">http://www.w3.org/TR/html-picture-element/</a></dd>
     <dd><a href="http://picture.responsiveimages.org">http://picture.responsiveimages.org</a></dd>
@@ -305,15 +307,14 @@ span.note, span.issue {
     <dt>Authors:</dt>
     <dd><span>Participants</span> of the  Responsive Images Community Group</dd>
     <dt>Editors:</dt>
-    <dd>Marcos Cáceres</dd>
-    <dd>Mat Marquis</dd>
-    <dd>Yoav Weiss</dd>
+    <dd><a href="http://marcosc.com">Marcos Cáceres</a>, <a href="http://datadriven.com.au">Data.Driven</a></dd>
+    <dd><a href="http://matmarquis.com/">Mat Marquis</a></dd>
+    <dd><a href="http://blog.yoav.ws/">Yoav Weiss</a></dd>
     <dd>Adrian Bateman, <a href="http://www.microsoft.com/">Microsoft Corporation</a></dd>
-    <dt>Final Specification Licensing Commitments:</dt>
+    <dt>RICG Final Specification Licensing Commitments:</dt>
     <dd><a href="http://www.w3.org/community/respimg/spec/26/commitments">http://www.w3.org/community/respimg/spec/26/commitments</a></dd>
   </dl>
   <p class="copyright ricg">Copyright © 2012 the Contributors to the <cite>Use Cases and Requirements for Standardizing Responsive Images</cite> Specification, published by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.</p>
-
   </div>
     <hr>
 </header>
@@ -348,7 +349,7 @@ span.note, span.issue {
 
 <h2 id="introduction"><span class="secno">1 </span>Introduction</h2>
 <p><em>This section is non-normative.</em></p>
-<p>This specification   provides developers with a means to declare multiple sources for an image, and, through <cite>CSS Media Queries</cite> ([<cite>CSS3-MEDIAQUERIES</cite>]), it gives developers control as to when those images are to be presented to a user. This is achieved by introducing a new <code><a href="#dfn-picture">picture</a></code> element to [<cite>HTML</cite>] that makes use of the <code> source</code> element. The <code><a href="#dfn-picture">picture</a></code> element remains backwards compatible with legacy user agents by degrading gracefully through <a class="internalDFN" href="#dfn-fallback-content">fallback content</a> (i.e., through the <code>img</code> element) while also potentially providing better accessibility than the existing <code>img</code> element. </p>
+<p>This specification   provides developers with a means to declare multiple sources for an image, and, through [<cite>CSS3-MEDIAQUERIES</cite>] (<cite>CSS Media Queries</cite>), it gives developers control as to when those images are to be presented to a user. This is achieved by introducing a new <code><a href="#dfn-picture">picture</a></code> element to [<cite>HTML</cite>] that makes use of the <code> source</code> element. The <code><a href="#dfn-picture">picture</a></code> element remains backwards compatible with legacy user agents by degrading gracefully through <a class="internalDFN" href="#dfn-fallback-content">fallback content</a> (i.e., through the <code>img</code> element) while also potentially providing better accessibility than the existing <code>img</code> element. </p>
 <p>By relying on [<cite>CSS3-MEDIAQUERIES</cite>], a user agent can <em>respond</em> to changes in the browsing environment by selecting the image source that most closely matches the browsing environment - thus embodying a technique known as <a href="http://en.wikipedia.org/wiki/Responsive_web_design">responsive web design</a> directly in the HTML markup. <a href="http://www.w3.org/TR/css3-mediaqueries/#media1">Media features</a> that a user agent can potentially respond to include, but are not limited to,  pixel widths and heights, and pixel densities, as well as environmental lighting conditions, changes in orientation, and  changes in   media type such as going from screen to print. </p>
 <p>This specification also defines the <code>HTMLPictureElement</code> programming interface, which affords developers a set of attributes and methods for interacting with <code><a href="#dfn-picture">picture</a></code> elements through ECMAScript.</p>
 <h3 id="example-of-usage"><span class="secno">1.1 </span>Example of usage</h3>
@@ -394,7 +395,7 @@ span.note, span.issue {
 <p>Implementations that use ECMAScript to expose the APIs defined in this specification <em class="rfc2119" title="must">must</em> implement them in a manner consistent with the ECMAScript Bindings defined in the [<cite><a class="bibref" href="#bib-WEBIDL">WEBIDL</a></cite>] specification.</p>
 <h2 id="definitions"><span class="secno">3 </span>Definitions</h2>
 <p>The following terms are used throughout this specification so they are gathered here for the readers convenience. The following list of terms is not exhaustive; other terms are defined throughout this specification.</p>
-<p>The follow terms are defined by the<cite> </cite>[<cite>HTML</cite>] specification: <dfn id="dfn-img-element"><a href="http://dev.w3.org/html5/spec/single-page.html#the-img-element"><code>img</code> element</a></dfn>, <dfn id="dfn-source-element"><a href="http://dev.w3.org/html5/spec/single-page.html#the-source-element"><code>source</code> element</a></dfn>, <dfn id="dfn-fallback-content"><a href="http://dev.w3.org/html5/spec/single-page.html#fallback-content">fallback content</a></dfn>, and <dfn id="dfn-valid-media-query"><a href="http://dev.w3.org/html5/spec/single-page.html#valid-media-query">valid media query</a></dfn>. </p>
+<p>The follow terms are defined by the [<cite>HTML</cite>] specification: <dfn id="dfn-img-element"><a href="http://dev.w3.org/html5/spec/single-page.html#the-img-element"><code>img</code> element</a></dfn>, <dfn id="dfn-source-element"><a href="http://dev.w3.org/html5/spec/single-page.html#the-source-element"><code>source</code> element</a></dfn>, <dfn id="dfn-fallback-content"><a href="http://dev.w3.org/html5/spec/single-page.html#fallback-content">fallback content</a></dfn>, and <dfn id="dfn-valid-media-query"><a href="http://dev.w3.org/html5/spec/single-page.html#valid-media-query">valid media query</a></dfn>. </p>
 <h2 id="the-picture-element"><span class="secno">4 </span>The <code><a href="#dfn-picture">picture</a></code> element</h2>
 <dl>
   <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-categories" title="element-dfn-categories">Categories</a>:</dt>
@@ -478,8 +479,6 @@ HTMLPictureElement : HTMLImageElement{
 </div>
 <p>A user agent <em class="rfc2119" title="may">may</em> override requests for higher-resolution images based on  user preferences. For example: “always request high-resolution images,” “always request low-resolution images,” and “request high-resolution images as bandwidth permits” based on the bandwidth information available to the browser.</p>
 
-<!-- appendix -->
-
 <h2 class="no-num" id="open-issues">Open Issues</h2>
 <p>We are tracking <dfn id="dfn-open-issues">open issues</dfn> on Github. <a href="https://github.com/ResponsiveImagesCG/picture-element/issues">Please help close them</a>! </p>
 <div id="open-issues-xhr">
@@ -487,46 +486,8 @@ HTMLPictureElement : HTMLImageElement{
 <h2 class="no-toc no-num" id="reference-implementations">Reference implementations</h2>
 <p>We have a list of <a href="https://github.com/Wilto/draft-prop/wiki/Current-users,-polyfills,-prototypes,-and-implementations">current users, polyfills, prototypes, and implementations</a> on Github. </p>
 <h2 class="no-num" id="acknowledgements">Acknowledgements</h2>
-<p class="ricg" id="participants">A list of <a href="http://www.w3.org/community/respimg/participants">participants</a> is avialble at the W3C Community Group Website.</p>
+<p class="ricg" id="participants">A list of <a href="http://www.w3.org/community/respimg/participants">participants</a> is available at the W3C Community Group Website.</p>
 
-<script class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/show_issues.js"></script> 
-<script class="ricg" src="https://api.github.com/repos/ResponsiveImagesCG/picture-element/issues?state=open&amp;callback=processResponse"></script> 
-<script src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/ga.js"></script> 
-<script>
-//This script dynamically loads the participants of the CG and shows them in the spec. 
-window.addEventListener("DOMContentLoaded", function requestParticipants(){
-  var xhr = new XMLHttpRequest(),
-  	  output = document.querySelector("#participants"), 
-      participantsURL = output.querySelector("a").getAttribute("href"),
-	  tempElem = document.createElement("temp"), 
-	  participants;
-  xhr.open("GET", participantsURL,true);
-  xhr.onreadystatechange= processParticipants; 
-  xhr.send(null); 
-  
-  function processParticipants(){
-	 if (xhr.readyState==4) {
-		//participants are in a table on the other website
-		tempElem.innerHTML = xhr.responseText;
-		participants = tempElem.querySelectorAll("td > h3");
-		if(participants.length > 0){
- 	  		showParticipants(participants)
-		}
- 	}
-  } 
-  
-  function showParticipants(){
-	var names  = [],
-		prefix = "Participants of the Responsive Images Community Group are: ";
-	if(participants.length){
-		for(var i = 0; i < participants.length; i++){
-			names.push(participants.item(i).textContent);
-		}
-		output.innerHTML = prefix + names.join(", ") + "."; 
-	}
-  }
- }, false); 
-</script>
 <h2 class="no-num" id="normative-references">Normative references</h2>
 <dl class="bibliography">
   <dt id="bib-CSS3-MEDIAQUERIES">[CSS3-MEDIAQUERIES]</dt>
@@ -542,4 +503,3 @@ window.addEventListener("DOMContentLoaded", function requestParticipants(){
 <script class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/show_issues.js"></script>
 <script class="ricg" src="https://api.github.com/repos/ResponsiveImagesCG/picture-element/issues?state=open&amp;callback=processResponse"></script>
 <script class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/ga.js"></script>
-<script class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/load_cg_participants.js"></script>
