@@ -60,7 +60,6 @@ a:not([href]) {
 	float: left;
 	width: 5.5em;
 }
-
 /* --- INLINES --- */
 em.rfc2119 {
 	text-transform:     lowercase;
@@ -110,7 +109,7 @@ ol.algorithm li:before {
 .toc a, .tof a {
 	text-decoration:    none;
 }
-.toc li{
+.toc li {
 	list-style-type: none;
 	padding: .1em 0;
 }
@@ -241,40 +240,50 @@ span.note, span.issue {
 	background: #e9fbe9;
 }
 .stability {
-     position: fixed;
-     bottom: 0;
-     left: 0; right: 0;
-     margin: 0 auto 0 auto;
-     width: 50%;
-     background: maroon; color: yellow;
-     -webkit-border-radius: 1em 1em 0 0;
-     -moz-border-radius: 1em 1em 0 0;
-     border-radius: 1em 1em 0 0;
-     -moz-box-shadow: 0 0 1em #500;
-     -webkit-box-shadow: 0 0 1em #500;
-     box-shadow: 0 0 1em red;
-     padding: 0.5em 1em;
-     text-align: center;
-   }
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: 0 auto 0 auto;
+	width: 50%;
+	background: maroon;
+	color: yellow;
+	-webkit-border-radius: 1em 1em 0 0;
+	-moz-border-radius: 1em 1em 0 0;
+	border-radius: 1em 1em 0 0;
+	-moz-box-shadow: 0 0 1em #500;
+	-webkit-box-shadow: 0 0 1em #500;
+	box-shadow: 0 0 1em red;
+	padding: 0.5em 1em;
+	text-align: center;
+}
 .stability strong {
- display: block;
+	display: block;
 }
 .stability input {
- -moz-appearance: none; -webkit-appearance: none; margin: 0; 
- border: 0; padding: 0.25em 0.5em; background: transparent; color: black;
- position: absolute; top: -0.5em; right: 0; font: 1.25em sans-serif; text-align: center;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	margin: 0;
+	border: 0;
+	padding: 0.25em 0.5em;
+	background: transparent;
+	color: black;
+	position: absolute;
+	top: -0.5em;
+	right: 0;
+	font: 1.25em sans-serif;
+	text-align: center;
 }
 .stability input:hover {
- color: white;
- text-shadow: 0 0 2px black;
+	color: white;
+	text-shadow: 0 0 2px black;
 }
 .stability input:active {
- padding: 0.3em 0.45em 0.2em 0.55em;
+	padding: 0.3em 0.45em 0.2em 0.55em;
 }
-.stability :link, .stability :visited,
-.stability :link:hover, .stability :visited:hover {
- background: transparent;
- color: white;
+.stability :link, .stability :visited, .stability :link:hover, .stability :visited:hover {
+	background: transparent;
+	color: white;
 }
 </style>
 <link href="http://www.w3.org/StyleSheets/TR/W3C-ED" rel="stylesheet">
@@ -283,45 +292,45 @@ span.note, span.issue {
 <link class="ricg" href="http://www.w3.org/StyleSheets/TR/w3c-unofficial.css" rel="stylesheet">
 </head>
 <body>
-<header><div class="head">
-  <p><a href="http://responsiveimages.org"><img alt="Responsive Images Community Group" src="https://raw.github.com/ResponsiveImagesCG/meta/master/logo/Web/RICG_logo_small.png" style="float:right"></a> 
-  <a href="http://www.w3.org/"><img alt="W3C" height="48" src="http://www.w3.org/Icons/w3c_home" width="72"></a></p>
-  <h1>The picture element	</h1>
-  <h2 class="no-num no-toc" id="an-html-extension-for-adaptive-images">An HTML extension for adaptive images</h2>
-  <h2 class="no-num no-toc ricg" id="living-document-last-updated-28-december-2012">Living document - Last updated 28 December 2012 </h2>
-  <dl>
-    <dt>This Version:</dt>
-    <dd class="ricg"><a href="http://picture.responsiveimages.org/">http://picture.responsiveimages.org/</a></dd>
-    <dt class="ricg">Latest W3C Published Version:</dt>
-    <dd><a href="http://www.w3.org/TR/html-picture-element/">http://www.w3.org/TR/html-picture-element/</a></dd>
-    <dd><a href="http://picture.responsiveimages.org">http://picture.responsiveimages.org</a></dd>
-    <dt>Participate:</dt>
-    <dd><a href="http://w3c.responsiveimages.org">Join the Responsive Images Community Group</a></dd>
-    <dd><a href="http://list.responsiveimages.org">Public mailing list</a></dd>
-    <dd><a href="irc://irc.w3.org:6665/#respimg">IRC: #respimg on W3C's IRC server</a></dd>
-    <dd><a href="https://twitter.com/respimg">Twitter</a></dd>
-    <dd><a href="http://gh.responsiveimages.org">Github</a></dd>
-    <dt>Version history:</dt>
-    <dd><a href="https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages">Github commits</a> (<a href="https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages.atom">RSS</a>)</dd>
-    <dd><a href="https://twitter.com/respimg_commits">Github commits on Twitter</a></dd>
-    <dt>Authors:</dt>
-    <dd><span>Participants</span> of the  Responsive Images Community Group</dd>
-    <dt>Editors:</dt>
-    <dd><a href="http://marcosc.com">Marcos Cáceres</a>, <a href="http://datadriven.com.au">Data.Driven</a></dd>
-    <dd><a href="http://matmarquis.com/">Mat Marquis</a></dd>
-    <dd><a href="http://blog.yoav.ws/">Yoav Weiss</a></dd>
-    <dd>Adrian Bateman, <a href="http://www.microsoft.com/">Microsoft Corporation</a></dd>
-    <dt>RICG Final Specification Licensing Commitments:</dt>
-    <dd><a href="http://www.w3.org/community/respimg/spec/26/commitments">http://www.w3.org/community/respimg/spec/26/commitments</a></dd>
-  </dl>
-  <p class="copyright ricg">Copyright © 2012 the Contributors to the <cite>Use Cases and Requirements for Standardizing Responsive Images</cite> Specification, published by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.</p>
+<header>
+  <div class="head">
+    <p><a href="http://responsiveimages.org"><img alt="Responsive Images Community Group" src="https://raw.github.com/ResponsiveImagesCG/meta/master/logo/Web/RICG_logo_small.png" style="float:right"></a> <a href="http://www.w3.org/"><img alt="W3C" height="48" src="http://www.w3.org/Icons/w3c_home" width="72"></a></p>
+    <h1>The picture element </h1>
+    <h2 class="no-num no-toc" id="an-html-extension-for-adaptive-images">An HTML extension for adaptive images</h2>
+    <h2 class="no-num no-toc ricg" id="living-document-last-updated-7-january-2013">Living document - Last updated 7 January 2013 </h2>
+    <dl>
+      <dt>This Version:</dt>
+      <dd class="ricg"><a href="http://picture.responsiveimages.org/">http://picture.responsiveimages.org/</a></dd>
+      <dt class="ricg">Latest W3C Published Version:</dt>
+      <dd><a href="http://www.w3.org/TR/html-picture-element/">http://www.w3.org/TR/html-picture-element/</a></dd>
+      <dd><a href="http://picture.responsiveimages.org">http://picture.responsiveimages.org</a></dd>
+      <dt>Participate:</dt>
+      <dd><a href="http://w3c.responsiveimages.org">Join the Responsive Images Community Group</a></dd>
+      <dd><a href="http://list.responsiveimages.org">Public mailing list</a></dd>
+      <dd><a href="irc://irc.w3.org:6665/#respimg">IRC: #respimg on W3C's IRC server</a></dd>
+      <dd><a href="https://twitter.com/respimg">Twitter</a></dd>
+      <dd><a href="http://gh.responsiveimages.org">Github</a></dd>
+      <dt>Version history:</dt>
+      <dd><a href="https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages">Github commits</a> (<a href="https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages.atom">RSS</a>)</dd>
+      <dd><a href="https://twitter.com/respimg_commits">Github commits on Twitter</a></dd>
+      <dt>Authors:</dt>
+      <dd><span>Participants</span> of the  Responsive Images Community Group</dd>
+      <dt>Editors:</dt>
+      <dd><a href="http://marcosc.com">Marcos Cáceres</a>, <a href="http://datadriven.com.au">Data.Driven</a></dd>
+      <dd><a href="http://matmarquis.com/">Mat Marquis</a></dd>
+      <dd><a href="http://blog.yoav.ws/">Yoav Weiss</a></dd>
+      <dd>Adrian Bateman, <a href="http://www.microsoft.com/">Microsoft Corporation</a></dd>
+      <dt>RICG Final Specification Licensing Commitments:</dt>
+      <dd><a href="http://www.w3.org/community/respimg/spec/26/commitments">http://www.w3.org/community/respimg/spec/26/commitments</a></dd>
+    </dl>
+    <p class="copyright ricg">Copyright © 2013 the Contributors to the <cite>Use Cases and Requirements for Standardizing Responsive Images</cite> Specification, published by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.</p>
   </div>
-    <hr>
+  <hr>
 </header>
 <h2 class="no-toc no-num" id="abstract">Abstract</h2>
-<p>The <code><a href="#dfn-picture">picture</a></code> element is an image whose source content is determined    by one or more CSS media queries.</p>
+<p>The <code><a href="#dfn-picture">picture</a></code> element is an image container whose source content is determined by one or more CSS media queries.</p>
 <h2 class="no-toc no-num" id="status">Status of This Document</h2>
-  <p><em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a> at http://www.w3.org/TR/.</em></p>
+<p><em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a> at http://www.w3.org/TR/.</em></p>
 <p class="ricg">This specification was published by the <a href="http://www.w3.org/community/respimg/">Responsive Images Community Group</a>. It is not a W3C Standard nor is it on the W3C Standards Track. Please note that under the <a href="http://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a> there is a limited opt-out and other conditions apply. Learn more about <a href="http://www.w3.org/community/">W3C Community and Business Groups</a>.</p>
 <div class="note ricg">
   <div class="note-title"><span>Note</span></div>
@@ -329,7 +338,6 @@ span.note, span.issue {
     <p>This specification is under active development and changing frequently. Please see the list of <a class="internalDFN" href="#dfn-open-issues">open issues</a>.</p>
   </div>
 </div>
-
 <h2 class="no-num no-toc" id="table-of-contents">Table of Contents</h2>
 
 <!--begin-toc-->
@@ -349,7 +357,7 @@ span.note, span.issue {
 
 <h2 id="introduction"><span class="secno">1 </span>Introduction</h2>
 <p><em>This section is non-normative.</em></p>
-<p>This specification   provides developers with a means to declare multiple sources for an image, and, through [<cite>CSS3-MEDIAQUERIES</cite>] (<cite>CSS Media Queries</cite>), it gives developers control as to when those images are to be presented to a user. This is achieved by introducing a new <code><a href="#dfn-picture">picture</a></code> element to [<cite>HTML</cite>] that makes use of the <code> source</code> element. The <code><a href="#dfn-picture">picture</a></code> element remains backwards compatible with legacy user agents by degrading gracefully through <a class="internalDFN" href="#dfn-fallback-content">fallback content</a> (i.e., through the <code>img</code> element) while also potentially providing better accessibility than the existing <code>img</code> element. </p>
+<p>This specification provides developers with a means to declare multiple sources for an image, and, through [<cite>CSS3-MEDIAQUERIES</cite>] (<cite>CSS Media Queries</cite>), it gives developers control as to when those images are to be presented to a user. This is achieved by introducing a new <code><a href="#dfn-picture">picture</a></code> element to [<cite>HTML</cite>] that makes use of the <code> source</code> element. The <code><a href="#dfn-picture">picture</a></code> element remains backwards compatible with legacy user agents by degrading gracefully through <a href="#dfn-fallback-content">fallback content</a> (i.e., through the <code>img</code> element) while also potentially providing better accessibility than the existing <code>img</code> element. </p>
 <p>By relying on [<cite>CSS3-MEDIAQUERIES</cite>], a user agent can <em>respond</em> to changes in the browsing environment by selecting the image source that most closely matches the browsing environment - thus embodying a technique known as <a href="http://en.wikipedia.org/wiki/Responsive_web_design">responsive web design</a> directly in the HTML markup. <a href="http://www.w3.org/TR/css3-mediaqueries/#media1">Media features</a> that a user agent can potentially respond to include, but are not limited to,  pixel widths and heights, and pixel densities, as well as environmental lighting conditions, changes in orientation, and  changes in   media type such as going from screen to print. </p>
 <p>This specification also defines the <code>HTMLPictureElement</code> programming interface, which affords developers a set of attributes and methods for interacting with <code><a href="#dfn-picture">picture</a></code> elements through ECMAScript.</p>
 <h3 id="example-of-usage"><span class="secno">1.1 </span>Example of usage</h3>
@@ -425,9 +433,9 @@ HTMLPictureElement : HTMLImageElement{
 </dl>
 <p>The <code><dfn id="dfn-picture">picture</dfn></code> element used for displaying an image that can come from a range of sources (see <code>srcset</code> attribute). Which image the user agent displays depends on the <a class="internalDFN" href="#dfn-algorithm-for-deriving-the-source-image">algorithm for deriving the source image</a>. </p>
 <p>On getting the <code>media</code> IDL attribute, the user agent <em class="rfc2119" title="must">must</em> return the media query that matches the current environment. </p>
-<p>It is <em class="rfc2119" title="recommended">recommended</em> that for cases where a single image source is available, and where no responsive adoption is needed, authors  use the <code>img</code> element. </p>
+<p>It is <em class="rfc2119" title="recommended">recommended</em> that for cases where a single image source is available, and where no responsive adoption is needed, authors  use the <code>img</code> element. Authors can use the srcset attribute for simple resized image sources.</p>
 <p>The <span>chosen image</span> is the embedded content. </p>
-<p>For user agents that don't support the <code><a href="#dfn-picture">picture</a></code> element, an author can provide an <code>img</code> element as <a class="internalDFN" href="#dfn-fallback-content">fallback content</a>. User agents <em class="rfc2119" title="should not">should not</em> show this content to the user: it is intended for legacy user agents that do not support <code><a href="#dfn-picture">picture</a></code>, so that a legacy <code>img</code> element can be shown instead.</p>
+<p>For user agents that don't support the <code><a href="#dfn-picture">picture</a></code> element, an author can provide an <code>img</code> element as <a href="#dfn-fallback-content">fallback content</a>. User agents that support the <code><a href="#dfn-picture">picture</a></code> element <em class="rfc2119" title="should not">should not</em> show this content to the user: it is intended for legacy user agents that do not support <code><a href="#dfn-picture">picture</a></code>, so that a legacy <code>img</code> element can be shown instead.</p>
 <p>Authoring requirement: as with the <code>img</code> element, documents  must not use the <code><a href="#dfn-picture">picture</a></code> element as a layout tool. In particular, picture elements should not be used to display transparent images, as they rarely convey meaning and rarely add anything useful to the document. </p>
 <p>When used with the <code><a href="#dfn-picture">picture</a></code> element, a <span>document</span> <em class="rfc2119" title="should">should</em> only contain <code>source</code> elements need to represent the same subject matter, but cropping and zooming can differ.</p>
 <div class="issue">
@@ -441,7 +449,7 @@ HTMLPictureElement : HTMLImageElement{
 <div class="note">
   <div class="note-title"><span>Note</span></div>
   <div class="">
-    <p>What we want to do is have the <code><a href="#dfn-picture">picture</a></code> behave exactly the same as an <code>img</code> element, but with the only difference being that it is <code>source</code> elements is used to determine the value of the <code>src</code> IDL attribute (and hence what image content is displayed). How that is determined is through  using the <code>media</code> attribute attribute of the <code>source</code> element.    </p>
+    <p>What we want to do is have the <code><a href="#dfn-picture">picture</a></code> behave exactly the same as an <code>img</code> element, but with the only difference being that it is <code>source</code> elements is used to determine the value of the <code>src</code> IDL attribute (and hence what image content is displayed). How that is determined is through  using the <code>media</code> attribute attribute of the <code>source</code> element. </p>
     <p>So, to derive the <dfn id="dfn-source-image">source image</dfn>: ignoring any sources whose <code>type</code> is not supported by the browser, gather all the media queries from the <code>source</code> elements' <code>media</code> attributes into a "stylesheet", in document order. Any missing <code>media</code> attributes are just assumed to mean "all". Any media attributes that are not valid media queries are ignored. So, given the following: </p>
     <pre>&lt;picture id="pictureElement"&gt;
 <span class="example">   &lt;source media="(min-width: 45em)" srcset="large-1.jpg 1x, large-2.jpg 2x"&gt;
@@ -478,16 +486,13 @@ HTMLPictureElement : HTMLImageElement{
   </div>
 </div>
 <p>A user agent <em class="rfc2119" title="may">may</em> override requests for higher-resolution images based on  user preferences. For example: “always request high-resolution images,” “always request low-resolution images,” and “request high-resolution images as bandwidth permits” based on the bandwidth information available to the browser.</p>
-
 <h2 class="no-num" id="open-issues">Open Issues</h2>
 <p>We are tracking <dfn id="dfn-open-issues">open issues</dfn> on Github. <a href="https://github.com/ResponsiveImagesCG/picture-element/issues">Please help close them</a>! </p>
-<div id="open-issues-xhr">
-</div>
+<div id="open-issues-xhr"> </div>
 <h2 class="no-toc no-num" id="reference-implementations">Reference implementations</h2>
 <p>We have a list of <a href="https://github.com/Wilto/draft-prop/wiki/Current-users,-polyfills,-prototypes,-and-implementations">current users, polyfills, prototypes, and implementations</a> on Github. </p>
 <h2 class="no-num" id="acknowledgements">Acknowledgements</h2>
 <p id="participants">A <a href="http://www.w3.org/community/respimg/participants">complete list of participants</a> of the Responsive Images Community Group is available at the W3C Community Group Website.</p>
-
 <h2 class="no-num" id="normative-references">Normative references</h2>
 <dl class="bibliography">
   <dt id="bib-CSS3-MEDIAQUERIES">[CSS3-MEDIAQUERIES]</dt>
@@ -499,7 +504,6 @@ HTMLPictureElement : HTMLImageElement{
   <dt id="bib-WEBIDL">[WEBIDL]</dt>
   <dd><a href="http://www.w3.org/TR/WebIDL/"><cite>Web IDL.</cite></a> (<a href="http://www.w3.org/TR/WebIDL/#sotd">status</a>).</dd>
 </dl>
-
-<script class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/show_issues.js"></script>
-<script class="ricg" src="https://api.github.com/repos/ResponsiveImagesCG/picture-element/issues?state=open&amp;callback=processResponse"></script>
+<script class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/show_issues.js"></script> 
+<script class="ricg" src="https://api.github.com/repos/ResponsiveImagesCG/picture-element/issues?state=open&amp;callback=processResponse"></script> 
 <script class="ricg" src="https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/ga.js"></script>

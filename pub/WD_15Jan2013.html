@@ -60,7 +60,6 @@ a:not([href]) {
 	float: left;
 	width: 5.5em;
 }
-
 /* --- INLINES --- */
 em.rfc2119 {
 	text-transform:     lowercase;
@@ -110,7 +109,7 @@ ol.algorithm li:before {
 .toc a, .tof a {
 	text-decoration:    none;
 }
-.toc li{
+.toc li {
 	list-style-type: none;
 	padding: .1em 0;
 }
@@ -241,40 +240,50 @@ span.note, span.issue {
 	background: #e9fbe9;
 }
 .stability {
-     position: fixed;
-     bottom: 0;
-     left: 0; right: 0;
-     margin: 0 auto 0 auto;
-     width: 50%;
-     background: maroon; color: yellow;
-     -webkit-border-radius: 1em 1em 0 0;
-     -moz-border-radius: 1em 1em 0 0;
-     border-radius: 1em 1em 0 0;
-     -moz-box-shadow: 0 0 1em #500;
-     -webkit-box-shadow: 0 0 1em #500;
-     box-shadow: 0 0 1em red;
-     padding: 0.5em 1em;
-     text-align: center;
-   }
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: 0 auto 0 auto;
+	width: 50%;
+	background: maroon;
+	color: yellow;
+	-webkit-border-radius: 1em 1em 0 0;
+	-moz-border-radius: 1em 1em 0 0;
+	border-radius: 1em 1em 0 0;
+	-moz-box-shadow: 0 0 1em #500;
+	-webkit-box-shadow: 0 0 1em #500;
+	box-shadow: 0 0 1em red;
+	padding: 0.5em 1em;
+	text-align: center;
+}
 .stability strong {
- display: block;
+	display: block;
 }
 .stability input {
- -moz-appearance: none; -webkit-appearance: none; margin: 0; 
- border: 0; padding: 0.25em 0.5em; background: transparent; color: black;
- position: absolute; top: -0.5em; right: 0; font: 1.25em sans-serif; text-align: center;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	margin: 0;
+	border: 0;
+	padding: 0.25em 0.5em;
+	background: transparent;
+	color: black;
+	position: absolute;
+	top: -0.5em;
+	right: 0;
+	font: 1.25em sans-serif;
+	text-align: center;
 }
 .stability input:hover {
- color: white;
- text-shadow: 0 0 2px black;
+	color: white;
+	text-shadow: 0 0 2px black;
 }
 .stability input:active {
- padding: 0.3em 0.45em 0.2em 0.55em;
+	padding: 0.3em 0.45em 0.2em 0.55em;
 }
-.stability :link, .stability :visited,
-.stability :link:hover, .stability :visited:hover {
- background: transparent;
- color: white;
+.stability :link, .stability :visited, .stability :link:hover, .stability :visited:hover {
+	background: transparent;
+	color: white;
 }
 </style>
 <link href="http://www.w3.org/StyleSheets/TR/W3C-WD" rel="stylesheet">
@@ -283,55 +292,55 @@ span.note, span.issue {
 <link class="w3c" href="http://www.w3.org/StyleSheets/TR/W3C-WD" rel="stylesheet">
 </head>
 <body>
-<header><div class="head">
-  <p><a href="http://responsiveimages.org"><img alt="Responsive Images Community Group" src="https://raw.github.com/ResponsiveImagesCG/meta/master/logo/Web/RICG_logo_small.png" style="float:right"></a> 
-  <a href="http://www.w3.org/"><img alt="W3C" height="48" src="http://www.w3.org/Icons/w3c_home" width="72"></a></p>
-  <h1>The picture element	</h1>
-  <h2 class="no-num no-toc" id="an-html-extension-for-adaptive-images">An HTML extension for adaptive images</h2>
-  <h2 class="no-num no-toc w3c" id="w3c-working-draft-15-january-2013">W3C Working Draft 15 January 2013</h2>
-  <dl>
-    <dt>This Version:</dt>
-    <dd class="w3c"><a href="http://www.w3.org/TR/2013/WD-html-picture-element-20130115/">http://www.w3.org/TR/2013/WD-html-picture-element-20130115/</a></dd>
-    <dt class="w3c">Latest version:</dt> 
-    <dd><a href="http://www.w3.org/TR/html-picture-element/">http://www.w3.org/TR/html-picture-element/</a></dd>
-    <dt class="w3c">Previous version:</dt>
-    <dd class="w3c">None.</dd>
-    <dt class="w3c">Latest Editor's draft:</dt>
-    <dd><a href="http://picture.responsiveimages.org">http://picture.responsiveimages.org</a></dd>
-    <dt>Participate:</dt>
-    <dd><a href="http://w3c.responsiveimages.org">Join the Responsive Images Community Group</a></dd>
-    <dd><a href="http://list.responsiveimages.org">Public mailing list</a></dd>
-    <dd><a href="irc://irc.w3.org:6665/#respimg">IRC: #respimg on W3C's IRC server</a></dd>
-    <dd><a href="https://twitter.com/respimg">Twitter</a></dd>
-    <dd><a href="http://gh.responsiveimages.org">Github</a></dd>
-    <dt>Version history:</dt>
-    <dd><a href="https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages">Github commits</a> (<a href="https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages.atom">RSS</a>)</dd>
-    <dd><a href="https://twitter.com/respimg_commits">Github commits on Twitter</a></dd>
-    <dt>Authors:</dt>
-    <dd><a href="#participants-0">Participants</a> of the  Responsive Images Community Group</dd>
-    <dt>Editors:</dt>
-    <dd><a href="http://marcosc.com">Marcos Cáceres</a>, <a href="http://datadriven.com.au">Data.Driven</a></dd>
-    <dd><a href="http://matmarquis.com/">Mat Marquis</a></dd>
-    <dd><a href="http://blog.yoav.ws/">Yoav Weiss</a></dd>
-    <dd>Adrian Bateman, <a href="http://www.microsoft.com/">Microsoft Corporation</a></dd>
-    <dt>RICG Final Specification Licensing Commitments:</dt>
-    <dd><a href="http://www.w3.org/community/respimg/spec/26/commitments">http://www.w3.org/community/respimg/spec/26/commitments</a></dd>
-  </dl>
-  <p class="copyright w3c"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2013 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p>
-  
-  </div>
-    <hr>
+<header>
+  <div class="head">
+    <p><a href="http://responsiveimages.org"><img alt="Responsive Images Community Group" src="https://raw.github.com/ResponsiveImagesCG/meta/master/logo/Web/RICG_logo_small.png" style="float:right"></a> <a href="http://www.w3.org/"><img alt="W3C" height="48" src="http://www.w3.org/Icons/w3c_home" width="72"></a></p>
+    <h1>The picture element </h1>
+    <h2 class="no-num no-toc" id="an-html-extension-for-adaptive-images">An HTML extension for adaptive images</h2>
+    <h2 class="no-num no-toc w3c" id="w3c-working-draft-15-january-2013">W3C Working Draft 15 January 2013</h2>
+    <dl>
+      <dt>This Version:</dt>
+      <dd class="w3c"><a href="http://www.w3.org/TR/2013/WD-html-picture-element-20130115/">http://www.w3.org/TR/2013/WD-html-picture-element-20130115/</a></dd>
+      <dt class="w3c">Latest version:</dt>
+      <dd><a href="http://www.w3.org/TR/html-picture-element/">http://www.w3.org/TR/html-picture-element/</a></dd>
+      <dt class="w3c">Previous version:</dt>
+      <dd class="w3c">None.</dd>
+      <dt class="w3c">Latest Editor's draft:</dt>
+      <dd><a href="http://picture.responsiveimages.org">http://picture.responsiveimages.org</a></dd>
+      <dt>Participate:</dt>
+      <dd><a href="http://w3c.responsiveimages.org">Join the Responsive Images Community Group</a></dd>
+      <dd><a href="http://list.responsiveimages.org">Public mailing list</a></dd>
+      <dd><a href="irc://irc.w3.org:6665/#respimg">IRC: #respimg on W3C's IRC server</a></dd>
+      <dd><a href="https://twitter.com/respimg">Twitter</a></dd>
+      <dd><a href="http://gh.responsiveimages.org">Github</a></dd>
+      <dt>Version history:</dt>
+      <dd><a href="https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages">Github commits</a> (<a href="https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages.atom">RSS</a>)</dd>
+      <dd><a href="https://twitter.com/respimg_commits">Github commits on Twitter</a></dd>
+      <dt>Authors:</dt>
+      <dd><a href="#participants-0">Participants</a> of the  Responsive Images Community Group</dd>
+      <dt>Editors:</dt>
+      <dd><a href="http://marcosc.com">Marcos Cáceres</a>, <a href="http://datadriven.com.au">Data.Driven</a></dd>
+      <dd><a href="http://matmarquis.com/">Mat Marquis</a></dd>
+      <dd><a href="http://blog.yoav.ws/">Yoav Weiss</a></dd>
+      <dd>Adrian Bateman, <a href="http://www.microsoft.com/">Microsoft Corporation</a></dd>
+      <dt>RICG Final Specification Licensing Commitments:</dt>
+      <dd><a href="http://www.w3.org/community/respimg/spec/26/commitments">http://www.w3.org/community/respimg/spec/26/commitments</a></dd>
+    </dl>
+    <p class="copyright w3c"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2013 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p>
+    </div>
+  <hr>
 </header>
 <h2 class="no-toc no-num" id="abstract">Abstract</h2>
-<p>The <code><a href="#dfn-picture">picture</a></code> element is an image whose source content is determined    by one or more CSS media queries.</p>
+<p>The <code><a href="#dfn-picture">picture</a></code> element is an image container whose source content is determined by one or more CSS media queries.</p>
 <h2 class="no-toc no-num" id="status">Status of This Document</h2>
-  <p><em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a> at http://www.w3.org/TR/.</em></p>
+<p><em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a> at http://www.w3.org/TR/.</em></p>
 <div class="w3c">
-<p class="stability" id="wip"><strong>This is a work in
-  progress!</strong> For the latest updates from the HTML WG and <a href="http://responsiveimages.org">RICG</a>, possibly
-  including important bug fixes, please look at the <a href="http://usecases.responsiveimages.org">editor's draft</a> instead. If you find any bugs, typos, or issues please <a href="https://github.com/ResponsiveImagesCG/picture-element/issues">file a bug</a> on Github!
-  <input onclick="closeWarning(this.parentNode)" type="button" value="X"></p>
-<script>
+  <p class="stability" id="wip"><strong>This is a work in
+    progress!</strong> For the latest updates from the HTML WG and <a href="http://responsiveimages.org">RICG</a>, possibly
+    including important bug fixes, please look at the <a href="http://usecases.responsiveimages.org">editor's draft</a> instead. If you find any bugs, typos, or issues please <a href="https://github.com/ResponsiveImagesCG/picture-element/issues">file a bug</a> on Github!
+    <input onclick="closeWarning(this.parentNode)" type="button" value="X">
+  </p>
+  <script>
    function closeWarning(element) {
      element.parentNode.removeChild(element);
      var date = new Date();
@@ -341,12 +350,9 @@ span.note, span.issue {
    if (getCookie('hide-obsolescence-warning') == '1')
      setTimeout(function () { document.getElementById('wip').parentNode.removeChild(document.getElementById('wip')); }, 2000);
   </script>
-
-
   <p>This is a First Public Working Draft.</p>
   <p>This document was published by the <a href="http://www.w3.org/html/wg/">HTML Working Group</a> as a Working Draft, but was  developed in collaboration with the <a href="http://responsiveimages.org">Responsive Images Community Group</a> (see <a href="http://www.w3.org/community/respimg/spec/26/commitments">licensing commitments</a>). If you are not a HTML working group member and wish to make comments regarding this document please send them to <a href="mailto:public-html-comments@w3.org">public-html-comments@w3.org</a> (<a href="mailto:public-html-comments-request@w3.org?subject=subscribe">subscribe</a>, <a href="http://lists.w3.org/Archives/Public/public-html-comments/">archives</a>). If you are a HTML working group member and wish to make comments regarding this document, please send them to <a href="mailto:public-html@w3.org">public-html@w3.org</a> (<a href="mailto:public-html-request@w3.org?subject=subscribe">subscribe</a>, <a href="http://lists.w3.org/Archives/Public/public-html/">archives</a>). All feedback is welcome.</p>
-<p>Publication as a Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.</p>
-
+  <p>Publication as a Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.</p>
   <p>This document was produced by a group operating under the <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 W3C Patent Policy</a>. W3C maintains a <a href="http://www.w3.org/2004/01/pp-impl/40318/status" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section 6 of the W3C Patent Policy</a>.</p>
 </div>
 <h2 class="no-num no-toc" id="table-of-contents">Table of Contents</h2>
@@ -368,7 +374,7 @@ span.note, span.issue {
 
 <h2 id="introduction"><span class="secno">1 </span>Introduction</h2>
 <p><em>This section is non-normative.</em></p>
-<p>This specification   provides developers with a means to declare multiple sources for an image, and, through [<cite>CSS3-MEDIAQUERIES</cite>] (<cite>CSS Media Queries</cite>), it gives developers control as to when those images are to be presented to a user. This is achieved by introducing a new <code><a href="#dfn-picture">picture</a></code> element to [<cite>HTML</cite>] that makes use of the <code> source</code> element. The <code><a href="#dfn-picture">picture</a></code> element remains backwards compatible with legacy user agents by degrading gracefully through <a class="internalDFN" href="#dfn-fallback-content">fallback content</a> (i.e., through the <code>img</code> element) while also potentially providing better accessibility than the existing <code>img</code> element. </p>
+<p>This specification provides developers with a means to declare multiple sources for an image, and, through [<cite>CSS3-MEDIAQUERIES</cite>] (<cite>CSS Media Queries</cite>), it gives developers control as to when those images are to be presented to a user. This is achieved by introducing a new <code><a href="#dfn-picture">picture</a></code> element to [<cite>HTML</cite>] that makes use of the <code> source</code> element. The <code><a href="#dfn-picture">picture</a></code> element remains backwards compatible with legacy user agents by degrading gracefully through <a href="#dfn-fallback-content">fallback content</a> (i.e., through the <code>img</code> element) while also potentially providing better accessibility than the existing <code>img</code> element. </p>
 <p>By relying on [<cite>CSS3-MEDIAQUERIES</cite>], a user agent can <em>respond</em> to changes in the browsing environment by selecting the image source that most closely matches the browsing environment - thus embodying a technique known as <a href="http://en.wikipedia.org/wiki/Responsive_web_design">responsive web design</a> directly in the HTML markup. <a href="http://www.w3.org/TR/css3-mediaqueries/#media1">Media features</a> that a user agent can potentially respond to include, but are not limited to,  pixel widths and heights, and pixel densities, as well as environmental lighting conditions, changes in orientation, and  changes in   media type such as going from screen to print. </p>
 <p>This specification also defines the <code>HTMLPictureElement</code> programming interface, which affords developers a set of attributes and methods for interacting with <code><a href="#dfn-picture">picture</a></code> elements through ECMAScript.</p>
 <h3 id="example-of-usage"><span class="secno">1.1 </span>Example of usage</h3>
@@ -444,9 +450,9 @@ HTMLPictureElement : HTMLImageElement{
 </dl>
 <p>The <code><dfn id="dfn-picture">picture</dfn></code> element used for displaying an image that can come from a range of sources (see <code>srcset</code> attribute). Which image the user agent displays depends on the <a class="internalDFN" href="#dfn-algorithm-for-deriving-the-source-image">algorithm for deriving the source image</a>. </p>
 <p>On getting the <code>media</code> IDL attribute, the user agent <em class="rfc2119" title="must">must</em> return the media query that matches the current environment. </p>
-<p>It is <em class="rfc2119" title="recommended">recommended</em> that for cases where a single image source is available, and where no responsive adoption is needed, authors  use the <code>img</code> element. </p>
+<p>It is <em class="rfc2119" title="recommended">recommended</em> that for cases where a single image source is available, and where no responsive adoption is needed, authors  use the <code>img</code> element. Authors can use the srcset attribute for simple resized image sources.</p>
 <p>The <span>chosen image</span> is the embedded content. </p>
-<p>For user agents that don't support the <code><a href="#dfn-picture">picture</a></code> element, an author can provide an <code>img</code> element as <a class="internalDFN" href="#dfn-fallback-content">fallback content</a>. User agents <em class="rfc2119" title="should not">should not</em> show this content to the user: it is intended for legacy user agents that do not support <code><a href="#dfn-picture">picture</a></code>, so that a legacy <code>img</code> element can be shown instead.</p>
+<p>For user agents that don't support the <code><a href="#dfn-picture">picture</a></code> element, an author can provide an <code>img</code> element as <a href="#dfn-fallback-content">fallback content</a>. User agents that support the <code><a href="#dfn-picture">picture</a></code> element <em class="rfc2119" title="should not">should not</em> show this content to the user: it is intended for legacy user agents that do not support <code><a href="#dfn-picture">picture</a></code>, so that a legacy <code>img</code> element can be shown instead.</p>
 <p>Authoring requirement: as with the <code>img</code> element, documents  must not use the <code><a href="#dfn-picture">picture</a></code> element as a layout tool. In particular, picture elements should not be used to display transparent images, as they rarely convey meaning and rarely add anything useful to the document. </p>
 <p>When used with the <code><a href="#dfn-picture">picture</a></code> element, a <span>document</span> <em class="rfc2119" title="should">should</em> only contain <code>source</code> elements need to represent the same subject matter, but cropping and zooming can differ.</p>
 <div class="issue">
@@ -460,7 +466,7 @@ HTMLPictureElement : HTMLImageElement{
 <div class="note">
   <div class="note-title"><span>Note</span></div>
   <div class="">
-    <p>What we want to do is have the <code><a href="#dfn-picture">picture</a></code> behave exactly the same as an <code>img</code> element, but with the only difference being that it is <code>source</code> elements is used to determine the value of the <code>src</code> IDL attribute (and hence what image content is displayed). How that is determined is through  using the <code>media</code> attribute attribute of the <code>source</code> element.    </p>
+    <p>What we want to do is have the <code><a href="#dfn-picture">picture</a></code> behave exactly the same as an <code>img</code> element, but with the only difference being that it is <code>source</code> elements is used to determine the value of the <code>src</code> IDL attribute (and hence what image content is displayed). How that is determined is through  using the <code>media</code> attribute attribute of the <code>source</code> element. </p>
     <p>So, to derive the <dfn id="dfn-source-image">source image</dfn>: ignoring any sources whose <code>type</code> is not supported by the browser, gather all the media queries from the <code>source</code> elements' <code>media</code> attributes into a "stylesheet", in document order. Any missing <code>media</code> attributes are just assumed to mean "all". Any media attributes that are not valid media queries are ignored. So, given the following: </p>
     <pre>&lt;picture id="pictureElement"&gt;
 <span class="example">   &lt;source media="(min-width: 45em)" srcset="large-1.jpg 1x, large-2.jpg 2x"&gt;
@@ -497,19 +503,15 @@ HTMLPictureElement : HTMLImageElement{
   </div>
 </div>
 <p>A user agent <em class="rfc2119" title="may">may</em> override requests for higher-resolution images based on  user preferences. For example: “always request high-resolution images,” “always request low-resolution images,” and “request high-resolution images as bandwidth permits” based on the bandwidth information available to the browser.</p>
-
 <h2 class="no-num" id="open-issues">Open Issues</h2>
 <p>We are tracking <dfn id="dfn-open-issues">open issues</dfn> on Github. <a href="https://github.com/ResponsiveImagesCG/picture-element/issues">Please help close them</a>! </p>
-<div id="open-issues-xhr">
-</div>
+<div id="open-issues-xhr"> </div>
 <h2 class="no-toc no-num" id="reference-implementations">Reference implementations</h2>
 <p>We have a list of <a href="https://github.com/Wilto/draft-prop/wiki/Current-users,-polyfills,-prototypes,-and-implementations">current users, polyfills, prototypes, and implementations</a> on Github. </p>
 <h2 class="no-num" id="acknowledgements">Acknowledgements</h2>
 <p id="participants">A <a href="http://www.w3.org/community/respimg/participants">complete list of participants</a> of the Responsive Images Community Group is available at the W3C Community Group Website.</p>
-
 <p class="w3c"><dfn id="participants-0">Participants</dfn> of the <a href="http://w3c.responsiveimages.org">Responsive Images Community Group</a> at the time of publication were: George Adamson, Marie Alhomme, John Allan, Joshua Allen, Angely Alvarez, Aaryn Anderson, Philip Andrews, Phil Archer, Justin Avery, Michael Balensiefer, Toni Barrett, Bruno Barros, Paul Barton, Adrian Bateman, Jesse Renée Beach, Robin Berjon, Seth Bertalotto, Nicolaas Bijvoet, Andreas Bovens, J. Albert Bowden, Adam Bradley, Rodrigo Brancher, Gordon Brander, Paul Bridgestock, Aaron Brosey, Cory Brown, mairead buchan, Kris Bulman, Ariel Burone, Mathias Bynens, Marcos Caceres, Rusty Calder, Ben Callahan, Loïc Calvy, Chuck Carpenter, Brandon Carroll, Frederico Cerdeira, David Clements, Geri Coady, Anne-Gaelle Colom, Cyril Concolato, Pete Correia, Andy Crum, Jason Daihl, Francois Daoust, Kevin Davies, Robert Dawson, Ryan DeBeasi, Anna Debenham, Darryl deHaan, David Demaree, George DeMet, Ian Devlin, peter droogmans, Marlene Frykman, Dennis Gaebel, Nicolas Gallagher, Miguel Garcia, Rafael Garcia Lepper, Larry Garfield, Peter Gasston, David Goss, Chris Grant, Petra Gregorova, Jason Grigsby, Antoine Guergnon, Jeff Guntle, Aaron Gustafson, Jason Haag, Patrick Haney, Anselm Hannemann, chris hardy, Vincent Hardy, Dominique Hazaël-Massieux, Chris Hilditch, Nathan Hinshaw, Sean Hintz, John Holt Ripley, Shane Hudson, Tomomi Imura, Philip Ingrey, Brett Jankord, Scott Jehl, Dave Johnson, Nathanael Jones, Michael Jovel, Chao Ju, Tim Kadlec, Frédéric Kayser, Jin Kim, Andreas Klein, Peter Klein, John Kleinschmidt, Daniel Konopacki, Zoran Kurtin, Gerardo Lagger, Adam Lake, Chris Lamothe, Tom Lane, Matthieu Larcher, Bruce Lawson, Zach Leatherman, Silas Lepcha, Kornel Lesinski, Chris Lilley, grappler login, Tania Lopes, André Luís, Jacine Luisi, David Maciejewski, Kevin Mack, Ethan Malasky, Josh Marinacci, Eduardo Marques, Mathew Marquis, Daniel Martínez, Tom Maslen, Jacob Mather, Chris McAndrew, Denys Mishunov, Sabine Moebs, Ian Moffitt, Orestis Molopodis, jason morita, David Moulton, Brian Muenzenmeyer, Emi Myoudou, Irakli Nadareishvili, Christian Neuberger Jr, David Newton, Todd Nienkerk, Kothary Nishant, Ashley Nolan, Kenneth Nordahl, Lewis Nyman, Alejandro Oviedo, David Owens, Fernando Pasik, Andrew Pez Pengelly, Hassadee Pimsuwan, Manik Rathee, François REMY, Nestor Rojas, Adrian Roselli, Chris Ruppel, Oguzcan Sahin, Viljami Salminen, Luca Salvini, Luke Sands, aron santa, Jad Sarout, Brandon Satrom, Christoph Saxe, Doug Schepers, Jason Schmidt, Christopher Schmitt, Joe Schmitt, Boaz Sender, Tomoyuki Shimizu, Ariel Shkedi, Jen Simmons, Katerina Skotalova, Michael[tm] Smith, Ignacio Soriano Cano, Aaron Stanush, Jared Stilwell, Matt Stow, Kevin Suttle, Satoru Takagi, Philipp Tautz, James Tudsbury, Jacob van Zijp, Jitendra Vyas, Yoav Weiss, George White, Matt Wilcox, Richard Wild, John Albin Wilkins, Owen Winkler, Jeremy Worboys, Mike Wu, Carlos Zepeda, and jintian zheng.</p>
 <p class="w3c">Contributions also from: Ilya Grigorik and Leon de Rijke.</p>
-
 <h2 class="no-num" id="normative-references">Normative references</h2>
 <dl class="bibliography">
   <dt id="bib-CSS3-MEDIAQUERIES">[CSS3-MEDIAQUERIES]</dt>
@@ -521,4 +523,3 @@ HTMLPictureElement : HTMLImageElement{
   <dt id="bib-WEBIDL">[WEBIDL]</dt>
   <dd><a href="http://www.w3.org/TR/WebIDL/"><cite>Web IDL.</cite></a> (<a href="http://www.w3.org/TR/WebIDL/#sotd">status</a>).</dd>
 </dl>
-
