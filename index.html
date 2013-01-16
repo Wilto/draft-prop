@@ -302,7 +302,7 @@ span.note, span.issue {
       <dt>This Version:</dt>
       <dd class="ricg"><a href="http://picture.responsiveimages.org/">http://picture.responsiveimages.org/</a></dd>
       <dt class="ricg">Latest W3C Published Version:</dt>
-      <dd><a href="http://www.w3.org/TR/html-picture-element/">http://www.w3.org/TR/html-picture-element/</a></dd>
+      <dd><a href="http://www.w3.org/TR/picture-element/">http://www.w3.org/TR/picture-element/</a></dd>
       <dd><a href="http://picture.responsiveimages.org">http://picture.responsiveimages.org</a></dd>
       <dt>Participate:</dt>
       <dd><a href="http://w3c.responsiveimages.org">Join the Responsive Images Community Group</a></dd>
@@ -345,7 +345,7 @@ span.note, span.issue {
  <li><a href="#introduction"><span class="secno">1 </span>Introduction</a>
   <ol class="toc">
    <li><a href="#example-of-usage"><span class="secno">1.1 </span>Example of usage</a></li>
-   <li><a href="#relationship-to"><span class="secno">1.2 </span>Relationship to </a></ol></li>
+   <li><a href="#relationship-to-srcset"><span class="secno">1.2 </span>Relationship to <code>srcset</code></a></ol></li>
  <li><a href="#conformance"><span class="secno">2 </span>Conformance</a></li>
  <li><a href="#definitions"><span class="secno">3 </span>Definitions</a></li>
  <li><a href="#the-picture-element"><span class="secno">4 </span>The <code>picture</code> element</a></li>
@@ -390,10 +390,10 @@ span.note, span.issue {
    &lt;p&gt;Accessible text&lt;/p&gt;
 &lt;/picture&gt;</pre>
 </div>
-<h3 id="relationship-to"><span class="secno">1.2 </span>Relationship to </h3>
-<p>On the one hand, <a href="http://dev.w3.org/html5/srcset/">the `srcset` attribute</a> allows authors to define various image resources and “hints” that assist a user agent to determine the most appropriate image source to display. Given a set of image resources, the user agent has the option of either following or overriding the author’s declarations to optimize the user experience based on criteria such as <a href="http://usecases.responsiveimages.org/#resolution-switching">display density</a>, connection type, <a href="http://usecases.responsiveimages.org/#user-control-over-sources">user preferences</a>, and so on.</p>
-On the other hand, <a href="http://picture.responsiveimages.org">the `picture` element</a> defines conditions under which the browser should follow the author's intentions when selecting which resource to display. This includes image source sizes designed to align with layouts variations specified in CSS media queries ( see: <a href="http://usecases.responsiveimages.org/#design-breakpoints">design breakpoints</a>, <a href="http://usecases.responsiveimages.org/#matching-media-features-and-media-types">media features and types</a> and <a href="http://usecases.responsiveimages.org/#relative-units">relative units</a> ) or content variations for increased clarity and focus based on the <a href="http://usecases.responsiveimages.org/#art-direction">client’s display size</a>.
-<p>Proposed solutions are not mutually exclusive.  Together, they address the  set of <cite><a href="http://usecases.responsiveimages.org">Use Cases and Requirements for Responsive Images</a></cite>.</p>
+<h3 id="relationship-to-srcset"><span class="secno">1.2 </span>Relationship to <code>srcset</code></h3>
+<p>The `srcset` attribute allows authors to define various image resources and “hints” that assist a user agent in determining the most appropriate image source to display. Given a set of image resources, the user agent has the option of either following or overriding the author’s declarations to optimize the user experience based on criteria such as <a href="http://usecases.responsiveimages.org/#resolution-switching">display density</a>, connection type, <a href="http://usecases.responsiveimages.org/#user-control-over-sources">user preferences</a>, and so on.</p>
+<p>The `picture` element defines conditions under which the UA should follow the author's explicit instructions when selecting which resource to display. This includes image sources with inherent sizes designed to align with layout variations specified in CSS media queries ( see: <a href="http://usecases.responsiveimages.org/#design-breakpoints">design breakpoints</a>, <a href="http://usecases.responsiveimages.org/#matching-media-features-and-media-types">media features and types</a> and <a href="http://usecases.responsiveimages.org/#relative-units">relative units</a> ) or <a href="http://usecases.responsiveimages.org/#art-direction">content variations for increased clarity and focus</a> based on the client’s display size.<p>
+<p>The proposed solutions are not mutually exclusive, and may work together to address the complete set of <a href="http://usecases.responsiveimages.org/">use cases and requirements for responsive images</a>.</p>
 <h2 id="conformance"><span class="secno">2 </span>Conformance</h2>
 <p> As well as sections marked as non-normative, all authoring guidelines, diagrams, examples,
   and notes in this specification are non-normative. Everything else in this specification is
