@@ -457,6 +457,7 @@ span span{
   <dd><code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code></dd>
   <dd><code title="attr-picture-src"><a href="#attr-picture-src">src</a></code></dd>
   <dd><code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code></dd>
+  <dd><code title="attr-picture-crossorigin"><a href="#attr-picture-crossorigin">crossorigin</a></code></dd>
   <dd><code>width</code></dd>
   <dd><code>height</code></dd>
   <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-dom" title="element-dfn-dom">DOM interface</a>:</dt>
@@ -467,6 +468,7 @@ span span{
 HTMLPictureElement : HTMLImageElement{
    attribute DOMString <a href="#dom-picture-alt" title="dom-picture-alt">alt</a>;
    attribute DOMString <a href="#dom-picture-src" title="dom-picture-src">src</a>;
+   attribute DOMString <a href="#dom-picture-crossorigin" title="dom-picture-crossOrigin">crossOrigin</a>;
    attribute DOMString <a href="#dom-picture-srcset" title="dom-picture-srcset">srcset</a>;
    readonly attribute DOMString media;
 }</pre>
@@ -477,6 +479,7 @@ HTMLPictureElement : HTMLImageElement{
 <p>The <code title="attr-picture-src"><a href="#attr-picture-src">src</a></code> attribute may be present, and if present must contain a <a href="http://www.w3.org/TR/html5/infrastructure.html#valid-non-empty-url-potentially-surrounded-by-spaces">valid non-empty URL potentially surrounded by spaces</a> referencing a non-interactive, optionally animated, image resource that is neither paged nor scripted.</p>
 <p class="note">The requirements above imply that images can be static bitmaps (e.g. PNGs, GIFs, JPEGs), single-page vector documents (single-page PDFs, XML files with an SVG root element), animated bitmaps (APNGs, animated GIFs), animated vector graphics (XML files with an SVG root element that use declarative SMIL animation), and so forth. However, these definitions preclude SVG files with script, multipage PDF files, interactive MNG files, HTML documents, plain text documents, and so forth. <a href="http://www.w3.org/TR/html5/references.html#refsPNG">[PNG]</a> <a href="http://www.w3.org/TR/html5/references.html#refsGIF">[GIF]</a> <a href="http://www.w3.org/TR/html5/references.html#refsJPEG">[JPEG]</a> <a href="http://www.w3.org/TR/html5/references.html#refsPDF">[PDF]</a> <a href="http://www.w3.org/TR/html5/references.html#refsXML">[XML]</a> <a href="http://www.w3.org/TR/html5/references.html#refsAPNG">[APNG]</a> <!-- <a href="#refsAGIF">[AGIF]</a> --> <a href="http://www.w3.org/TR/html5/references.html#refsSVG">[SVG]</a> <a href="http://www.w3.org/TR/html5/references.html#refsMNG">[MNG]</a></p>
 <p>The <code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code> attribute may be present, and if present must conform to <a href="http://dev.w3.org/html5/srcset/">the <code>srcset</code> specification</a>.</p>
+<p>The <dfn id="attr-picture-crossorigin" title="attr-picture-crossorigin"><code>crossorigin</code></dfn> attribute is a <a href="http://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">CORS settings attribute</a>. Its purpose is to allow images from third-party sites that allow cross-origin access to be used with <code><a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-canvas-element">canvas</a></code>.</p>
 <p>On getting the <code>media</code> IDL attribute, the user agent <em class="rfc2119" title="must">must</em> return the media query that matches the current environment. </p>
 <p>It is <em class="rfc2119" title="recommended">recommended</em> that for cases where a single image source is available, and where no responsive adoption is needed, authors  use the <code>img</code> element. Authors can use the srcset attribute for simple resized image sources.</p>
 <p>The <span>chosen image</span> is the embedded content. </p>
@@ -540,6 +543,7 @@ HTMLPictureElement : HTMLImageElement{
 
 <div class="impl">
 <p>The <dfn id="dom-picture-alt" title="dom-picture-alt"><code>alt</code></dfn>, <dfn id="dom-picture-src" title="dom-picture-src"><code>src</code></dfn>, <dfn id="dom-picture-srcset" title="dom-picture-srcset"><code>src</code></dfn>, IDL attributes must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the respective content attributes of the same name.</p>
+<p>The <dfn id="dom-picture-crossorigin" title="dom-picture-crossOrigin"><code>crossOrigin</code></dfn> IDL attribute must <a href="infrastructure.html#reflect">reflect</a> the <code title="attr-picture-crossorigin"><a href="#attr-picture-crossorigin">crossorigin</a></code> content attribute.</p>
 </div>
 
  <h2  class="no-num">Open Issues</h2>
