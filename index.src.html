@@ -496,6 +496,20 @@ HTMLPictureElement : HTMLImageElement{
     <p>It should be codified that this is not a mechanism by which to swap disparate images depending on screen size. See bug <a href="https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7">18384</a>.</p>
   </div>
 </div>
+
+<hr>
+
+<p>The <code title="attr-hyperlink-usemap"><a href="#attr-hyperlink-usemap">usemap</a></code> attribute, if present, can indicate that the image has an associated <a href="http://www.w3.org/TR/html5/embedded-content-0.html#image-map">image map</a>.</p>
+<p>The <dfn id="attr-picture-ismap" title="attr-picture-ismap"><code>ismap</code></dfn> attribute, when used on an element that is a descendant of an <code><a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element">a</a></code> element with an <code title="attr-hyperlink-href"><a href="http://www.w3.org/TR/html5/links.html#attr-hyperlink-href">href</a></code> attribute, indicates by its presence that the element provides access to a server-side image map. This affects how events are handled on the corresponding <code><a href="http://www.w3.org/TR/html5/links.html#attr-hyperlink-href">a</a></code> element.</p>
+<p>The <code title="attr-picture-ismap"><a href="#attr-picture-ismap">ismap</a></code> attribute is a <a href="http://www.w3.org/TR/html5/infrastructure.html#boolean-attribute">boolean attribute</a>. The attribute must not be specified on an element that does not have an ancestor <code><a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element">a</a></code> element with an <code title="attr-hyperlink-href"><a href="http://www.w3.org/TR/html5/links.html#attr-hyperlink-href">href</a></code> attribute.</p>
+
+<div class="impl">
+<p>The <dfn id="dom-picture-alt" title="dom-picture-alt"><code>alt</code></dfn>, <dfn id="dom-picture-src" title="dom-picture-src"><code>src</code></dfn>, <dfn id="dom-picture-srcset" title="dom-picture-srcset"><code>src</code></dfn>, IDL attributes must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the respective content attributes of the same name.</p>
+<p>The <dfn id="dom-picture-crossorigin" title="dom-picture-crossOrigin"><code>crossOrigin</code></dfn> IDL attribute must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the <code title="attr-picture-crossorigin"><a href="#attr-picture-crossorigin">crossorigin</a></code> content attribute.</p>
+<p>The <dfn id="dom-picture-usemap" title="dom-picture-useMap"><code>useMap</code></dfn> IDL attribute must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the <code title="attr-hyperlink-usemap">usemap</code> content attribute.</p>
+<p>The <dfn id="dom-picture-ismap" title="dom-picture-isMap"><code>isMap</code></dfn> IDL attribute must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the <code title="attr-picture-ismap"><a href="#attr-picture-ismap">ismap</a></code> content attribute.</p>
+</div>
+
 <h2>Algorithm for deriving the source image</h2>
 <p>The <dfn id="dfn-algorithm-for-deriving-the-source-image">algorithm for deriving the source image</dfn> as follows. The result is the image source to be used by the <code>picture</code> element, which reflects  the <code>picture</code> element's <span><code>src</code> IDL attribute</span>: </p>
 <div class="note">
@@ -542,19 +556,6 @@ HTMLPictureElement : HTMLImageElement{
 <p>A user agent <em class="rfc2119" title="may">may</em> override requests for higher-resolution images based on  user preferences. For example: “always request high-resolution images,” “always request low-resolution images,” and “request high-resolution images as bandwidth permits” based on the bandwidth information available to the browser.</p>
 <p>The <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attribute does not represent advisory information. User agents must not present the contents of the <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attribute in the same way as content of the <code title="attr-title"><a href="dom.html#attr-title">title</a></code> attribute.</p>
 <p class="warning">While user agents are encouraged to repair cases of missing <code title="attr-picture-alt"><a href="#attr-picture-alt">alt</a></code> attributes, authors must not rely on such behavior. <a href="http://www.w3.org/TR/html5/embedded-content-0.html#alt">Requirements for providing text to act as an alternative for images</a> are described in detail in the <code>img</code> section.</p>
-
-<hr>
-
-<p>The <code title="attr-hyperlink-usemap"><a href="#attr-hyperlink-usemap">usemap</a></code> attribute, if present, can indicate that the image has an associated <a href="http://www.w3.org/TR/html5/embedded-content-0.html#image-map">image map</a>.</p>
-<p>The <dfn id="attr-picture-ismap" title="attr-picture-ismap"><code>ismap</code></dfn> attribute, when used on an element that is a descendant of an <code><a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element">a</a></code> element with an <code title="attr-hyperlink-href"><a href="http://www.w3.org/TR/html5/links.html#attr-hyperlink-href">href</a></code> attribute, indicates by its presence that the element provides access to a server-side image map. This affects how events are handled on the corresponding <code><a href="http://www.w3.org/TR/html5/links.html#attr-hyperlink-href">a</a></code> element.</p>
-<p>The <code title="attr-picture-ismap"><a href="#attr-picture-ismap">ismap</a></code> attribute is a <a href="http://www.w3.org/TR/html5/infrastructure.html#boolean-attribute">boolean attribute</a>. The attribute must not be specified on an element that does not have an ancestor <code><a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element">a</a></code> element with an <code title="attr-hyperlink-href"><a href="http://www.w3.org/TR/html5/links.html#attr-hyperlink-href">href</a></code> attribute.</p>
-
-<div class="impl">
-<p>The <dfn id="dom-picture-alt" title="dom-picture-alt"><code>alt</code></dfn>, <dfn id="dom-picture-src" title="dom-picture-src"><code>src</code></dfn>, <dfn id="dom-picture-srcset" title="dom-picture-srcset"><code>src</code></dfn>, IDL attributes must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the respective content attributes of the same name.</p>
-<p>The <dfn id="dom-picture-crossorigin" title="dom-picture-crossOrigin"><code>crossOrigin</code></dfn> IDL attribute must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the <code title="attr-picture-crossorigin"><a href="#attr-picture-crossorigin">crossorigin</a></code> content attribute.</p>
-<p>The <dfn id="dom-picture-usemap" title="dom-picture-useMap"><code>useMap</code></dfn> IDL attribute must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the <code title="attr-hyperlink-usemap">usemap</code> content attribute.</p>
-<p>The <dfn id="dom-picture-ismap" title="dom-picture-isMap"><code>isMap</code></dfn> IDL attribute must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the <code title="attr-picture-ismap"><a href="#attr-picture-ismap">ismap</a></code> content attribute.</p>
-</div>
 
  <h2  class="no-num">Open Issues</h2>
 <p>We are tracking <dfn id="dfn-open-issues">open issues</dfn> on Github. <a href="https://github.com/ResponsiveImagesCG/picture-element/issues">Please help close them</a>! </p>
