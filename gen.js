@@ -49,7 +49,17 @@ exec(anolis, function(error, stdout, stderr) {
         console.log('Something went wrong', error, stdout, stderr);
         return;
     }
-    showNotification();
+    var hasTidy = "command -v tidy >/dev/null 2>&1";
+    exec(hasTidy, function(error, stdout, stderr) {
+      var tidyVersion = "tidy -version";
+      exec(tidyVersion, function(error,stdout,stderr){
+        if(stdout.search("HTML Tidy for HTML5") !== -1){
+          tidy();
+        }else{
+          console.warn("Missing Dependency, yay! Please install HTML5 Tidy: https://github.com/w3c/tidy-html5")
+        }
+      });
+    });
 });
 
 function showNotification() {
@@ -68,4 +78,17 @@ function showNotification() {
                   '-group \"Anolis\"';
     exec(command);
     });
+}
+
+function tidy(){
+  var command = "tidy -config tidyconfig.txt -o index.src.html index.src.html";
+  console.log("running HTML5 tidy");
+  exec(command, showDetails);
+}
+
+function showDetails(err, stdout, stderr){
+  if(err) console.error(err);
+  if(stdout) console.log(stdout);
+  if(stderr) console.log(stderr);
+  showNotification();
 }
