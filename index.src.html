@@ -458,6 +458,8 @@ span span{
   <dd><code title="attr-picture-src"><a href="#attr-picture-src">src</a></code></dd>
   <dd><code title="attr-picture-srcset"><a href="#attr-picture-srcset">srcset</a></code></dd>
   <dd><code title="attr-picture-crossorigin"><a href="#attr-picture-crossorigin">crossorigin</a></code></dd>
+  <dd><code title="attr-hyperlink-usemap"><a href="#attr-hyperlink-usemap">usemap</a></code></dd>
+  <dd><code title="attr-picture-ismap"><a href="#attr-picture-ismap">ismap</a></code></dd>
   <dd><code>width</code></dd>
   <dd><code>height</code></dd>
   <dt><a href="http://dev.w3.org/html5/spec/single-page.html#element-dfn-dom" title="element-dfn-dom">DOM interface</a>:</dt>
@@ -470,6 +472,8 @@ HTMLPictureElement : HTMLImageElement{
    attribute DOMString <a href="#dom-picture-src" title="dom-picture-src">src</a>;
    attribute DOMString <a href="#dom-picture-crossorigin" title="dom-picture-crossOrigin">crossOrigin</a>;
    attribute DOMString <a href="#dom-picture-srcset" title="dom-picture-srcset">srcset</a>;
+   attribute DOMString <a href="#dom-picture-usemap" title="dom-picture-useMap">useMap</a>;
+   attribute boolean <a href="#dom-picture-ismap" title="dom-picture-isMap">isMap</a>;
    readonly attribute DOMString media;
 }</pre>
   </dd>
@@ -541,9 +545,15 @@ HTMLPictureElement : HTMLImageElement{
 
 <hr>
 
+<p>The <code title="attr-hyperlink-usemap"><a href="#attr-hyperlink-usemap">usemap</a></code> attribute, if present, can indicate that the image has an associated <a href="http://www.w3.org/TR/html5/embedded-content-0.html#image-map">image map</a>.</p>
+<p>The <dfn id="attr-picture-ismap" title="attr-picture-ismap"><code>ismap</code></dfn> attribute, when used on an element that is a descendant of an <code><a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element">a</a></code> element with an <code title="attr-hyperlink-href"><a href="http://www.w3.org/TR/html5/links.html#attr-hyperlink-href">href</a></code> attribute, indicates by its presence that the element provides access to a server-side image map. This affects how events are handled on the corresponding <code><a href="http://www.w3.org/TR/html5/links.html#attr-hyperlink-href">a</a></code> element.</p>
+<p>The <code title="attr-picture-ismap"><a href="#attr-picture-ismap">ismap</a></code> attribute is a <a href="http://www.w3.org/TR/html5/infrastructure.html#boolean-attribute">boolean attribute</a>. The attribute must not be specified on an element that does not have an ancestor <code><a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element">a</a></code> element with an <code title="attr-hyperlink-href"><a href="http://www.w3.org/TR/html5/links.html#attr-hyperlink-href">href</a></code> attribute.</p>
+
 <div class="impl">
 <p>The <dfn id="dom-picture-alt" title="dom-picture-alt"><code>alt</code></dfn>, <dfn id="dom-picture-src" title="dom-picture-src"><code>src</code></dfn>, <dfn id="dom-picture-srcset" title="dom-picture-srcset"><code>src</code></dfn>, IDL attributes must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the respective content attributes of the same name.</p>
-<p>The <dfn id="dom-picture-crossorigin" title="dom-picture-crossOrigin"><code>crossOrigin</code></dfn> IDL attribute must <a href="infrastructure.html#reflect">reflect</a> the <code title="attr-picture-crossorigin"><a href="#attr-picture-crossorigin">crossorigin</a></code> content attribute.</p>
+<p>The <dfn id="dom-picture-crossorigin" title="dom-picture-crossOrigin"><code>crossOrigin</code></dfn> IDL attribute must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the <code title="attr-picture-crossorigin"><a href="#attr-picture-crossorigin">crossorigin</a></code> content attribute.</p>
+<p>The <dfn id="dom-picture-usemap" title="dom-picture-useMap"><code>useMap</code></dfn> IDL attribute must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the <code title="attr-hyperlink-usemap">usemap</code> content attribute.</p>
+<p>The <dfn id="dom-picture-ismap" title="dom-picture-isMap"><code>isMap</code></dfn> IDL attribute must <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a> the <code title="attr-picture-ismap"><a href="#attr-picture-ismap">ismap</a></code> content attribute.</p>
 </div>
 
  <h2  class="no-num">Open Issues</h2>
