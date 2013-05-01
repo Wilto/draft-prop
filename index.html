@@ -719,6 +719,7 @@ HTMLPictureElement : HTMLImageElement{
    attribute DOMString <a href="#dom-picture-usemap" title="dom-picture-useMap">useMap</a>;
    attribute boolean <a href="#dom-picture-ismap" title="dom-picture-isMap">isMap</a>;
    readonly attribute DOMString media;
+   void <a href="#dom-picture-load" title="dom-picture-load">load</a>();
 }
 </pre>
       </dd>
@@ -886,6 +887,21 @@ HTMLPictureElement : HTMLImageElement{
         <a href="http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a>
         the <code title="attr-picture-ismap"><a href="#attr-picture-ismap">ismap</a></code> content attribute.
       </p>
+
+      <dl class="domintro">
+        <dt>
+          <var><a href="#dfn-picture">picture</a></var> . <code title="dom-picture-load"><a href="#dom-picture-load">load()</a></code>
+        </dt>
+        <dd>
+          <p>Causes the element to reset and start selecting and loading a new <a href="#image-resource">image resource</a> from scratch.</p>
+        </dd>
+      </dl>
+      <div class="impl">
+        <p>
+          When the <dfn id="dom-picture-load" title="dom-picture-load"><code>load()</code></dfn> method on a <code><a href="#dfn-picture">picture</a></code> element is invoked, the user agent must run the load algorithm.
+        </p>
+      </div>
+
     </div>
     <h2 id="algorithm-for-deriving-the-source-image"><span class="secno">5 </span>
       Algorithm for deriving the source image
