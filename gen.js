@@ -56,7 +56,10 @@ exec(anolis, function(error, stdout, stderr) {
         if(stdout.search("HTML Tidy for HTML5") !== -1){
           tidy();
         }else{
-          console.warn("Missing Dependency, yay! Please install HTML5 Tidy: https://github.com/w3c/tidy-html5")
+          var warn = "Missing Dependency, yay!";
+          warn+= " Please install HTML5 Tidy:";
+          warn+="https://github.com/w3c/tidy-html5";
+          console.warn(warn);
         }
       });
     });
