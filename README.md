@@ -34,7 +34,12 @@ repo and run `./gen.js`.
 If you get something like "Error: Cannot find module
 'optimist'", try doing the `sudo npm install -g optimist` in your home directory.
 
-If you get something like "Missing Dependency, yay! Please install HTML5 Tidy: https://github.com/w3c/tidy-html5" (even though you've installed it), try running `tidy -version`; if the version listed isn't the HTML5 version, then `tidy` is pointing to a different/old version, not the one you just installed. You may need to update your path, or you may be able to replace the old one in `/usr/bin/` with the new one in `/usr/local/bin/`.
+If you get something like "Missing Dependency, yay! Please install HTML5 Tidy:
+https://github.com/w3c/tidy-html5" (even though you've installed it), try
+running `tidy -version`; if the version listed isn't the HTML5 version, then
+`tidy` is pointing to a different/old version, not the one you just installed.
+You may need to update your path, or you may be able to replace the old one in
+`/usr/bin/` with the new one in `/usr/local/bin/`.
 
 In terms of what Anolis *does*, here's @marcoscaceres dropping some science:
 
