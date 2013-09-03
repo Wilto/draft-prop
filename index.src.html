@@ -7,7 +7,8 @@
       The picture element
     </title>
     <style>
-.informative {
+		/* This linke stops tidy from screwing up */
+		.informative {
         background-color: rgb(233, 251, 233);
     }
     figure {
@@ -295,14 +296,16 @@
     <!--[if lt IE 9]><script src='http://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]-->
 
     <style class="w3c ricg">
-.w3c{
-                border: 1px solid blue;
-        }
-
-    .ricg{
-                border: 1px solid red;
-    }
-
+		/* This box is removed when the document is generated 
+		   Rules here help the Editor see stuff that that is not properly linked.
+		*/
+		
+		/*this controls W3C specific text - it is used by Anolis */
+		.w3c{
+				        display: none;
+                border: 1px solid blue;	
+     }
+		
     span, cite{
         border: 1px dotted green;
     }
