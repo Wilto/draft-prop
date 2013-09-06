@@ -778,33 +778,74 @@ HTMLPictureElement : HTMLImageElement{
       <div class="impl">
         <div>
           <p>
-            The algorithm for deriving the <dfn>source image</dfn>, the <a>Picture load algorithm</a> is as follows. This algorithm may invoke the <a>Resource selection algorithm</a> defined below. The result is the <a title="source image">image source</a>
-            to be used by the user agent. Fetching of the <a title="source image">image source</a> is defined by the <a>Resource fetching algorithm</a>.
+            The algorithm for deriving the <dfn>source image</dfn>, the
+            <a>Picture load algorithm</a> is as follows. This algorithm may
+            invoke the <a>Resource selection algorithm</a> defined below. The
+            result is the <a title="source image">image source</a> to be used
+            by the user agent. Fetching of the <a title="source image">image
+            source</a> is defined by the <a>Resource fetching algorithm</a>.
           </p>
           <p>
-            These three algorithms combine portions of
-            <code><a href="http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">img</a></code>’s <a href="http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">update the image data</a> algorithm;
-            <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">Media Elements</a>’ <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-element-load-algorithm">media element load algorithm</a>, <a href="http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">resource selection algorithm</a>, and <a href="http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-resource">resource fetch algorithm</a>; and
-            <code><a href="http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/">srcset</a></code>’s <a href="http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/#update-the-image-data">update the image data</a> algorithm.
-            Unless specified otherwise below:
+            These three algorithms combine portions of <code><a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
+            img</a></code>’s <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
+            update the image data</a> algorithm; <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+            Media Elements</a>’ <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#media-element-load-algorithm">
+            media element load algorithm</a>, <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
+            resource selection algorithm</a>, and <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-resource">
+            resource fetch algorithm</a>; and <code><a href=
+            "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/">srcset</a></code>’s
+            <a href=
+            "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/#update-the-image-data">
+            update the image data</a> algorithm. Unless specified otherwise
+            below:
           </p>
           <ul>
-            <li>
-              When referencing <code><a href="http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">img</a></code>
+            <li>When referencing <code><a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
+              img</a></code>
               <ul>
-                <li>All instances of “<code>img</code>” need to be read as “<code>picture</code>”.</li>
-                <li>All instances of “<code title="attr-picture-src">src</code>” need to be read as “<code title="attr-picture-src">src</code> or <code title="attr-picture-srcset">srcset</code>”.</li>
-                <li>All instances of “fetching algorithm” need to be read as “<a>resource selection algorithm</a> or <a>resource fetching algorithm</a>”.</li>
-                <li>All instances of “the resulting <a href="http://www.w3.org/TR/html51/infrastructure.html#absolute-url">absolute URL</a>” need to be read as “<var>absolute URL</var>”.</li>
+                <li>All instances of “<code>img</code>” need to be read as
+                “<code>picture</code>”.
+                </li>
+                <li>All instances of “<code title=
+                "attr-picture-src">src</code>” need to be read as
+                  “<code title="attr-picture-src">src</code> or <code title=
+                  "attr-picture-srcset">srcset</code>”.
+                </li>
+                <li>All instances of “fetching algorithm” need to be read as
+                “<a>resource selection algorithm</a> or <a>resource fetching
+                algorithm</a>”.
+                </li>
+                <li>All instances of “the resulting <a href=
+                "http://www.w3.org/TR/html51/infrastructure.html#absolute-url">
+                  absolute URL</a>” need to be read as “<var>absolute
+                  URL</var>”.
+                </li>
               </ul>
             </li>
-            <li>
-              When referencing <a href="http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">Media Elements</a>
+            <li>When referencing <a href=
+            "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
+              Media Elements</a>
               <ul>
-                <li>All instances of “media element” need to be read as “<code>picture</code> element”.</li>
-                <li>All instances of “<code title="attr-picture-src">src</code>” need to be read as “<code title="attr-picture-src">src</code> or <code title="attr-picture-srcset">srcset</code>”.</li>
-                <li>All instances of “media data” need to be read as “image data”.</li>
+                <li>All instances of “media element” need to be read as
+                “<code>picture</code> element”.
+                </li>
+                <li>All instances of “<code title=
+                "attr-picture-src">src</code>” need to be read as
+                  “<code title="attr-picture-src">src</code> or <code title=
+                  "attr-picture-srcset">srcset</code>”.
+                </li>
+                <li>All instances of “media data” need to be read as “image
+                data”.
+                </li>
               </ul>
+            </li>
           </ul>
           <p>
             A <code>picture</code> element is always in one of the following
@@ -994,8 +1035,8 @@ HTMLPictureElement : HTMLImageElement{
                     The first instance of “<code title=
                     "attr-picture-src">src</code>” needs to be read as
                     “<code title="attr-picture-src">src</code> or <code title=
-                    "attr-picture-srcset">srcset</code>”; the second needs to be
-                    read as “<code title="attr-picture-src">src</code> and
+                    "attr-picture-srcset">srcset</code>”; the second needs to
+                    be read as “<code title="attr-picture-src">src</code> and
                     <code title="attr-picture-srcset">srcset</code>”.
                   </p>
                 </li>
@@ -1181,7 +1222,9 @@ HTMLPictureElement : HTMLImageElement{
           </p>
           <p class="note">
             This needs to be updated with cases for <code title=
-            "attr-picture-srcset">srcset</code> and child elements, e.g. <code>figure</code>, and discussion of legacy UAs. <code title="attr-picture-alt">alt</code> can reference <code>img</code>.
+            "attr-picture-srcset">srcset</code> and child elements, e.g.
+            <code>figure</code>, and discussion of legacy UAs. <code title=
+            "attr-picture-alt">alt</code> can reference <code>img</code>.
           </p>
         </div>
       </div>
