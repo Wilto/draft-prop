@@ -260,7 +260,7 @@ var respecConfig = {
         </h3>
         <p>
           This first sample shows how to combine the <code>picture</code>
-          element with the source element, while also providing fallback
+          element with the <code>source</code> element, while also providing fallback
           content for legacy user agents through the <code>img</code> element.
         </p>
         <pre class="example highlight">
@@ -271,14 +271,7 @@ var respecConfig = {
                  &lt;img src="small.jpg" alt="" lazyload&gt;
                  &lt;p&gt;Accessible text&lt;/p&gt;
               &lt;/picture&gt;
-
 </pre>
-        <p class="issue">
-          The following example assumes we can get <a href=
-          "http://dev.w3.org/html5/srcset/">the <code>srcset</code>
-          attribute</a> supported on HTML's <code>source</code> element. See
-          <a href="https://github.com/Wilto/draft-prop/issues/64">issue 64</a>.
-        </p>
         <p>
           This second example shows how the <code>picture</code> element can be
           used with <a href="http://dev.w3.org/html5/srcset/">the
