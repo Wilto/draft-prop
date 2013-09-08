@@ -225,13 +225,9 @@ var respecConfig = {
         This specification provides developers with a means to declare multiple
         sources for an image, and, through [[!CSS3-MEDIAQUERIES]] (<cite>CSS
         Media Queries</cite>), it gives developers control as to when those
-        images are to be presented to a user. This is achieved by introducing a
-        new <code>picture</code> element to [[!HTML]] that makes use of the
-        <code>source</code> element. The <code>picture</code> element remains
-        backwards compatible with legacy user agents by degrading gracefully
-        through <span>fallback content</span> (i.e., through the
-        <code>img</code> element) while also potentially providing better
-        accessibility than the existing <code>img</code> element.
+        images are to be presented to a user. This is achieved by introducing
+        the <code>picture</code> element to [[!HTML]], and by enhancing the
+        <code>source</code> element to support [[!html-srcset]].
       </p>
       <p>
         By relying on [[!CSS3-MEDIAQUERIES]], a user agent can <em>respond</em>
@@ -247,10 +243,16 @@ var respecConfig = {
         in media type such as going from screen to print.
       </p>
       <p>
+        The <code>picture</code> element remains backwards compatible with
+        legacy user agents by degrading gracefully through <a>fallback
+        content</a> (i.e., through the <code>img</code> element) while also
+        potentially providing better accessibility than the existing
+        <code>img</code> element.
+      </p>
+      <p>
         This specification also defines the <code>HTMLPictureElement</code>
-        programming interface, which affords developers a set of attributes and
-        methods for interacting with <code>picture</code> elements through
-        ECMAScript.
+        interface, through which developers can interact with
+        <code>picture</code> elements.
       </p>
       <section>
         <h3>
