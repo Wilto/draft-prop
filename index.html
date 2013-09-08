@@ -260,8 +260,9 @@ var respecConfig = {
         </h3>
         <p>
           This first sample shows how to combine the <code>picture</code>
-          element with the <code>source</code> element, while also providing fallback
-          content for legacy user agents through the <code>img</code> element.
+          element with the <code>source</code> element, while also providing
+          fallback content for legacy user agents through the <code>img</code>
+          element.
         </p>
         <pre class="example highlight">
               &lt;picture width="500" height="500"&gt;
@@ -274,9 +275,8 @@ var respecConfig = {
 </pre>
         <p>
           This second example shows how the <code>picture</code> element can be
-          used with the
-          <code>srcset</code> attribute [[!html-srcset]] to provide a range of sources
-          suitable for a given media query:
+          used with the <code>srcset</code> attribute [[!html-srcset]] to
+          provide a range of sources suitable for a given media query:
         </p>
         <pre class="example highlight">
             &lt;picture width="500" height="500"&gt;
@@ -291,10 +291,10 @@ var respecConfig = {
         <p class="note">
           The <code>lazyload</code> attribute is used on the
           <code>&lt;img&gt;</code> tag in the above examples in order to avoid
-          a download of that resource when picture is supported. It enables the
-          user agent to delay the resource's download at least until the
-          resource is added to the DOM, at which point the user agent can
-          detect that the <code>&lt;img&gt;</code> element is a child of a
+          a download of that resource when <code>picture</code> is supported.
+          It enables the user agent to delay the resource's download at least
+          until the resource is added to the DOM, at which point the user agent
+          can detect that the <code>&lt;img&gt;</code> element is a child of a
           <code>&lt;picture&gt;</code> element.
         </p>
       </section>
@@ -303,38 +303,38 @@ var respecConfig = {
           Relationship to <code>srcset</code>
         </h3>
         <p>
-          The `srcset` attribute allows authors to define various image
-          resources and “hints” that assist a user agent in determining the
-          most appropriate image source to display. Given a set of image
+          The <code>srcset</code> attribute allows authors to define various
+          image resources and “hints” that assist a user agent in determining
+          the most appropriate image source to display. Given a set of image
           resources, the user agent has the option of either following or
           overriding the author’s declarations to optimize the user experience
           based on criteria such as <a href=
           "http://usecases.responsiveimages.org/#resolution-switching">display
-          density</a>, connection type, <a href=
+          density</a>, network connection type, <a href=
           "http://usecases.responsiveimages.org/#user-control-over-sources">user
           preferences</a>, and so on.
         </p>
         <p>
-          The `picture` element defines conditions under which the UA should
-          follow the author's explicit instructions when selecting which
-          resource to display. This includes image sources with inherent sizes
-          designed to align with layout variations specified in CSS media
-          queries ( see: <a href=
+          The <code>picture</code> element defines conditions under which the
+          use agent needs to follow the author's explicit instructions when
+          selecting which resource to display. This includes image sources with
+          inherent sizes designed to align with layout variations specified in
+          CSS media queries ( see: <a href=
           "http://usecases.responsiveimages.org/#design-breakpoints">design
           breakpoints</a>, <a href=
           "http://usecases.responsiveimages.org/#matching-media-features-and-media-types">
           media features and types</a> and <a href=
           "http://usecases.responsiveimages.org/#relative-units">relative
-          units</a> ) or <a href=
-          "http://usecases.responsiveimages.org/#art-direction">content
-          variations for increased clarity and focus</a> based on the client’s
-          display size.
+          units</a> ) or content variations for increased clarity and focus
+          (i.e., <a href=
+          "http://usecases.responsiveimages.org/#art-direction"><q>art
+          direction</q></a>) based on the client’s viewport.
         </p>
         <p>
-          The proposed solutions are not mutually exclusive, and may work
-          together to address the complete set of <a href=
+          The proposed solutions are not mutually exclusive. They work together
+          to address the complete set of <a href=
           "http://usecases.responsiveimages.org/">use cases and requirements
-          for responsive images</a>.
+          for responsive images</a> (see [[!respimg-usecases]]).
         </p>
       </section>
     </section>
