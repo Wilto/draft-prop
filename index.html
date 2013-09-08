@@ -11,8 +11,9 @@
 </script>
     <script class='remove'>
 /*Respec config*/
-    var respecConfig = {
-	additionalCopyrightHolders: "Copyright © the Contributors to this Specification, published by the <a href='http://www.w3.org/community/respimg/'>Responsive Images Community Group</a> under the <a href= 'https://www.w3.org/community/about/agreements/cla/'>W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href= 'http://www.w3.org/community/about/agreements/cla-deed/'>summary</a> is available.",
+var respecConfig = { 
+          noLegacyStyle: true,
+          additionalCopyrightHolders: "Copyright © the Contributors to this Specification, published by the <a href='http://www.w3.org/community/respimg/'>Responsive Images Community Group</a> under the <a href= 'https://www.w3.org/community/about/agreements/cla/'>W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href= 'http://www.w3.org/community/about/agreements/cla-deed/'>summary</a> is available.",
 
   // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
   specStatus: "ED",
@@ -388,6 +389,45 @@
     </section>
     <section>
       <h2>
+        <code>HTMLPictureElement</code> interface
+      </h2>
+      <dl class="idl" title=
+      "[NamedConstructor=Picture, NamedConstructor=Picture(unsigned long width), NamedConstructor=Picture(unsigned long width, unsigned long height)] HTMLPictureElement : HTMLImageElement">
+      <dt>
+          readonly attribute DOMString currentSrc;
+        </dt>
+        <dd>
+          .
+        </dd>
+        <dt>
+          readonly attribute DOMString media;
+        </dt>
+        <dd>
+          .
+        </dd>
+      </dl>
+      <section>
+        <h3>
+          currentSrc attribute
+        </h3>
+        <p>
+          When getting the currentSrc attribute, the user agent MUST returns
+          the address of the current image resource. Returns the empty string
+          when there is no image resource.
+        </p>
+      </section>
+      <section>
+        <h3>
+          media attribute
+        </h3>
+        <p>
+          On getting the <code>media</code> IDL attribute, the user agent MUST
+          return the media query that matches the current environment.
+        </p>
+      </section>
+    </section>
+    <section>
+      <h2>
         The <code>picture</code> element
       </h2>
       <dl>
@@ -483,36 +523,6 @@
         <dd>
           <code>height</code>
         </dd>
-        <dt>
-          <a href=
-          "http://dev.w3.org/html5/spec/single-page.html#element-dfn-dom"
-          title="element-dfn-dom">DOM interface</a>:
-        </dt>
-        <dd>
-          <pre>
-[NamedConstructor=Picture,
- NamedConstructor=Picture(unsigned long width),
- NamedConstructor=Picture(unsigned long width, unsigned long height)]
-HTMLPictureElement : HTMLImageElement{
-   attribute DOMString <a href="#dom-picture-alt" title=
-"dom-picture-alt">alt</a>;
-   attribute DOMString <a href="#dom-picture-src" title=
-"dom-picture-src">src</a>;
-   attribute DOMString <a href="#dom-picture-crossorigin" title=
-"dom-picture-crossOrigin">crossOrigin</a>;
-   attribute DOMString <a href="#dom-picture-srcset" title=
-"dom-picture-srcset">srcset</a>;
-   readonly attribute DOMString <span title=
-"dom-picture-currentsrc">currentSrc</span>;
-   attribute DOMString <a href="#dom-picture-usemap" title=
-"dom-picture-useMap">useMap</a>;
-   attribute boolean <a href="#dom-picture-ismap" title=
-"dom-picture-isMap">isMap</a>;
-   readonly attribute DOMString media;
-   void <span title="dom-picture-load">load</span>();
-}
-</pre>
-        </dd>
       </dl>
       <p>
         The <code><dfn id="dfn-picture">picture</dfn></code> element used for
@@ -528,21 +538,6 @@ HTMLPictureElement : HTMLImageElement{
         "attr-picture-alt"><code>alt</code></dfn> attribute provides equivalent
         content for those who cannot process images or who have image loading
         disabled.
-      </p>
-      <p>
-        The requirements on the <code title="attr-picture-alt"><a href=
-        "#attr-picture-alt">alt</a></code> attribute's value are described
-        <a href="http://www.w3.org/TR/html5/embedded-content-0.html#alt">in the
-        <code>img</code> section</a>.
-      </p>
-      <p>
-        The <code title="attr-picture-src"><a href=
-        "#attr-picture-src">src</a></code> attribute may be present, and if
-        present must contain a <a href=
-        "http://www.w3.org/TR/html5/infrastructure.html#valid-non-empty-url-potentially-surrounded-by-spaces">
-        valid non-empty URL potentially surrounded by spaces</a> referencing a
-        non-interactive, optionally animated, <dfn>image resource</dfn> that is
-        neither paged nor scripted.
       </p>
       <p class="note">
         The requirements above imply that images can be static bitmaps (e.g.
@@ -561,20 +556,6 @@ HTMLPictureElement : HTMLImageElement{
         "http://dev.w3.org/html5/srcset/">the <code>srcset</code>
         specification</a>.
       </p>
-      <dl class="domintro">
-        <dt>
-          <var>picture</var> . <code>currentSrc</code>
-        </dt>
-        <dd>
-          <p>
-            Returns the address of the current <span>image resource</span>.
-          </p>
-          <p>
-            Returns the empty string when there is no <span>image
-            resource</span>.
-          </p>
-        </dd>
-      </dl>
       <div class="impl">
         <p>
           The <dfn title="dom-picture-currentSrc"><code>currentSrc</code></dfn>
@@ -603,11 +584,6 @@ HTMLPictureElement : HTMLImageElement{
         <code><a href=
         "http://www.w3.org/TR/html5/embedded-content-0.html#the-canvas-element">
         canvas</a></code>.
-      </p>
-      <p>
-        On getting the <code>media</code> IDL attribute, the user agent
-        <em class="rfc2119" title="must">must</em> return the media query that
-        matches the current environment.
       </p>
       <p>
         It is <em class="rfc2119" title="recommended">recommended</em> that for
