@@ -287,6 +287,21 @@
                &lt;p&gt;Accessible text&lt;/p&gt;
             &lt;/picture&gt;
 </pre>
+        <p>
+          This example shows how picture and other HTML elements can be used
+          together.
+        </p>
+        <pre class="example highlight">
+    &lt;figure&gt;
+        &lt;picture width="200" height="200"&gt;
+           &lt;source media="(min-width: 45em)" srcset="large-1.jpg, large-2.jpg 2x"&gt;
+           &lt;source media="(min-width: 18em)" srcset="med-1.jpg, med-2.jpg 2x"&gt;
+           &lt;source srcset="small-1.jpg, small-2.jpg 2x"&gt;
+           &lt;img src="small-1.jpg" alt=""&gt;
+        &lt;/picture&gt;
+        &lt;figcapture&gt;A figure of a fox jumping over a lazy box.&lt;/figcaption&gt;
+    &lt;/figure&gt;
+</pre>
       </section>
       <section>
         <h3>
