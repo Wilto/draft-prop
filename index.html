@@ -6,6 +6,12 @@
     <title>
       The picture element
     </title>
+    <style>
+@media print{
+        #participantslist{display: none;}
+        a:link,a:visited{text-decoration: none;color: inherit; }
+    }
+    </style>
     <script src='http://www.w3.org/Tools/respec/respec-w3c-common' async=""
     class='remove'>
 </script>
@@ -23,11 +29,11 @@
 
         // if your specification has a subtitle that goes below the main
         // formal title, define it here
-        subtitle: " An HTML extension for adaptive images (living document)",
+        subtitle: "An HTML extension for adaptive images",
 
         // if you wish the publication date to be other than the last
         // modification, set this
-        // publishDate:  "2009-08-06",
+        publishDate:  "2013-11-26",
 
         // if the specification's copyright date is a range of years, specify
         // the start date here:
@@ -66,7 +72,7 @@
         wgURI: "http://www.w3.org/html/wg/",
 
         // name (without the @w3c.org) of the public mailing to which comments are due
-        wgPublicList: "public-respimg@w3.org",
+        wgPublicList: "public-respimg",
 
         // URI of the patent status for this WG, for Rec-track documents
         // !!!! IMPORTANT !!!!
@@ -93,8 +99,8 @@
                 value: "Join the Responsive Images Community Group",
                 href: "http://w3c.responsiveimages.org"
             }, {
-                value: "http://list.responsiveimages.org",
-                href: "Public mailing list"
+                value: "Public mailing list",
+                href: "http://list.responsiveimages.org"
             }, {
                 value: "IRC: #respimg on W3C's IRC",
                 href: "irc://irc.w3.org:6665/#respimg"
@@ -109,28 +115,6 @@
         }]
     };
     </script>
-    <style>
-/*this line stops tidy from screwing up*/
-    #open-issues-xhr {
-        font-size: .9em;
-    }
-    #open-issues-xhr li {
-        padding: .25em 0;
-    }
-    #open-issues-xhr .meta {
-        display: block;
-        font: normal .8em/1 sans-serif;
-        padding: .35em 0 0 0;
-    }
-    #open-issues-xhr .meta b {
-        font-weight: normal;
-    }
-    #open-issues-xhr .meta span {
-        display: block;
-        float: left;
-        width: 5.5em;
-    }
-    </style>
   </head>
   <body>
     <p>
@@ -141,7 +125,8 @@
     </p>
     <section id="abstract">
       <p>
-        This specification is no longer being maintained.
+        This specification is no longer being maintained. See the <a href=
+        "#sotd">status of this document</a> for details.
       </p>
       <p>
         The <code>picture</code> element was intended to give authors a way to
@@ -177,20 +162,7 @@
         "http://responsiveimages.org">Responsive Images Community Group</a>
         (see <a href=
         "http://www.w3.org/community/respimg/spec/26/commitments">licensing
-        commitments</a>). If you are not a HTML working group member and wish
-        to make comments regarding this document please send them to <a href=
-        "mailto:public-html-comments@w3.org">public-html-comments@w3.org</a>
-        (<a href=
-        "mailto:public-html-comments-request@w3.org?subject=subscribe">subscribe</a>,
-        <a href=
-        "http://lists.w3.org/Archives/Public/public-html-comments/">archives</a>).
-        If you are a HTML working group member and wish to make comments
-        regarding this document, please send them to <a href=
-        "mailto:public-html@w3.org">public-html@w3.org</a> (<a href=
-        "mailto:public-html-request@w3.org?subject=subscribe">subscribe</a>,
-        <a href=
-        "http://lists.w3.org/Archives/Public/public-html/">archives</a>). All
-        feedback is welcome.
+        commitments</a>).
       </p>
     </section>
     <section class="informative">
@@ -300,23 +272,20 @@
           resources, the user agent has the option of either following or
           overriding the author’s declarations to optimize the user experience
           based on criteria such as <a href=
-          "http://usecases.responsiveimages.org/#resolution-switching">display
-          density</a>, network connection type, <a href=
-          "http://usecases.responsiveimages.org/#user-control-over-sources">user
-          preferences</a>, and so on.
+          "http://usecases.responsiveimages.org/#device-pixel-ratio-based-selection">
+          display density</a>, network connection type, user preferences, and
+          so on.
         </p>
         <p>
           The <code>picture</code> element defines conditions under which the
           use agent needs to follow the author's explicit instructions when
           selecting which resource to display. This includes image sources with
           inherent sizes designed to align with layout variations specified in
-          CSS media queries ( see: <a href=
+          CSS media queries (see: <a href=
           "http://usecases.responsiveimages.org/#design-breakpoints">design
-          breakpoints</a>, <a href=
-          "http://usecases.responsiveimages.org/#matching-media-features-and-media-types">
-          media features and types</a> and <a href=
+          breakpoints</a>, and <a href=
           "http://usecases.responsiveimages.org/#relative-units">relative
-          units</a> ) or content variations for increased clarity and focus
+          units</a>) or content variations for increased clarity and focus
           (i.e., <a href=
           "http://usecases.responsiveimages.org/#art-direction"><q>art
           direction</q></a>) based on the client’s viewport.
@@ -346,8 +315,7 @@
         not</em>, <em class="rfc2119" title="recommended">recommended</em>,
         <em class="rfc2119" title="may">may</em>, and <em class="rfc2119"
         title="optional">optional</em> in this specification are to be
-        interpreted as described in [[!<a class="bibref" href=
-        "#bib-RFC2119">RFC2119</a>]].
+        interpreted as described in [[!RFC2119]].
       </p>
       <p>
         This specification has the same <a href=
@@ -483,7 +451,7 @@
           <code>HTMLPictureElement</code> interface
         </h3>
         <dl class="idl" title=
-        "[NamedConstructor=Picture(optional unsigned long width, optional unsigned long height)] HTMLPictureElement">
+        "[NamedConstructor=Picture(optional unsigned long width, optional unsigned long height)] interface HTMLPictureElement">
         <dt>
             attribute long width;
           </dt>
@@ -507,22 +475,6 @@
           an author can provide an <code>img</code> element as <span>fallback
           content</span>.
         </p>
-        <p class="issue">
-          It should be codified that this is not a mechanism by which to swap
-          disparate images depending on screen size. See bug <a href=
-          "https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7">18384</a>.
-        </p>
-      </section>
-      <section class="appendix">
-        <h2>
-          Reference implementations
-        </h2>
-        <p>
-          We have a list of <a href=
-          "https://github.com/ResponsiveImagesCG/picture-element/wiki/Current-users,-polyfills,-prototypes,-and-implementations">
-          current users, polyfills, prototypes, and implementations</a> on
-          Github.
-        </p>
       </section>
       <section class="appendix">
         <h2>
@@ -533,56 +485,98 @@
           list of participants</a> of the Responsive Images Community Group is
           available at the W3C Community Group Website.
         </p>
-        <p class="w3c">
-          <dfn>Participants</dfn> of the <a href=
+        <p id="participantslist">
+          <!--
+        To get the participant's list, go to
+        http://www.w3.org/community/respimg/participants
+
+        var all = document.querySelectorAll("td>h3"),
+            each = [];
+        for(var i = 0; i < all.length; i++){
+                each.push(all.item(i).textContent);
+        }
+        console.log(each.join(", "))
+        -->
+           <dfn>Participants</dfn> of the <a href=
           "http://w3c.responsiveimages.org">Responsive Images Community
-          Group</a> at the time of publication were: George Adamson, Marie
-          Alhomme, John Allan, Joshua Allen, Angely Alvarez, Aaryn Anderson,
-          Philip Andrews, Phil Archer, Justin Avery, Michael Balensiefer, Toni
-          Barrett, Bruno Barros, Paul Barton, Adrian Bateman, Jesse Renée
-          Beach, Robin Berjon, Seth Bertalotto, Nicolaas Bijvoet, Andreas
+          Group</a> at the time of publication were: Barry Atimer, Daniel
+          Abril, George Adamson, Heide Alexander, Marie Alhomme, John Allan,
+          Joshua Allen, Angely Alvarez, Agustin Amenabar, Aaryn Anderson,
+          Philip Andrews, Ritchie Anesco, Phil Archer, Tony Atayi, Tom Atkins,
+          Justin Avery, Mohsen Azimi, Phillip Baker, Raymond Baker, Michael
+          Balensiefer, Toni Barrett, Bruno Barros, Paul Barton, Adrian Bateman,
+          Jesse Renée Beach, Robin Berjon, Seth Bertalotto, Anirban
+          Bhattacharya, Nicolaas Bijvoet, Barna Bitai, Nathan Bleigh, Andreas
           Bovens, J. Albert Bowden, Adam Bradley, Rodrigo Brancher, Gordon
-          Brander, Paul Bridgestock, Aaron Brosey, Cory Brown, mairead buchan,
-          Kris Bulman, Ariel Burone, Mathias Bynens, Marcos Caceres, Rusty
-          Calder, Ben Callahan, Loïc Calvy, Chuck Carpenter, Brandon Carroll,
-          Frederico Cerdeira, David Clements, Geri Coady, Anne-Gaelle Colom,
-          Cyril Concolato, Pete Correia, Andy Crum, Jason Daihl, Francois
-          Daoust, Kevin Davies, Robert Dawson, Ryan DeBeasi, Anna Debenham,
-          Darryl deHaan, David Demaree, George DeMet, Ian Devlin, peter
-          droogmans, Marlene Frykman, Dennis Gaebel, Nicolas Gallagher, Miguel
-          Garcia, Rafael Garcia Lepper, Larry Garfield, Peter Gasston, David
-          Goss, Chris Grant, Petra Gregorova, Jason Grigsby, Antoine Guergnon,
-          Jeff Guntle, Aaron Gustafson, Jason Haag, Patrick Haney, Anselm
-          Hannemann, chris hardy, Vincent Hardy, Dominique Hazaël-Massieux,
-          Chris Hilditch, Nathan Hinshaw, Sean Hintz, John Holt Ripley, Shane
-          Hudson, Tomomi Imura, Philip Ingrey, Brett Jankord, Scott Jehl, Dave
-          Johnson, Nathanael Jones, Michael Jovel, Chao Ju, Tim Kadlec,
-          Frédéric Kayser, Jin Kim, Andreas Klein, Peter Klein, John
-          Kleinschmidt, Daniel Konopacki, Zoran Kurtin, Gerardo Lagger, Adam
-          Lake, Chris Lamothe, Tom Lane, Matthieu Larcher, Bruce Lawson, Zach
-          Leatherman, Silas Lepcha, Kornel Lesinski, Chris Lilley, grappler
-          login, Tania Lopes, André Luís, Jacine Luisi, David Maciejewski,
-          Kevin Mack, Ethan Malasky, Josh Marinacci, Eduardo Marques, Mathew
-          Marquis, Daniel Martínez, Tom Maslen, Jacob Mather, Chris McAndrew,
-          Denys Mishunov, Sabine Moebs, Ian Moffitt, Orestis Molopodis, jason
-          morita, David Moulton, Brian Muenzenmeyer, Emi Myoudou, Irakli
-          Nadareishvili, Christian Neuberger Jr, David Newton, Todd Nienkerk,
-          Kothary Nishant, Ashley Nolan, Kenneth Nordahl, Lewis Nyman,
-          Alejandro Oviedo, David Owens, Fernando Pasik, Andrew Pez Pengelly,
-          Hassadee Pimsuwan, Manik Rathee, François REMY, Nestor Rojas, Adrian
-          Roselli, Chris Ruppel, Oguzcan Sahin, Viljami Salminen, Luca Salvini,
-          Luke Sands, aron santa, Jad Sarout, Brandon Satrom, Christoph Saxe,
-          Doug Schepers, Jason Schmidt, Christopher Schmitt, Joe Schmitt, Boaz
-          Sender, Tomoyuki Shimizu, Ariel Shkedi, Jen Simmons, Katerina
-          Skotalova, Michael[tm] Smith, Ignacio Soriano Cano, Aaron Stanush,
-          Jared Stilwell, Matt Stow, Kevin Suttle, Satoru Takagi, Philipp
-          Tautz, James Tudsbury, Jacob van Zijp, Jitendra Vyas, Yoav Weiss,
-          George White, Matt Wilcox, Richard Wild, John Albin Wilkins, Owen
-          Winkler, Jeremy Worboys, Mike Wu, Carlos Zepeda, and jintian zheng.
+          Brander, Paul Bridgestock, Aaron Brosey, Brandon Brown, Cory Brown,
+          mairead buchan, Kris Bulman, Ariel Burone, Mathias Bynens, Marcos
+          Caceres, Rusty Calder, Ben Callahan, Loïc Calvy, Welch Canavan, Chuck
+          Carpenter, Brandon Carroll, Frederico Cerdeira, Daniel Chamberlin,
+          Adi Chikara, David Clements, Geri Coady, Anne-Gaelle Colom, Cyril
+          Concolato, Jessica Constantine, Greg Cota, Geoff Cowan, Andy Crum,
+          David D'Amico, Jason Daihl, Francois Daoust, Kevin Davies, Robert
+          Dawson, Jacques de Klerk, Timothy de Paris, Ryan DeBeasi, Anna
+          Debenham, Darryl deHaan, David Demaree, George DeMet, Ian Devlin,
+          Alex DiLiberto, peter droogmans, Ronni Dyrholm Chidekel, simpson
+          eddie, Sylvia Egger, Dominic Fee, Ève Février, Maximiliano Firtman,
+          Ben Fonarov, Harry Fozzard, Marlene Frykman, Dennis Gaebel, Igor
+          Gajosinskas, Nicolas Gallagher, Miguel Garcia, Rafael Garcia Lepper,
+          Larry Garfield, Peter Gasston, George GeorgeHaeger, David Goss, Chris
+          Grant, Petra Gregorova, Ilya Grigorik, Jason Grigsby, Aaron Grogg,
+          Antoine Guergnon, Jeff Guntle, Aaron Gustafson, Jason Haag, Jordan
+          Haines, Cristina Hanes, Patrick Haney, Anselm Hannemann, chris hardy,
+          Vincent Hardy, Bridget Harrison, Duncan Hawthorne, Dominique
+          Hazaël-Massieux, Chris Hilditch, Jon Hill, Nathan Hinshaw, Sean
+          Hintz, John Holt Ripley, Enrico Hösel, Peter Hrynkow, Kym Huang,
+          Shane Hudson, Vinicius Ianni, Tomomi Imura, Philip Ingrey, Bryn
+          Jackson, Rihnna Jakosalem, Brett Jankord, Scott Jehl, Dave Johnson,
+          Nathanael Jones, Danny Jongerius, Michael Jovel, Chao Ju, Tim Kadlec,
+          Raj Kaimal, Kevin Joe Kanger, Frédéric Kayser, Serge K. Keller,
+          Arthur Khachatryan, Jin Kim, Andreas Klein, Peter Klein, John
+          Kleinschmidt, Daniel Konopacki, Darius Kruythoff, Zoran Kurtin,
+          Vitaliy Kuzmin, Gerardo Lagger, Adam Lake, Chris Lamothe, Tom Lane,
+          Matthieu Larcher, Christopher Latham, Bruce Lawson, Zach Leatherman,
+          Silas Lepcha, Kornel Lesinski, Chris Lilley, grappler login, william
+          lombardo, Tania Lopes, Amie Lucas, André Luís, Jacine Luisi, David
+          Maciejewski, Kevin Mack, Ethan Malasky, Josh Marinacci, Eduardo
+          Marques, Mathew Marquis, Daniel Martínez, Tom Maslen, Jacob Mather,
+          Chris McAndrew, Mark McDonnell, Andre Jay Meissner, Benjamin
+          Melançon, Julian Mendl, Rick Messer, Zane Milakovic, Denys Mishunov,
+          Sabine Moebs, Ian Moffitt, Orestis Molopodis, jason morita, David
+          Moulton, Bobby Mozumder, Brian Muenzenmeyer, Emi Myoudou, Irakli
+          Nadareishvili, Giorgio Natili, Jonathan Neal, Christian Neuberger Jr,
+          David Newton, Todd Nienkerk, Ashley Nolan, Johnna Nonboe, Kenneth
+          Nordahl, Mark Nottingham, Lewis Nyman, Darrel O'Pry, Alejandro
+          Oviedo, David Owens, Paddy O’Hanlon, Isabel Palomar, suzanne peter,
+          Hassadee Pimsuwan, Guy Podjarny, Andreas Pollak, gentian polovina,
+          Dave Poole, Florent Preynat, Manik Rathee, François REMY, Venkatesh
+          Rengasamy, Jen Reynolds, Ricardo Andrade Belo Ricardo Belo, Michael
+          Riethmuller, Carlo Rizzante, John Rodler, César Rodríguez, Nestor
+          Rojas, Adrian Roselli, David Rupert, Chris Ruppel, Oguzcan Sahin,
+          Viljami Salminen, Luca Salvini, Ana Sampaio, Luke Sands, crazyrohila
+          sanjay, aron santa, Osny Santos, Jad Sarout, Brandon Satrom, Jeroen
+          Savat, Stéphane Savona, Christoph Saxe, Doug Schepers, Jason Schmidt,
+          Christopher Schmitt, Joe Schmitt, Greg Schumacher, Boaz Sender,
+          SHAHINA SHEIK, Tomoyuki Shimizu, Ariel Shkedi, Abdul Wahid Sial,
+          Pandapotan Silaban, Mauricio Silva Teixeira de Nobrega, Jen Simmons,
+          Michael Singleterry, Katerina Skotalova, David Sleight, Michael[tm]
+          Smith, Nick Snyder, Ignacio Soriano Cano, Steve Souders, Brenden
+          Sparks, Aaron Staker, Aaron Stanush, Walter Stevenson, Bridget
+          Stewart, Jared Stilwell, Matt Stow, Shari Sullivan, Kevin Suttle,
+          Patrick Szalapski, Satoru Takagi, Rob Tarr, Philipp Tautz, Nguyen
+          Thao Thao, Edward Thurgood, Anthony Ticknor, Erek Tinker, Sebastián
+          Tromer, Tsvetan Tsvetkov, Yusuke Uchida, Mads Ulsø Østergaard,
+          Katarina Ur, Adam van den Hoven, Jacob van Zijp, Lucas Vilaboim,
+          Jitendra Vyas, Amy W, Tady Walsh, Yoav Weiss, George White, Michael
+          Whittet, Matt Wilcox, Richard Wild, John Albin Wilkins, Chris
+          Williams, Rory Wilson, Owen Winkler, Robin Winslow, Cyril Wolfangel,
+          Mike Woodard, Jeremy Worboys, Mike Wu, Bruce Zawalsky, Carlos Zepeda,
+          and jintian zheng.
         </p>
         <p>
-          Contributions also from: Ilya Grigorik and Leon de Rijke. Special
-          thanks to Adrian Bateman for providing the group with guidance.
+          Contributions also from: David Newton, Ilya Grigorik and Leon de
+          Rijke. Special thanks to Adrian Bateman for providing the group with
+          guidance.
         </p>
       </section>
     </section>
