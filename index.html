@@ -13,10 +13,10 @@
 /*Respec config*/
     var respecConfig = { 
     noLegacyStyle: true,
-    additionalCopyrightHolders: "Copyright © the Contributors to this Specification, published by the <a href='http://www.w3.org/community/respimg/'>Responsive Images Community Group</a> under the <a href= 'https://www.w3.org/community/about/agreements/cla/'>W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href= 'http://www.w3.org/community/about/agreements/cla-deed/'>summary</a> is available.",
+    //additionalCopyrightHolders: "Copyright © the Contributors to this Specification, published by the <a href='http://www.w3.org/community/respimg/'>Responsive Images Community Group</a> under the <a href= 'https://www.w3.org/community/about/agreements/cla/'>W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href= 'http://www.w3.org/community/about/agreements/cla-deed/'>summary</a> is available.",
 
     // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
-    specStatus: "ED",
+    specStatus: "Note",
 
         // the specification's short name, as in http://www.w3.org/TR/short-name/
         shortName: "html-picture-element",
@@ -66,7 +66,7 @@
         wgURI: "http://www.w3.org/html/wg/",
 
         // name (without the @w3c.org) of the public mailing to which comments are due
-        wgPublicList: "public-html@w3.org",
+        wgPublicList: "public-respimg@w3.org",
 
         // URI of the patent status for this WG, for Rec-track documents
         // !!!! IMPORTANT !!!!
@@ -75,7 +75,7 @@
         // document unless you know what you're doing.
         // If in doubt ask your friendly neighbourhood
         // Team Contact.
-        wgPatentURI: "http://www.w3.org/community/respimg/spec/26/commitments",
+        wgPatentURI: "http://www.w3.org/2004/01/pp-impl/40318/status",
         // !!!! IMPORTANT !!!! MAKE THE ABOVE BLINK IN YOUR HEAD
         otherLinks: [{
             key: "Version history",
@@ -141,9 +141,12 @@
     </p>
     <section id="abstract">
       <p>
-        The <code>picture</code> element gives authors a way to control which
-        image resource the user agent presents to a user based on a media query
-        and/or support for a particular image format.
+        This specification is no longer being maintained.
+      </p>
+      <p>
+        The <code>picture</code> element was intended to give authors a way to
+        control which image resource a user agent presents to a user based on a
+        media query and/or support for a particular image format.
       </p>
       <p>
         The primary purpose of the <code>picture</code> element is to address
@@ -160,9 +163,12 @@
     </section>
     <section id="sotd">
       <p class="note">
-        This specification is under active development and changing frequently.
-        Please see the list of <a href="#dfn-open-issues" class=
-        "internalDFN">open issues</a>.
+        Work on this specification has stopped as it was superceded by the
+        <a href=
+        "http://tabatkins.github.io/specs/respimg/Overview.html">RespImg Syntax
+        proposal</a>. The mailing list gives the justification as to why we
+        stopped persuing the standardization of the <code>picture</code>
+        element.
       </p>
       <p>
         This document was published by the <a href=
@@ -185,26 +191,6 @@
         <a href=
         "http://lists.w3.org/Archives/Public/public-html/">archives</a>). All
         feedback is welcome.
-      </p>
-      <p>
-        Publication as a Working Draft does not imply endorsement by the W3C
-        Membership. This is a draft document and may be updated, replaced or
-        obsoleted by other documents at any time. It is inappropriate to cite
-        this document as other than work in progress.
-      </p>
-      <p>
-        This document was produced by a group operating under the <a href=
-        "http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004
-        W3C Patent Policy</a>. W3C maintains a <a href=
-        "http://www.w3.org/2004/01/pp-impl/40318/status" rel=
-        "disclosure">public list of any patent disclosures</a> made in
-        connection with the deliverables of the group; that page also includes
-        instructions for disclosing a patent. An individual who has actual
-        knowledge of a patent which the individual believes contains <a href=
-        "http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential
-        Claim(s)</a> must disclose the information in accordance with <a href=
-        "http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section
-        6 of the W3C Patent Policy</a>.
       </p>
     </section>
     <section class="informative">
@@ -249,10 +235,10 @@
           When to use <code>picture</code>
         </h3>
         <p>
-          The picture element is intended primarily for <q>art directing</q>
-          graphical content. For cases where a single image source is
-          available, and where no responsive adoption is needed, authors are
-          encouraged to use the <code>img</code> element instead.
+          The <code>picture</code> element is intended primarily for <q>art
+          directing</q> graphical content. For cases where a single image
+          source is available, and where no responsive adoption is needed,
+          authors are encouraged to use the <code>img</code> element instead.
         </p>
       </section>
       <section>
@@ -402,23 +388,13 @@
     </section>
     <section>
       <h2>
-        <code>HTMLPictureElement</code> interface
+        Extensions to <code>source</code> element
       </h2>
-      <dl class="idl" title=
-      "[NamedConstructor=Picture(optional unsigned long width, optional unsigned long height)] HTMLPictureElement">
-      <dt>
-          attribute long width;
-        </dt>
-        <dd>
-          The width, in CSS pixels, of the picture.
-        </dd>
-        <dt>
-          attribute long height;
-        </dt>
-        <dd>
-          The height, in CSS Pixels, of the picture.
-        </dd>
-      </dl>
+      <p>
+        This specification allows HTML's <code>source</code> element to use the
+        srcset attribute when a <code>source</code> is used in the context of a
+        <code>picture</code> element.
+      </p>
     </section>
     <section>
       <h2>
@@ -502,6 +478,26 @@
         and/or matching some environmental condition. The <span>chosen
         image</span> is the embedded content.
       </p>
+      <section>
+        <h3>
+          <code>HTMLPictureElement</code> interface
+        </h3>
+        <dl class="idl" title=
+        "[NamedConstructor=Picture(optional unsigned long width, optional unsigned long height)] HTMLPictureElement">
+        <dt>
+            attribute long width;
+          </dt>
+          <dd>
+            The width, in CSS pixels, of the picture.
+          </dd>
+          <dt>
+            attribute long height;
+          </dt>
+          <dd>
+            The height, in CSS Pixels, of the picture.
+          </dd>
+        </dl>
+      </section>
       <section class="informative">
         <h3>
           Authoring Requiments
@@ -516,18 +512,6 @@
           disparate images depending on screen size. See bug <a href=
           "https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7">18384</a>.
         </p>
-      </section>
-      <section class="appendix">
-        <h2>
-          Open Issues
-        </h2>
-        <p>
-          We are tracking <dfn id="dfn-open-issues">open issues</dfn> on
-          Github. <a href=
-          "https://github.com/ResponsiveImagesCG/picture-element/issues">Please
-          help close them</a>!
-        </p>
-        <div id="open-issues-xhr"></div>
       </section>
       <section class="appendix">
         <h2>
@@ -601,12 +585,6 @@
           thanks to Adrian Bateman for providing the group with guidance.
         </p>
       </section>
-    </section><script class="ricg" src=
-    "http://responsiveimagescg.github.io/meta/scripts/show_issues.js">
-</script> <script class="ricg" src=
-"https://api.github.com/repos/ResponsiveImagesCG/picture-element/issues?state=open&amp;callback=processResponse">
-</script> <script class="ricg" src=
-"http://responsiveimagescg.github.io/meta/scripts/ga.js">
-</script>
+    </section>
   </body>
 </html>
