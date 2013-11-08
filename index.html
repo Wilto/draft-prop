@@ -6,130 +6,115 @@
     <title>
       The picture element
     </title>
+    <style>
+@media print{
+        #participantslist{display: none;}
+        a:link,a:visited{text-decoration: none;color: inherit; }
+    }
+    </style>
     <script src='http://www.w3.org/Tools/respec/respec-w3c-common' async=""
     class='remove'>
 </script>
     <script class='remove'>
 /*Respec config*/
-    var respecConfig = {
-	additionalCopyrightHolders: "Copyright © the Contributors to this Specification, published by the <a href='http://www.w3.org/community/respimg/'>Responsive Images Community Group</a> under the <a href= 'https://www.w3.org/community/about/agreements/cla/'>W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href= 'http://www.w3.org/community/about/agreements/cla-deed/'>summary</a> is available.",
+    var respecConfig = { 
+    noLegacyStyle: true,
+    //additionalCopyrightHolders: "Copyright © the Contributors to this Specification, published by the <a href='http://www.w3.org/community/respimg/'>Responsive Images Community Group</a> under the <a href= 'https://www.w3.org/community/about/agreements/cla/'>W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href= 'http://www.w3.org/community/about/agreements/cla-deed/'>summary</a> is available.",
 
-  // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
-  specStatus: "ED",
+    // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
+    specStatus: "WG-NOTE",
 
-	// the specification's short name, as in http://www.w3.org/TR/short-name/
-	shortName: "html-picture-element",
+        // the specification's short name, as in http://www.w3.org/TR/short-name/
+        shortName: "html-picture-element",
 
-	// if your specification has a subtitle that goes below the main
-	// formal title, define it here
-	subtitle: " An HTML extension for adaptive images (living document)",
+        // if your specification has a subtitle that goes below the main
+        // formal title, define it here
+        subtitle: "An HTML extension for adaptive images",
 
-	// if you wish the publication date to be other than the last
-	// modification, set this
-	// publishDate:  "2009-08-06",
+        // if you wish the publication date to be other than the last
+        // modification, set this
+        publishDate:  "2013-11-26",
 
-	// if the specification's copyright date is a range of years, specify
-	// the start date here:
-	// copyrightStart: "2005"
+        // if the specification's copyright date is a range of years, specify
+        // the start date here:
+        // copyrightStart: "2005"
 
-	// if there is a previously published draft, uncomment this
-	// and set its YYYY-MM-DD date and its maturity status
-	previousPublishDate: "2013-02-26",
-	previousMaturity: "FPWD",
+        // if there is a previously published draft, uncomment this
+        // and set its YYYY-MM-DD date and its maturity status
+        previousPublishDate: "2013-02-26",
+        previousMaturity: "FPWD",
 
-	// if there a publicly available Editor's Draft, this is the link
-	edDraftURI: "http://picture.responsiveimages.org",
+        // if there a publicly available Editor's Draft, this is the link
+        edDraftURI: "http://picture.responsiveimages.org",
 
-	// if this is a LCWD, uncomment and set the end of its review period
-	// lcEnd: "2009-08-05",
+        // if this is a LCWD, uncomment and set the end of its review period
+        // lcEnd: "2009-08-05",
 
-	// editors, add as many as you like
-	// only "name" is required
-	editors: [{
-	    name: "Marcos Cáceres",
-	    url: "http://marcosc.com/",
-	    company: "Mozilla",
-	    companyURL: "http://mozilla.com"
-	}, {
-	    name: "Mat Marquis",
-	    url: "http://matmarquis.com/"
-	}, {
-	    name: "Yoav Weiss",
-	    url: "http://blog.yoav.ws/"
-	}],
+        // editors, add as many as you like
+        // only "name" is required
+        editors: [{
+            name: "Marcos Cáceres",
+            url: "http://marcosc.com/",
+            company: "Mozilla",
+            companyURL: "http://mozilla.com"
+        }, {
+            name: "Mat Marquis",
+            url: "http://matmarquis.com/"
+        }, {
+            name: "Yoav Weiss",
+            url: "http://blog.yoav.ws/"
+        }],
 
-	// name of the WG
-	wg: "HTML Working Group",
+        // name of the WG
+        wg: "HTML Working Group",
 
-	// URI of the public WG page
-	wgURI: "http://www.w3.org/html/wg/",
+        // URI of the public WG page
+        wgURI: "http://www.w3.org/html/wg/",
 
-	// name (without the @w3c.org) of the public mailing to which comments are due
-	wgPublicList: "public-html@w3.org",
+        // name (without the @w3c.org) of the public mailing to which comments are due
+        wgPublicList: "public-respimg",
 
-	// URI of the patent status for this WG, for Rec-track documents
-	// !!!! IMPORTANT !!!!
-	// This is important for Rec-track documents,
-	// do not copy a patent URI from a random
-	// document unless you know what you're doing.
-	// If in doubt ask your friendly neighbourhood
-	// Team Contact.
-	wgPatentURI: "http://www.w3.org/community/respimg/spec/26/commitments",
-	// !!!! IMPORTANT !!!! MAKE THE ABOVE BLINK IN YOUR HEAD
-	otherLinks: [{
-	    key: "Version history",
-	    data: [{
-		value: "Commit History",
-		href: "https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages"
-	    }, {
-		value: "Github commits on Twitter",
-		href: "https://twitter.com/respimg_commits"
+        // URI of the patent status for this WG, for Rec-track documents
+        // !!!! IMPORTANT !!!!
+        // This is important for Rec-track documents,
+        // do not copy a patent URI from a random
+        // document unless you know what you're doing.
+        // If in doubt ask your friendly neighbourhood
+        // Team Contact.
+        wgPatentURI: "http://www.w3.org/2004/01/pp-impl/40318/status",
+        // !!!! IMPORTANT !!!! MAKE THE ABOVE BLINK IN YOUR HEAD
+        otherLinks: [{
+            key: "Version history",
+            data: [{
+                value: "Commit History",
+                href: "https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages"
+            }, {
+                value: "Github commits on Twitter",
+                href: "https://twitter.com/respimg_commits"
 
-	    }]
-	}, {
-	    key: "Participate",
-	    data: [{
-		value: "Join the Responsive Images Community Group",
-		href: "http://w3c.responsiveimages.org"
-	    }, {
-		value: "http://list.responsiveimages.org",
-		href: "Public mailing list"
-	    }, {
-		value: "IRC: #respimg on W3C's IRC",
-		href: "irc://irc.w3.org:6665/#respimg"
-	    }, {
-		value: "Twitter",
-		href: "https://twitter.com/respimg"
-	    }, {
-		value: "Github",
-		href: "https://github.com/ResponsiveImagesCG/picture-element"
+            }]
+        }, {
+            key: "Participate",
+            data: [{
+                value: "Join the Responsive Images Community Group",
+                href: "http://w3c.responsiveimages.org"
+            }, {
+                value: "Public mailing list",
+                href: "http://list.responsiveimages.org"
+            }, {
+                value: "IRC: #respimg on W3C's IRC",
+                href: "irc://irc.w3.org:6665/#respimg"
+            }, {
+                value: "Twitter",
+                href: "https://twitter.com/respimg"
+            }, {
+                value: "Github",
+                href: "https://github.com/ResponsiveImagesCG/picture-element"
 
-	    }]
-	}]
+            }]
+        }]
     };
     </script>
-    <style>
-/*this line stops tidy from screwing up*/
-    #open-issues-xhr {
-        font-size: .9em;
-    }
-    #open-issues-xhr li {
-        padding: .25em 0;
-    }
-    #open-issues-xhr .meta {
-        display: block;
-        font: normal .8em/1 sans-serif;
-        padding: .35em 0 0 0;
-    }
-    #open-issues-xhr .meta b {
-        font-weight: normal;
-    }
-    #open-issues-xhr .meta span {
-        display: block;
-        float: left;
-        width: 5.5em;
-    }
-    </style>
   </head>
   <body>
     <p>
@@ -140,11 +125,13 @@
     </p>
     <section id="abstract">
       <p>
-        The <code>picture</code> element provides a way to group multiple
-        versions of an image using different characteristics (e.g., format,
-        resolution, cropping, etc.). This allows the user agent to select the
-        optimum image to present to an end-user based on the user agent's
-        environmental conditions and constraints.
+        This specification is no longer being maintained. See the <a href=
+        "#sotd">status of this document</a> for details.
+      </p>
+      <p>
+        The <code>picture</code> element was intended to give authors a way to
+        control which image resource a user agent presents to a user based on a
+        media query and/or support for a particular image format.
       </p>
       <p>
         The primary purpose of the <code>picture</code> element is to address
@@ -161,9 +148,13 @@
     </section>
     <section id="sotd">
       <p class="note">
-        This specification is under active development and changing frequently.
-        Please see the list of <a href="#dfn-open-issues" class=
-        "internalDFN">open issues</a>.
+        Work on this specification has stopped as it was superceded by the
+        <a href=
+        "http://tabatkins.github.io/specs/respimg/Overview.html">RespImg Syntax
+        proposal</a>. The mailing list gives the <a href=
+        "http://lists.w3.org/Archives/Public/public-respimg/2013Oct/0020.html">justification
+        as to why we stopped persuing the standardization</a> of the
+        <code>picture</code> element.
       </p>
       <p>
         This document was published by the <a href=
@@ -172,40 +163,7 @@
         "http://responsiveimages.org">Responsive Images Community Group</a>
         (see <a href=
         "http://www.w3.org/community/respimg/spec/26/commitments">licensing
-        commitments</a>). If you are not a HTML working group member and wish
-        to make comments regarding this document please send them to <a href=
-        "mailto:public-html-comments@w3.org">public-html-comments@w3.org</a>
-        (<a href=
-        "mailto:public-html-comments-request@w3.org?subject=subscribe">subscribe</a>,
-        <a href=
-        "http://lists.w3.org/Archives/Public/public-html-comments/">archives</a>).
-        If you are a HTML working group member and wish to make comments
-        regarding this document, please send them to <a href=
-        "mailto:public-html@w3.org">public-html@w3.org</a> (<a href=
-        "mailto:public-html-request@w3.org?subject=subscribe">subscribe</a>,
-        <a href=
-        "http://lists.w3.org/Archives/Public/public-html/">archives</a>). All
-        feedback is welcome.
-      </p>
-      <p>
-        Publication as a Working Draft does not imply endorsement by the W3C
-        Membership. This is a draft document and may be updated, replaced or
-        obsoleted by other documents at any time. It is inappropriate to cite
-        this document as other than work in progress.
-      </p>
-      <p>
-        This document was produced by a group operating under the <a href=
-        "http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004
-        W3C Patent Policy</a>. W3C maintains a <a href=
-        "http://www.w3.org/2004/01/pp-impl/40318/status" rel=
-        "disclosure">public list of any patent disclosures</a> made in
-        connection with the deliverables of the group; that page also includes
-        instructions for disclosing a patent. An individual who has actual
-        knowledge of a patent which the individual believes contains <a href=
-        "http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential
-        Claim(s)</a> must disclose the information in accordance with <a href=
-        "http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section
-        6 of the W3C Patent Policy</a>.
+        commitments</a>).
       </p>
     </section>
     <section class="informative">
@@ -247,47 +205,62 @@
       </p>
       <section>
         <h3>
-          Example of usage
+          When to use <code>picture</code>
         </h3>
         <p>
-          This first sample shows how to combine the <code>picture</code>
-          element with the <code>source</code> element, while also providing
-          fallback content for legacy user agents through the <code>img</code>
-          element.
+          The <code>picture</code> element is intended primarily for <q>art
+          directing</q> graphical content. For cases where a single image
+          source is available, and where no responsive adoption is needed,
+          authors are encouraged to use the <code>img</code> element instead.
+        </p>
+      </section>
+      <section>
+        <h3>
+          Examples of usage
+        </h3>
+        <p>
+          This example shows how to combine the <code>picture</code> element
+          with the <code>source</code> element, while also providing fallback
+          content for legacy user agents through the <code>img</code> element.
         </p>
         <pre class="example highlight">
               &lt;picture width="500" height="500"&gt;
                  &lt;source media="(min-width: 45em)" src="large.jpg"&gt;
                  &lt;source media="(min-width: 18em)" src="med.jpg"&gt;
                  &lt;source src="small.jpg"&gt;
-                 &lt;img src="small.jpg" alt="" lazyload&gt;
+                 &lt;img src="small.jpg" alt=""&gt;
                  &lt;p&gt;Accessible text&lt;/p&gt;
               &lt;/picture&gt;
 </pre>
         <p>
-          This second example shows how the <code>picture</code> element can be
-          used with the <code>srcset</code> attribute [[!html-srcset]] to
-          provide a range of sources suitable for a given media query:
+          This example shows how the <code>picture</code> element can be used
+          with the <code>srcset</code> attribute [[!html-srcset]] to provide a
+          range of sources suitable for a given media query:
         </p>
         <pre class="example highlight">
             &lt;picture width="500" height="500"&gt;
-               &lt;source media="(min-width: 45em)" srcset="large-1.jpg 1x, large-2.jpg 2x"&gt;
-               &lt;source media="(min-width: 18em)" srcset="med-1.jpg 1x, med-2.jpg 2x"&gt;
-               &lt;source srcset="small-1.jpg 1x, small-2.jpg 2x"&gt;
-               &lt;img src="small-1.jpg" alt="" lazyload&gt;
+               &lt;source media="(min-width: 45em)" srcset="large-1.jpg, large-2.jpg 2x"&gt;
+               &lt;source media="(min-width: 18em)" srcset="med-1.jpg, med-2.jpg 2x"&gt;
+               &lt;source srcset="small-1.jpg, small-2.jpg 2x"&gt;
+               &lt;img src="small-1.jpg" alt=""&gt;
                &lt;p&gt;Accessible text&lt;/p&gt;
             &lt;/picture&gt;
-
 </pre>
-        <p class="note">
-          The <code>lazyload</code> attribute is used on the
-          <code>&lt;img&gt;</code> tag in the above examples in order to avoid
-          a download of that resource when <code>picture</code> is supported.
-          It enables the user agent to delay the resource's download at least
-          until the resource is added to the DOM, at which point the user agent
-          can detect that the <code>&lt;img&gt;</code> element is a child of a
-          <code>&lt;picture&gt;</code> element.
+        <p>
+          This example shows how picture and other HTML elements can be used
+          together.
         </p>
+        <pre class="example highlight">
+    &lt;figure&gt;
+        &lt;picture width="200" height="200"&gt;
+           &lt;source media="(min-width: 45em)" srcset="large-1.jpg, large-2.jpg 2x"&gt;
+           &lt;source media="(min-width: 18em)" srcset="med-1.jpg, med-2.jpg 2x"&gt;
+           &lt;source srcset="small-1.jpg, small-2.jpg 2x"&gt;
+           &lt;img src="small-1.jpg" alt=""&gt;
+        &lt;/picture&gt;
+        &lt;figcapture&gt;A figure of a fox jumping over a lazy box.&lt;/figcaption&gt;
+    &lt;/figure&gt;
+</pre>
       </section>
       <section>
         <h3>
@@ -300,23 +273,20 @@
           resources, the user agent has the option of either following or
           overriding the author’s declarations to optimize the user experience
           based on criteria such as <a href=
-          "http://usecases.responsiveimages.org/#resolution-switching">display
-          density</a>, network connection type, <a href=
-          "http://usecases.responsiveimages.org/#user-control-over-sources">user
-          preferences</a>, and so on.
+          "http://usecases.responsiveimages.org/#device-pixel-ratio-based-selection">
+          display density</a>, network connection type, user preferences, and
+          so on.
         </p>
         <p>
           The <code>picture</code> element defines conditions under which the
           use agent needs to follow the author's explicit instructions when
           selecting which resource to display. This includes image sources with
           inherent sizes designed to align with layout variations specified in
-          CSS media queries ( see: <a href=
+          CSS media queries (see: <a href=
           "http://usecases.responsiveimages.org/#design-breakpoints">design
-          breakpoints</a>, <a href=
-          "http://usecases.responsiveimages.org/#matching-media-features-and-media-types">
-          media features and types</a> and <a href=
+          breakpoints</a>, and <a href=
           "http://usecases.responsiveimages.org/#relative-units">relative
-          units</a> ) or content variations for increased clarity and focus
+          units</a>) or content variations for increased clarity and focus
           (i.e., <a href=
           "http://usecases.responsiveimages.org/#art-direction"><q>art
           direction</q></a>) based on the client’s viewport.
@@ -346,8 +316,7 @@
         not</em>, <em class="rfc2119" title="recommended">recommended</em>,
         <em class="rfc2119" title="may">may</em>, and <em class="rfc2119"
         title="optional">optional</em> in this specification are to be
-        interpreted as described in [[!<a class="bibref" href=
-        "#bib-RFC2119">RFC2119</a>]].
+        interpreted as described in [[!RFC2119]].
       </p>
       <p>
         This specification has the same <a href=
@@ -388,6 +357,16 @@
     </section>
     <section>
       <h2>
+        Extensions to <code>source</code> element
+      </h2>
+      <p>
+        This specification allows HTML's <code>source</code> element to use the
+        srcset attribute when a <code>source</code> is used in the context of a
+        <code>picture</code> element.
+      </p>
+    </section>
+    <section>
+      <h2>
         The <code>picture</code> element
       </h2>
       <dl>
@@ -423,9 +402,9 @@
           used</a>:
         </dt>
         <dd>
-          Where&nbsp;<a href=
+          Where <a href=
           "http://dev.w3.org/html5/spec/single-page.html#embedded-content-2">embedded
-          content</a>&nbsp;is expected.
+          content</a> is expected.
         </dd>
         <dt>
           <a href=
@@ -433,15 +412,15 @@
           title="element-dfn-content-model">Content model</a>:
         </dt>
         <dd>
-          If zero descendents, then&nbsp;<a href=
+          If zero descendents, then <a href=
           "http://dev.w3.org/html5/spec/single-page.html#transparent">transparent</a>.
         </dd>
         <dd>
-          One&nbsp;or more <code>source</code> elements.
+          One or more <code>source</code> elements.
         </dd>
         <dd>
-          Zero or one <code>img</code> element, serving as <a href=
-          "#dfn-fallback-content" class="internalDFN">fallback content</a>.
+          Zero or more elements, serving as <a href="#dfn-fallback-content"
+          class="internalDFN">fallback content</a>.
         </dd>
         <dt>
           <a href=
@@ -454,856 +433,153 @@
           attributes</a>
         </dd>
         <dd>
-          <code title="attr-picture-alt"><a href=
-          "#attr-picture-alt">alt</a></code>
-        </dd>
-        <dd>
-          <code title="attr-picture-src"><a href=
-          "#attr-picture-src">src</a></code>
-        </dd>
-        <dd>
-          <code title="attr-picture-srcset"><a href=
-          "#attr-picture-srcset">srcset</a></code>
-        </dd>
-        <dd>
-          <code title="attr-picture-crossorigin"><a href=
-          "#attr-picture-crossorigin">crossorigin</a></code>
-        </dd>
-        <dd>
-          <code title="attr-hyperlink-usemap"><a href=
-          "#attr-hyperlink-usemap">usemap</a></code>
-        </dd>
-        <dd>
-          <code title="attr-picture-ismap"><a href=
-          "#attr-picture-ismap">ismap</a></code>
-        </dd>
-        <dd>
           <code>width</code>
         </dd>
         <dd>
           <code>height</code>
         </dd>
-        <dt>
-          <a href=
-          "http://dev.w3.org/html5/spec/single-page.html#element-dfn-dom"
-          title="element-dfn-dom">DOM interface</a>:
-        </dt>
-        <dd>
-          <pre>
-[NamedConstructor=Picture,
- NamedConstructor=Picture(unsigned long width),
- NamedConstructor=Picture(unsigned long width, unsigned long height)]
-HTMLPictureElement : HTMLImageElement{
-   attribute DOMString <a href="#dom-picture-alt" title=
-"dom-picture-alt">alt</a>;
-   attribute DOMString <a href="#dom-picture-src" title=
-"dom-picture-src">src</a>;
-   attribute DOMString <a href="#dom-picture-crossorigin" title=
-"dom-picture-crossOrigin">crossOrigin</a>;
-   attribute DOMString <a href="#dom-picture-srcset" title=
-"dom-picture-srcset">srcset</a>;
-   readonly attribute DOMString <span title=
-"dom-picture-currentsrc">currentSrc</span>;
-   attribute DOMString <a href="#dom-picture-usemap" title=
-"dom-picture-useMap">useMap</a>;
-   attribute boolean <a href="#dom-picture-ismap" title=
-"dom-picture-isMap">isMap</a>;
-   readonly attribute DOMString media;
-   void <span title="dom-picture-load">load</span>();
-}
-</pre>
-        </dd>
       </dl>
       <p>
-        The <code><dfn id="dfn-picture">picture</dfn></code> element used for
-        displaying an image that can come from a range of sources (including
-        the <dfn id="attr-picture-src" title=
-        "attr-picture-src"><code>src</code></dfn> and <dfn id=
-        "attr-picture-srcset" title=
-        "attr-picture-srcset"><code>srcset</code></dfn> attributes). Which
-        image the user agent displays depends on the <a href=
-        "#dfn-algorithm-for-deriving-the-source-image" class=
-        "internalDFN">algorithm for deriving the source image</a>. The value of
-        the <dfn id="attr-picture-alt" title=
-        "attr-picture-alt"><code>alt</code></dfn> attribute provides equivalent
-        content for those who cannot process images or who have image loading
-        disabled.
+        Like the <code>img</code> element, the <code><dfn id=
+        "dfn-picture">picture</dfn></code> element presents image data.
+        However, unlike the img element, which the resource is presented
+        depends on the user agent's support for a particular image format
+        and/or matching some environmental condition. The <span>chosen
+        image</span> is the embedded content.
       </p>
-      <p>
-        The requirements on the <code title="attr-picture-alt"><a href=
-        "#attr-picture-alt">alt</a></code> attribute's value are described
-        <a href="http://www.w3.org/TR/html5/embedded-content-0.html#alt">in the
-        <code>img</code> section</a>.
-      </p>
-      <p>
-        The <code title="attr-picture-src"><a href=
-        "#attr-picture-src">src</a></code> attribute may be present, and if
-        present must contain a <a href=
-        "http://www.w3.org/TR/html5/infrastructure.html#valid-non-empty-url-potentially-surrounded-by-spaces">
-        valid non-empty URL potentially surrounded by spaces</a> referencing a
-        non-interactive, optionally animated, <dfn>image resource</dfn> that is
-        neither paged nor scripted.
-      </p>
-      <p class="note">
-        The requirements above imply that images can be static bitmaps (e.g.
-        PNGs, GIFs, JPEGs), single-page vector documents (single-page PDFs, XML
-        files with an SVG root element), animated bitmaps (APNGs, animated
-        GIFs), animated vector graphics (XML files with an SVG root element
-        that use declarative SMIL animation), and so forth. However, these
-        definitions preclude SVG files with script, multipage PDF files,
-        interactive MNG files, HTML documents, plain text documents, and so
-        forth.
-      </p>
-      <p>
-        The <code title="attr-picture-srcset"><a href=
-        "#attr-picture-srcset">srcset</a></code> attribute may be present, and
-        if present must conform to <a href=
-        "http://dev.w3.org/html5/srcset/">the <code>srcset</code>
-        specification</a>.
-      </p>
-      <dl class="domintro">
+      <section>
+        <h3>
+          <code>HTMLPictureElement</code> interface
+        </h3>
+        <dl class="idl" title=
+        "[NamedConstructor=Picture(optional unsigned long width, optional unsigned long height)] interface HTMLPictureElement">
         <dt>
-          <var>picture</var> . <code>currentSrc</code>
-        </dt>
-        <dd>
-          <p>
-            Returns the address of the current <span>image resource</span>.
-          </p>
-          <p>
-            Returns the empty string when there is no <span>image
-            resource</span>.
-          </p>
-        </dd>
-      </dl>
-      <div class="impl">
-        <p>
-          The <dfn title="dom-picture-currentSrc"><code>currentSrc</code></dfn>
-          IDL attribute is initially the empty string. Its value is changed by
-          the <span title=
-          "dfn-algorithm-for-deriving-the-source-image">resource selection
-          algorithm</span> defined below.
-        </p>
-      </div>
-      <p class="note">
-        There are three ways to specify an <span>image resource</span>, the
-        <code title="attr-picture-src">src</code> attribute, the <code title=
-        "attr-picture-srcset">srcset</code> attribute, or <code>source</code>
-        elements. The <code title="attr-picture-srcset">srcset</code> attribute
-        overrides both the <code title="attr-picture-src">src</code> attribute
-        and the elements; the <code title="attr-picture-src">src</code>
-        attribute overrides the elements.
-      </p>
-      <p>
-        The <dfn id="attr-picture-crossorigin" title=
-        "attr-picture-crossorigin"><code>crossorigin</code></dfn> attribute is
-        a <a href=
-        "http://www.w3.org/TR/html5/infrastructure.html#cors-settings-attribute">
-        CORS settings attribute</a>. Its purpose is to allow images from
-        third-party sites that allow cross-origin access to be used with
-        <code><a href=
-        "http://www.w3.org/TR/html5/embedded-content-0.html#the-canvas-element">
-        canvas</a></code>.
-      </p>
-      <p>
-        On getting the <code>media</code> IDL attribute, the user agent
-        <em class="rfc2119" title="must">must</em> return the media query that
-        matches the current environment.
-      </p>
-      <p>
-        It is <em class="rfc2119" title="recommended">recommended</em> that for
-        cases where a single image source is available, and where no responsive
-        adoption is needed, authors use the <code>img</code> element. Authors
-        can use the srcset attribute for simple resized image sources.
-      </p>
-      <p>
-        The <span>chosen image</span> is the embedded content.
-      </p>
-      <p>
-        In the absence of style rules to the contrary, the chosen <span>image
-        resource</span> should be rendered centered within the element's area
-        at the largest possible size that fits completely within the element's
-        area, with the chosen <span>image resource</span>'s intrinsic aspect
-        ratio being preserved. Thus, if the aspect ratio of the
-        <code>picture</code> element's area does not match the aspect ratio of
-        the <span>image resource</span>, the <span>image resource</span> will
-        be shown letterboxed or pillarboxed. Areas of the element's area that
-        do not contain the <span>image resource</span> represent nothing.
-      </p>
-      <div class="note">
-        <p>
-          In user agents that implement CSS, the above requirement can be
-          implemented by using the following style rules:
-        </p>
-        <pre>
-            picture {
-               object-fit: contain;
-               object-position: center;
-            }
-
-</pre>
-      </div>
-      <p>
-        For user agents that don't support the <code>picture</code> element, an
-        author can provide an <code>img</code> element as <span>fallback
-        content</span>. User agents that support the <code>picture</code>
-        element <em class="rfc2119" title="should not">should not</em> show
-        this content to the user: it is intended for legacy user agents that do
-        not support <code>picture</code>, so that a legacy <code>img</code>
-        element can be shown instead.
-      </p>
-      <p>
-        Authoring requirement: as with the <code>img</code> element, documents
-        must not use the <code>picture</code>&nbsp;element as a layout tool. In
-        particular,&nbsp;picture&nbsp;elements should not be used to display
-        transparent images, as they rarely convey meaning and rarely add
-        anything useful to the document.
-      </p>
-      <p>
-        When used with the <code>picture</code> element, a
-        <span>document</span> <em class="rfc2119" title="should">should</em>
-        only contain <code>source</code> elements need to represent the same
-        subject matter, but cropping and zooming can differ.
-      </p>
-      <p class="issue">
-        It should be codified that this is not a mechanism by which to swap
-        disparate images depending on screen size. See bug <a href=
-        "https://www.w3.org/Bugs/Public/show_bug.cgi?id=18384#c7">18384</a>.
-      </p>
-      <hr>
-      <p>
-        The <code title="attr-hyperlink-usemap"><a href=
-        "#attr-hyperlink-usemap">usemap</a></code> attribute, if present, can
-        indicate that the image has an associated <a href=
-        "http://www.w3.org/TR/html5/embedded-content-0.html#image-map">image
-        map</a>.
-      </p>
-      <p>
-        The <dfn id="attr-picture-ismap" title=
-        "attr-picture-ismap"><code>ismap</code></dfn> attribute, when used on
-        an element that is a descendant of an <code><a href=
-        "http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element">a</a></code>
-        element with an <code title="attr-hyperlink-href"><a href=
-        "http://www.w3.org/TR/html5/links.html#attr-hyperlink-href">href</a></code>
-        attribute, indicates by its presence that the element provides access
-        to a server-side image map. This affects how events are handled on the
-        corresponding <code><a href=
-        "http://www.w3.org/TR/html5/links.html#attr-hyperlink-href">a</a></code>
-        element.
-      </p>
-      <p>
-        The <code title="attr-picture-ismap"><a href=
-        "#attr-picture-ismap">ismap</a></code> attribute is a <a href=
-        "http://www.w3.org/TR/html5/infrastructure.html#boolean-attribute">boolean
-        attribute</a>. The attribute must not be specified on an element that
-        does not have an ancestor <code><a href=
-        "http://www.w3.org/TR/html5/text-level-semantics.html#the-a-element">a</a></code>
-        element with an <code title="attr-hyperlink-href"><a href=
-        "http://www.w3.org/TR/html5/links.html#attr-hyperlink-href">href</a></code>
-        attribute.
-      </p>
-      <div class="impl">
-        <p>
-          The <dfn id="dom-picture-alt" title=
-          "dom-picture-alt"><code>alt</code></dfn>, <dfn id="dom-picture-src"
-          title="dom-picture-src"><code>src</code></dfn>, <dfn id=
-          "dom-picture-srcset" title=
-          "dom-picture-srcset"><code>src</code></dfn>, IDL attributes must
-          <a href=
-          "http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a>
-          the respective content attributes of the same name.
-        </p>
-        <p>
-          The <dfn id="dom-picture-crossorigin" title=
-          "dom-picture-crossOrigin"><code>crossOrigin</code></dfn> IDL
-          attribute must <a href=
-          "http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a>
-          the <code title="attr-picture-crossorigin"><a href=
-          "#attr-picture-crossorigin">crossorigin</a></code> content attribute.
-        </p>
-        <p>
-          The <dfn id="dom-picture-usemap" title=
-          "dom-picture-useMap"><code>useMap</code></dfn> IDL attribute must
-          <a href=
-          "http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a>
-          the <code title="attr-hyperlink-usemap">usemap</code> content
-          attribute.
-        </p>
-        <p>
-          The <dfn id="dom-picture-ismap" title=
-          "dom-picture-isMap"><code>isMap</code></dfn> IDL attribute must
-          <a href=
-          "http://www.w3.org/TR/html5/infrastructure.html#reflect">reflect</a>
-          the <code title="attr-picture-ismap"><a href=
-          "#attr-picture-ismap">ismap</a></code> content attribute.
-        </p>
-        <dl class="domintro">
-          <dt>
-            <var>picture</var> . <code title="dom-picture-load">load()</code>
+            attribute long width;
           </dt>
           <dd>
-            <p>
-              Causes the element to reset and start selecting and loading a new
-              <span>image resource</span> from scratch.
-            </p>
+            The width, in CSS pixels, of the picture.
+          </dd>
+          <dt>
+            attribute long height;
+          </dt>
+          <dd>
+            The height, in CSS Pixels, of the picture.
           </dd>
         </dl>
-        <div class="impl">
-          <p>
-            When the <dfn title="dom-picture-load"><code>load()</code></dfn>
-            method on a <code>picture</code> element is invoked, the user agent
-            must run the load algorithm.
-          </p>
-        </div>
-      </div>
+      </section>
+      <section class="informative">
+        <h3>
+          Authoring Requiments
+        </h3>
+        <p>
+          For user agents that don't support the <code>picture</code> element,
+          an author can provide an <code>img</code> element as <span>fallback
+          content</span>.
+        </p>
+      </section>
+      <section class="appendix">
+        <h2>
+          Acknowledgements
+        </h2>
+        <p id="participants">
+          A <a href="http://www.w3.org/community/respimg/participants">complete
+          list of participants</a> of the Responsive Images Community Group is
+          available at the W3C Community Group Website.
+        </p>
+        <p id="participantslist">
+          <!--
+        To get the participant's list, go to
+        http://www.w3.org/community/respimg/participants
+
+        var all = document.querySelectorAll("td>h3"),
+            each = [];
+        for(var i = 0; i < all.length; i++){
+                each.push(all.item(i).textContent);
+        }
+        console.log(each.join(", "))
+        -->
+           <dfn>Participants</dfn> of the <a href=
+          "http://w3c.responsiveimages.org">Responsive Images Community
+          Group</a> at the time of publication were: Barry Atimer, Daniel
+          Abril, George Adamson, Heide Alexander, Marie Alhomme, John Allan,
+          Joshua Allen, Angely Alvarez, Agustin Amenabar, Aaryn Anderson,
+          Philip Andrews, Ritchie Anesco, Phil Archer, Tony Atayi, Tom Atkins,
+          Justin Avery, Mohsen Azimi, Phillip Baker, Raymond Baker, Michael
+          Balensiefer, Toni Barrett, Bruno Barros, Paul Barton, Adrian Bateman,
+          Jesse Renée Beach, Robin Berjon, Seth Bertalotto, Anirban
+          Bhattacharya, Nicolaas Bijvoet, Barna Bitai, Nathan Bleigh, Andreas
+          Bovens, J. Albert Bowden, Adam Bradley, Rodrigo Brancher, Gordon
+          Brander, Paul Bridgestock, Aaron Brosey, Brandon Brown, Cory Brown,
+          mairead buchan, Kris Bulman, Ariel Burone, Mathias Bynens, Marcos
+          Caceres, Rusty Calder, Ben Callahan, Loïc Calvy, Welch Canavan, Chuck
+          Carpenter, Brandon Carroll, Frederico Cerdeira, Daniel Chamberlin,
+          Adi Chikara, David Clements, Geri Coady, Anne-Gaelle Colom, Cyril
+          Concolato, Jessica Constantine, Greg Cota, Geoff Cowan, Andy Crum,
+          David D'Amico, Jason Daihl, Francois Daoust, Kevin Davies, Robert
+          Dawson, Jacques de Klerk, Timothy de Paris, Ryan DeBeasi, Anna
+          Debenham, Darryl deHaan, David Demaree, George DeMet, Ian Devlin,
+          Alex DiLiberto, peter droogmans, Ronni Dyrholm Chidekel, simpson
+          eddie, Sylvia Egger, Dominic Fee, Ève Février, Maximiliano Firtman,
+          Ben Fonarov, Harry Fozzard, Marlene Frykman, Dennis Gaebel, Igor
+          Gajosinskas, Nicolas Gallagher, Miguel Garcia, Rafael Garcia Lepper,
+          Larry Garfield, Peter Gasston, George GeorgeHaeger, David Goss, Chris
+          Grant, Petra Gregorova, Ilya Grigorik, Jason Grigsby, Aaron Grogg,
+          Antoine Guergnon, Jeff Guntle, Aaron Gustafson, Jason Haag, Jordan
+          Haines, Cristina Hanes, Patrick Haney, Anselm Hannemann, chris hardy,
+          Vincent Hardy, Bridget Harrison, Duncan Hawthorne, Dominique
+          Hazaël-Massieux, Chris Hilditch, Jon Hill, Nathan Hinshaw, Sean
+          Hintz, John Holt Ripley, Enrico Hösel, Peter Hrynkow, Kym Huang,
+          Shane Hudson, Vinicius Ianni, Tomomi Imura, Philip Ingrey, Bryn
+          Jackson, Rihnna Jakosalem, Brett Jankord, Scott Jehl, Dave Johnson,
+          Nathanael Jones, Danny Jongerius, Michael Jovel, Chao Ju, Tim Kadlec,
+          Raj Kaimal, Kevin Joe Kanger, Frédéric Kayser, Serge K. Keller,
+          Arthur Khachatryan, Jin Kim, Andreas Klein, Peter Klein, John
+          Kleinschmidt, Daniel Konopacki, Darius Kruythoff, Zoran Kurtin,
+          Vitaliy Kuzmin, Gerardo Lagger, Adam Lake, Chris Lamothe, Tom Lane,
+          Matthieu Larcher, Christopher Latham, Bruce Lawson, Zach Leatherman,
+          Silas Lepcha, Kornel Lesinski, Chris Lilley, grappler login, william
+          lombardo, Tania Lopes, Amie Lucas, André Luís, Jacine Luisi, David
+          Maciejewski, Kevin Mack, Ethan Malasky, Josh Marinacci, Eduardo
+          Marques, Mathew Marquis, Daniel Martínez, Tom Maslen, Jacob Mather,
+          Chris McAndrew, Mark McDonnell, Andre Jay Meissner, Benjamin
+          Melançon, Julian Mendl, Rick Messer, Zane Milakovic, Denys Mishunov,
+          Sabine Moebs, Ian Moffitt, Orestis Molopodis, jason morita, David
+          Moulton, Bobby Mozumder, Brian Muenzenmeyer, Emi Myoudou, Irakli
+          Nadareishvili, Giorgio Natili, Jonathan Neal, Christian Neuberger Jr,
+          David Newton, Todd Nienkerk, Ashley Nolan, Johnna Nonboe, Kenneth
+          Nordahl, Mark Nottingham, Lewis Nyman, Darrel O'Pry, Alejandro
+          Oviedo, David Owens, Paddy O’Hanlon, Isabel Palomar, suzanne peter,
+          Hassadee Pimsuwan, Guy Podjarny, Andreas Pollak, gentian polovina,
+          Dave Poole, Florent Preynat, Manik Rathee, François REMY, Venkatesh
+          Rengasamy, Jen Reynolds, Ricardo Andrade Belo Ricardo Belo, Michael
+          Riethmuller, Carlo Rizzante, John Rodler, César Rodríguez, Nestor
+          Rojas, Adrian Roselli, David Rupert, Chris Ruppel, Oguzcan Sahin,
+          Viljami Salminen, Luca Salvini, Ana Sampaio, Luke Sands, crazyrohila
+          sanjay, aron santa, Osny Santos, Jad Sarout, Brandon Satrom, Jeroen
+          Savat, Stéphane Savona, Christoph Saxe, Doug Schepers, Jason Schmidt,
+          Christopher Schmitt, Joe Schmitt, Greg Schumacher, Boaz Sender,
+          SHAHINA SHEIK, Tomoyuki Shimizu, Ariel Shkedi, Abdul Wahid Sial,
+          Pandapotan Silaban, Mauricio Silva Teixeira de Nobrega, Jen Simmons,
+          Michael Singleterry, Katerina Skotalova, David Sleight, Michael[tm]
+          Smith, Nick Snyder, Ignacio Soriano Cano, Steve Souders, Brenden
+          Sparks, Aaron Staker, Aaron Stanush, Walter Stevenson, Bridget
+          Stewart, Jared Stilwell, Matt Stow, Shari Sullivan, Kevin Suttle,
+          Patrick Szalapski, Satoru Takagi, Rob Tarr, Philipp Tautz, Nguyen
+          Thao Thao, Edward Thurgood, Anthony Ticknor, Erek Tinker, Sebastián
+          Tromer, Tsvetan Tsvetkov, Yusuke Uchida, Mads Ulsø Østergaard,
+          Katarina Ur, Adam van den Hoven, Jacob van Zijp, Lucas Vilaboim,
+          Jitendra Vyas, Amy W, Tady Walsh, Yoav Weiss, George White, Michael
+          Whittet, Matt Wilcox, Richard Wild, John Albin Wilkins, Chris
+          Williams, Rory Wilson, Owen Winkler, Robin Winslow, Cyril Wolfangel,
+          Mike Woodard, Jeremy Worboys, Mike Wu, Bruce Zawalsky, Carlos Zepeda,
+          and jintian zheng.
+        </p>
+        <p>
+          Contributions also from: David Newton, Ilya Grigorik and Leon de
+          Rijke. Special thanks to Adrian Bateman for providing the group with
+          guidance.
+        </p>
+      </section>
     </section>
-    <section>
-      <hr>
-      <h2>
-        Algorithms for deriving the source image
-      </h2>
-      <div class="impl">
-        <div>
-          <p>
-            The algorithm for deriving the <dfn>source image</dfn>, the
-            <a>Picture load algorithm</a> is as follows. This algorithm may
-            invoke the <a>Resource selection algorithm</a> defined below. The
-            result is the <a title="source image">image source</a> to be used
-            by the user agent. Fetching of the <a title="source image">image
-            source</a> is defined by the <a>Resource fetching algorithm</a>.
-          </p>
-          <p>
-            These three algorithms combine portions of <code><a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
-            img</a></code>’s <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
-            update the image data</a> algorithm; <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
-            Media Elements</a>’ <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#media-element-load-algorithm">
-            media element load algorithm</a>, <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
-            resource selection algorithm</a>, and <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-resource">
-            resource fetch algorithm</a>; and <code><a href=
-            "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/">srcset</a></code>’s
-            <a href=
-            "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/#update-the-image-data">
-            update the image data</a> algorithm. Unless specified otherwise
-            below:
-          </p>
-          <ul>
-            <li>When referencing <code><a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
-              img</a></code>
-              <ul>
-                <li>All instances of “<code>img</code>” need to be read as
-                “<code>picture</code>”.
-                </li>
-                <li>All instances of “<code title=
-                "attr-picture-src">src</code>” need to be read as
-                  “<code title="attr-picture-src">src</code> or <code title=
-                  "attr-picture-srcset">srcset</code>”.
-                </li>
-                <li>All instances of “fetching algorithm” need to be read as
-                “<a>resource selection algorithm</a> or <a>resource fetching
-                algorithm</a>”.
-                </li>
-                <li>All instances of “the resulting <a href=
-                "http://www.w3.org/TR/html51/infrastructure.html#absolute-url">
-                  absolute URL</a>” need to be read as “<var>absolute
-                  URL</var>”.
-                </li>
-              </ul>
-            </li>
-            <li>When referencing <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
-              Media Elements</a>
-              <ul>
-                <li>All instances of “media element” need to be read as
-                “<code>picture</code> element”.
-                </li>
-                <li>All instances of “<code title=
-                "attr-picture-src">src</code>” need to be read as
-                  “<code title="attr-picture-src">src</code> or <code title=
-                  "attr-picture-srcset">srcset</code>”.
-                </li>
-                <li>All instances of “media data” need to be read as “image
-                data”.
-                </li>
-              </ul>
-            </li>
-          </ul>
-          <p>
-            A <code>picture</code> element is always in one of the following
-            states, as defined in <code><a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
-            img</a></code>: <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#img-none"><dfn>
-            unavailable</dfn></a>, <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#img-inc"><dfn>partially
-            available</dfn></a>, <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#img-all"><dfn>completely
-            available</dfn></a>, <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#img-error"><dfn>
-            broken</dfn></a>.
-          </p>
-          <p>
-            A <code>picture</code> element’s <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#last-selected-source">
-            <dfn>last selected source</dfn></a> and <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#current-pixel-density">
-            <dfn>current pixel density</dfn></a>, and a <code><a href=
-            "http://www.w3.org/TR/html51/dom.html#document">Document</a></code>’s
-            <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#list-of-available-images">
-            <dfn>list of available images</dfn></a> are as defined in
-            <code><a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
-            img</a></code>.
-          </p>
-          <p>
-            A <code>picture</code> element’s <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#delaying-the-load-event-flag">
-            <dfn>delaying-the-load-event flag</dfn></a> is as defined in
-            <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
-            Media Elements</a>.
-          </p>
-          <hr>
-          <p>
-            Image data for a <code>picture</code> element is obtained or
-            updated by running the <a>picture load algorithm</a> with the
-            <code>picture</code> element as input.
-          </p>
-          <p>
-            The timing of how image data is obtained–specifically if and when
-            image data is loaded on demand , if and when image data is loaded
-            immediately, and if and when and image is loaded synchronously or
-            asynchronously–is defined as in <code><a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
-            img</a></code>.
-          </p>
-          <p>
-            Invoking a <code>picture</code> element’s <dfn title=
-            "dom-picture-load"><code>load()</code></dfn> function must trigger
-            the <a>picture load algorithm</a>.
-          </p>
-          <p>
-            A user agent may override requests for higher-resolution images
-            based on user preferences. For example: “always request
-            high-resolution images”, “always request low-resolution images”,
-            and “request high-resolution images as bandwidth permits” based on
-            the bandwidth information available to the browser.
-          </p>
-        </div>
-        <div>
-          <h3>
-            Picture load algorithm
-          </h3>
-          <p>
-            The <dfn>picture load algorithm</dfn> must be run when the user
-            agent is to obtain the image data of a <code>picture</code>
-            element. The user agent may at any time run the following algorithm
-            to update a <code>picture</code> element’s image in order to react
-            to changes in the environment. The picture load algorithm consists
-            of the following steps:
-          </p>
-          <p>
-            This algorithm combines portions of <code><a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
-            img</a></code>’s <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
-            update the image data</a> algorithm and <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
-            Media Elements</a>’ <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#media-element-load-algorithm">
-            media element load algorithm</a>, as follows:
-          </p>
-          <ol>
-            <li>
-              <p>
-                Perform steps 1–3 of the <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
-                update the image data</a> algorithm.
-              </p>
-            </li>
-            <li>
-              <p>
-                Perform step 4, substep 1 of the <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#media-element-load-algorithm">
-                media element load algorithm</a>.
-              </p>
-            </li>
-            <li>
-              <p>
-                Perform step 4 of the <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
-                update the image data</a> algorithm.
-              </p>
-            </li>
-            <li>
-              <p>
-                Run the <a>resource selection algorithm</a> with the
-                <code>picture</code> element as input.
-              </p>
-            </li>
-          </ol>
-        </div>
-        <div>
-          <h3>
-            Resource selection algorithm
-          </h3>
-          <p>
-            This algorithm combines portions of <code><a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
-            img</a></code>’s <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
-            update the image data</a> algorithm, <code><a href=
-            "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/">srcset</a></code>’s
-            <a href=
-            "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/#update-the-image-data">
-            update the image data</a> algorithm, and <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
-            Media Elements</a>’ <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
-            resource selection algorithm</a>, as follows:
-          </p>
-          <ol>
-            <li>
-              <p>
-                Perform steps 3, 4, 6, and 8 of the <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
-                Media Elements</a>’ <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
-                resource selection algorithm</a>.
-              </p>
-              <ul>
-                <li>
-                  <p>
-                    When that algorithm instructs a user agent to “set the
-                    <code>networkState</code> to <code>NETWORK_EMPTY</code>”,
-                    the user agent should instead set the <code>picture</code>
-                    element to the <a title="picture-error">broken state</a>
-                    and <a href=
-                    "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
-                    a task</a> to <a href=
-                    "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-                    fire a simple event</a> named <code title=
-                    "event-error">error</code> at the <code>picture</code>
-                    element, and set the <code>picture</code> element’s
-                    <a>delaying-the-load-event flag</a> to false.
-                  </p>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <p>
-                If <var>mode</var> is <i>attribute</i>, perform step 5 of the
-                <code><a href=
-                "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/">srcset</a></code>
-                <a href=
-                "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/#update-the-image-data">
-                update the image data</a> algorithm, with the
-                <code>picture</code> element as the input.
-              </p>
-              <p>
-                Otherwise, <code>source</code> elements will be used; perform
-                the <code>source</code> element substeps 1, 2, 5, 6 of the
-                <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
-                Media Elements</a>’ <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
-                resource selection algorithm</a>’s step 9.
-              </p>
-              <ul>
-                <li>
-                  <p>
-                    The first instance of “<code title=
-                    "attr-picture-src">src</code>” needs to be read as
-                    “<code title="attr-picture-src">src</code> or <code title=
-                    "attr-picture-srcset">srcset</code>”; the second needs to
-                    be read as “<code title="attr-picture-src">src</code> and
-                    <code title="attr-picture-srcset">srcset</code>”.
-                  </p>
-                </li>
-              </ul>
-              <p>
-                Perform step 5 of the <code><a href=
-                "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/">srcset</a></code>
-                <a href=
-                "http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/#update-the-image-data">
-                update the image data</a> algorithm, with the
-                <code>source</code> element as the input.
-              </p>
-              <p>
-                Perform the <code>source</code> element substeps 10, 11, 13–17,
-                21–23, and 26 of the <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
-                Media Elements</a>’ <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
-                resource selection algorithm</a>’s step 9.
-              </p>
-              <ul>
-                <li>
-                  <p>
-                    Ignore references to the <i>Waiting</i> step.
-                  </p>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <p>
-                Perform steps 6 and 7 of the <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
-                update the image data</a> algorithm.
-              </p>
-              <ul>
-                <li>
-                  <p>
-                    If step 7’s <a href=
-                    "http://www.w3.org/TR/html51/infrastructure.html#resolve-a-url">
-                    resolve</a> is unsuccessful, set the <code>picture</code>
-                    element to the <a title="picture-error">broken state</a>,
-                    <a href=
-                    "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
-                    a task</a> to <a href=
-                    "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-                    fire a simple event</a> named <code title=
-                    "event-error">error</code> at the <code>picture</code>
-                    element, set the <code>picture</code> element’s
-                    <a>delaying-the-load-event flag</a> to false before
-                    aborting.
-                  </p>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <p>
-                Let <var>absolute URL</var> be the <a href=
-                "http://www.w3.org/TR/html51/infrastructure.html#absolute-url">absolute
-                URL</a> of <var>selected source</var>.
-              </p>
-            </li>
-            <li>
-              <p>
-                Perform <code>source</code> element substep 7 of the <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
-                Media Elements</a>’ <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
-                resource selection algorithm</a>’s step 9.
-              </p>
-            </li>
-            <li>
-              <p>
-                Perform steps 8–12 of the <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
-                update the image data</a> algorithm.
-              </p>
-            </li>
-            <li>
-              <p>
-                Perform <code>source</code> element substep 9 of the <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
-                Media Elements</a>’ <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-algorithm">
-                resource selection algorithm</a>’s step 9.
-              </p>
-              <ul>
-                <li>
-                  <p>
-                    The <a>resource fetch algorithm</a> that runs is
-                    <code>picture</code>’s, not <a href=
-                    "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
-                    Media Elements</a>’.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    If the load fails, set the <code>picture</code> element to
-                    the <a title="img-error">broken</a> state, <a href=
-                    "http://www.w3.org/TR/html51/webappapis.html#queue-a-task">queue
-                    a task</a> to <a href=
-                    "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-                    fire a simple event</a> named <code title=
-                    "event-error">error</code> at the <code>picture</code>
-                    element, set the <code>picture</code> element’s
-                    <a>delaying-the-load-event flag</a> to false, and abort
-                    these steps.
-                  </p>
-                </li>
-              </ul>
-            </li>
-          </ol>
-        </div>
-        <div>
-          <h3>
-            Resource fetching algorithm
-          </h3>
-          <p>
-            The <dfn>resource fetching algorithm</dfn> for a
-            <code>picture</code> element and a given <a href=
-            "http://www.w3.org/TR/html51/infrastructure.html#absolute-url">absolute
-            URL</a> combines portions of <code><a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
-            img</a></code>’s <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
-            update the image data</a> algorithm and <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
-            Media Elements</a>’ <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-resource">
-            resource fetch algorithm</a>, as follows:
-          </p>
-          <ol>
-            <li>
-              <p>
-                Perform step 14 of <code><a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
-                img</a></code>’s <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#update-the-image-data">
-                update the image data</a>.
-              </p>
-              <p>
-                During this step, <a href=
-                "http://www.w3.org/TR/html51/webappapis.html#fire-a-simple-event">
-                fire a simple event</a> named <code title=
-                "event-progress">progress</code>, as defined in <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
-                Media Elements</a>’ <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-resource">
-                resource fetch algorithm</a> step 4.
-              </p>
-              <p>
-                The <dfn>stall timeout</dfn> is as defined in <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#media-elements">
-                Media Elements</a>’ <a href=
-                "http://www.w3.org/TR/html51/embedded-content-0.html#concept-media-load-resource">
-                resource fetch algorithm</a> step 4. User agents may block,
-                slow, or suspend downloads as defined in the same step. User
-                agents may use whatever means necessary to fetch the resource,
-                as defined in the same step.
-              </p>
-            </li>
-          </ol>
-          <p>
-            A <code>picture</code> element is considered <a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#img-good"><dfn>
-            fully decodable</dfn></a> as defined in <code><a href=
-            "http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
-            img</a></code>. Determination of image type, and which resource
-            types a user agent must not support, is as defined in
-            <code><a href="http://www.w3.org/TR/html51/embedded-content-0.html#the-img-element">
-            img</a></code>.
-          </p>
-        </div>
-        <div>
-          <h3>
-            Representation
-          </h3>
-          <p>
-            What a <code>picture</code> element represents depends on the
-            <code title="attr-picture-src">src</code> attribute, the
-            <code title="attr-picture-srcset">srcset</code> attribute, the
-            <code title="attr-picture-alt">alt</code> attribute, and any child
-            elements.
-          </p>
-          <p class="note">
-            This needs to be updated with cases for <code title=
-            "attr-picture-srcset">srcset</code> and child elements, e.g.
-            <code>figure</code>, and discussion of legacy UAs. <code title=
-            "attr-picture-alt">alt</code> can reference <code>img</code>.
-          </p>
-        </div>
-      </div>
-      <hr>
-    </section>
-    <section class="appendix">
-      <h2>
-        Open Issues
-      </h2>
-      <p>
-        We are tracking <dfn id="dfn-open-issues">open issues</dfn> on Github.
-        <a href=
-        "https://github.com/ResponsiveImagesCG/picture-element/issues">Please
-        help close them</a>!
-      </p>
-      <div id="open-issues-xhr"></div>
-    </section>
-    <section class="appendix">
-      <h2>
-        Reference implementations
-      </h2>
-      <p>
-        We have a list of <a href=
-        "https://github.com/ResponsiveImagesCG/picture-element/wiki/Current-users,-polyfills,-prototypes,-and-implementations">
-        current users, polyfills, prototypes, and implementations</a> on
-        Github.
-      </p>
-    </section>
-    <section class="appendix">
-      <h2>
-        Acknowledgements
-      </h2>
-      <p id="participants">
-        A <a href="http://www.w3.org/community/respimg/participants">complete
-        list of participants</a> of the Responsive Images Community Group is
-        available at the W3C Community Group Website.
-      </p>
-      <p class="w3c">
-        <dfn>Participants</dfn> of the <a href=
-        "http://w3c.responsiveimages.org">Responsive Images Community Group</a>
-        at the time of publication were: George Adamson, Marie Alhomme, John
-        Allan, Joshua Allen, Angely Alvarez, Aaryn Anderson, Philip Andrews,
-        Phil Archer, Justin Avery, Michael Balensiefer, Toni Barrett, Bruno
-        Barros, Paul Barton, Adrian Bateman, Jesse Renée Beach, Robin Berjon,
-        Seth Bertalotto, Nicolaas Bijvoet, Andreas Bovens, J. Albert Bowden,
-        Adam Bradley, Rodrigo Brancher, Gordon Brander, Paul Bridgestock, Aaron
-        Brosey, Cory Brown, mairead buchan, Kris Bulman, Ariel Burone, Mathias
-        Bynens, Marcos Caceres, Rusty Calder, Ben Callahan, Loïc Calvy, Chuck
-        Carpenter, Brandon Carroll, Frederico Cerdeira, David Clements, Geri
-        Coady, Anne-Gaelle Colom, Cyril Concolato, Pete Correia, Andy Crum,
-        Jason Daihl, Francois Daoust, Kevin Davies, Robert Dawson, Ryan
-        DeBeasi, Anna Debenham, Darryl deHaan, David Demaree, George DeMet, Ian
-        Devlin, peter droogmans, Marlene Frykman, Dennis Gaebel, Nicolas
-        Gallagher, Miguel Garcia, Rafael Garcia Lepper, Larry Garfield, Peter
-        Gasston, David Goss, Chris Grant, Petra Gregorova, Jason Grigsby,
-        Antoine Guergnon, Jeff Guntle, Aaron Gustafson, Jason Haag, Patrick
-        Haney, Anselm Hannemann, chris hardy, Vincent Hardy, Dominique
-        Hazaël-Massieux, Chris Hilditch, Nathan Hinshaw, Sean Hintz, John Holt
-        Ripley, Shane Hudson, Tomomi Imura, Philip Ingrey, Brett Jankord, Scott
-        Jehl, Dave Johnson, Nathanael Jones, Michael Jovel, Chao Ju, Tim
-        Kadlec, Frédéric Kayser, Jin Kim, Andreas Klein, Peter Klein, John
-        Kleinschmidt, Daniel Konopacki, Zoran Kurtin, Gerardo Lagger, Adam
-        Lake, Chris Lamothe, Tom Lane, Matthieu Larcher, Bruce Lawson, Zach
-        Leatherman, Silas Lepcha, Kornel Lesinski, Chris Lilley, grappler
-        login, Tania Lopes, André Luís, Jacine Luisi, David Maciejewski, Kevin
-        Mack, Ethan Malasky, Josh Marinacci, Eduardo Marques, Mathew Marquis,
-        Daniel Martínez, Tom Maslen, Jacob Mather, Chris McAndrew, Denys
-        Mishunov, Sabine Moebs, Ian Moffitt, Orestis Molopodis, jason morita,
-        David Moulton, Brian Muenzenmeyer, Emi Myoudou, Irakli Nadareishvili,
-        Christian Neuberger Jr, David Newton, Todd Nienkerk, Kothary Nishant,
-        Ashley Nolan, Kenneth Nordahl, Lewis Nyman, Alejandro Oviedo, David
-        Owens, Fernando Pasik, Andrew Pez Pengelly, Hassadee Pimsuwan, Manik
-        Rathee, François REMY, Nestor Rojas, Adrian Roselli, Chris Ruppel,
-        Oguzcan Sahin, Viljami Salminen, Luca Salvini, Luke Sands, aron santa,
-        Jad Sarout, Brandon Satrom, Christoph Saxe, Doug Schepers, Jason
-        Schmidt, Christopher Schmitt, Joe Schmitt, Boaz Sender, Tomoyuki
-        Shimizu, Ariel Shkedi, Jen Simmons, Katerina Skotalova, Michael[tm]
-        Smith, Ignacio Soriano Cano, Aaron Stanush, Jared Stilwell, Matt Stow,
-        Kevin Suttle, Satoru Takagi, Philipp Tautz, James Tudsbury, Jacob van
-        Zijp, Jitendra Vyas, Yoav Weiss, George White, Matt Wilcox, Richard
-        Wild, John Albin Wilkins, Owen Winkler, Jeremy Worboys, Mike Wu, Carlos
-        Zepeda, and jintian zheng.
-      </p>
-      <p>
-        Contributions also from: Ilya Grigorik and Leon de Rijke. Special
-        thanks to Adrian Bateman for providing the group with guidance.
-      </p>
-    </section><script class="ricg" src=
-    "https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/show_issues.js">
-</script> <script class="ricg" src=
-"https://api.github.com/repos/ResponsiveImagesCG/picture-element/issues?state=open&amp;callback=processResponse">
-</script> <script class="ricg" src=
-"https://raw.github.com/ResponsiveImagesCG/meta/master/scripts/ga.js">
-</script>
   </body>
 </html>
