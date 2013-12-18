@@ -546,14 +546,14 @@ span.issue, span.note {
 </p>
   <h1 class="p-name no-ref" id=title>The picture Element</h1>
   <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
-    <span class=dt-updated><span class=value-title title=20131214>14 December 2013</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20131218>18 December 2013</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>This version:<dd><a class=u-url href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Editor’s Draft:<dd><a href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Test Suite:<dd>None Yet<dt>Editors:
 <dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://xanthir.com/contact/>Tab Atkins</a> (<span class="p-org org">Google</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:>Marcos Cáceres</a> (<span class="p-org org">Mozilla</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://matmarquis.com/>Mat Marquis</a><dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://blog.yoav.ws/>Yoav Weiss</a><dt>Version History:<dd><a href=https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages>Commit History</a><dd><a href=https://twitter.com/respimg_commits>Github commits on Twitter</a><dt>Participate:<dd><a href=http://w3c.responsiveimages.org>Join the Responsive Images Community Group</a><dd><a href=http://list.responsiveimages.org>Public Mailing List</a><dd><a href=irc://irc.w3.org:6665/#respimg>IRC: #respimg on W3C’s IRC</a><dd><a href=https://twitter.com/respimg>Twitter</a><dd><a href=https://github.com/ResponsiveImagesCG/picture-element>Github</a></dl></div>
   <div data-fill-with=warning></div>
   <p class=copyright data-fill-with=copyright><a href=http://creativecommons.org/publicdomain/zero/1.0/ rel=license><img alt=CC0 src=http://i.creativecommons.org/p/zero/1.0/80x15.png></a>
 To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 14 December 2013,
+In addition, as of 18 December 2013,
 the editors have made this specification available under the
 <a href=http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0 rel=license>Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
@@ -577,7 +577,9 @@ Definitions</a><li><a href=#the-picture-element><span class=secno>3</span>
 The <span data-link-type=element title=picture>picture</span> Element</a><ul class=toc><li><a href=#preloader><span class=secno>3.1</span>
 Interaction with the Preload Scanner</a><li><a href=#parse-src-attr><span class=secno>3.2</span>
 Parsing a <code>src</code> Attribute</a><li><a href=#parse-sizes-attr><span class=secno>3.3</span>
-Parsing a <code>sizes</code> Attribute</a><li><a href=#picture-idl><span class=secno>3.4</span>
+Parsing a <code>sizes</code> Attribute</a><li><a href=#normalize-source-densities><span class=secno>3.4</span>
+Normalizing the Source Densities</a><li><a href=#find-effective-size><span class=secno>3.5</span>
+Find The Effective Size</a><li><a href=#picture-idl><span class=secno>3.6</span>
 <code>HTMLPictureElement</code> interface</a></ul><li><a href=#the-source-element><span class=secno>4</span>
 Changes to the <span data-link-type=element title=source>source</span> Element</a><li><a href=#acks><span class=secno>5</span>
 Acknowledgements</a><li><a href=#conformance><span class=secno></span>
@@ -746,12 +748,12 @@ Attributes: Global attributes
 	and optionally a <a data-link-type=dfn title="media query">media query</a>.
 	An <dfn data-dfn-type=dfn data-export="" id=image-source>image source<a class=self-link href=#image-source></a></dfn> is a URL,
 	and optionally either a density descriptor,
-	or a width and/or height descriptor.
+	or a width descriptor.
 	A <dfn data-dfn-type=dfn data-export="" id=source-size-list>source size list<a class=self-link href=#source-size-list></a></dfn> is a list of zero or more pairs of a <a data-link-type=dfn title="media query">media query</a> and a <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a>,
 	and optionally a default <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a>.
 
 <p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=update-the-list-of-source-sets>update the list of source sets<a class=self-link href=#update-the-list-of-source-sets></a></dfn> for a given <a data-link-type=element href=#elementdef-picture title=picture>picture</a> element <var>picture</var>,
-	do the following:
+	user agents must do the following:
 
 	<ol>
 		<li>
@@ -803,19 +805,33 @@ Attributes: Global attributes
 					continue to the next child.
 
 				<li>
+					<a data-link-type=dfn href=#normalize-the-source-densities title="normalize the source densities">Normalize the source densities</a> of <var>source set</var>.
+
+				<li>
 					Append <var>source set</var> to <var>picture</var>’s <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>.
 			</ol>
 	</ol>
 
-	<p class=issue id=issue-fe16b617><a class=self-link href=#issue-fe16b617></a>
-		I’d like to allow individual sources to specify a type as well,
-		overriding the default type specified by the type="" attribute,
+	<p class=issue id=issue-7c81674f><a class=self-link href=#issue-7c81674f></a>
+		I’d like to allow individual sources to specify a type as well with a <span class=css data-link-type=maybe title=type()>type()</span> function,
+		overriding the default type specified by the <a data-link-for=source data-link-type=element-attr title=type>type</a> attribute,
 		but I’m keeping things simple for now.
 
-<p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=select-an-image-source>select an image source<a class=self-link href=#select-an-image-source></a></dfn> for a given <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element,
-	do the following:
+<p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=select-an-image-source>select an image source<a class=self-link href=#select-an-image-source></a></dfn> for a given <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element <var>el</var>,
+	user agents must do the following:
 
 	<ol>
+		<li>
+			If the
+		<li>
+			<a data-link-type=dfn href=#update-the-list-of-source-sets title="update the list of source sets">Update the list of source sets</a> for <var>el</var>.
+
+		<li>
+			For each <a data-link-type=dfn href=#source-set title="source set">source set</a> <var>source set</var> in <var>el</var>’s <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>:
+
+			<ol>
+				<li>
+
 	</ol>
 
 <h3 class="heading settled heading" data-level=3.1 id=preloader><span class=secno>3.1 </span><span class=content>
@@ -854,14 +870,13 @@ Parsing a <code>src</code> Attribute</span><a class=self-link href=#parse-src-at
 	parse the value of the element’s <code>src</code> attribute with the following grammar:
 
 	<pre>  <dfn class=css-code data-dfn-type=type data-export="" id=typedef-image-source-list>&lt;image-source-list&gt;<a class=self-link href=#typedef-image-source-list></a></dfn> = <a class="production css-code" data-link-type=type href=#typedef-image-source title="<image-source>">&lt;image-source&gt;</a>#
-  <dfn class=css-code data-dfn-type=type data-export="" id=typedef-image-source>&lt;image-source&gt;<a class=self-link href=#typedef-image-source></a></dfn> = <a class="production css-code" data-link-type=type href=#typedef-url title="<url>">&lt;url&gt;</a> [ <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#resolution-value title="<resolution>">&lt;resolution&gt;</a> | [ <a class="production css-code" data-link-type=type href=#typedef-source-width title="<source-width>">&lt;source-width&gt;</a> || <a class="production css-code" data-link-type=type href=#typedef-source-height title="<source-height>">&lt;source-height&gt;</a> ] ]?
+  <dfn class=css-code data-dfn-type=type data-export="" id=typedef-image-source>&lt;image-source&gt;<a class=self-link href=#typedef-image-source></a></dfn> = <a class="production css-code" data-link-type=type href=#typedef-url title="<url>">&lt;url&gt;</a> [ <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#resolution-value title="<resolution>">&lt;resolution&gt;</a> | <a class="production css-code" data-link-type=type href=#typedef-source-width title="<source-width>">&lt;source-width&gt;</a> ]?
 </pre>
 <p>	The above grammar must be interpreted per the grammar definition in <a data-biblio-type=normative data-link-type=biblio href=#css3val title=css3val>[CSS3VAL]</a>.
 	For the purposes of the above grammar,
 	the <dfn class=css-code data-dfn-type=type data-noexport="" id=typedef-url>&lt;url&gt;<a class=self-link href=#typedef-url></a></dfn> production is simply any sequence of non-<a data-link-type=dfn href=http://dev.w3.org/csswg/css-syntax-3/#whitespace title=whitespace>whitespace</a> characters
 	that does not end in a comma.
-	The <dfn class=css-code data-dfn-type=type data-export="" id=typedef-source-width>&lt;source-width&gt;<a class=self-link href=#typedef-source-width></a></dfn> production is a <a data-link-type=dfn href=http://dev.w3.org/csswg/css-values-3/#dimension title=dimension>dimension</a> with a unit of <span class=css data-link-type=maybe title=w>w</span>,
-	while the <dfn class=css-code data-dfn-type=type data-export="" id=typedef-source-height>&lt;source-height&gt;<a class=self-link href=#typedef-source-height></a></dfn> production is a <a data-link-type=dfn href=http://dev.w3.org/csswg/css-values-3/#dimension title=dimension>dimension</a> with a unit of <span class=css data-link-type=maybe title=h>h</span>.
+	The <dfn class=css-code data-dfn-type=type data-export="" id=typedef-source-width>&lt;source-width&gt;<a class=self-link href=#typedef-source-width></a></dfn> production is a <a data-link-type=dfn href=http://dev.w3.org/csswg/css-values-3/#dimension title=dimension>dimension</a> with a unit of <span class=css data-link-type=maybe title=w>w</span>.
 	All other terminal productions are defined as per CSS.
 
 <p>	If the value does not parse successfully according to the above grammar,
@@ -886,10 +901,6 @@ Parsing a <code>src</code> Attribute</span><a class=self-link href=#parse-src-at
 		<li>
 			If a <a class="production css-code" data-link-type=type href=#typedef-source-width title="<source-width>">&lt;source-width&gt;</a> was parsed,
 			set <var>source</var>’s width descriptor to the <a class="production css-code" data-link-type=type href=#typedef-source-width title="<source-width>">&lt;source-width&gt;</a>’s value.
-
-		<li>
-			If a <a class="production css-code" data-link-type=type href=#typedef-source-height title="<source-height>">&lt;source-height&gt;</a> was parsed,
-			set <var>source</var>’s height descriptor to the <a class="production css-code" data-link-type=type href=#typedef-source-height title="<source-height>">&lt;source-height&gt;</a>’s value.
 
 		<li>
 			Append <var>source</var> to <var>source set</var>.
@@ -925,17 +936,73 @@ Parsing a <code>sizes</code> Attribute</span><a class=self-link href=#parse-size
 			Continue to the next <a class="production css-code" data-link-type=type href=#typedef-source-size title="<source-size>">&lt;source-size&gt;</a>.
 
 		<li>
+			If the <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/mediaqueries-4/#typedef-media-query title="<media-query>">&lt;media-query&gt;</a> evaluates to false,
+			continue to the next <a class="production css-code" data-link-type=type href=#typedef-source-size title="<source-size>">&lt;source-size&gt;</a>.
+
+		<li>
 			Otherwise,
 			create a new pair of the parsed <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/mediaqueries-4/#typedef-media-query title="<media-query>">&lt;media-query&gt;</a> and the parsed <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a>,
 			and append it to <var>source size list</var>.
 	</ol>
 
-<h3 class="heading settled heading" data-level=3.4 id=picture-idl><span class=secno>3.4 </span><span class=content>
+<h3 class="heading settled heading" data-level=3.4 id=normalize-source-densities><span class=secno>3.4 </span><span class=content>
+Normalizing the Source Densities</span><a class=self-link href=#normalize-source-densities></a></h3>
+
+<p>	An <a data-link-type=dfn href=#image-source title="image source">image source</a> can have a density descriptor,
+	a width descriptor,
+	or no descriptor at all accompanying its URL.
+	Normalizing a <a data-link-type=dfn href=#source-set title="source set">source set</a> gives every <a data-link-type=dfn href=#image-source title="image source">image source</a> a density descriptor.
+
+<p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=normalize-the-source-densities>normalize the source densities<a class=self-link href=#normalize-the-source-densities></a></dfn> of a <a data-link-type=dfn href=#source-set title="source set">source set</a> <var>source set</var>,
+	user agents must do the following:
+
+	<ol>
+		<li>
+			<a data-link-type=dfn href=#find-the-effective-size title="find the effective size">Find the effective size</a> from <var>source set</var>’s <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a>,
+			and let the result be <var>effective size</var>.
+
+		<li>
+			...
+	</ol>
+
+
+<h3 class="heading settled heading" data-level=3.5 id=find-effective-size><span class=secno>3.5 </span><span class=content>
+Find The Effective Size</span><a class=self-link href=#find-effective-size></a></h3>
+
+<p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=find-the-effective-size>find the effective size<a class=self-link href=#find-the-effective-size></a></dfn> from a <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a> <var>list</var>,
+	user agents must do the following:
+
+	<ol>
+		<li>
+			If <var>list</var> contains any <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/mediaqueries-4/#typedef-media-query title="<media-query>">&lt;media-query&gt;</a>/<a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a> pairs,
+			find the first <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/mediaqueries-4/#typedef-media-query title="<media-query>">&lt;media-query&gt;</a>, in pair order,
+			that evaluates to true.
+			If one was successfully found,
+			return the <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a> from its pair.
+
+		<li>
+			Otherwise,
+			if <var>list</var> has a default size,
+			return that.
+
+		<li>
+			Otherwise,
+			return <span class=css data-link-type=maybe title=300px>300px</span>.
+	</ol>
+
+<h3 class="heading settled heading" data-level=3.6 id=picture-idl><span class=secno>3.6 </span><span class=content>
 <code>HTMLPictureElement</code> interface</span><a class=self-link href=#picture-idl></a></h3>
 
 	<pre class=idl>interface <dfn class=idl-code data-dfn-type=interface data-export="" data-global-name="" id=dom-htmlpictureelement>HTMLPictureElement<a class=self-link href=#dom-htmlpictureelement></a></dfn> {
   };
 </pre>
+	<p class=issue id=issue-6eda22b6><a class=self-link href=#issue-6eda22b6></a>
+		We could maybe add some more things here,
+		like a list of the relevant <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> elements
+		and the active <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element.
+		Readonly?
+		I dunno.
+
 <h2 class="heading settled heading" data-level=4 id=the-source-element><span class=secno>4 </span><span class=content>
 Changes to the <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> Element</span><a class=self-link href=#the-source-element></a></h2>
 
@@ -1010,11 +1077,13 @@ Informative References</span><a class=self-link href=#informative></a></h3>
 Index</span><a class=self-link href=#index></a></h2>
 <div data-fill-with=index><ul class=indexlist>
 <li>fallback content, <a href=#dfn-fallback-content title="section 2">2</a>
-<li>HTMLPictureElement, <a href=#dom-htmlpictureelement title="section 3.4">3.4</a>
+<li>find the effective size, <a href=#find-the-effective-size title="section 3.5">3.5</a>
+<li>HTMLPictureElement, <a href=#dom-htmlpictureelement title="section 3.6">3.6</a>
 <li>image source, <a href=#image-source title="section 3">3</a>
 <li>&lt;image-source&gt;, <a href=#typedef-image-source title="section 3.2">3.2</a>
 <li>&lt;image-source-list&gt;, <a href=#typedef-image-source-list title="section 3.2">3.2</a>
 <li>list of source sets, <a href=#list-of-source-sets title="section 3">3</a>
+<li>normalize the source densities, <a href=#normalize-the-source-densities title="section 3.4">3.4</a>
 <li>parse a sizes attribute, <a href=#parse-a-sizes-attribute title="section 3.3">3.3</a>
 <li>parse a src attribute, <a href=#parse-a-src-attribute title="section 3.2">3.2</a>
 <li>parse its src attribute, <a href=#parse-a-src-attribute title="section 3.2">3.2</a>
@@ -1022,8 +1091,7 @@ Index</span><a class=self-link href=#index></a></h2>
 <li>select an image source, <a href=#select-an-image-source title="section 3">3</a>
 <li>sizes<ul><li>element-attr for source, <a href=#element-attrdef-sizes title="section 4">4</a>
 <li>attribute for HTMLSourceElement, <a href=#dom-htmlsourceelement-sizes title="section 4">4</a>
-</ul><li>&lt;source-height&gt;, <a href=#typedef-source-height title="section 3.2">3.2</a>
-<li>source set, <a href=#source-set title="section 3">3</a>
+</ul><li>source set, <a href=#source-set title="section 3">3</a>
 <li>&lt;source-size&gt;, <a href=#typedef-source-size title="section 3.3">3.3</a>
 <li>&lt;source-size-list&gt;, <a href=#typedef-source-size-list title="section 3.3">3.3</a>
 <li>source size list, <a href=#source-size-list title="section 3">3</a>
@@ -1040,9 +1108,16 @@ Property index</span><a class=self-link href=#property-index></a></h2>
 
 
 
-<h2 class="no-num heading settled" id=issues-index><span class=content>Issues Index</span><a class=self-link href=#issues-index></a></h2><div style="counter-reset: issue"><div class=issue>
-		I’d like to allow individual sources to specify a type as well,
-		overriding the default type specified by the type="" attribute,
+</ol><h2 class="no-num heading settled" id=issues-index><span class=content>Issues Index</span><a class=self-link href=#issues-index></a></h2><div style="counter-reset: issue"><div class=issue>
+		I’d like to allow individual sources to specify a type as well with a <span class=css data-link-type=maybe title=type()>type()</span> function,
+		overriding the default type specified by the <a data-link-for=source data-link-type=element-attr title=type>type</a> attribute,
 		but I’m keeping things simple for now.
 
-<a href=#issue-fe16b617> ↵ </a></div></div>
+<a href=#issue-7c81674f> ↵ </a></div><div class=issue>
+		We could maybe add some more things here,
+		like a list of the relevant <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> elements
+		and the active <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element.
+		Readonly?
+		I dunno.
+
+<a href=#issue-6eda22b6> ↵ </a></div></div>
