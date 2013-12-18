@@ -546,14 +546,14 @@ span.issue, span.note {
 </p>
   <h1 class="p-name no-ref" id=title>The picture Element</h1>
   <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
-    <span class=dt-updated><span class=value-title title=20131218>18 December 2013</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20131219>19 December 2013</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>This version:<dd><a class=u-url href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Editor’s Draft:<dd><a href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Test Suite:<dd>None Yet<dt>Editors:
 <dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://xanthir.com/contact/>Tab Atkins</a> (<span class="p-org org">Google</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:>Marcos Cáceres</a> (<span class="p-org org">Mozilla</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://matmarquis.com/>Mat Marquis</a><dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://blog.yoav.ws/>Yoav Weiss</a><dt>Version History:<dd><a href=https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages>Commit History</a><dd><a href=https://twitter.com/respimg_commits>Github commits on Twitter</a><dt>Participate:<dd><a href=http://w3c.responsiveimages.org>Join the Responsive Images Community Group</a><dd><a href=http://list.responsiveimages.org>Public Mailing List</a><dd><a href=irc://irc.w3.org:6665/#respimg>IRC: #respimg on W3C’s IRC</a><dd><a href=https://twitter.com/respimg>Twitter</a><dd><a href=https://github.com/ResponsiveImagesCG/picture-element>Github</a></dl></div>
   <div data-fill-with=warning></div>
   <p class=copyright data-fill-with=copyright><a href=http://creativecommons.org/publicdomain/zero/1.0/ rel=license><img alt=CC0 src=http://i.creativecommons.org/p/zero/1.0/80x15.png></a>
 To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 18 December 2013,
+In addition, as of 19 December 2013,
 the editors have made this specification available under the
 <a href=http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0 rel=license>Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
@@ -574,12 +574,15 @@ When to use <code>picture</code></a><li><a href=#examples><span class=secno>1.2<
 Examples of usage</a><li><a href=#relationship-to-srcset><span class=secno>1.3</span>
 Relationship to <code>srcset</code></a></ul><li><a href=#defs><span class=secno>2</span>
 Definitions</a><li><a href=#the-picture-element><span class=secno>3</span>
-The <span data-link-type=element title=picture>picture</span> Element</a><ul class=toc><li><a href=#preloader><span class=secno>3.1</span>
-Interaction with the Preload Scanner</a><li><a href=#parse-src-attr><span class=secno>3.2</span>
-Parsing a <code>src</code> Attribute</a><li><a href=#parse-sizes-attr><span class=secno>3.3</span>
-Parsing a <code>sizes</code> Attribute</a><li><a href=#normalize-source-densities><span class=secno>3.4</span>
-Normalizing the Source Densities</a><li><a href=#find-effective-size><span class=secno>3.5</span>
-Find The Effective Size</a><li><a href=#picture-idl><span class=secno>3.6</span>
+The <span data-link-type=element title=picture>picture</span> Element</a><ul class=toc><li><a href=#algos><span class=secno>3.1</span>
+Sub-Algorithms</a><ul class=toc><li><a href=#select-image-source><span class=secno>3.1.1</span>
+Selecting an Image Source</a><li><a href=#update-source-sets><span class=secno>3.1.2</span>
+Updating the List of Source Sets</a><li><a href=#parse-src-attr><span class=secno>3.1.3</span>
+Parsing a <code>src</code> Attribute</a><li><a href=#parse-sizes-attr><span class=secno>3.1.4</span>
+Parsing a <code>sizes</code> Attribute</a><li><a href=#normalize-source-densities><span class=secno>3.1.5</span>
+Normalizing the Source Densities</a><li><a href=#find-effective-size><span class=secno>3.1.6</span>
+Finding the Effective Size</a></ul><li><a href=#preloader><span class=secno>3.2</span>
+Interaction with the Preload Scanner</a><li><a href=#picture-idl><span class=secno>3.3</span>
 <code>HTMLPictureElement</code> interface</a></ul><li><a href=#the-source-element><span class=secno>4</span>
 Changes to the <span data-link-type=element title=source>source</span> Element</a><li><a href=#acks><span class=secno>5</span>
 Acknowledgements</a><li><a href=#conformance><span class=secno></span>
@@ -743,14 +746,45 @@ Attributes: Global attributes
 
 <p>	A <a data-link-type=element href=#elementdef-picture title=picture>picture</a> element is associated with a <dfn data-dfn-type=dfn data-export="" id=list-of-source-sets>list of source sets<a class=self-link href=#list-of-source-sets></a></dfn>,
 	which is a list of zero or more <a data-link-type=dfn href=#source-set title="source sets">source sets</a>.
-	A <dfn data-dfn-type=dfn data-export="" id=source-set>source set<a class=self-link href=#source-set></a></dfn> is a set of zero or more <a data-link-type=dfn href=#image-source title="image sources">image sources</a>,
+
+<p>	A <dfn data-dfn-type=dfn data-export="" id=source-set>source set<a class=self-link href=#source-set></a></dfn> is a set of zero or more <a data-link-type=dfn href=#image-source title="image sources">image sources</a>,
 	optionally a <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a>,
 	and optionally a <a data-link-type=dfn title="media query">media query</a>.
-	An <dfn data-dfn-type=dfn data-export="" id=image-source>image source<a class=self-link href=#image-source></a></dfn> is a URL,
+
+<p>	An <dfn data-dfn-type=dfn data-export="" id=image-source>image source<a class=self-link href=#image-source></a></dfn> is a URL,
 	and optionally either a density descriptor,
 	or a width descriptor.
-	A <dfn data-dfn-type=dfn data-export="" id=source-size-list>source size list<a class=self-link href=#source-size-list></a></dfn> is a list of zero or more pairs of a <a data-link-type=dfn title="media query">media query</a> and a <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a>,
+
+<p>	A <dfn data-dfn-type=dfn data-export="" id=source-size-list>source size list<a class=self-link href=#source-size-list></a></dfn> is a list of zero or more pairs of a <a data-link-type=dfn title="media query">media query</a> and a <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a>,
 	and optionally a default <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a>.
+
+
+<h3 class="heading settled heading" data-level=3.1 id=algos><span class=secno>3.1 </span><span class=content>
+Sub-Algorithms</span><a class=self-link href=#algos></a></h3>
+
+<h4 class="heading settled heading" data-level=3.1.1 id=select-image-source><span class=secno>3.1.1 </span><span class=content>
+Selecting an Image Source</span><a class=self-link href=#select-image-source></a></h4>
+
+	<p class=issue id=issue-04df11d0><a class=self-link href=#issue-04df11d0></a>
+		This is meant to be the HTML integration point.
+
+<p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=select-an-image-source>select an image source<a class=self-link href=#select-an-image-source></a></dfn> for a given <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element <var>el</var>,
+	user agents must do the following:
+
+	<ol>
+		<li>
+			<a data-link-type=dfn href=#update-the-list-of-source-sets title="update the list of source sets">Update the list of source sets</a> for <var>el</var>.
+
+		<li>
+			For each <a data-link-type=dfn href=#source-set title="source set">source set</a> <var>source set</var> in <var>el</var>’s <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>:
+
+			<ol>
+				<li>
+
+	</ol>
+
+<h4 class="heading settled heading" data-level=3.1.2 id=update-source-sets><span class=secno>3.1.2 </span><span class=content>
+Updating the List of Source Sets</span><a class=self-link href=#update-source-sets></a></h4>
 
 <p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=update-the-list-of-source-sets>update the list of source sets<a class=self-link href=#update-the-list-of-source-sets></a></dfn> for a given <a data-link-type=element href=#elementdef-picture title=picture>picture</a> element <var>picture</var>,
 	user agents must do the following:
@@ -817,54 +851,9 @@ Attributes: Global attributes
 		overriding the default type specified by the <a data-link-for=source data-link-type=element-attr title=type>type</a> attribute,
 		but I’m keeping things simple for now.
 
-<p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=select-an-image-source>select an image source<a class=self-link href=#select-an-image-source></a></dfn> for a given <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element <var>el</var>,
-	user agents must do the following:
 
-	<ol>
-		<li>
-			If the
-		<li>
-			<a data-link-type=dfn href=#update-the-list-of-source-sets title="update the list of source sets">Update the list of source sets</a> for <var>el</var>.
-
-		<li>
-			For each <a data-link-type=dfn href=#source-set title="source set">source set</a> <var>source set</var> in <var>el</var>’s <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>:
-
-			<ol>
-				<li>
-
-	</ol>
-
-<h3 class="heading settled heading" data-level=3.1 id=preloader><span class=secno>3.1 </span><span class=content>
-Interaction with the Preload Scanner</span><a class=self-link href=#preloader></a></h3>
-
-<p>	Some UAs utilize a “preload scanner”,
-	which is a simplified parser that runs ahead of the main HTML parser
-	during the initial load of the page,
-	looking for URLs that it can begin loading as quickly as possible.
-
-<p>	The definition of the <a data-link-type=element href=#elementdef-picture title=picture>picture</a> element is compatible with a preload scanner,
-	at least for some <a data-link-type=dfn title="media queries">media queries</a>.
-
-<p>	If a UA uses a preload scanner,
-	it must recognize when a an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element is a child of a <a data-link-type=element href=#elementdef-picture title=picture>picture</a>,
-	and use the full algorithm to <a data-link-type=dfn title="update the image data">update the image data</a> to determine which URL to pre-load,
-	with the following caveats:
-
-<p>	<ul>
-		<li>
-			The preload scanner must be able to correctly determine the truth value of
-			<span class=css data-link-type=maybe title=@media/width>@media/width</span>, <span class=css data-link-type=maybe title=@media/device-width>@media/device-width</span>, <span class=css data-link-type=maybe title=@media/height>@media/height</span>, <span class=css data-link-type=maybe title=@media/device-height>@media/device-height</span>, and <span class=css data-link-type=maybe title=@media/resolution>@media/resolution</span> <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-feature title="media features">media features</a>.
-
-		<li>
-			The preload scanner may be able to correctly determine the truth value of any other <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-feature title="media feature">media feature</a>.
-			If it encounters an unknown <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-feature title="media feature">media feature</a>,
-			or one which it cannot correctly determine the truth value of,
-			it must not attempt to preload <strong>any</strong> URL for the given <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element.
-	</ul>
-
-
-<h3 class="heading settled heading" data-level=3.2 id=parse-src-attr><span class=secno>3.2 </span><span class=content>
-Parsing a <code>src</code> Attribute</span><a class=self-link href=#parse-src-attr></a></h3>
+<h4 class="heading settled heading" data-level=3.1.3 id=parse-src-attr><span class=secno>3.1.3 </span><span class=content>
+Parsing a <code>src</code> Attribute</span><a class=self-link href=#parse-src-attr></a></h4>
 
 <p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=parse-a-src-attribute title="parse a src attribute|parse its src attribute">parse a src attribute<a class=self-link href=#parse-a-src-attribute></a></dfn> from an element,
 	parse the value of the element’s <code>src</code> attribute with the following grammar:
@@ -909,8 +898,8 @@ Parsing a <code>src</code> Attribute</span><a class=self-link href=#parse-src-at
 <p>	Then return <var>source set</var>.
 
 
-<h3 class="heading settled heading" data-level=3.3 id=parse-sizes-attr><span class=secno>3.3 </span><span class=content>
-Parsing a <code>sizes</code> Attribute</span><a class=self-link href=#parse-sizes-attr></a></h3>
+<h4 class="heading settled heading" data-level=3.1.4 id=parse-sizes-attr><span class=secno>3.1.4 </span><span class=content>
+Parsing a <code>sizes</code> Attribute</span><a class=self-link href=#parse-sizes-attr></a></h4>
 
 <p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=parse-a-sizes-attribute>parse a sizes attribute<a class=self-link href=#parse-a-sizes-attribute></a></dfn> from an element,
 	parse the value of the element’s <code>sizes</code> attribute with the following grammar:
@@ -945,8 +934,8 @@ Parsing a <code>sizes</code> Attribute</span><a class=self-link href=#parse-size
 			and append it to <var>source size list</var>.
 	</ol>
 
-<h3 class="heading settled heading" data-level=3.4 id=normalize-source-densities><span class=secno>3.4 </span><span class=content>
-Normalizing the Source Densities</span><a class=self-link href=#normalize-source-densities></a></h3>
+<h4 class="heading settled heading" data-level=3.1.5 id=normalize-source-densities><span class=secno>3.1.5 </span><span class=content>
+Normalizing the Source Densities</span><a class=self-link href=#normalize-source-densities></a></h4>
 
 <p>	An <a data-link-type=dfn href=#image-source title="image source">image source</a> can have a density descriptor,
 	a width descriptor,
@@ -962,12 +951,27 @@ Normalizing the Source Densities</span><a class=self-link href=#normalize-source
 			and let the result be <var>effective size</var>.
 
 		<li>
-			...
+			For each <a data-link-type=dfn href=#image-source title="image source">image source</a> in <var>source set</var>’s <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a>:
+
+			<ol>
+				<li>
+					If the <a data-link-type=dfn href=#image-source title="image source">image source</a> has a density descriptor,
+					continue to the next <a data-link-type=dfn href=#image-source title="image source">image source</a>.
+
+				<li>
+					Otherwise, if the <a data-link-type=dfn href=#image-source title="image source">image source</a> has a size descriptor,
+					replace the size descriptor with a density descriptor
+					with a value of <code>size descriptor / effective size</code>
+					and a unit of <span class=css data-link-type=maybe title=x>x</span>.
+
+				<li>
+					Otherwise,
+					give the <a data-link-type=dfn href=#image-source title="image source">image source</a> a density descriptor of <span class=css data-link-type=maybe title=1x>1x</span>.
 	</ol>
 
 
-<h3 class="heading settled heading" data-level=3.5 id=find-effective-size><span class=secno>3.5 </span><span class=content>
-Find The Effective Size</span><a class=self-link href=#find-effective-size></a></h3>
+<h4 class="heading settled heading" data-level=3.1.6 id=find-effective-size><span class=secno>3.1.6 </span><span class=content>
+Finding the Effective Size</span><a class=self-link href=#find-effective-size></a></h4>
 
 <p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=find-the-effective-size>find the effective size<a class=self-link href=#find-the-effective-size></a></dfn> from a <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a> <var>list</var>,
 	user agents must do the following:
@@ -990,7 +994,35 @@ Find The Effective Size</span><a class=self-link href=#find-effective-size></a><
 			return <span class=css data-link-type=maybe title=300px>300px</span>.
 	</ol>
 
-<h3 class="heading settled heading" data-level=3.6 id=picture-idl><span class=secno>3.6 </span><span class=content>
+<h3 class="heading settled heading" data-level=3.2 id=preloader><span class=secno>3.2 </span><span class=content>
+Interaction with the Preload Scanner</span><a class=self-link href=#preloader></a></h3>
+
+<p>	Some UAs utilize a “preload scanner”,
+	which is a simplified parser that runs ahead of the main HTML parser
+	during the initial load of the page,
+	looking for URLs that it can begin loading as quickly as possible.
+
+<p>	The definition of the <a data-link-type=element href=#elementdef-picture title=picture>picture</a> element is compatible with a preload scanner,
+	at least for some <a data-link-type=dfn title="media queries">media queries</a>.
+
+<p>	If a UA uses a preload scanner,
+	it must recognize when a an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element is a child of a <a data-link-type=element href=#elementdef-picture title=picture>picture</a>,
+	and use the full algorithm to <a data-link-type=dfn title="update the image data">update the image data</a> to determine which URL to pre-load,
+	with the following caveats:
+
+<p>	<ul>
+		<li>
+			The preload scanner must be able to correctly determine the truth value of
+			<span class=css data-link-type=maybe title=@media/width>@media/width</span>, <span class=css data-link-type=maybe title=@media/device-width>@media/device-width</span>, <span class=css data-link-type=maybe title=@media/height>@media/height</span>, <span class=css data-link-type=maybe title=@media/device-height>@media/device-height</span>, and <span class=css data-link-type=maybe title=@media/resolution>@media/resolution</span> <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-feature title="media features">media features</a>.
+
+		<li>
+			The preload scanner may be able to correctly determine the truth value of any other <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-feature title="media feature">media feature</a>.
+			If it encounters an unknown <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-feature title="media feature">media feature</a>,
+			or one which it cannot correctly determine the truth value of,
+			it must not attempt to preload <strong>any</strong> URL for the given <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element.
+	</ul>
+
+<h3 class="heading settled heading" data-level=3.3 id=picture-idl><span class=secno>3.3 </span><span class=content>
 <code>HTMLPictureElement</code> interface</span><a class=self-link href=#picture-idl></a></h3>
 
 	<pre class=idl>interface <dfn class=idl-code data-dfn-type=interface data-export="" data-global-name="" id=dom-htmlpictureelement>HTMLPictureElement<a class=self-link href=#dom-htmlpictureelement></a></dfn> {
@@ -1077,28 +1109,28 @@ Informative References</span><a class=self-link href=#informative></a></h3>
 Index</span><a class=self-link href=#index></a></h2>
 <div data-fill-with=index><ul class=indexlist>
 <li>fallback content, <a href=#dfn-fallback-content title="section 2">2</a>
-<li>find the effective size, <a href=#find-the-effective-size title="section 3.5">3.5</a>
-<li>HTMLPictureElement, <a href=#dom-htmlpictureelement title="section 3.6">3.6</a>
+<li>find the effective size, <a href=#find-the-effective-size title="section 3.1.6">3.1.6</a>
+<li>HTMLPictureElement, <a href=#dom-htmlpictureelement title="section 3.3">3.3</a>
 <li>image source, <a href=#image-source title="section 3">3</a>
-<li>&lt;image-source&gt;, <a href=#typedef-image-source title="section 3.2">3.2</a>
-<li>&lt;image-source-list&gt;, <a href=#typedef-image-source-list title="section 3.2">3.2</a>
+<li>&lt;image-source&gt;, <a href=#typedef-image-source title="section 3.1.3">3.1.3</a>
+<li>&lt;image-source-list&gt;, <a href=#typedef-image-source-list title="section 3.1.3">3.1.3</a>
 <li>list of source sets, <a href=#list-of-source-sets title="section 3">3</a>
-<li>normalize the source densities, <a href=#normalize-the-source-densities title="section 3.4">3.4</a>
-<li>parse a sizes attribute, <a href=#parse-a-sizes-attribute title="section 3.3">3.3</a>
-<li>parse a src attribute, <a href=#parse-a-src-attribute title="section 3.2">3.2</a>
-<li>parse its src attribute, <a href=#parse-a-src-attribute title="section 3.2">3.2</a>
+<li>normalize the source densities, <a href=#normalize-the-source-densities title="section 3.1.5">3.1.5</a>
+<li>parse a sizes attribute, <a href=#parse-a-sizes-attribute title="section 3.1.4">3.1.4</a>
+<li>parse a src attribute, <a href=#parse-a-src-attribute title="section 3.1.3">3.1.3</a>
+<li>parse its src attribute, <a href=#parse-a-src-attribute title="section 3.1.3">3.1.3</a>
 <li>picture, <a href=#elementdef-picture title="section 3">3</a>
-<li>select an image source, <a href=#select-an-image-source title="section 3">3</a>
+<li>select an image source, <a href=#select-an-image-source title="section 3.1.1">3.1.1</a>
 <li>sizes<ul><li>element-attr for source, <a href=#element-attrdef-sizes title="section 4">4</a>
 <li>attribute for HTMLSourceElement, <a href=#dom-htmlsourceelement-sizes title="section 4">4</a>
 </ul><li>source set, <a href=#source-set title="section 3">3</a>
-<li>&lt;source-size&gt;, <a href=#typedef-source-size title="section 3.3">3.3</a>
-<li>&lt;source-size-list&gt;, <a href=#typedef-source-size-list title="section 3.3">3.3</a>
+<li>&lt;source-size&gt;, <a href=#typedef-source-size title="section 3.1.4">3.1.4</a>
+<li>&lt;source-size-list&gt;, <a href=#typedef-source-size-list title="section 3.1.4">3.1.4</a>
 <li>source size list, <a href=#source-size-list title="section 3">3</a>
 <li>&lt;source-src&gt;, <a href=#typedef-source-src title="section 4">4</a>
-<li>&lt;source-width&gt;, <a href=#typedef-source-width title="section 3.2">3.2</a>
-<li>update the list of source sets, <a href=#update-the-list-of-source-sets title="section 3">3</a>
-<li>&lt;url&gt;, <a href=#typedef-url title="section 3.2">3.2</a>
+<li>&lt;source-width&gt;, <a href=#typedef-source-width title="section 3.1.3">3.1.3</a>
+<li>update the list of source sets, <a href=#update-the-list-of-source-sets title="section 3.1.2">3.1.2</a>
+<li>&lt;url&gt;, <a href=#typedef-url title="section 3.1.3">3.1.3</a>
 <li>valid media query, <a href=#dfn-valid-media-query title="section 2">2</a>
 </ul></div>
 
@@ -1108,10 +1140,14 @@ Property index</span><a class=self-link href=#property-index></a></h2>
 
 
 
-</ol><h2 class="no-num heading settled" id=issues-index><span class=content>Issues Index</span><a class=self-link href=#issues-index></a></h2><div style="counter-reset: issue"><div class=issue>
+</ol></ol><h2 class="no-num heading settled" id=issues-index><span class=content>Issues Index</span><a class=self-link href=#issues-index></a></h2><div style="counter-reset: issue"><div class=issue>
+		This is meant to be the HTML integration point.
+
+<a href=#issue-04df11d0> ↵ </a></div><div class=issue>
 		I’d like to allow individual sources to specify a type as well with a <span class=css data-link-type=maybe title=type()>type()</span> function,
 		overriding the default type specified by the <a data-link-for=source data-link-type=element-attr title=type>type</a> attribute,
 		but I’m keeping things simple for now.
+
 
 <a href=#issue-7c81674f> ↵ </a></div><div class=issue>
 		We could maybe add some more things here,

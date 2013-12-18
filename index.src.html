@@ -192,14 +192,45 @@ The <a element>picture</a> Element</h2>
 
 	A <a element>picture</a> element is associated with a <dfn export>list of source sets</dfn>,
 	which is a list of zero or more <a>source sets</a>.
+
 	A <dfn export>source set</dfn> is a set of zero or more <a>image sources</a>,
 	optionally a <a>source size list</a>,
 	and optionally a <a>media query</a>.
+
 	An <dfn export>image source</dfn> is a URL,
 	and optionally either a density descriptor,
 	or a width descriptor.
+
 	A <dfn export>source size list</dfn> is a list of zero or more pairs of a <a>media query</a> and a <<length>>,
 	and optionally a default <<length>>.
+
+
+<h3 id='algos'>
+Sub-Algorithms</h3>
+
+<h4 id='select-image-source'>
+Selecting an Image Source</h4>
+
+	<p class='issue'>
+		This is meant to be the HTML integration point.
+
+	When asked to <dfn>select an image source</dfn> for a given <a element>img</a> element <var>el</var>,
+	user agents must do the following:
+
+	<ol>
+		<li>
+			<a>Update the list of source sets</a> for <var>el</var>.
+
+		<li>
+			For each <a>source set</a> <var>source set</var> in <var>el</var>’s <a>list of source sets</a>:
+
+			<ol>
+				<li>
+
+	</ol>
+
+<h4 id='update-source-sets'>
+Updating the List of Source Sets</h4>
 
 	When asked to <dfn>update the list of source sets</dfn> for a given <a element>picture</a> element <var>picture</var>,
 	user agents must do the following:
@@ -266,54 +297,9 @@ The <a element>picture</a> Element</h2>
 		overriding the default type specified by the <a element-attr for="source">type</a> attribute,
 		but I'm keeping things simple for now.
 
-	When asked to <dfn>select an image source</dfn> for a given <a element>img</a> element <var>el</var>,
-	user agents must do the following:
 
-	<ol>
-		<li>
-			If the
-		<li>
-			<a>Update the list of source sets</a> for <var>el</var>.
-
-		<li>
-			For each <a>source set</a> <var>source set</var> in <var>el</var>’s <a>list of source sets</a>:
-
-			<ol>
-				<li>
-
-	</ol>
-
-<h3 id='preloader'>
-Interaction with the Preload Scanner</h3>
-
-	Some UAs utilize a “preload scanner”,
-	which is a simplified parser that runs ahead of the main HTML parser
-	during the initial load of the page,
-	looking for URLs that it can begin loading as quickly as possible.
-
-	The definition of the <a element>picture</a> element is compatible with a preload scanner,
-	at least for some <a>media queries</a>.
-
-	If a UA uses a preload scanner,
-	it must recognize when a an <a element>img</a> element is a child of a <a element>picture</a>,
-	and use the full algorithm to <a>update the image data</a> to determine which URL to pre-load,
-	with the following caveats:
-
-	<ul>
-		<li>
-			The preload scanner must be able to correctly determine the truth value of
-			''@media/width'', ''@media/device-width'', ''@media/height'', ''@media/device-height'', and ''@media/resolution'' <a>media features</a>.
-
-		<li>
-			The preload scanner may be able to correctly determine the truth value of any other <a>media feature</a>.
-			If it encounters an unknown <a>media feature</a>,
-			or one which it cannot correctly determine the truth value of,
-			it must not attempt to preload <strong>any</strong> URL for the given <a element>img</a> element.
-	</ul>
-
-
-<h3 id='parse-src-attr'>
-Parsing a <code>src</code> Attribute</h3>
+<h4 id='parse-src-attr'>
+Parsing a <code>src</code> Attribute</h4>
 
 	When asked to <dfn title="parse a src attribute|parse its src attribute">parse a src attribute</dfn> from an element,
 	parse the value of the element's <code>src</code> attribute with the following grammar:
@@ -360,8 +346,8 @@ Parsing a <code>src</code> Attribute</h3>
 	Then return <var>source set</var>.
 
 
-<h3 id='parse-sizes-attr'>
-Parsing a <code>sizes</code> Attribute</h3>
+<h4 id='parse-sizes-attr'>
+Parsing a <code>sizes</code> Attribute</h4>
 
 	When asked to <dfn>parse a sizes attribute</dfn> from an element,
 	parse the value of the element's <code>sizes</code> attribute with the following grammar:
@@ -398,8 +384,8 @@ Parsing a <code>sizes</code> Attribute</h3>
 			and append it to <var>source size list</var>.
 	</ol>
 
-<h3 id='normalize-source-densities'>
-Normalizing the Source Densities</h3>
+<h4 id='normalize-source-densities'>
+Normalizing the Source Densities</h4>
 
 	An <a>image source</a> can have a density descriptor,
 	a width descriptor,
@@ -415,12 +401,27 @@ Normalizing the Source Densities</h3>
 			and let the result be <var>effective size</var>.
 
 		<li>
-			...
+			For each <a>image source</a> in <var>source set</var>’s <a>source size list</a>:
+
+			<ol>
+				<li>
+					If the <a>image source</a> has a density descriptor,
+					continue to the next <a>image source</a>.
+
+				<li>
+					Otherwise, if the <a>image source</a> has a size descriptor,
+					replace the size descriptor with a density descriptor
+					with a value of <code>size descriptor / effective size</code>
+					and a unit of ''x''.
+
+				<li>
+					Otherwise,
+					give the <a>image source</a> a density descriptor of ''1x''.
 	</ol>
 
 
-<h3 id='find-effective-size'>
-Find The Effective Size</h3>
+<h4 id='find-effective-size'>
+Finding the Effective Size</h4>
 
 	When asked to <dfn>find the effective size</dfn> from a <a>source size list</a> <var>list</var>,
 	user agents must do the following:
@@ -442,6 +443,34 @@ Find The Effective Size</h3>
 			Otherwise,
 			return ''300px''.
 	</ol>
+
+<h3 id='preloader'>
+Interaction with the Preload Scanner</h3>
+
+	Some UAs utilize a “preload scanner”,
+	which is a simplified parser that runs ahead of the main HTML parser
+	during the initial load of the page,
+	looking for URLs that it can begin loading as quickly as possible.
+
+	The definition of the <a element>picture</a> element is compatible with a preload scanner,
+	at least for some <a>media queries</a>.
+
+	If a UA uses a preload scanner,
+	it must recognize when a an <a element>img</a> element is a child of a <a element>picture</a>,
+	and use the full algorithm to <a>update the image data</a> to determine which URL to pre-load,
+	with the following caveats:
+
+	<ul>
+		<li>
+			The preload scanner must be able to correctly determine the truth value of
+			''@media/width'', ''@media/device-width'', ''@media/height'', ''@media/device-height'', and ''@media/resolution'' <a>media features</a>.
+
+		<li>
+			The preload scanner may be able to correctly determine the truth value of any other <a>media feature</a>.
+			If it encounters an unknown <a>media feature</a>,
+			or one which it cannot correctly determine the truth value of,
+			it must not attempt to preload <strong>any</strong> URL for the given <a element>img</a> element.
+	</ul>
 
 <h3 id='picture-idl'>
 <code>HTMLPictureElement</code> interface</h3>
