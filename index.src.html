@@ -90,14 +90,14 @@ Examples of usage</h3>
 
 	<div class='example'>
 		This example shows how the <code>picture</code> element can be used
-		with the <code>srcset</code> attribute to provide a
+		with a <code>srcset</code>-equivalent syntax to provide a
 		range of sources suitable for a given media query:
 
 		<pre>
 			&lt;picture>
 				 &lt;source media="(min-width: 45em)" src="large-1.jpg, large-2.jpg 2x">
 				 &lt;source media="(min-width: 18em)" src="med-1.jpg, med-2.jpg 2x">
-				 &lt;source srcset="small-1.jpg, small-2.jpg 2x">
+				 &lt;source src="small-1.jpg, small-2.jpg 2x">
 				 &lt;img src="small-1.jpg" alt="" width="500" height="500">
 				 &lt;p>Accessible text&lt;/p>
 			&lt;/picture>
@@ -113,7 +113,7 @@ Examples of usage</h3>
 					&lt;picture>
 						 &lt;source media="(min-width: 45em)" src="large-1.jpg, large-2.jpg 2x">
 						 &lt;source media="(min-width: 18em)" src="med-1.jpg, med-2.jpg 2x">
-						 &lt;source srcset="small-1.jpg, small-2.jpg 2x">
+						 &lt;source src="small-1.jpg, small-2.jpg 2x">
 						 &lt;img src="small-1.jpg" alt="" width="200" height="200">
 					&lt;/picture>
 					&lt;figcapture>A figure of a fox jumping over a lazy box.&lt;/figcaption>
@@ -121,8 +121,24 @@ Examples of usage</h3>
 		</pre>
 	</div>
 
+
+	<div class='example'>
+		This example shows how the <code>picture</code> element can be used
+		to address the art-direction and variable-width images use case:
+
+		<pre>
+			&lt;picture>
+				 &lt;source media="(min-width: 45em)" sizes="(45em) 50% (60em) 30%" src="large-1.jpg 900w, large-2.jpg 1800w">
+				 &lt;source media="(min-width: 18em)" sizes="(18em) 80%" src="med-1.jpg 400w, med-2.jpg 800w">
+				 &lt;source src="small-1.jpg 200w, small-2.jpg 400w">
+				 &lt;img src="small-1.jpg" alt="" width="200" height="200">
+				 &lt;p>Accessible text&lt;/p>
+			&lt;/picture>
+		</pre>
+	</div>
 	<p class='issue'>
 		Need a bunch more examples + explanation.
+    </p>
 
 
 <h3 id='relationship-to-srcset'>
@@ -139,7 +155,7 @@ Relationship to <code>srcset</code></h3>
 	so on.
 
 	The <code>picture</code> element defines conditions under which the
-	use agent needs to follow the author's explicit instructions when
+	user agent needs to follow the author's explicit instructions when
 	selecting which resource to display. This includes image sources with
 	inherent sizes designed to align with layout variations specified in
 	CSS media queries (see: <a href=
@@ -155,7 +171,6 @@ Relationship to <code>srcset</code></h3>
 	to address the complete set of <a href=
 	"http://usecases.responsiveimages.org/">use cases and requirements
 	for responsive images</a> (see [[!respimg-usecases]]).
-
 
 <h2 id='defs'>
 Definitions</h2>
