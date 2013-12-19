@@ -10,7 +10,7 @@ Editor: Marcos Cáceres, Mozilla
 Editor: Mat Marquis, , http://matmarquis.com/
 Editor: Yoav Weiss, , http://blog.yoav.ws/
 Abstract: The <code>picture</code> element is intended to give authors a way to control which image resource a user agent presents to a user, based on media query and/or support for a particular image format.
-Abstract: The primary purpose of the <code>picture</code> element is to address use cases [[!respimg-usecases]] that are left unaddressed by the <code>srcset</code> attribute [[html-srcset]]; the most important being <q><a href="http://usecases.responsiveimages.org/#art-direction">art direction</a></q>. Other use cases, such as <q><a href= "http://usecases.responsiveimages.org/#matching-media-features-and-media-types"> matching media features and media types</a></q> and matching on supported <q><a href= "http://usecases.responsiveimages.org/#image-formats">image formats</a></q>, are also addressed by this specification.
+Abstract: The primary purpose of the <code>picture</code> element is to address use cases [[!respimg-usecases]] that are left unaddressed by the <code>srcset</code> attribute [[HTML]]; the most important being <q><a href="http://usecases.responsiveimages.org/#art-direction">art direction</a></q>. Other use cases, such as <q><a href= "http://usecases.responsiveimages.org/#matching-media-features-and-media-types"> matching media features and media types</a></q> and matching on supported <q><a href= "http://usecases.responsiveimages.org/#image-formats">image formats</a></q>, are also addressed by this specification.
 !Version History: <a href="https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages">Commit History</a>
 !Version History: <a href="https://twitter.com/respimg_commits">Github commits on Twitter</a>
 !Participate: <a href="http://w3c.responsiveimages.org">Join the Responsive Images Community Group</a>
@@ -18,6 +18,7 @@ Abstract: The primary purpose of the <code>picture</code> element is to address 
 !Participate: <a href="irc://irc.w3.org:6665/#respimg">IRC: #respimg on W3C's IRC</a>
 !Participate: <a href="https://twitter.com/respimg">Twitter</a>
 !Participate: <a href="https://github.com/ResponsiveImagesCG/picture-element">Github</a>
+Ignored Terms: src, media, type
 </pre>
 
 <style>
@@ -30,13 +31,13 @@ Abstract: The primary purpose of the <code>picture</code> element is to address 
 Introduction</h2>
 
 	This specification provides developers with a means to declare multiple
-	sources for an image, and, through [[!CSS3-MEDIAQUERIES]] (<cite>CSS
+	sources for an image, and, through [[!MEDIAQ]] (<cite>CSS
 	Media Queries</cite>), it gives developers control as to when those
 	images are to be presented to a user. This is achieved by introducing
-	the <code>picture</code> element to [[!HTML]], and by enhancing the
-	<code>source</code> element to support [[!html-srcset]].
+	the <code>picture</code> element to HTML, and by enhancing the
+	<code>source</code> element to support specifying multiple source urls.
 
-	By relying on [[!CSS3-MEDIAQUERIES]], a user agent can <em>respond</em>
+	By relying on [[!MEDIAQ]], a user agent can <em>respond</em>
 	to changes in the browsing environment by selecting the image source
 	that most closely matches the browsing environment - thus embodying a
 	technique known as <a href=
@@ -89,13 +90,13 @@ Examples of usage</h3>
 
 	<div class='example'>
 		This example shows how the <code>picture</code> element can be used
-		with the <code>srcset</code> attribute [[!html-srcset]] to provide a
+		with the <code>srcset</code> attribute to provide a
 		range of sources suitable for a given media query:
 
 		<pre>
 			&lt;picture width="500" height="500">
-				 &lt;source media="(min-width: 45em)" srcset="large-1.jpg, large-2.jpg 2x">
-				 &lt;source media="(min-width: 18em)" srcset="med-1.jpg, med-2.jpg 2x">
+				 &lt;source media="(min-width: 45em)" src="large-1.jpg, large-2.jpg 2x">
+				 &lt;source media="(min-width: 18em)" src="med-1.jpg, med-2.jpg 2x">
 				 &lt;source srcset="small-1.jpg, small-2.jpg 2x">
 				 &lt;img src="small-1.jpg" alt="">
 				 &lt;p>Accessible text&lt;/p>
@@ -110,8 +111,8 @@ Examples of usage</h3>
 		<pre>
 			&lt;figure>
 					&lt;picture width="200" height="200">
-						 &lt;source media="(min-width: 45em)" srcset="large-1.jpg, large-2.jpg 2x">
-						 &lt;source media="(min-width: 18em)" srcset="med-1.jpg, med-2.jpg 2x">
+						 &lt;source media="(min-width: 45em)" src="large-1.jpg, large-2.jpg 2x">
+						 &lt;source media="(min-width: 18em)" src="med-1.jpg, med-2.jpg 2x">
 						 &lt;source srcset="small-1.jpg, small-2.jpg 2x">
 						 &lt;img src="small-1.jpg" alt="">
 					&lt;/picture>
@@ -222,11 +223,28 @@ Selecting an Image Source</h4>
 			<a>Update the list of source sets</a> for <var>el</var>.
 
 		<li>
-			For each <a>source set</a> <var>source set</var> in <var>el</var>’s <a>list of source sets</a>:
+			If <var>el</var>’s <a>list of source sets</a> is empty,
+			<p class='issue'>make the img throw an error, however that's done.</p>
+			Exit this algorithm.
 
-			<ol>
-				<li>
+		<li>
+			Otherwise,
+			take the first <a>source set</a> in <var>el</var>’s <a>list of source sets</a>
+			and let it be <var>source set</var>.
 
+		<li>
+			In a UA-specific manner,
+			choose one <a>image source</a> from <var>source set</var>.
+			Let this be <var>selected source</var>.
+
+		<li>
+			The intrinsic width of <var>el</var> is the result of <a title="find the effective size">finding the effective size</a>
+			from <var>source list</var>.
+			The intrinsic resolution of <var>el</var> is the density associated with <var>selected source</var>.
+
+		<li>
+			<p class='issue'>
+				Load the url of <var>selected source</var>, etc.
 	</ol>
 
 <h4 id='update-source-sets'>
@@ -349,7 +367,7 @@ Parsing a <code>src</code> Attribute</h4>
 <h4 id='parse-sizes-attr'>
 Parsing a <code>sizes</code> Attribute</h4>
 
-	When asked to <dfn>parse a sizes attribute</dfn> from an element,
+	When asked to <dfn title="parse a sizes attribute|parse its sizes attribute">parse a sizes attribute</dfn> from an element,
 	parse the value of the element's <code>sizes</code> attribute with the following grammar:
 
 	<pre>
@@ -417,6 +435,7 @@ Normalizing the Source Densities</h4>
 				<li>
 					Otherwise,
 					give the <a>image source</a> a density descriptor of ''1x''.
+			</ol>
 	</ol>
 
 
@@ -457,7 +476,7 @@ Interaction with the Preload Scanner</h3>
 
 	If a UA uses a preload scanner,
 	it must recognize when a an <a element>img</a> element is a child of a <a element>picture</a>,
-	and use the full algorithm to <a>update the image data</a> to determine which URL to pre-load,
+	and use the full algorithm to <a>select an image source</a> to determine which URL to pre-load,
 	with the following caveats:
 
 	<ul>
