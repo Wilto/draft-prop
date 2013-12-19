@@ -78,11 +78,11 @@ Examples of usage</h3>
 		content for legacy user agents through the <code>img</code> element.
 
 		<pre>
-			&lt;picture width="500" height="500">
+			&lt;picture>
 				 &lt;source media="(min-width: 45em)" src="large.jpg">
 				 &lt;source media="(min-width: 18em)" src="med.jpg">
 				 &lt;source src="small.jpg">
-				 &lt;img src="small.jpg" alt="">
+				 &lt;img src="small.jpg" alt="" width="500" height="500">
 				 &lt;p>Accessible text&lt;/p>
 			&lt;/picture>
 		</pre>
@@ -94,11 +94,11 @@ Examples of usage</h3>
 		range of sources suitable for a given media query:
 
 		<pre>
-			&lt;picture width="500" height="500">
+			&lt;picture>
 				 &lt;source media="(min-width: 45em)" src="large-1.jpg, large-2.jpg 2x">
 				 &lt;source media="(min-width: 18em)" src="med-1.jpg, med-2.jpg 2x">
 				 &lt;source srcset="small-1.jpg, small-2.jpg 2x">
-				 &lt;img src="small-1.jpg" alt="">
+				 &lt;img src="small-1.jpg" alt="" width="500" height="500">
 				 &lt;p>Accessible text&lt;/p>
 			&lt;/picture>
 		</pre>
@@ -110,16 +110,19 @@ Examples of usage</h3>
 
 		<pre>
 			&lt;figure>
-					&lt;picture width="200" height="200">
+					&lt;picture>
 						 &lt;source media="(min-width: 45em)" src="large-1.jpg, large-2.jpg 2x">
 						 &lt;source media="(min-width: 18em)" src="med-1.jpg, med-2.jpg 2x">
 						 &lt;source srcset="small-1.jpg, small-2.jpg 2x">
-						 &lt;img src="small-1.jpg" alt="">
+						 &lt;img src="small-1.jpg" alt="" width="200" height="200">
 					&lt;/picture>
 					&lt;figcapture>A figure of a fox jumping over a lazy box.&lt;/figcaption>
 			&lt;/figure>
 		</pre>
 	</div>
+
+	<p class='issue'>
+		Need a bunch more examples + explanation.
 
 
 <h3 id='relationship-to-srcset'>
