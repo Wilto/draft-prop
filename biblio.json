@@ -1,0 +1,26 @@
+{
+    "respimg-usecases": {
+        "authors": [
+            "Marcos Cáceres",
+            "Mat Marquis",
+            "Yaov Weiss",
+            "David Newton"
+        ],
+        "href": "http://www.w3.org/TR/respimg-usecases/",
+        "title": "Use Cases and Requirements for Standardizing Responsive Images",
+        "status": "NOTE",
+        "publisher": "W3C",
+        "deliveredBy": [
+            "http://www.w3.org/community/respimg/"
+        ]
+    },
+    "HTML": {
+        "authors": [
+            "Ian Hickson"
+        ],
+        "href": "http://whatwg.org/html",
+        "title": "HTML",
+        "status": "Living Standard",
+        "publisher": "WHATWG"
+    }
+}
