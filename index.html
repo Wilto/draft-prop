@@ -540,15 +540,16 @@ span.issue, span.note {
 </style>
 
 <div class=head>
+  <p data-fill-with=logo></p>
   <p data-fill-with=logo><a href=http://responsiveimages.org>
-	<img alt="Responsive Images Community Group" src=https://raw.github.com/ResponsiveImagesCG/meta/master/logo/Web/RICG_logo_small.png>
-</a>
-</p>
+       <img alt="Responsive Images Community Group" src=https://raw.github.com/ResponsiveImagesCG/meta/master/logo/Web/RICG_logo_small.png>
+       </a>
+  </p>
   <h1 class="p-name no-ref" id=title>The picture Element</h1>
   <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
     <span class=dt-updated><span class=value-title title=20131219>19 December 2013</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>This version:<dd><a class=u-url href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Editor’s Draft:<dd><a href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Test Suite:<dd>None Yet<dt>Editors:
-<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://xanthir.com/contact/>Tab Atkins</a> (<span class="p-org org">Google</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:>Marcos Cáceres</a> (<span class="p-org org">Mozilla</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://matmarquis.com/>Mat Marquis</a><dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://blog.yoav.ws/>Yoav Weiss</a><dt>Version History:<dd><a href=https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages>Commit History</a><dd><a href=https://twitter.com/respimg_commits>Github commits on Twitter</a><dt>Participate:<dd><a href=http://w3c.responsiveimages.org>Join the Responsive Images Community Group</a><dd><a href=http://list.responsiveimages.org>Public Mailing List</a><dd><a href=irc://irc.w3.org:6665/#respimg>IRC: #respimg on W3C’s IRC</a><dd><a href=https://twitter.com/respimg>Twitter</a><dd><a href=https://github.com/ResponsiveImagesCG/picture-element>Github</a></dl></div>
+<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://xanthir.com/contact/>Tab Atkins</a> (<span class="p-org org">Google</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:>Marcos Cáceres</a> (<span class="p-org org">Mozilla</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://matmarquis.com/>Mat Marquis</a> (<span class="p-org org"> </span>)<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://blog.yoav.ws/>Yoav Weiss</a> (<span class="p-org org"> </span>)<dt>Version History:<dd><a href=https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages>Commit History</a><dd><a href=https://twitter.com/respimg_commits>Github commits on Twitter</a><dt>Participate:<dd><a href=http://w3c.responsiveimages.org>Join the Responsive Images Community Group</a><dd><a href=http://list.responsiveimages.org>Public Mailing List</a><dd><a href=irc://irc.w3.org:6665/#respimg>IRC: #respimg on W3C’s IRC</a><dd><a href=https://twitter.com/respimg>Twitter</a><dd><a href=https://github.com/ResponsiveImagesCG/picture-element>Github</a></dl></div>
   <div data-fill-with=warning></div>
   <p class=copyright data-fill-with=copyright><a href=http://creativecommons.org/publicdomain/zero/1.0/ rel=license><img alt=CC0 src=http://i.creativecommons.org/p/zero/1.0/80x15.png></a>
 To the extent possible under law, the editors have waived all copyright
@@ -654,13 +655,13 @@ Examples of usage</span><a class=self-link href=#examples></a></h3>
 
 	<div class=example>
 		This example shows how the <code>picture</code> element can be used
-		with the <code>srcset</code> attribute to provide a
+		with a <code>srcset</code>-equivalent syntax to provide a
 		range of sources suitable for a given media query:
 
 		<pre>  &lt;picture&gt;
      &lt;source media="(min-width: 45em)" src="large-1.jpg, large-2.jpg 2x"&gt;
      &lt;source media="(min-width: 18em)" src="med-1.jpg, med-2.jpg 2x"&gt;
-     &lt;source srcset="small-1.jpg, small-2.jpg 2x"&gt;
+     &lt;source src="small-1.jpg, small-2.jpg 2x"&gt;
      &lt;img src="small-1.jpg" alt="" width="500" height="500"&gt;
      &lt;p&gt;Accessible text&lt;/p&gt;
   &lt;/picture&gt;
@@ -674,15 +675,29 @@ Examples of usage</span><a class=self-link href=#examples></a></h3>
       &lt;picture&gt;
          &lt;source media="(min-width: 45em)" src="large-1.jpg, large-2.jpg 2x"&gt;
          &lt;source media="(min-width: 18em)" src="med-1.jpg, med-2.jpg 2x"&gt;
-         &lt;source srcset="small-1.jpg, small-2.jpg 2x"&gt;
+         &lt;source src="small-1.jpg, small-2.jpg 2x"&gt;
          &lt;img src="small-1.jpg" alt="" width="200" height="200"&gt;
       &lt;/picture&gt;
       &lt;figcapture&gt;A figure of a fox jumping over a lazy box.&lt;/figcaption&gt;
   &lt;/figure&gt;
 </pre>	</div>
 
+
+	<div class=example>
+		This example shows how the <code>picture</code> element can be used
+		to address the art-direction and variable-width images use case:
+
+		<pre>  &lt;picture&gt;
+     &lt;source media="(min-width: 45em)" sizes="(45em) 50% (60em) 30%" src="large-1.jpg 900w, large-2.jpg 1800w"&gt;
+     &lt;source media="(min-width: 18em)" sizes="(18em) 80%" src="med-1.jpg 400w, med-2.jpg 800w"&gt;
+     &lt;source src="small-1.jpg 200w, small-2.jpg 400w"&gt;
+     &lt;img src="small-1.jpg" alt="" width="200" height="200"&gt;
+     &lt;p&gt;Accessible text&lt;/p&gt;
+  &lt;/picture&gt;
+</pre>	</div>
 	<p class=issue id=issue-de83d86d><a class=self-link href=#issue-de83d86d></a>
 		Need a bunch more examples + explanation.
+    </p>
 
 
 <h3 class="heading settled heading" data-level=1.3 id=relationship-to-srcset><span class=secno>1.3 </span><span class=content>
@@ -698,7 +713,7 @@ Relationship to <code>srcset</code></span><a class=self-link href=#relationship-
 	so on.
 
 <p>	The <code>picture</code> element defines conditions under which the
-	use agent needs to follow the author’s explicit instructions when
+	user agent needs to follow the author’s explicit instructions when
 	selecting which resource to display. This includes image sources with
 	inherent sizes designed to align with layout variations specified in
 	CSS media queries (see: <a href=http://usecases.responsiveimages.org/#design-breakpoints>design
@@ -710,7 +725,6 @@ Relationship to <code>srcset</code></span><a class=self-link href=#relationship-
 <p>	The proposed solutions are not mutually exclusive. They work together
 	to address the complete set of <a href=http://usecases.responsiveimages.org/>use cases and requirements
 	for responsive images</a> (see <a data-biblio-type=normative data-link-type=biblio href=#respimg-usecases title=respimg-usecases>[respimg-usecases]</a>).
-
 
 <h2 class="heading settled heading" data-level=2 id=defs><span class=secno>2 </span><span class=content>
 Definitions</span><a class=self-link href=#defs></a></h2>
@@ -736,7 +750,8 @@ Attributes: Global attributes
 </pre>
 <p>	The <a data-link-type=element href=#elementdef-picture title=picture>picture</a> element is a container which provides multiples sources to its contained <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element,
 	allowing the displayed image to vary based on the density of the screen
-	or other environmental factors expressed as <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-query title="media queries">media queries</a>.
+    or other environmental factors expressed as <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-query title="media
+        queries">media queries</a>.
 
 <p class=note>	Note: <a data-link-type=element href=#elementdef-picture title=picture>picture</a> is somewhat different from the similar-looking elements <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#video title=video>video</a> and <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#audio title=audio>audio</a>.
 	While all of them contain <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> elements,
@@ -752,13 +767,13 @@ Attributes: Global attributes
 
 <p>	A <dfn data-dfn-type=dfn data-export="" id=source-set>source set<a class=self-link href=#source-set></a></dfn> is a set of zero or more <a data-link-type=dfn href=#image-source title="image sources">image sources</a>,
 	optionally a <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a>,
-	and optionally a <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-query title="media query">media query</a>.
+    and optionally a <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-query title="media query">media query</a>.
 
 <p>	An <dfn data-dfn-type=dfn data-export="" id=image-source>image source<a class=self-link href=#image-source></a></dfn> is a URL,
 	and optionally either a density descriptor,
 	or a width descriptor.
 
-<p>	A <dfn data-dfn-type=dfn data-export="" id=source-size-list>source size list<a class=self-link href=#source-size-list></a></dfn> is a list of zero or more pairs of a <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-query title="media query">media query</a> and a <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a>,
+<p>  A <dfn data-dfn-type=dfn data-export="" id=source-size-list>source size list<a class=self-link href=#source-size-list></a></dfn> is a list of zero or more pairs of a <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-query title="media query">media query</a> and a <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a>,
 	and optionally a default <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a>.
 
 
@@ -847,7 +862,7 @@ Updating the List of Source Sets</span><a class=self-link href=#update-source-se
 				<li>
 					If <var>child</var> has a <a data-link-for=source data-link-type=element-attr title=media>media</a> attribute,
 					and its value is a <a data-link-type=dfn href=#dfn-valid-media-query title="valid media query">valid media query</a> which evaluates to true,
-					attach the <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-query title="media query">media query</a> to <var>source set</var>.
+                    attach the <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-query title="media query">media query</a> to <var>source set</var>.
 					If its value is not a <a data-link-type=dfn href=#dfn-valid-media-query title="valid media query">valid media query</a>,
 					or is a <a data-link-type=dfn href=#dfn-valid-media-query title="valid media query">valid media query</a> that evaluates to false,
 					continue to the next child.
@@ -1030,7 +1045,7 @@ Interaction with the Preload Scanner</span><a class=self-link href=#preloader></
 	looking for URLs that it can begin loading as quickly as possible.
 
 <p>	The definition of the <a data-link-type=element href=#elementdef-picture title=picture>picture</a> element is compatible with a preload scanner,
-	at least for some <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-query title="media queries">media queries</a>.
+    at least for some <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-query title="media queries">media queries</a>.
 
 <p>	If a UA uses a preload scanner,
 	it must recognize when a an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element is a child of a <a data-link-type=element href=#elementdef-picture title=picture>picture</a>,
@@ -1170,9 +1185,10 @@ Property index</span><a class=self-link href=#property-index></a></h2>
 
 <h2 class="no-num heading settled" id=issues-index><span class=content>Issues Index</span><a class=self-link href=#issues-index></a></h2><div style="counter-reset: issue"><div class=issue>
 		Need a bunch more examples + explanation.
+    <a href=#issue-de83d86d> ↵ </a></div>
 
 
-<a href=#issue-de83d86d> ↵ </a></div><div class=issue>
+<div class=issue>
 		This is meant to be the HTML integration point.
 
 <a href=#issue-04df11d0> ↵ </a></div><div class=issue>make the img throw an error, however that’s done.<a href=#issue-50fd8b63> ↵ </a></div>
