@@ -1,0 +1,549 @@
+<h1>The picture Element</h1>
+<pre class='metadata'>
+Group: ricg
+Status: ED
+ED: http://picture.responsiveimages.org
+Shortname: picture-element
+Level: 1
+Editor: Tab Atkins, Google, http://xanthir.com/contact/
+Editor: Marcos Cáceres, Mozilla
+Editor: Mat Marquis, , http://matmarquis.com/
+Editor: Yoav Weiss, , http://blog.yoav.ws/
+Abstract: The <code>picture</code> element is intended to give authors a way to control which image resource a user agent presents to a user, based on media query and/or support for a particular image format.
+Abstract: The primary purpose of the <code>picture</code> element is to address use cases [[!respimg-usecases]] that are left unaddressed by the <code>srcset</code> attribute [[HTML]]; the most important being <q><a href="http://usecases.responsiveimages.org/#art-direction">art direction</a></q>. Other use cases, such as <q><a href= "http://usecases.responsiveimages.org/#matching-media-features-and-media-types"> matching media features and media types</a></q> and matching on supported <q><a href= "http://usecases.responsiveimages.org/#image-formats">image formats</a></q>, are also addressed by this specification.
+!Version History: <a href="https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages">Commit History</a>
+!Version History: <a href="https://twitter.com/respimg_commits">Github commits on Twitter</a>
+!Participate: <a href="http://w3c.responsiveimages.org">Join the Responsive Images Community Group</a>
+!Participate: <a href="http://list.responsiveimages.org">Public Mailing List</a>
+!Participate: <a href="irc://irc.w3.org:6665/#respimg">IRC: #respimg on W3C's IRC</a>
+!Participate: <a href="https://twitter.com/respimg">Twitter</a>
+!Participate: <a href="https://github.com/ResponsiveImagesCG/picture-element">Github</a>
+Ignored Terms: src, media, type
+</pre>
+
+<style>
+[data-link-type=element] { font-family: monospace; }
+[data-link-type=element]::before { content: "<" }
+[data-link-type=element]::after { content: ">" }
+</style>
+
+<h2 id='intro'>
+Introduction</h2>
+
+	This specification provides developers with a means to declare multiple
+	sources for an image, and, through [[!MEDIAQ]] (<cite>CSS
+	Media Queries</cite>), it gives developers control as to when those
+	images are to be presented to a user. This is achieved by introducing
+	the <code>picture</code> element to HTML, and by enhancing the
+	<code>source</code> element to support specifying multiple source urls.
+
+	By relying on [[!MEDIAQ]], a user agent can <em>respond</em>
+	to changes in the browsing environment by selecting the image source
+	that most closely matches the browsing environment - thus embodying a
+	technique known as <a href=
+	"http://en.wikipedia.org/wiki/Responsive_web_design">responsive web
+	design</a> directly in the HTML markup. <a href=
+	"http://www.w3.org/TR/css3-mediaqueries/#media1">Media features</a>
+	that a user agent can potentially respond to include, but are not
+	limited to, pixel widths and heights, and pixel densities, as well as
+	environmental lighting conditions, changes in orientation, and changes
+	in media type such as going from screen to print.
+
+	The <code>picture</code> element remains backwards compatible with
+	legacy user agents by degrading gracefully through <a>fallback
+	content</a> (i.e., through the <code>img</code> element) while also
+	potentially providing better accessibility than the existing
+	<code>img</code> element.
+
+	This specification also defines the <code>HTMLPictureElement</code>
+	interface, through which developers can interact with
+	<code>picture</code> elements.
+
+
+<h3 id='when-to-use'>
+When to use <code>picture</code></h3>
+
+	The <code>picture</code> element is intended primarily for <q>art
+	directing</q> graphical content. For cases where a single image
+	source is available, and where no responsive adoption is needed,
+	authors are encouraged to use the <code>img</code> element instead.
+
+
+<h3 id='examples'>
+Examples of usage</h3>
+
+	<div class='example'>
+		This example shows how to combine the <code>picture</code> element
+		with the <code>source</code> element, while also providing fallback
+		content for legacy user agents through the <code>img</code> element.
+
+		<pre>
+			&lt;picture>
+				 &lt;source media="(min-width: 45em)" src="large.jpg">
+				 &lt;source media="(min-width: 18em)" src="med.jpg">
+				 &lt;source src="small.jpg">
+				 &lt;img src="small.jpg" alt="" width="500" height="500">
+				 &lt;p>Accessible text&lt;/p>
+			&lt;/picture>
+		</pre>
+	</div>
+
+	<div class='example'>
+		This example shows how the <code>picture</code> element can be used
+		with the <code>srcset</code> attribute to provide a
+		range of sources suitable for a given media query:
+
+		<pre>
+			&lt;picture>
+				 &lt;source media="(min-width: 45em)" src="large-1.jpg, large-2.jpg 2x">
+				 &lt;source media="(min-width: 18em)" src="med-1.jpg, med-2.jpg 2x">
+				 &lt;source srcset="small-1.jpg, small-2.jpg 2x">
+				 &lt;img src="small-1.jpg" alt="" width="500" height="500">
+				 &lt;p>Accessible text&lt;/p>
+			&lt;/picture>
+		</pre>
+	</div>
+
+	<div class='example'>
+		This example shows how picture and other HTML elements can be used
+		together.
+
+		<pre>
+			&lt;figure>
+					&lt;picture>
+						 &lt;source media="(min-width: 45em)" src="large-1.jpg, large-2.jpg 2x">
+						 &lt;source media="(min-width: 18em)" src="med-1.jpg, med-2.jpg 2x">
+						 &lt;source srcset="small-1.jpg, small-2.jpg 2x">
+						 &lt;img src="small-1.jpg" alt="" width="200" height="200">
+					&lt;/picture>
+					&lt;figcapture>A figure of a fox jumping over a lazy box.&lt;/figcaption>
+			&lt;/figure>
+		</pre>
+	</div>
+
+	<p class='issue'>
+		Need a bunch more examples + explanation.
+
+
+<h3 id='relationship-to-srcset'>
+Relationship to <code>srcset</code></h3>
+
+	The <code>srcset</code> attribute allows authors to define various
+	image resources and “hints” that assist a user agent in determining
+	the most appropriate image source to display. Given a set of image
+	resources, the user agent has the option of either following or
+	overriding the author’s declarations to optimize the user experience
+	based on criteria such as <a href=
+	"http://usecases.responsiveimages.org/#device-pixel-ratio-based-selection">
+	display density</a>, network connection type, user preferences, and
+	so on.
+
+	The <code>picture</code> element defines conditions under which the
+	use agent needs to follow the author's explicit instructions when
+	selecting which resource to display. This includes image sources with
+	inherent sizes designed to align with layout variations specified in
+	CSS media queries (see: <a href=
+	"http://usecases.responsiveimages.org/#design-breakpoints">design
+	breakpoints</a>, and <a href=
+	"http://usecases.responsiveimages.org/#relative-units">relative
+	units</a>) or content variations for increased clarity and focus
+	(i.e., <a href=
+	"http://usecases.responsiveimages.org/#art-direction"><q>art
+	direction</q></a>) based on the client’s viewport.
+
+	The proposed solutions are not mutually exclusive. They work together
+	to address the complete set of <a href=
+	"http://usecases.responsiveimages.org/">use cases and requirements
+	for responsive images</a> (see [[!respimg-usecases]]).
+
+
+<h2 id='defs'>
+Definitions</h2>
+
+	The following terms are used throughout this specification so they are
+	gathered here for the readers convenience. The following list of terms
+	is not exhaustive; other terms are defined throughout this
+	specification.
+
+	The follow terms are defined by the [[!HTML]] specification:
+	<dfn id="dfn-fallback-content"><a href="http://dev.w3.org/html5/spec/single-page.html#fallback-content">fallback content</a></dfn>,
+	and <dfn id="dfn-valid-media-query"><a href="http://dev.w3.org/html5/spec/single-page.html#valid-media-query">valid media query</a></dfn>.
+
+
+<h2 id='the-picture-element'>
+The <a element>picture</a> Element</h2>
+
+	<pre class='elementdef'>
+	Name: <dfn element>picture</dfn>
+	Categories: Flow content, Phrasing content, Embedded content, Palpable content
+	Contexts: Where embedded content is expected
+	Content Model: Zero or more <a element>source</a> elements, followed by one <a element>img</a> element.
+	Attributes: Global attributes
+	</pre>
+
+	The <a element>picture</a> element is a container which provides multiples sources to its contained <a element>img</a> element,
+	allowing the displayed image to vary based on the density of the screen
+	or other environmental factors expressed as <a>media queries</a>.
+
+	Note: <a element>picture</a> is somewhat different from the similar-looking elements <a element>video</a> and <a element>audio</a>.
+	While all of them contain <a element>source</a> elements,
+	the syntax of the <a element-attr for="source">src</a> attribute is different when the element is nested within <a element>picture</a>,
+	and the resource selection algorithm is different.
+	As well,
+	the <a element>picture</a> element itself does not display anything;
+	it merely provides a context for its contained <a element>img</a>
+	that enables it to choose from multiple source urls.
+
+	A <a element>picture</a> element is associated with a <dfn export>list of source sets</dfn>,
+	which is a list of zero or more <a>source sets</a>.
+
+	A <dfn export>source set</dfn> is a set of zero or more <a>image sources</a>,
+	optionally a <a>source size list</a>,
+	and optionally a <a>media query</a>.
+
+	An <dfn export>image source</dfn> is a URL,
+	and optionally either a density descriptor,
+	or a width descriptor.
+
+	A <dfn export>source size list</dfn> is a list of zero or more pairs of a <a>media query</a> and a <<length>>,
+	and optionally a default <<length>>.
+
+
+<h3 id='algos'>
+Sub-Algorithms</h3>
+
+<h4 id='select-image-source'>
+Selecting an Image Source</h4>
+
+	<p class='issue'>
+		This is meant to be the HTML integration point.
+
+	When asked to <dfn>select an image source</dfn> for a given <a element>img</a> element <var>el</var>,
+	user agents must do the following:
+
+	<ol>
+		<li>
+			<a>Update the list of source sets</a> for <var>el</var>.
+
+		<li>
+			If <var>el</var>’s <a>list of source sets</a> is empty,
+			<p class='issue'>make the img throw an error, however that's done.</p>
+			Exit this algorithm.
+
+		<li>
+			Otherwise,
+			take the first <a>source set</a> in <var>el</var>’s <a>list of source sets</a>
+			and let it be <var>source set</var>.
+
+		<li>
+			In a UA-specific manner,
+			choose one <a>image source</a> from <var>source set</var>.
+			Let this be <var>selected source</var>.
+
+		<li>
+			The intrinsic width of <var>el</var> is the result of <a title="find the effective size">finding the effective size</a>
+			from <var>source list</var>.
+			The intrinsic resolution of <var>el</var> is the density associated with <var>selected source</var>.
+
+		<li>
+			<p class='issue'>
+				Load the url of <var>selected source</var>, etc.
+	</ol>
+
+	<p class='issue'>
+		This just selects a single image and then sticks with it,
+		unlike CSS's ''image()'',
+		but similar to <code>srcset</code>.
+		That okay?
+
+<h4 id='update-source-sets'>
+Updating the List of Source Sets</h4>
+
+	When asked to <dfn>update the list of source sets</dfn> for a given <a element>picture</a> element <var>picture</var>,
+	user agents must do the following:
+
+	<ol>
+		<li>
+			Initially set <var>picture</var>’s <a>list of source sets</a> to the empty list.
+
+		<li>
+			Iterate through <var>picture</var>’s child elements,
+			doing the following for each child <var>child</var>:
+
+			<ol>
+				<li>
+					If <var>child</var> is an <a element>img</a> element,
+					exit this sub-algorithm.
+
+				<li>
+					If <var>child</var> is not a <a element>source</a> element,
+					continue to the next child.
+					Otherwise, <var>child</var> is a <a element>source</a> element.
+
+				<li>
+					If <var>child</var> does not have a <a element-attr for="source">src</a> attribute,
+					continue to the next child.
+
+				<li>
+					<a title="parse a src attribute">Parse <var>child</var>’s src attribute</a> and let the returned <a>source set</a> be <var>source set</a>.
+
+				<li>
+					If <var>source set</var> has zero <a>image sources</a>,
+					continue to the next child.
+
+				<li>
+					If <var>child</var> has a <a element-attr for="source">media</a> attribute,
+					and its value is a <a>valid media query</a> which evaluates to true,
+					attach the <a>media query</a> to <var>source set</var>.
+					If its value is not a <a>valid media query</a>,
+					or is a <a>valid media query</a> that evaluates to false,
+					continue to the next child.
+
+				<li>
+					If <var>child</var> has a <a element-attr for="source">sizes</a> attribute,
+					<a>parse its sizes attribute</a>
+					and let <var>source set</var>’s <a>source size list</a> be the returned value.
+					Otherwise,
+					let <var>source set</var>’s <a>source size list</a> be an empty <a>source size list</a>.
+
+				<li>
+					If <var>child</var> has a <a element-attr for="source">type</a> attribute,
+					and its value is an unknown or unsupported MIME type,
+					continue to the next child.
+
+				<li>
+					<a>Normalize the source densities</a> of <var>source set</var>.
+
+				<li>
+					Append <var>source set</var> to <var>picture</var>’s <a>list of source sets</a>.
+			</ol>
+	</ol>
+
+	<p class='issue'>
+		I'd like to allow individual sources to specify a type as well with a ''type()'' function,
+		overriding the default type specified by the <a element-attr for="source">type</a> attribute,
+		but I'm keeping things simple for now.
+
+
+<h4 id='parse-src-attr'>
+Parsing a <code>src</code> Attribute</h4>
+
+	When asked to <dfn title="parse a src attribute|parse its src attribute">parse a src attribute</dfn> from an element,
+	parse the value of the element's <code>src</code> attribute with the following grammar:
+
+	<pre>
+		<dfn>&lt;image-source-list></dfn> = <<image-source>>#
+		<dfn>&lt;image-source></dfn> = <<url>> [ <<resolution>> | <<source-width>> ]?
+	</pre>
+
+	The above grammar must be interpreted per the grammar definition in [[!CSS3VAL]].
+	For the purposes of the above grammar,
+	the <dfn noexport>&lt;url></dfn> production is simply any sequence of non-<a>whitespace</a> characters
+	that does not end in a comma.
+	The <dfn>&lt;source-width></dfn> production is a <a>dimension</a> with a unit of ''w''.
+	All other terminal productions are defined as per CSS.
+
+	If the value does not parse successfully according to the above grammar,
+	return an empty <a>source set</a>.
+
+	Otherwise,
+	let <var>source set</var> initially be an empty <a>source set</a>.
+	For each <<image-source>> parsed,
+	do the following:
+
+	<ol>
+		<li>
+			Let <var>source</var> be a fresh <a>image source</a>.
+
+		<li>
+			Set <var>source</var>’s URL to the parsed <<url>>.
+
+		<li>
+			If a <<resolution>> was parsed,
+			set <var>source</var>’s resolution descriptor to the <<resolution>>’s value.
+
+		<li>
+			If a <<source-width>> was parsed,
+			set <var>source</var>’s width descriptor to the <<source-width>>’s value.
+
+		<li>
+			Append <var>source</var> to <var>source set</var>.
+	</ol>
+
+	Then return <var>source set</var>.
+
+
+<h4 id='parse-sizes-attr'>
+Parsing a <code>sizes</code> Attribute</h4>
+
+	When asked to <dfn title="parse a sizes attribute|parse its sizes attribute">parse a sizes attribute</dfn> from an element,
+	parse the value of the element's <code>sizes</code> attribute with the following grammar:
+
+	<pre>
+		<dfn>&lt;source-size-list></dfn> = <<source-size>>#?
+		<dfn>&lt;source-size></dfn> = <<media-query>>? <<length>>
+	</pre>
+
+	The above grammar must be interpreted per the grammar definition in [[!CSS3VAL]].
+
+	If the value does not parse successfully according to the above grammar,
+	return an empty <a>source size list</a>.
+
+	Otherwise,
+	let <var>source size list</var> initially be an emtpy <a>source size list</a>.
+	For each <<source-size>> parsed,
+	do the following:
+
+	<ol>
+		<li>
+			If the parsed <<source-size>> does not contain a <<media-query>>,
+			set <var>source size list</var>’s default size to the parsed <<length>>.
+			<span class='note'>This can be set multiple times; last wins.</span>
+			Continue to the next <<source-size>>.
+
+		<li>
+			If the <<media-query>> evaluates to false,
+			continue to the next <<source-size>>.
+
+		<li>
+			Otherwise,
+			create a new pair of the parsed <<media-query>> and the parsed <<length>>,
+			and append it to <var>source size list</var>.
+	</ol>
+
+<h4 id='normalize-source-densities'>
+Normalizing the Source Densities</h4>
+
+	An <a>image source</a> can have a density descriptor,
+	a width descriptor,
+	or no descriptor at all accompanying its URL.
+	Normalizing a <a>source set</a> gives every <a>image source</a> a density descriptor.
+
+	When asked to <dfn>normalize the source densities</dfn> of a <a>source set</a> <var>source set</var>,
+	user agents must do the following:
+
+	<ol>
+		<li>
+			<a>Find the effective size</a> from <var>source set</var>’s <a>source size list</a>,
+			and let the result be <var>effective size</var>.
+
+		<li>
+			For each <a>image source</a> in <var>source set</var>’s <a>source size list</a>:
+
+			<ol>
+				<li>
+					If the <a>image source</a> has a density descriptor,
+					continue to the next <a>image source</a>.
+
+				<li>
+					Otherwise, if the <a>image source</a> has a size descriptor,
+					replace the size descriptor with a density descriptor
+					with a value of <code>size descriptor / effective size</code>
+					and a unit of ''x''.
+
+				<li>
+					Otherwise,
+					give the <a>image source</a> a density descriptor of ''1x''.
+			</ol>
+	</ol>
+
+
+<h4 id='find-effective-size'>
+Finding the Effective Size</h4>
+
+	When asked to <dfn>find the effective size</dfn> from a <a>source size list</a> <var>list</var>,
+	user agents must do the following:
+
+	<ol>
+		<li>
+			If <var>list</var> contains any <<media-query>>/<<length>> pairs,
+			find the first <<media-query>>, in pair order,
+			that evaluates to true.
+			If one was successfully found,
+			return the <<length>> from its pair.
+
+		<li>
+			Otherwise,
+			if <var>list</var> has a default size,
+			return that.
+
+		<li>
+			Otherwise,
+			return ''300px''.
+	</ol>
+
+<h3 id='preloader'>
+Interaction with the Preload Scanner</h3>
+
+	Some UAs utilize a “preload scanner”,
+	which is a simplified parser that runs ahead of the main HTML parser
+	during the initial load of the page,
+	looking for URLs that it can begin loading as quickly as possible.
+
+	The definition of the <a element>picture</a> element is compatible with a preload scanner,
+	at least for some <a>media queries</a>.
+
+	If a UA uses a preload scanner,
+	it must recognize when a an <a element>img</a> element is a child of a <a element>picture</a>,
+	and use the full algorithm to <a>select an image source</a> to determine which URL to pre-load,
+	with the following caveats:
+
+	<ul>
+		<li>
+			The preload scanner must be able to correctly determine the truth value of
+			''@media/width'', ''@media/device-width'', ''@media/height'', ''@media/device-height'', and ''@media/resolution'' <a>media features</a>.
+
+		<li>
+			The preload scanner may be able to correctly determine the truth value of any other <a>media feature</a>.
+			If it encounters an unknown <a>media feature</a>,
+			or one which it cannot correctly determine the truth value of,
+			it must not attempt to preload <strong>any</strong> URL for the given <a element>img</a> element.
+	</ul>
+
+<h3 id='picture-idl'>
+<code>HTMLPictureElement</code> interface</h3>
+
+	<pre class='idl'>
+		interface HTMLPictureElement {
+		};
+	</pre>
+
+	<p class='issue'>
+		We could maybe add some more things here,
+		like a list of the relevant <a element>source</a> elements
+		and the active <a element>img</a> element.
+		Readonly?
+		I dunno.
+
+<h2 id='the-source-element'>
+Changes to the <a element>source</a> Element</h2>
+
+	When a <a element>source</a> element is a child of <a element>picture</a> element,
+	the syntax of its <a element-attr for="source">src</a> attribute is changed.
+	Instead of being a URL,
+	it must instead match the following grammar:
+
+	<pre>
+		<dfn>&lt;source-src></dfn> = <<image-source>>#
+	</pre>
+
+	Additionally, the <a element>source</a> element gains a <dfn element-attr for="source">sizes</dfn> attribute,
+	which contains a set of intrinsic sizes for the sources it provides.
+	The <a element-attr for="source">sizes</a> attribute is reflected by the <a attribute>sizes</a> attribute on the element’s DOM interface.
+
+	<pre class='idl'>
+		partial interface HTMLSourceElement {
+			attribute DOMString sizes;
+		};
+	</pre>
+
+<h2 id='acks'>
+Acknowledgements</h2>
+
+	A <a href="http://www.w3.org/community/respimg/participants">complete
+	list of participants</a> of the Responsive Images Community Group is
+	available at the W3C Community Group Website.
+
+	Contributions also from: David Newton, Ilya Grigorik and Leon de
+	Rijke. Special thanks to Adrian Bateman for providing the group with
+	guidance.

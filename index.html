@@ -1,586 +1,1202 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>
-      The picture element
-    </title>
-    <style>
-@media print{
-        #participantslist{display: none;}
-        a:link,a:visited{text-decoration: none;color: inherit; }
-    }
-    </style>
-    <script src='http://www.w3.org/Tools/respec/respec-w3c-common' async=""
-    class='remove'>
-</script>
-    <script class='remove'>
-/*Respec config*/
-    var respecConfig = { 
-    noLegacyStyle: true,
-    //additionalCopyrightHolders: "Copyright © the Contributors to this Specification, published by the <a href='http://www.w3.org/community/respimg/'>Responsive Images Community Group</a> under the <a href= 'https://www.w3.org/community/about/agreements/cla/'>W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href= 'http://www.w3.org/community/about/agreements/cla-deed/'>summary</a> is available.",
+<!DOCTYPE html><html lang=en><head>
+  <meta content="text/html; charset=utf-8" http-equiv=Content-Type>
+  <title>The picture Element</title>
+  <style>
+@media print {
+  html { margin: 0 !important; }
+  body { font-family: serif; }
+  th, td { font-family: inherit; }
+  a { color: inherit !important; }
+  .example:before { font-family: serif !important; }
+  a:link, a:visited { text-decoration: none !important; }
+  a:link:after, a:visited:after { /* create a cross-ref "see..." */; }
+}
+@page {
+  margin: 1.5cm 1.1cm;
+}
+h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
+figure, div.figure, div.sidefigure, pre, table.propdef, table.propdef-extra,
+.example { page-break-inside: avoid; }
+dt { page-break-after: avoid; }
 
-    // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
-    specStatus: "WG-NOTE",
+body {
+  background: white;
+  /* background-image: floating-margin-image-goes-here; */
+  background-position: top left;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: black;
+  counter-reset: exampleno figure issue;
+  font-family: sans-serif;
+  line-height: 1.5;
+  margin: 0 auto;
+  max-width: 50em;
+  padding: 2em 1em 2em 70px;
+}
 
-        // the specification's short name, as in http://www.w3.org/TR/short-name/
-        shortName: "html-picture-element",
+/* General structural markup */
 
-        // if your specification has a subtitle that goes below the main
-        // formal title, define it here
-        subtitle: "An HTML extension for adaptive images",
+h1, h2, h3, h4, h5, h6 { text-align: left; }
+h1, h2, h3 { color: #005A9C; }
+h1 { font: 170% sans-serif; }
+h2 { font: 140% sans-serif; }
+h3 { font: 120% sans-serif; }
+h4 { font: bold 100% sans-serif; }
+h5 { font: italic 100% sans-serif; }
+h6 { font: small-caps 100% sans-serif; }
+h2, h3, h4, h5, h6 { margin-top: 3em; }
+h1 + h2 { margin-top: 0em; }
+h2 + h3, h3 + h4, h4 + h5, h5 + h6 { margin-top: 1.2em; }
 
-        // if you wish the publication date to be other than the last
-        // modification, set this
-        publishDate:  "2013-11-26",
+.head { margin-bottom: 1em; }
+.head h1 { margin-top: 2em; clear: both; }
+.head table { margin-left: 2em; margin-top: 2em; }
+.head dd { margin-bottom: 0; }
 
-        // if the specification's copyright date is a range of years, specify
-        // the start date here:
-        // copyrightStart: "2005"
+p.copyright { font-size: small; }
+p.copyright small { font-size: small; }
 
-        // if there is a previously published draft, uncomment this
-        // and set its YYYY-MM-DD date and its maturity status
-        previousPublishDate: "2013-02-26",
-        previousMaturity: "FPWD",
+pre { margin: 1em 0 1em 2em; }
+pre, code, .idl-code {
+  font-size: .9em;
+  font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
+}
+dt dfn code { font-size: inherit; }
 
-        // if there a publicly available Editor's Draft, this is the link
-        edDraftURI: "http://picture.responsiveimages.org",
+dfn { font-weight: bolder; }
 
-        // if this is a LCWD, uncomment and set the end of its review period
-        // lcEnd: "2009-08-05",
+s, del {text-decoration: line-through; color: red; }
+u, ins {text-decoration: underline; background: #bfa; }
 
-        // editors, add as many as you like
-        // only "name" is required
-        editors: [{
-            name: "Marcos Cáceres",
-            url: "http://marcosc.com/",
-            company: "Mozilla",
-            companyURL: "http://mozilla.com"
-        }, {
-            name: "Mat Marquis",
-            url: "http://matmarquis.com/"
-        }, {
-            name: "Yoav Weiss",
-            url: "http://blog.yoav.ws/"
-        }],
+sup {
+  vertical-align: super;
+  font-size: 80%
+}
 
-        // name of the WG
-        wg: "HTML Working Group",
+details { display: block; }
 
-        // URI of the public WG page
-        wgURI: "http://www.w3.org/html/wg/",
+dt { font-weight: bold; }
+dd { margin: 0 0 1em 2em; }
+ul, ol { margin-left: 0; padding-left: 2em; }
+li { margin: 0.25em 2em 0.5em 0; padding-left: 0; }
 
-        // name (without the @w3c.org) of the public mailing to which comments are due
-        wgPublicList: "public-respimg",
+td.pre {
+  white-space: pre-wrap;
+}
 
-        // URI of the patent status for this WG, for Rec-track documents
-        // !!!! IMPORTANT !!!!
-        // This is important for Rec-track documents,
-        // do not copy a patent URI from a random
-        // document unless you know what you're doing.
-        // If in doubt ask your friendly neighbourhood
-        // Team Contact.
-        wgPatentURI: "http://www.w3.org/2004/01/pp-impl/40318/status",
-        // !!!! IMPORTANT !!!! MAKE THE ABOVE BLINK IN YOUR HEAD
-        otherLinks: [{
-            key: "Version history",
-            data: [{
-                value: "Commit History",
-                href: "https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages"
-            }, {
-                value: "Github commits on Twitter",
-                href: "https://twitter.com/respimg_commits"
+.css, .property { color: #005a9c; }
+.property { white-space: nowrap; }
 
-            }]
-        }, {
-            key: "Participate",
-            data: [{
-                value: "Join the Responsive Images Community Group",
-                href: "http://w3c.responsiveimages.org"
-            }, {
-                value: "Public mailing list",
-                href: "http://list.responsiveimages.org"
-            }, {
-                value: "IRC: #respimg on W3C's IRC",
-                href: "irc://irc.w3.org:6665/#respimg"
-            }, {
-                value: "Twitter",
-                href: "https://twitter.com/respimg"
-            }, {
-                value: "Github",
-                href: "https://github.com/ResponsiveImagesCG/picture-element"
 
-            }]
-        }]
-    };
-    </script>
-  </head>
-  <body>
+/* Boilerplate sections */
+
+ul.indexlist { margin-left: 0; columns: 13em; }
+ul.indexlist li { margin-left: 0; list-style: none }
+ul.indexlist li li { margin-left: 1em; }
+ul.indexlist a { font-weight: bold; }
+ul.indexlist ul, ul.indexlist dl { font-size: smaller; }
+ul.indexlist dl { margin-top: 0; }
+ul.indexlist dt { margin: .2em 0 .2em 20px; }
+ul.indexlist dd { margin: .2em 0 .2em 40px; }
+
+.toc {
+  font-weight: bold;
+  line-height: 1.3;
+  list-style: none;
+  margin: 1em 0 0 5em;
+  padding: 0;
+}
+.toc ul { margin: 0; padding: 0; font-weight: normal; }
+.toc ul ul { margin: 0 0 0 2em; font-style: italic; }
+.toc ul ul ul { margin: 0}
+.toc > li { margin: 1.5em 0; padding: 0; }
+.toc li { clear: both; }
+.toc ul.toc li { margin: 0.3em 0 0 0; }
+.toc a { border-bottom-style: none; }
+.toc a:hover, ul.toc a:focus { border-bottom-style: solid; }
+/* Section numbers in a column of their own */
+.toc span.secno {float: left; width: 4em; margin-left: -5em}
+.toc ul ul span.secno { margin-left: -7em; }
+
+table.proptable {
+  font-size: small;
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-align: left;
+  margin: 1em 0;
+}
+table.proptable td, table.proptable th {
+  padding: 0.4em;
+  text-align: center;
+}
+table.proptable tr:hover td { background: #DEF; }
+
+
+/* Links */
+
+a[href] { color: inherit; border-bottom: 1px solid silver; text-decoration: none; }
+a[href]:hover { background: #ffa; }
+a[href]:active { color: #C00; background: transparent; }
+img, a.logo { border-style: none; }
+.heading, .issue, .note, .example, li, dt { position: relative; }
+/* CSS-ish link types */
+[data-link-type="property"]::before,
+[data-link-type="propdesc"]::before,
+[data-link-type="descriptor"]::before,
+[data-link-type="value"]::before,
+[data-link-type="function"]::before,
+[data-link-type="at-rule"]::before,
+[data-link-type="selector"]::before,
+[data-link-type="maybe"]::before {content: "“";}
+[data-link-type="property"]::after,
+[data-link-type="propdesc"]::after,
+[data-link-type="descriptor"]::after,
+[data-link-type="value"]::after,
+[data-link-type="function"]::after,
+[data-link-type="at-rule"]::after,
+[data-link-type="selector"]::after,
+[data-link-type="maybe"]::after {content: "”";}
+[data-link-type].production::before,
+[data-link-type].production::after { content: ""; }
+/* Self-links */
+a.self-link {
+  position: absolute;
+  top: 0;
+  left: -2.5em;
+  width: 2em;
+  height: 2em;
+  text-align: center;
+  border: none;
+  transition: opacity .2s;
+  opacity: .5;
+}
+a.self-link:hover {
+  opacity: 1;
+}
+.heading > a.self-link {
+  font-size: 83%;
+}
+li > a.self-link {
+  left: -3.5em;
+}
+dfn > a.self-link {
+  top: auto;
+  left: auto;
+  opacity: 0;
+  width: 1.5em;
+  height: 1.5em;
+  background: gray;
+  color: white;
+  font-style: normal;
+  transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+  opacity: 1;
+}
+dfn > a.self-link:hover {
+  color: black;
+}
+a.self-link::before { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before { content: "#"; }
+
+
+/* Figures */
+
+figure {
+  display: block;
+  text-align: center;
+  margin: 2.5em 0;
+}
+figure.sidefigure {
+  float: right;
+  width: 50%;
+  margin: 0 0 0.5em 0.5em
+}
+figure pre {
+  text-align: left;
+  display: table;
+  margin: 1em auto;
+}
+figure table {
+  margin: auto;
+}
+figure img, figure object {
+  display: block;
+  margin: auto;
+  max-width: 100%
+}
+figcaption {
+  counter-increment: figure;
+  font-size: 90%;
+  font-style: italic;
+  text-align: center;
+}
+figcaption::before {
+  content: "Figure " counter(figure) ". ";
+  font-weight: bold;
+}
+dd figure { margin-left: -2em; }
+
+
+/* Definition tables */
+
+table.definition {
+  border-spacing: 0;
+  padding: 0 1em 0.5em;
+  width: 100%;
+  table-layout: fixed;
+  margin: 1.2em 0;
+}
+table.definition td, table.definition th {
+  padding: 0.5em;
+  vertical-align: baseline;
+  border-bottom: 1px solid #bbd7e9;
+}
+table.definition th:first-child {
+  font-style: italic;
+  font-weight: normal;
+  text-align: left;
+  width: 8.3em;
+  padding-left: 1em;
+}
+table.definition > tbody > tr:last-child > th,
+table.definition > tbody > tr:last-child > td {
+  border-bottom: none;
+}
+table.definition tr:first-child > th,
+table.definition tr:first-child > td {
+  padding-top: 1em;
+}
+/* Footnotes at the bottom of a definition table */
+table.definition td.footnote {
+  font-style: normal;
+  padding-top: .6em;
+  width: auto;
+}
+table.definition td.footnote::before {
+  content: " ";
+  display: block;
+  height: 0.6em;
+  width: 4em;
+  border-top: thin solid;
+}
+
+
+/* IDL fragments */
+
+pre.idl {
+  padding: .5em 1em;
+  margin: 1.2em 0;
+}
+pre.idl :link, pre.idl :visited {
+  color:inherit;
+  background:transparent;
+}
+
+
+/* Data tables */
+/* Comes in plain, long, complex, or define varieties */
+
+.data {
+  margin: 1em auto;
+  border-collapse: collapse;
+  width: 100%;
+  border: hidden;
+}
+.data {
+  text-align: center;
+  width: auto;
+}
+.data caption {
+  width: 100%;
+}
+.data td, .data th {
+  padding: 0.5em;
+  border-width: 1px;
+  border-color: silver;
+  border-top-style: solid;
+}
+.data thead td:empty {
+  padding: 0;
+  border: 0;
+}
+.data thead th[scope="row"] {
+  text-align: right;
+  color: inherit;
+}
+.data thead,
+.data tbody {
+  color: inherit;
+  border-bottom: 2px solid;
+}
+.data colgroup {
+  border-left: 2px solid;
+}
+.data tbody th:first-child,
+.data tbody td[scope="row"]:first-child {
+  text-align: right;
+  color: inherit;
+  border-right: 2px solid;
+  border-top: 1px solid silver;
+  padding-right: 1em;
+}
+.data.define td:last-child {
+  text-align: left;
+}
+.data tbody th[rowspan],
+.data tbody td[rowspan] {
+  border-left: 1px solid silver;
+}
+.data tbody th[rowspan]:first-child,
+.data tbody td[rowspan]:first-child {
+  border-left: 0;
+  border-right: 1px solid silver;
+}
+.data.complex th,
+.data.complex td {
+  border: 1px solid silver;
+}
+.data td.long {
+ vertical-align: baseline;
+ text-align: left;
+}
+.data img {
+  vertical-align: middle;
+}
+
+
+/* Switch/case <dl>s */
+
+dl.switch {
+ padding-left: 2em;
+}
+dl.switch > dt {
+ text-indent: -1.5em;
+}
+dl.switch > dt:before {
+ content: '↪';
+ padding: 0 0.5em 0 0;
+ display: inline-block;
+ width: 1em;
+ text-align: right;
+ line-height: 0.5em;
+}
+
+
+/* Style for At Risk features (intended as editorial aid, not intended for publishing) */
+.atrisk::before {
+ position: absolute;
+ margin-left: -5em;
+ margin-top: -2px;
+ padding: 4px;
+ border: 1px solid;
+ content: 'At risk';
+ font-size: small;
+ background-color: white;
+ color: gray;
+ border-radius: 1em;
+ text-align: center;
+}
+
+
+/* Obsoletion notice */
+details.obsolete[open] {
+  background: #fdd;
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  padding: .5em;
+  border: thick solid red;
+  border-radius: 1em;
+  position: fixed;
+  left: 1em;
+  right: 1em;
+  bottom: 1em;
+  z-index: 1000;
+}
+details.obsolete:not([open]) > summary {
+  background: #fdd;
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  padding: .5em;
+}
+
+
+/* Examples */
+
+.example {
+  counter-increment: exampleno;
+}
+.example::before {
+  content: "Example";
+  content: "Example " counter(exampleno);
+  min-width: 7.5em;
+  text-transform: uppercase;
+  display: block;
+}
+.illegal-example::before {
+  content: "Invalid Example";
+  content: "Invalid Example" counter(exampleno);
+}
+.example, .illegal-example, .html, .illegal-html, .xml, .illegal-xml {
+  padding: 0.5em;
+  margin: 1em 0;
+  position: relative;
+  clear: both;
+}
+pre.example, pre.illegal-example, pre.html,
+pre.illegal-html, pre.xml, pre.illegal-xml {
+  padding-top: 1.5em;
+}
+.illegal-example { color: red; }
+.illegal-example p { color: black; }
+.html { color: #600; }
+.illegal-html { color: red; }
+.illegal-html p { color: black; }
+.xml { color: #600; }
+.illegal-xml { color: red; }
+.illegal-xml p { color: black; }
+code.css { font-family: inherit; font-size: 100% }
+code.html { color: #600 } /* inline HTML */
+code.xml { color: #600 }  /* inline XML */
+
+
+/* Issues */
+
+.issue {
+  border-color: #E05252;
+  background: #FBE9E9;
+  counter-increment: issue;
+}
+.issue:before {
+  content: "Issue " counter(issue);
+  padding-right: 1em;
+  text-transform: uppercase;
+  color: #E05252;
+}
+
+
+/* Whys */
+
+details.why > summary {
+  font-style: italic;
+}
+details.why[open] > summary {
+  border-bottom: 1px silver solid;
+}
+
+
+/* All the blocks get similarly styled */
+
+table.definition, pre.idl, .example, .note, details.why, .issue {
+  border: none;
+  border-left: .5em solid black;
+  border-left: .5rem solid black;
+}
+.issue, .note, .example, .why {
+  padding: .5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+table.definition, pre.idl {
+  background: hsl(210, 70%, 95%);
+  border-color: hsl(210, 80%, 75%);
+}
+.example {
+  background: hsl(50, 70%, 95%);
+  border-color: hsl(50, 70%, 60%);
+}
+.example::before {
+  color: hsl(50, 70%, 60%);
+}
+.note, details.why {
+  background: hsl(120, 70%, 95%);
+  border-color: hsl(120, 70%, 60%);
+}
+.note::before {
+  color: hsl(120, 70%, 60%);
+}
+.issue {
+  background: hsl(0, 70%, 95%);
+  border-color: hsl(0, 70%, 60%);
+}
+.issue::before {
+  color: hsl(0, 70%, 60%);
+}
+span.issue, span.note {
+  padding: .1em .5em .15em;
+  border-right-width: .5em;
+  border-right-style: solid;
+}
+  </style>
+</head>
+<body class=h-entry>
+<style scoped>
+[data-link-type=element] { font-family: monospace; }
+[data-link-type=element]::before { content: "<" }
+[data-link-type=element]::after { content: ">" }
+</style>
+
+<div class=head>
+  <p data-fill-with=logo><a href=http://responsiveimages.org>
+	<img alt="Responsive Images Community Group" src=https://raw.github.com/ResponsiveImagesCG/meta/master/logo/Web/RICG_logo_small.png>
+</a>
+</p>
+  <h1 class="p-name no-ref" id=title>The picture Element</h1>
+  <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
+    <span class=dt-updated><span class=value-title title=20131219>19 December 2013</span></span></span></h2>
+  <div data-fill-with=spec-metadata><dl><dt>This version:<dd><a class=u-url href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Editor’s Draft:<dd><a href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Test Suite:<dd>None Yet<dt>Editors:
+<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://xanthir.com/contact/>Tab Atkins</a> (<span class="p-org org">Google</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:>Marcos Cáceres</a> (<span class="p-org org">Mozilla</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://matmarquis.com/>Mat Marquis</a><dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://blog.yoav.ws/>Yoav Weiss</a><dt>Version History:<dd><a href=https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages>Commit History</a><dd><a href=https://twitter.com/respimg_commits>Github commits on Twitter</a><dt>Participate:<dd><a href=http://w3c.responsiveimages.org>Join the Responsive Images Community Group</a><dd><a href=http://list.responsiveimages.org>Public Mailing List</a><dd><a href=irc://irc.w3.org:6665/#respimg>IRC: #respimg on W3C’s IRC</a><dd><a href=https://twitter.com/respimg>Twitter</a><dd><a href=https://github.com/ResponsiveImagesCG/picture-element>Github</a></dl></div>
+  <div data-fill-with=warning></div>
+  <p class=copyright data-fill-with=copyright><a href=http://creativecommons.org/publicdomain/zero/1.0/ rel=license><img alt=CC0 src=http://i.creativecommons.org/p/zero/1.0/80x15.png></a>
+To the extent possible under law, the editors have waived all copyright
+and related or neighboring rights to this work.
+In addition, as of 19 December 2013,
+the editors have made this specification available under the
+<a href=http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0 rel=license>Open Web Foundation Agreement Version 1.0</a>,
+which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
+Parts of this work may be from an existing specification document.  If so, those parts are instead covered by the license of the existing specification document.
+</p>
+  <hr title="Separator for header">
+</div>
+
+<h2 class="no-num no-toc no-ref heading settled heading" id=abstract><span class=content>Abstract</span></h2>
+<p class=p-summary data-fill-with=abstract>The <code>picture</code> element is intended to give authors a way to control which image resource a user agent presents to a user, based on media query and/or support for a particular image format.<p>The primary purpose of the <code>picture</code> element is to address use cases <a data-biblio-type=normative data-link-type=biblio href=#respimg-usecases title=respimg-usecases>[respimg-usecases]</a> that are left unaddressed by the <code>srcset</code> attribute <a data-biblio-type=informative data-link-type=biblio href=#html title=html>[HTML]</a>; the most important being <q><a href=http://usecases.responsiveimages.org/#art-direction>art direction</a></q>. Other use cases, such as <q><a href=http://usecases.responsiveimages.org/#matching-media-features-and-media-types> matching media features and media types</a></q> and matching on supported <q><a href=http://usecases.responsiveimages.org/#image-formats>image formats</a></q>, are also addressed by this specification.
+</p>
+<div data-fill-with=at-risk></div>
+
+<h2 class="no-num no-toc no-ref heading settled heading" id=contents><span class=content>Table of contents</span></h2>
+<div data-fill-with=table-of-contents><ul class=toc><li><a href=#intro><span class=secno>1</span>
+Introduction</a><ul class=toc><li><a href=#when-to-use><span class=secno>1.1</span>
+When to use <code>picture</code></a><li><a href=#examples><span class=secno>1.2</span>
+Examples of usage</a><li><a href=#relationship-to-srcset><span class=secno>1.3</span>
+Relationship to <code>srcset</code></a></ul><li><a href=#defs><span class=secno>2</span>
+Definitions</a><li><a href=#the-picture-element><span class=secno>3</span>
+The <span data-link-type=element title=picture>picture</span> Element</a><ul class=toc><li><a href=#algos><span class=secno>3.1</span>
+Sub-Algorithms</a><ul class=toc><li><a href=#select-image-source><span class=secno>3.1.1</span>
+Selecting an Image Source</a><li><a href=#update-source-sets><span class=secno>3.1.2</span>
+Updating the List of Source Sets</a><li><a href=#parse-src-attr><span class=secno>3.1.3</span>
+Parsing a <code>src</code> Attribute</a><li><a href=#parse-sizes-attr><span class=secno>3.1.4</span>
+Parsing a <code>sizes</code> Attribute</a><li><a href=#normalize-source-densities><span class=secno>3.1.5</span>
+Normalizing the Source Densities</a><li><a href=#find-effective-size><span class=secno>3.1.6</span>
+Finding the Effective Size</a></ul><li><a href=#preloader><span class=secno>3.2</span>
+Interaction with the Preload Scanner</a><li><a href=#picture-idl><span class=secno>3.3</span>
+<code>HTMLPictureElement</code> interface</a></ul><li><a href=#the-source-element><span class=secno>4</span>
+Changes to the <span data-link-type=element title=source>source</span> Element</a><li><a href=#acks><span class=secno>5</span>
+Acknowledgements</a><li><a href=#conformance><span class=secno></span>
+Conformance</a><li><a href=#references><span class=secno></span>
+References</a><ul class=toc><li><a href=#normative><span class=secno></span>
+Normative References</a><li><a href=#informative><span class=secno></span>
+Informative References</a></ul><li><a href=#index><span class=secno></span>
+Index</a><li><a href=#property-index><span class=secno></span>
+Property index</a><li><a href=#issues-index><span class=secno></span>Issues Index</a></ul></div>
+
+
+
+<h2 class="heading settled heading" data-level=1 id=intro><span class=secno>1 </span><span class=content>
+Introduction</span><a class=self-link href=#intro></a></h2>
+
+<p>	This specification provides developers with a means to declare multiple
+	sources for an image, and, through <a data-biblio-type=normative data-link-type=biblio href=#mediaq title=mediaq>[MEDIAQ]</a> (<cite>CSS
+	Media Queries</cite>), it gives developers control as to when those
+	images are to be presented to a user. This is achieved by introducing
+	the <code>picture</code> element to HTML, and by enhancing the
+	<code>source</code> element to support specifying multiple source urls.
+
+<p>	By relying on <a data-biblio-type=normative data-link-type=biblio href=#mediaq title=mediaq>[MEDIAQ]</a>, a user agent can <em>respond</em>
+	to changes in the browsing environment by selecting the image source
+	that most closely matches the browsing environment - thus embodying a
+	technique known as <a href=http://en.wikipedia.org/wiki/Responsive_web_design>responsive web
+	design</a> directly in the HTML markup. <a href=http://www.w3.org/TR/css3-mediaqueries/#media1>Media features</a>
+	that a user agent can potentially respond to include, but are not
+	limited to, pixel widths and heights, and pixel densities, as well as
+	environmental lighting conditions, changes in orientation, and changes
+	in media type such as going from screen to print.
+
+<p>	The <code>picture</code> element remains backwards compatible with
+	legacy user agents by degrading gracefully through <a data-link-type=dfn href=#dfn-fallback-content title="fallback content">fallback
+	content</a> (i.e., through the <code>img</code> element) while also
+	potentially providing better accessibility than the existing
+	<code>img</code> element.
+
+<p>	This specification also defines the <code>HTMLPictureElement</code>
+	interface, through which developers can interact with
+	<code>picture</code> elements.
+
+
+<h3 class="heading settled heading" data-level=1.1 id=when-to-use><span class=secno>1.1 </span><span class=content>
+When to use <code>picture</code></span><a class=self-link href=#when-to-use></a></h3>
+
+<p>	The <code>picture</code> element is intended primarily for <q>art
+	directing</q> graphical content. For cases where a single image
+	source is available, and where no responsive adoption is needed,
+	authors are encouraged to use the <code>img</code> element instead.
+
+
+<h3 class="heading settled heading" data-level=1.2 id=examples><span class=secno>1.2 </span><span class=content>
+Examples of usage</span><a class=self-link href=#examples></a></h3>
+
+	<div class=example>
+		This example shows how to combine the <code>picture</code> element
+		with the <code>source</code> element, while also providing fallback
+		content for legacy user agents through the <code>img</code> element.
+
+		<pre>  &lt;picture&gt;
+     &lt;source media="(min-width: 45em)" src="large.jpg"&gt;
+     &lt;source media="(min-width: 18em)" src="med.jpg"&gt;
+     &lt;source src="small.jpg"&gt;
+     &lt;img src="small.jpg" alt="" width="500" height="500"&gt;
+     &lt;p&gt;Accessible text&lt;/p&gt;
+  &lt;/picture&gt;
+</pre>	</div>
+
+	<div class=example>
+		This example shows how the <code>picture</code> element can be used
+		with the <code>srcset</code> attribute to provide a
+		range of sources suitable for a given media query:
+
+		<pre>  &lt;picture&gt;
+     &lt;source media="(min-width: 45em)" src="large-1.jpg, large-2.jpg 2x"&gt;
+     &lt;source media="(min-width: 18em)" src="med-1.jpg, med-2.jpg 2x"&gt;
+     &lt;source srcset="small-1.jpg, small-2.jpg 2x"&gt;
+     &lt;img src="small-1.jpg" alt="" width="500" height="500"&gt;
+     &lt;p&gt;Accessible text&lt;/p&gt;
+  &lt;/picture&gt;
+</pre>	</div>
+
+	<div class=example>
+		This example shows how picture and other HTML elements can be used
+		together.
+
+		<pre>  &lt;figure&gt;
+      &lt;picture&gt;
+         &lt;source media="(min-width: 45em)" src="large-1.jpg, large-2.jpg 2x"&gt;
+         &lt;source media="(min-width: 18em)" src="med-1.jpg, med-2.jpg 2x"&gt;
+         &lt;source srcset="small-1.jpg, small-2.jpg 2x"&gt;
+         &lt;img src="small-1.jpg" alt="" width="200" height="200"&gt;
+      &lt;/picture&gt;
+      &lt;figcapture&gt;A figure of a fox jumping over a lazy box.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+</pre>	</div>
+
+	<p class=issue id=issue-de83d86d><a class=self-link href=#issue-de83d86d></a>
+		Need a bunch more examples + explanation.
+
+
+<h3 class="heading settled heading" data-level=1.3 id=relationship-to-srcset><span class=secno>1.3 </span><span class=content>
+Relationship to <code>srcset</code></span><a class=self-link href=#relationship-to-srcset></a></h3>
+
+<p>	The <code>srcset</code> attribute allows authors to define various
+	image resources and “hints” that assist a user agent in determining
+	the most appropriate image source to display. Given a set of image
+	resources, the user agent has the option of either following or
+	overriding the author’s declarations to optimize the user experience
+	based on criteria such as <a href=http://usecases.responsiveimages.org/#device-pixel-ratio-based-selection>
+	display density</a>, network connection type, user preferences, and
+	so on.
+
+<p>	The <code>picture</code> element defines conditions under which the
+	use agent needs to follow the author’s explicit instructions when
+	selecting which resource to display. This includes image sources with
+	inherent sizes designed to align with layout variations specified in
+	CSS media queries (see: <a href=http://usecases.responsiveimages.org/#design-breakpoints>design
+	breakpoints</a>, and <a href=http://usecases.responsiveimages.org/#relative-units>relative
+	units</a>) or content variations for increased clarity and focus
+	(i.e., <a href=http://usecases.responsiveimages.org/#art-direction><q>art
+	direction</q></a>) based on the client’s viewport.
+
+<p>	The proposed solutions are not mutually exclusive. They work together
+	to address the complete set of <a href=http://usecases.responsiveimages.org/>use cases and requirements
+	for responsive images</a> (see <a data-biblio-type=normative data-link-type=biblio href=#respimg-usecases title=respimg-usecases>[respimg-usecases]</a>).
+
+
+<h2 class="heading settled heading" data-level=2 id=defs><span class=secno>2 </span><span class=content>
+Definitions</span><a class=self-link href=#defs></a></h2>
+
+<p>	The following terms are used throughout this specification so they are
+	gathered here for the readers convenience. The following list of terms
+	is not exhaustive; other terms are defined throughout this
+	specification.
+
+<p>	The follow terms are defined by the <a data-biblio-type=normative data-link-type=biblio href=#html title=html>[HTML]</a> specification:
+	<dfn data-dfn-type=dfn data-noexport="" id=dfn-fallback-content><a href=http://dev.w3.org/html5/spec/single-page.html#fallback-content>fallback content</a><a class=self-link href=#dfn-fallback-content></a></dfn>,
+	and <dfn data-dfn-type=dfn data-noexport="" id=dfn-valid-media-query><a href=http://dev.w3.org/html5/spec/single-page.html#valid-media-query>valid media query</a><a class=self-link href=#dfn-valid-media-query></a></dfn>.
+
+
+<h2 class="heading settled heading" data-level=3 id=the-picture-element><span class=secno>3 </span><span class=content>
+The <a data-link-type=element href=#elementdef-picture title=picture>picture</a> Element</span><a class=self-link href=#the-picture-element></a></h2>
+
+	<pre class=elementdef>Name: <dfn data-dfn-type=element data-export="" id=elementdef-picture>picture<a class=self-link href=#elementdef-picture></a></dfn>
+Categories: Flow content, Phrasing content, Embedded content, Palpable content
+Contexts: Where embedded content is expected
+Content Model: Zero or more <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> elements, followed by one <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element.
+Attributes: Global attributes
+</pre>
+<p>	The <a data-link-type=element href=#elementdef-picture title=picture>picture</a> element is a container which provides multiples sources to its contained <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element,
+	allowing the displayed image to vary based on the density of the screen
+	or other environmental factors expressed as <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-query title="media queries">media queries</a>.
+
+<p class=note>	Note: <a data-link-type=element href=#elementdef-picture title=picture>picture</a> is somewhat different from the similar-looking elements <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#video title=video>video</a> and <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#audio title=audio>audio</a>.
+	While all of them contain <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> elements,
+	the syntax of the <a data-link-for=source data-link-type=element-attr title=src>src</a> attribute is different when the element is nested within <a data-link-type=element href=#elementdef-picture title=picture>picture</a>,
+	and the resource selection algorithm is different.
+	As well,
+	the <a data-link-type=element href=#elementdef-picture title=picture>picture</a> element itself does not display anything;
+	it merely provides a context for its contained <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a>
+	that enables it to choose from multiple source urls.
+
+<p>	A <a data-link-type=element href=#elementdef-picture title=picture>picture</a> element is associated with a <dfn data-dfn-type=dfn data-export="" id=list-of-source-sets>list of source sets<a class=self-link href=#list-of-source-sets></a></dfn>,
+	which is a list of zero or more <a data-link-type=dfn href=#source-set title="source sets">source sets</a>.
+
+<p>	A <dfn data-dfn-type=dfn data-export="" id=source-set>source set<a class=self-link href=#source-set></a></dfn> is a set of zero or more <a data-link-type=dfn href=#image-source title="image sources">image sources</a>,
+	optionally a <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a>,
+	and optionally a <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-query title="media query">media query</a>.
+
+<p>	An <dfn data-dfn-type=dfn data-export="" id=image-source>image source<a class=self-link href=#image-source></a></dfn> is a URL,
+	and optionally either a density descriptor,
+	or a width descriptor.
+
+<p>	A <dfn data-dfn-type=dfn data-export="" id=source-size-list>source size list<a class=self-link href=#source-size-list></a></dfn> is a list of zero or more pairs of a <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-query title="media query">media query</a> and a <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a>,
+	and optionally a default <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a>.
+
+
+<h3 class="heading settled heading" data-level=3.1 id=algos><span class=secno>3.1 </span><span class=content>
+Sub-Algorithms</span><a class=self-link href=#algos></a></h3>
+
+<h4 class="heading settled heading" data-level=3.1.1 id=select-image-source><span class=secno>3.1.1 </span><span class=content>
+Selecting an Image Source</span><a class=self-link href=#select-image-source></a></h4>
+
+	<p class=issue id=issue-04df11d0><a class=self-link href=#issue-04df11d0></a>
+		This is meant to be the HTML integration point.
+
+<p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=select-an-image-source>select an image source<a class=self-link href=#select-an-image-source></a></dfn> for a given <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element <var>el</var>,
+	user agents must do the following:
+
+	<ol>
+		<li>
+			<a data-link-type=dfn href=#update-the-list-of-source-sets title="update the list of source sets">Update the list of source sets</a> for <var>el</var>.
+
+		<li>
+			If <var>el</var>’s <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a> is empty,
+			<p class=issue id=issue-50fd8b63><a class=self-link href=#issue-50fd8b63></a>make the img throw an error, however that’s done.</p>
+			Exit this algorithm.
+
+		<li>
+			Otherwise,
+			take the first <a data-link-type=dfn href=#source-set title="source set">source set</a> in <var>el</var>’s <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>
+			and let it be <var>source set</var>.
+
+		<li>
+			In a UA-specific manner,
+			choose one <a data-link-type=dfn href=#image-source title="image source">image source</a> from <var>source set</var>.
+			Let this be <var>selected source</var>.
+
+		<li>
+			The intrinsic width of <var>el</var> is the result of <a data-link-type=dfn href=#find-the-effective-size title="find the effective size">finding the effective size</a>
+			from <var>source list</var>.
+			The intrinsic resolution of <var>el</var> is the density associated with <var>selected source</var>.
+
+		<li>
+			<p class=issue id=issue-d087258a><a class=self-link href=#issue-d087258a></a>
+				Load the url of <var>selected source</var>, etc.
+	</ol>
+
+	<p class=issue id=issue-db0987e0><a class=self-link href=#issue-db0987e0></a>
+		This just selects a single image and then sticks with it,
+		unlike CSS’s <a class=css data-link-type=maybe href=http://dev.w3.org/csswg/css-images-4/#funcdef-image title=image()>image()</a>,
+		but similar to <code>srcset</code>.
+		That okay?
+
+<h4 class="heading settled heading" data-level=3.1.2 id=update-source-sets><span class=secno>3.1.2 </span><span class=content>
+Updating the List of Source Sets</span><a class=self-link href=#update-source-sets></a></h4>
+
+<p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=update-the-list-of-source-sets>update the list of source sets<a class=self-link href=#update-the-list-of-source-sets></a></dfn> for a given <a data-link-type=element href=#elementdef-picture title=picture>picture</a> element <var>picture</var>,
+	user agents must do the following:
+
+	<ol>
+		<li>
+			Initially set <var>picture</var>’s <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a> to the empty list.
+
+		<li>
+			Iterate through <var>picture</var>’s child elements,
+			doing the following for each child <var>child</var>:
+
+			<ol>
+				<li>
+					If <var>child</var> is an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element,
+					exit this sub-algorithm.
+
+				<li>
+					If <var>child</var> is not a <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> element,
+					continue to the next child.
+					Otherwise, <var>child</var> is a <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> element.
+
+				<li>
+					If <var>child</var> does not have a <a data-link-for=source data-link-type=element-attr title=src>src</a> attribute,
+					continue to the next child.
+
+				<li>
+					<a data-link-type=dfn href=#parse-a-src-attribute title="parse a src attribute">Parse <var>child</var>’s src attribute</a> and let the returned <a data-link-type=dfn href=#source-set title="source set">source set</a> be <var>source set.
+
+				</var><li>
+					If <var>source set</var> has zero <a data-link-type=dfn href=#image-source title="image sources">image sources</a>,
+					continue to the next child.
+
+				<li>
+					If <var>child</var> has a <a data-link-for=source data-link-type=element-attr title=media>media</a> attribute,
+					and its value is a <a data-link-type=dfn href=#dfn-valid-media-query title="valid media query">valid media query</a> which evaluates to true,
+					attach the <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-query title="media query">media query</a> to <var>source set</var>.
+					If its value is not a <a data-link-type=dfn href=#dfn-valid-media-query title="valid media query">valid media query</a>,
+					or is a <a data-link-type=dfn href=#dfn-valid-media-query title="valid media query">valid media query</a> that evaluates to false,
+					continue to the next child.
+
+				<li>
+					If <var>child</var> has a <a data-link-for=source data-link-type=element-attr href=#element-attrdef-sizes title=sizes>sizes</a> attribute,
+					<a data-link-type=dfn href=#parse-a-sizes-attribute title="parse its sizes attribute">parse its sizes attribute</a>
+					and let <var>source set</var>’s <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a> be the returned value.
+					Otherwise,
+					let <var>source set</var>’s <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a> be an empty <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a>.
+
+				<li>
+					If <var>child</var> has a <a data-link-for=source data-link-type=element-attr title=type>type</a> attribute,
+					and its value is an unknown or unsupported MIME type,
+					continue to the next child.
+
+				<li>
+					<a data-link-type=dfn href=#normalize-the-source-densities title="normalize the source densities">Normalize the source densities</a> of <var>source set</var>.
+
+				<li>
+					Append <var>source set</var> to <var>picture</var>’s <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>.
+			</ol>
+	</ol>
+
+	<p class=issue id=issue-7c81674f><a class=self-link href=#issue-7c81674f></a>
+		I’d like to allow individual sources to specify a type as well with a <span class=css data-link-type=maybe title=type()>type()</span> function,
+		overriding the default type specified by the <a data-link-for=source data-link-type=element-attr title=type>type</a> attribute,
+		but I’m keeping things simple for now.
+
+
+<h4 class="heading settled heading" data-level=3.1.3 id=parse-src-attr><span class=secno>3.1.3 </span><span class=content>
+Parsing a <code>src</code> Attribute</span><a class=self-link href=#parse-src-attr></a></h4>
+
+<p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=parse-a-src-attribute title="parse a src attribute|parse its src attribute">parse a src attribute<a class=self-link href=#parse-a-src-attribute></a></dfn> from an element,
+	parse the value of the element’s <code>src</code> attribute with the following grammar:
+
+	<pre>  <dfn class=css-code data-dfn-type=type data-export="" id=typedef-image-source-list>&lt;image-source-list&gt;<a class=self-link href=#typedef-image-source-list></a></dfn> = <a class="production css-code" data-link-type=type href=#typedef-image-source title="<image-source>">&lt;image-source&gt;</a>#
+  <dfn class=css-code data-dfn-type=type data-export="" id=typedef-image-source>&lt;image-source&gt;<a class=self-link href=#typedef-image-source></a></dfn> = <a class="production css-code" data-link-type=type href=#typedef-url title="<url>">&lt;url&gt;</a> [ <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#resolution-value title="<resolution>">&lt;resolution&gt;</a> | <a class="production css-code" data-link-type=type href=#typedef-source-width title="<source-width>">&lt;source-width&gt;</a> ]?
+</pre>
+<p>	The above grammar must be interpreted per the grammar definition in <a data-biblio-type=normative data-link-type=biblio href=#css3val title=css3val>[CSS3VAL]</a>.
+	For the purposes of the above grammar,
+	the <dfn class=css-code data-dfn-type=type data-noexport="" id=typedef-url>&lt;url&gt;<a class=self-link href=#typedef-url></a></dfn> production is simply any sequence of non-<a data-link-type=dfn href=http://dev.w3.org/csswg/css-syntax-3/#whitespace title=whitespace>whitespace</a> characters
+	that does not end in a comma.
+	The <dfn class=css-code data-dfn-type=type data-export="" id=typedef-source-width>&lt;source-width&gt;<a class=self-link href=#typedef-source-width></a></dfn> production is a <a data-link-type=dfn href=http://dev.w3.org/csswg/css-values-3/#dimension title=dimension>dimension</a> with a unit of <span class=css data-link-type=maybe title=w>w</span>.
+	All other terminal productions are defined as per CSS.
+
+<p>	If the value does not parse successfully according to the above grammar,
+	return an empty <a data-link-type=dfn href=#source-set title="source set">source set</a>.
+
+<p>	Otherwise,
+	let <var>source set</var> initially be an empty <a data-link-type=dfn href=#source-set title="source set">source set</a>.
+	For each <a class="production css-code" data-link-type=type href=#typedef-image-source title="<image-source>">&lt;image-source&gt;</a> parsed,
+	do the following:
+
+	<ol>
+		<li>
+			Let <var>source</var> be a fresh <a data-link-type=dfn href=#image-source title="image source">image source</a>.
+
+		<li>
+			Set <var>source</var>’s URL to the parsed <a class="production css-code" data-link-type=type href=#typedef-url title="<url>">&lt;url&gt;</a>.
+
+		<li>
+			If a <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#resolution-value title="<resolution>">&lt;resolution&gt;</a> was parsed,
+			set <var>source</var>’s resolution descriptor to the <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#resolution-value title="<resolution>">&lt;resolution&gt;</a>’s value.
+
+		<li>
+			If a <a class="production css-code" data-link-type=type href=#typedef-source-width title="<source-width>">&lt;source-width&gt;</a> was parsed,
+			set <var>source</var>’s width descriptor to the <a class="production css-code" data-link-type=type href=#typedef-source-width title="<source-width>">&lt;source-width&gt;</a>’s value.
+
+		<li>
+			Append <var>source</var> to <var>source set</var>.
+	</ol>
+
+<p>	Then return <var>source set</var>.
+
+
+<h4 class="heading settled heading" data-level=3.1.4 id=parse-sizes-attr><span class=secno>3.1.4 </span><span class=content>
+Parsing a <code>sizes</code> Attribute</span><a class=self-link href=#parse-sizes-attr></a></h4>
+
+<p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=parse-a-sizes-attribute title="parse a sizes attribute|parse its sizes attribute">parse a sizes attribute<a class=self-link href=#parse-a-sizes-attribute></a></dfn> from an element,
+	parse the value of the element’s <code>sizes</code> attribute with the following grammar:
+
+	<pre>  <dfn class=css-code data-dfn-type=type data-export="" id=typedef-source-size-list>&lt;source-size-list&gt;<a class=self-link href=#typedef-source-size-list></a></dfn> = <a class="production css-code" data-link-type=type href=#typedef-source-size title="<source-size>">&lt;source-size&gt;</a>#?
+  <dfn class=css-code data-dfn-type=type data-export="" id=typedef-source-size>&lt;source-size&gt;<a class=self-link href=#typedef-source-size></a></dfn> = <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/mediaqueries-4/#typedef-media-query title="<media-query>">&lt;media-query&gt;</a>? <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a>
+</pre>
+<p>	The above grammar must be interpreted per the grammar definition in <a data-biblio-type=normative data-link-type=biblio href=#css3val title=css3val>[CSS3VAL]</a>.
+
+<p>	If the value does not parse successfully according to the above grammar,
+	return an empty <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a>.
+
+<p>	Otherwise,
+	let <var>source size list</var> initially be an emtpy <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a>.
+	For each <a class="production css-code" data-link-type=type href=#typedef-source-size title="<source-size>">&lt;source-size&gt;</a> parsed,
+	do the following:
+
+	<ol>
+		<li>
+			If the parsed <a class="production css-code" data-link-type=type href=#typedef-source-size title="<source-size>">&lt;source-size&gt;</a> does not contain a <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/mediaqueries-4/#typedef-media-query title="<media-query>">&lt;media-query&gt;</a>,
+			set <var>source size list</var>’s default size to the parsed <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a>.
+			<span class=note>This can be set multiple times; last wins.</span>
+			Continue to the next <a class="production css-code" data-link-type=type href=#typedef-source-size title="<source-size>">&lt;source-size&gt;</a>.
+
+		<li>
+			If the <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/mediaqueries-4/#typedef-media-query title="<media-query>">&lt;media-query&gt;</a> evaluates to false,
+			continue to the next <a class="production css-code" data-link-type=type href=#typedef-source-size title="<source-size>">&lt;source-size&gt;</a>.
+
+		<li>
+			Otherwise,
+			create a new pair of the parsed <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/mediaqueries-4/#typedef-media-query title="<media-query>">&lt;media-query&gt;</a> and the parsed <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a>,
+			and append it to <var>source size list</var>.
+	</ol>
+
+<h4 class="heading settled heading" data-level=3.1.5 id=normalize-source-densities><span class=secno>3.1.5 </span><span class=content>
+Normalizing the Source Densities</span><a class=self-link href=#normalize-source-densities></a></h4>
+
+<p>	An <a data-link-type=dfn href=#image-source title="image source">image source</a> can have a density descriptor,
+	a width descriptor,
+	or no descriptor at all accompanying its URL.
+	Normalizing a <a data-link-type=dfn href=#source-set title="source set">source set</a> gives every <a data-link-type=dfn href=#image-source title="image source">image source</a> a density descriptor.
+
+<p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=normalize-the-source-densities>normalize the source densities<a class=self-link href=#normalize-the-source-densities></a></dfn> of a <a data-link-type=dfn href=#source-set title="source set">source set</a> <var>source set</var>,
+	user agents must do the following:
+
+	<ol>
+		<li>
+			<a data-link-type=dfn href=#find-the-effective-size title="find the effective size">Find the effective size</a> from <var>source set</var>’s <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a>,
+			and let the result be <var>effective size</var>.
+
+		<li>
+			For each <a data-link-type=dfn href=#image-source title="image source">image source</a> in <var>source set</var>’s <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a>:
+
+			<ol>
+				<li>
+					If the <a data-link-type=dfn href=#image-source title="image source">image source</a> has a density descriptor,
+					continue to the next <a data-link-type=dfn href=#image-source title="image source">image source</a>.
+
+				<li>
+					Otherwise, if the <a data-link-type=dfn href=#image-source title="image source">image source</a> has a size descriptor,
+					replace the size descriptor with a density descriptor
+					with a value of <code>size descriptor / effective size</code>
+					and a unit of <span class=css data-link-type=maybe title=x>x</span>.
+
+				<li>
+					Otherwise,
+					give the <a data-link-type=dfn href=#image-source title="image source">image source</a> a density descriptor of <span class=css data-link-type=maybe title=1x>1x</span>.
+			</ol>
+	</ol>
+
+
+<h4 class="heading settled heading" data-level=3.1.6 id=find-effective-size><span class=secno>3.1.6 </span><span class=content>
+Finding the Effective Size</span><a class=self-link href=#find-effective-size></a></h4>
+
+<p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=find-the-effective-size>find the effective size<a class=self-link href=#find-the-effective-size></a></dfn> from a <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a> <var>list</var>,
+	user agents must do the following:
+
+	<ol>
+		<li>
+			If <var>list</var> contains any <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/mediaqueries-4/#typedef-media-query title="<media-query>">&lt;media-query&gt;</a>/<a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a> pairs,
+			find the first <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/mediaqueries-4/#typedef-media-query title="<media-query>">&lt;media-query&gt;</a>, in pair order,
+			that evaluates to true.
+			If one was successfully found,
+			return the <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#length-value title="<length>">&lt;length&gt;</a> from its pair.
+
+		<li>
+			Otherwise,
+			if <var>list</var> has a default size,
+			return that.
+
+		<li>
+			Otherwise,
+			return <span class=css data-link-type=maybe title=300px>300px</span>.
+	</ol>
+
+<h3 class="heading settled heading" data-level=3.2 id=preloader><span class=secno>3.2 </span><span class=content>
+Interaction with the Preload Scanner</span><a class=self-link href=#preloader></a></h3>
+
+<p>	Some UAs utilize a “preload scanner”,
+	which is a simplified parser that runs ahead of the main HTML parser
+	during the initial load of the page,
+	looking for URLs that it can begin loading as quickly as possible.
+
+<p>	The definition of the <a data-link-type=element href=#elementdef-picture title=picture>picture</a> element is compatible with a preload scanner,
+	at least for some <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-query title="media queries">media queries</a>.
+
+<p>	If a UA uses a preload scanner,
+	it must recognize when a an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element is a child of a <a data-link-type=element href=#elementdef-picture title=picture>picture</a>,
+	and use the full algorithm to <a data-link-type=dfn href=#select-an-image-source title="select an image source">select an image source</a> to determine which URL to pre-load,
+	with the following caveats:
+
+<p>	<ul>
+		<li>
+			The preload scanner must be able to correctly determine the truth value of
+			<span class=css data-link-type=maybe title=@media/width>@media/width</span>, <span class=css data-link-type=maybe title=@media/device-width>@media/device-width</span>, <span class=css data-link-type=maybe title=@media/height>@media/height</span>, <span class=css data-link-type=maybe title=@media/device-height>@media/device-height</span>, and <span class=css data-link-type=maybe title=@media/resolution>@media/resolution</span> <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-feature title="media features">media features</a>.
+
+		<li>
+			The preload scanner may be able to correctly determine the truth value of any other <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-feature title="media feature">media feature</a>.
+			If it encounters an unknown <a data-link-type=dfn href=http://dev.w3.org/csswg/mediaqueries-4/#media-feature title="media feature">media feature</a>,
+			or one which it cannot correctly determine the truth value of,
+			it must not attempt to preload <strong>any</strong> URL for the given <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element.
+	</ul>
+
+<h3 class="heading settled heading" data-level=3.3 id=picture-idl><span class=secno>3.3 </span><span class=content>
+<code>HTMLPictureElement</code> interface</span><a class=self-link href=#picture-idl></a></h3>
+
+	<pre class=idl>interface <dfn class=idl-code data-dfn-type=interface data-export="" data-global-name="" id=dom-htmlpictureelement>HTMLPictureElement<a class=self-link href=#dom-htmlpictureelement></a></dfn> {
+  };
+</pre>
+	<p class=issue id=issue-6eda22b6><a class=self-link href=#issue-6eda22b6></a>
+		We could maybe add some more things here,
+		like a list of the relevant <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> elements
+		and the active <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element.
+		Readonly?
+		I dunno.
+
+<h2 class="heading settled heading" data-level=4 id=the-source-element><span class=secno>4 </span><span class=content>
+Changes to the <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> Element</span><a class=self-link href=#the-source-element></a></h2>
+
+<p>	When a <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> element is a child of <a data-link-type=element href=#elementdef-picture title=picture>picture</a> element,
+	the syntax of its <a data-link-for=source data-link-type=element-attr title=src>src</a> attribute is changed.
+	Instead of being a URL,
+	it must instead match the following grammar:
+
+	<pre>  <dfn class=css-code data-dfn-type=type data-export="" id=typedef-source-src>&lt;source-src&gt;<a class=self-link href=#typedef-source-src></a></dfn> = <a class="production css-code" data-link-type=type href=#typedef-image-source title="<image-source>">&lt;image-source&gt;</a>#
+</pre>
+<p>	Additionally, the <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> element gains a <dfn data-dfn-for=source data-dfn-type=element-attr data-export="" id=element-attrdef-sizes>sizes<a class=self-link href=#element-attrdef-sizes></a></dfn> attribute,
+	which contains a set of intrinsic sizes for the sources it provides.
+	The <a data-link-for=source data-link-type=element-attr href=#element-attrdef-sizes title=sizes>sizes</a> attribute is reflected by the <a class=idl-code data-link-type=attribute href=#dom-htmlsourceelement-sizes title=sizes>sizes</a> attribute on the element’s DOM interface.
+
+	<pre class=idl>partial interface <a class=idl-code data-global-name="" data-link-type=interface href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#htmlsourceelement title=htmlsourceelement>HTMLSourceElement</a> {
+    attribute DOMString <dfn class=idl-code data-dfn-for=HTMLSourceElement data-dfn-type=attribute data-export="" data-global-name="HTMLSourceElement<interface>/sizes<attribute>" id=dom-htmlsourceelement-sizes>sizes<a class=self-link href=#dom-htmlsourceelement-sizes></a></dfn>;
+  };
+</pre>
+<h2 class="heading settled heading" data-level=5 id=acks><span class=secno>5 </span><span class=content>
+Acknowledgements</span><a class=self-link href=#acks></a></h2>
+
+<p>	A <a href=http://www.w3.org/community/respimg/participants>complete
+	list of participants</a> of the Responsive Images Community Group is
+	available at the W3C Community Group Website.
+
+<p>	Contributions also from: David Newton, Ilya Grigorik and Leon de
+	Rijke. Special thanks to Adrian Bateman for providing the group with
+	guidance.
+
+<h2 class="no-ref no-num heading settled heading" id=conformance><span class=content>
+Conformance</span><a class=self-link href=#conformance></a></h2>
+
     <p>
-      <a href="http://responsiveimages.org"><img style=
-      "position: absolute; top: 1em; right: 1em;" src=
-      "https://raw.github.com/ResponsiveImagesCG/meta/master/logo/Web/RICG_logo_small.png"
-      alt="Responsive Images Community Group"></a>
-    </p>
-    <section id="abstract">
-      <p>
-        <strong style="color:red">This specification is no longer being
-        maintained</strong>. See the <a href="#sotd">status of this
-        document</a> for details.
-      </p>
-      <p>
-        The <code>picture</code> element was intended to give authors a way to
-        control which image resource a user agent presents to a user based on a
-        media query and/or support for a particular image format.
-      </p>
-      <p>
-        The primary purpose of the <code>picture</code> element is to address
-        use cases [[!respimg-usecases]] that are left unaddressed by the
-        <code>srcset</code> attribute [[html-srcset]]; the most important being
-        <q><a href="http://usecases.responsiveimages.org/#art-direction">art
-        direction</a></q>. Other use cases, such as <q><a href=
-        "http://usecases.responsiveimages.org/#matching-media-features-and-media-types">
-        matching media features and media types</a></q> and matching on
-        supported <q><a href=
-        "http://usecases.responsiveimages.org/#image-formats">image
-        formats</a></q>, are also addressed by this specification.
-      </p>
-    </section>
-    <section id="sotd">
-      <p class="note">
-        Work on this specification has stopped as it was superceded by the
-        <a href=
-        "http://tabatkins.github.io/specs/respimg/Overview.html">RespImg Syntax
-        proposal</a>. The mailing list gives the <a href=
-        "http://lists.w3.org/Archives/Public/public-respimg/2013Oct/0020.html">justification
-        as to why we stopped persuing the standardization</a> of the
-        <code>picture</code> element.
-      </p>
-      <p>
-        This document was published by the <a href=
-        "http://www.w3.org/html/wg/">HTML Working Group</a> as a Working Draft,
-        but was developed in collaboration with the <a href=
-        "http://responsiveimages.org">Responsive Images Community Group</a>
-        (see <a href=
-        "http://www.w3.org/community/respimg/spec/26/commitments">licensing
-        commitments</a>).
-      </p>
-    </section>
-    <section class="informative">
-      <h2>
-        Introduction
-      </h2>
-      <p>
-        This specification provides developers with a means to declare multiple
-        sources for an image, and, through [[!CSS3-MEDIAQUERIES]] (<cite>CSS
-        Media Queries</cite>), it gives developers control as to when those
-        images are to be presented to a user. This is achieved by introducing
-        the <code>picture</code> element to [[!HTML]], and by enhancing the
-        <code>source</code> element to support [[!html-srcset]].
-      </p>
-      <p>
-        By relying on [[!CSS3-MEDIAQUERIES]], a user agent can <em>respond</em>
-        to changes in the browsing environment by selecting the image source
-        that most closely matches the browsing environment - thus embodying a
-        technique known as <a href=
-        "http://en.wikipedia.org/wiki/Responsive_web_design">responsive web
-        design</a> directly in the HTML markup. <a href=
-        "http://www.w3.org/TR/css3-mediaqueries/#media1">Media features</a>
-        that a user agent can potentially respond to include, but are not
-        limited to, pixel widths and heights, and pixel densities, as well as
-        environmental lighting conditions, changes in orientation, and changes
-        in media type such as going from screen to print.
-      </p>
-      <p>
-        The <code>picture</code> element remains backwards compatible with
-        legacy user agents by degrading gracefully through <a>fallback
-        content</a> (i.e., through the <code>img</code> element) while also
-        potentially providing better accessibility than the existing
-        <code>img</code> element.
-      </p>
-      <p>
-        This specification also defines the <code>HTMLPictureElement</code>
-        interface, through which developers can interact with
-        <code>picture</code> elements.
-      </p>
-      <section>
-        <h3>
-          When to use <code>picture</code>
-        </h3>
-        <p>
-          The <code>picture</code> element is intended primarily for <q>art
-          directing</q> graphical content. For cases where a single image
-          source is available, and where no responsive adoption is needed,
-          authors are encouraged to use the <code>img</code> element instead.
-        </p>
-      </section>
-      <section>
-        <h3>
-          Examples of usage
-        </h3>
-        <p>
-          This example shows how to combine the <code>picture</code> element
-          with the <code>source</code> element, while also providing fallback
-          content for legacy user agents through the <code>img</code> element.
-        </p>
-        <pre class="example highlight">
-              &lt;picture width="500" height="500"&gt;
-                 &lt;source media="(min-width: 45em)" src="large.jpg"&gt;
-                 &lt;source media="(min-width: 18em)" src="med.jpg"&gt;
-                 &lt;source src="small.jpg"&gt;
-                 &lt;img src="small.jpg" alt=""&gt;
-                 &lt;p&gt;Accessible text&lt;/p&gt;
-              &lt;/picture&gt;
-</pre>
-        <p>
-          This example shows how the <code>picture</code> element can be used
-          with the <code>srcset</code> attribute [[!html-srcset]] to provide a
-          range of sources suitable for a given media query:
-        </p>
-        <pre class="example highlight">
-            &lt;picture width="500" height="500"&gt;
-               &lt;source media="(min-width: 45em)" srcset="large-1.jpg, large-2.jpg 2x"&gt;
-               &lt;source media="(min-width: 18em)" srcset="med-1.jpg, med-2.jpg 2x"&gt;
-               &lt;source srcset="small-1.jpg, small-2.jpg 2x"&gt;
-               &lt;img src="small-1.jpg" alt=""&gt;
-               &lt;p&gt;Accessible text&lt;/p&gt;
-            &lt;/picture&gt;
-</pre>
-        <p>
-          This example shows how picture and other HTML elements can be used
-          together.
-        </p>
-        <pre class="example highlight">
-    &lt;figure&gt;
-        &lt;picture width="200" height="200"&gt;
-           &lt;source media="(min-width: 45em)" srcset="large-1.jpg, large-2.jpg 2x"&gt;
-           &lt;source media="(min-width: 18em)" srcset="med-1.jpg, med-2.jpg 2x"&gt;
-           &lt;source srcset="small-1.jpg, small-2.jpg 2x"&gt;
-           &lt;img src="small-1.jpg" alt=""&gt;
-        &lt;/picture&gt;
-        &lt;figcapture&gt;A figure of a fox jumping over a lazy box.&lt;/figcaption&gt;
-    &lt;/figure&gt;
-</pre>
-      </section>
-      <section>
-        <h3>
-          Relationship to <code>srcset</code>
-        </h3>
-        <p>
-          The <code>srcset</code> attribute allows authors to define various
-          image resources and “hints” that assist a user agent in determining
-          the most appropriate image source to display. Given a set of image
-          resources, the user agent has the option of either following or
-          overriding the author’s declarations to optimize the user experience
-          based on criteria such as <a href=
-          "http://usecases.responsiveimages.org/#device-pixel-ratio-based-selection">
-          display density</a>, network connection type, user preferences, and
-          so on.
-        </p>
-        <p>
-          The <code>picture</code> element defines conditions under which the
-          use agent needs to follow the author's explicit instructions when
-          selecting which resource to display. This includes image sources with
-          inherent sizes designed to align with layout variations specified in
-          CSS media queries (see: <a href=
-          "http://usecases.responsiveimages.org/#design-breakpoints">design
-          breakpoints</a>, and <a href=
-          "http://usecases.responsiveimages.org/#relative-units">relative
-          units</a>) or content variations for increased clarity and focus
-          (i.e., <a href=
-          "http://usecases.responsiveimages.org/#art-direction"><q>art
-          direction</q></a>) based on the client’s viewport.
-        </p>
-        <p>
-          The proposed solutions are not mutually exclusive. They work together
-          to address the complete set of <a href=
-          "http://usecases.responsiveimages.org/">use cases and requirements
-          for responsive images</a> (see [[!respimg-usecases]]).
-        </p>
-      </section>
-    </section>
-    <section>
-      <h2>
-        Conformance
-      </h2>
-      <p>
-        As well as sections marked as non-normative, all authoring guidelines,
-        diagrams, examples, and notes in this specification are non-normative.
-        Everything else in this specification is normative.
-      </p>
-      <p>
-        The key words <em class="rfc2119" title="must">must</em>, <em class=
-        "rfc2119" title="must not">must not</em>, <em class="rfc2119" title=
-        "required">required</em>, <em class="rfc2119" title=
-        "should">should</em>, <em class="rfc2119" title="should not">should
-        not</em>, <em class="rfc2119" title="recommended">recommended</em>,
-        <em class="rfc2119" title="may">may</em>, and <em class="rfc2119"
-        title="optional">optional</em> in this specification are to be
-        interpreted as described in [[!RFC2119]].
-      </p>
-      <p>
-        This specification has the same <a href=
-        "http://dev.w3.org/html5/spec/single-page.html#conformance-requirements">
-        conformance requirements</a> and applies to the same <a href=
-        "http://dev.w3.org/html5/spec/single-page.html#conformance-classes">conformance
-        classes</a> as [[!HTML]].
-      </p>
-      <p>
-        Implementations that use ECMAScript to expose the APIs defined in this
-        specification <em class="rfc2119" title="must">must</em> implement them
-        in a manner consistent with the ECMAScript Bindings defined in the
-        [[!WEBIDL]] specification.
-      </p>
-    </section>
-    <section>
-      <h2>
-        Definitions
-      </h2>
-      <p>
-        The following terms are used throughout this specification so they are
-        gathered here for the readers convenience. The following list of terms
-        is not exhaustive; other terms are defined throughout this
-        specification.
-      </p>
-      <p>
-        The follow terms are defined by the [[!HTML]] specification: <dfn id=
-        "dfn-img-element"><a href=
-        "http://dev.w3.org/html5/spec/single-page.html#the-img-element"><code>img</code>
-        element</a></dfn>, <dfn id="dfn-source-element"><a href=
-        "http://dev.w3.org/html5/spec/single-page.html#the-source-element"><code>
-        source</code> element</a></dfn>, <dfn id=
-        "dfn-fallback-content"><a href="http://dev.w3.org/html5/spec/single-page.html#fallback-content">
-        fallback content</a></dfn>, and <dfn id=
-        "dfn-valid-media-query"><a href="http://dev.w3.org/html5/spec/single-page.html#valid-media-query">
-        valid media query</a></dfn>.
-      </p>
-    </section>
-    <section>
-      <h2>
-        Extensions to <code>source</code> element
-      </h2>
-      <p>
-        This specification allows HTML's <code>source</code> element to use the
-        srcset attribute when a <code>source</code> is used in the context of a
-        <code>picture</code> element.
-      </p>
-    </section>
-    <section>
-      <h2>
-        The <code>picture</code> element
-      </h2>
-      <dl>
-        <dt>
-          <a href=
-          "http://dev.w3.org/html5/spec/single-page.html#element-dfn-categories"
-          title="element-dfn-categories">Categories</a>:
-        </dt>
-        <dd>
-          <a href=
-          "http://dev.w3.org/html5/spec/single-page.html#flow-content-1">Flow
-          content</a>.
-        </dd>
-        <dd>
-          <a href=
-          "http://dev.w3.org/html5/spec/single-page.html#phrasing-content-1">Phrasing
-          content</a>.
-        </dd>
-        <dd>
-          <a href=
-          "http://dev.w3.org/html5/spec/single-page.html#embedded-content-2">Embedded
-          content</a>.
-        </dd>
-        <dd>
-          <a href=
-          "http://dev.w3.org/html5/spec/single-page.html#palpable-content-0">Palpable
-          content</a>.
-        </dd>
-        <dt>
-          <a href=
-          "http://dev.w3.org/html5/spec/single-page.html#element-dfn-contexts"
-          title="element-dfn-contexts">Contexts in which this element can be
-          used</a>:
-        </dt>
-        <dd>
-          Where <a href=
-          "http://dev.w3.org/html5/spec/single-page.html#embedded-content-2">embedded
-          content</a> is expected.
-        </dd>
-        <dt>
-          <a href=
-          "http://dev.w3.org/html5/spec/single-page.html#element-dfn-content-model"
-          title="element-dfn-content-model">Content model</a>:
-        </dt>
-        <dd>
-          If zero descendents, then <a href=
-          "http://dev.w3.org/html5/spec/single-page.html#transparent">transparent</a>.
-        </dd>
-        <dd>
-          One or more <code>source</code> elements.
-        </dd>
-        <dd>
-          Zero or more elements, serving as <a href="#dfn-fallback-content"
-          class="internalDFN">fallback content</a>.
-        </dd>
-        <dt>
-          <a href=
-          "http://dev.w3.org/html5/spec/single-page.html#element-dfn-attributes"
-          title="element-dfn-attributes">Content attributes</a>:
-        </dt>
-        <dd>
-          <a href=
-          "http://dev.w3.org/html5/spec/single-page.html#global-attributes">Global
-          attributes</a>
-        </dd>
-        <dd>
-          <code>width</code>
-        </dd>
-        <dd>
-          <code>height</code>
-        </dd>
-      </dl>
-      <p>
-        Like the <code>img</code> element, the <code><dfn id=
-        "dfn-picture">picture</dfn></code> element presents image data.
-        However, unlike the img element, which the resource is presented
-        depends on the user agent's support for a particular image format
-        and/or matching some environmental condition. The <span>chosen
-        image</span> is the embedded content.
-      </p>
-      <section>
-        <h3>
-          <code>HTMLPictureElement</code> interface
-        </h3>
-        <dl class="idl" title=
-        "[NamedConstructor=Picture(optional unsigned long width, optional unsigned long height)] interface HTMLPictureElement">
-        <dt>
-            attribute long width;
-          </dt>
-          <dd>
-            The width, in CSS pixels, of the picture.
-          </dd>
-          <dt>
-            attribute long height;
-          </dt>
-          <dd>
-            The height, in CSS Pixels, of the picture.
-          </dd>
-        </dl>
-      </section>
-      <section class="informative">
-        <h3>
-          Authoring Requiments
-        </h3>
-        <p>
-          For user agents that don't support the <code>picture</code> element,
-          an author can provide an <code>img</code> element as <span>fallback
-          content</span>.
-        </p>
-      </section>
-      <section class="appendix">
-        <h2>
-          Acknowledgements
-        </h2>
-        <p id="participants">
-          A <a href="http://www.w3.org/community/respimg/participants">complete
-          list of participants</a> of the Responsive Images Community Group is
-          available at the W3C Community Group Website.
-        </p>
-        <p id="participantslist">
-          <!--
-        To get the participant's list, go to
-        http://www.w3.org/community/respimg/participants
+        Conformance requirements are expressed with a combination of descriptive assertions and RFC 2119 terminology.
+        The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL”
+        in the normative parts of this document
+        are to be interpreted as described in RFC 2119.
+        However, for readability,
+        these words do not appear in all uppercase letters in this specification.
 
-        var all = document.querySelectorAll("td>h3"),
-            each = [];
-        for(var i = 0; i < all.length; i++){
-                each.push(all.item(i).textContent);
-        }
-        console.log(each.join(", "))
-        -->
-           <dfn>Participants</dfn> of the <a href=
-          "http://w3c.responsiveimages.org">Responsive Images Community
-          Group</a> at the time of publication were: Barry Atimer, Daniel
-          Abril, George Adamson, Heide Alexander, Marie Alhomme, John Allan,
-          Joshua Allen, Angely Alvarez, Agustin Amenabar, Aaryn Anderson,
-          Philip Andrews, Ritchie Anesco, Phil Archer, Tony Atayi, Tom Atkins,
-          Justin Avery, Mohsen Azimi, Phillip Baker, Raymond Baker, Michael
-          Balensiefer, Toni Barrett, Bruno Barros, Paul Barton, Adrian Bateman,
-          Jesse Renée Beach, Robin Berjon, Seth Bertalotto, Anirban
-          Bhattacharya, Nicolaas Bijvoet, Barna Bitai, Nathan Bleigh, Andreas
-          Bovens, J. Albert Bowden, Adam Bradley, Rodrigo Brancher, Gordon
-          Brander, Paul Bridgestock, Aaron Brosey, Brandon Brown, Cory Brown,
-          mairead buchan, Kris Bulman, Ariel Burone, Mathias Bynens, Marcos
-          Caceres, Rusty Calder, Ben Callahan, Loïc Calvy, Welch Canavan, Chuck
-          Carpenter, Brandon Carroll, Frederico Cerdeira, Daniel Chamberlin,
-          Adi Chikara, David Clements, Geri Coady, Anne-Gaelle Colom, Cyril
-          Concolato, Jessica Constantine, Greg Cota, Geoff Cowan, Andy Crum,
-          David D'Amico, Jason Daihl, Francois Daoust, Kevin Davies, Robert
-          Dawson, Jacques de Klerk, Timothy de Paris, Ryan DeBeasi, Anna
-          Debenham, Darryl deHaan, David Demaree, George DeMet, Ian Devlin,
-          Alex DiLiberto, peter droogmans, Ronni Dyrholm Chidekel, simpson
-          eddie, Sylvia Egger, Dominic Fee, Ève Février, Maximiliano Firtman,
-          Ben Fonarov, Harry Fozzard, Marlene Frykman, Dennis Gaebel, Igor
-          Gajosinskas, Nicolas Gallagher, Miguel Garcia, Rafael Garcia Lepper,
-          Larry Garfield, Peter Gasston, George GeorgeHaeger, David Goss, Chris
-          Grant, Petra Gregorova, Ilya Grigorik, Jason Grigsby, Aaron Grogg,
-          Antoine Guergnon, Jeff Guntle, Aaron Gustafson, Jason Haag, Jordan
-          Haines, Cristina Hanes, Patrick Haney, Anselm Hannemann, chris hardy,
-          Vincent Hardy, Bridget Harrison, Duncan Hawthorne, Dominique
-          Hazaël-Massieux, Chris Hilditch, Jon Hill, Nathan Hinshaw, Sean
-          Hintz, John Holt Ripley, Enrico Hösel, Peter Hrynkow, Kym Huang,
-          Shane Hudson, Vinicius Ianni, Tomomi Imura, Philip Ingrey, Bryn
-          Jackson, Rihnna Jakosalem, Brett Jankord, Scott Jehl, Dave Johnson,
-          Nathanael Jones, Danny Jongerius, Michael Jovel, Chao Ju, Tim Kadlec,
-          Raj Kaimal, Kevin Joe Kanger, Frédéric Kayser, Serge K. Keller,
-          Arthur Khachatryan, Jin Kim, Andreas Klein, Peter Klein, John
-          Kleinschmidt, Daniel Konopacki, Darius Kruythoff, Zoran Kurtin,
-          Vitaliy Kuzmin, Gerardo Lagger, Adam Lake, Chris Lamothe, Tom Lane,
-          Matthieu Larcher, Christopher Latham, Bruce Lawson, Zach Leatherman,
-          Silas Lepcha, Kornel Lesinski, Chris Lilley, grappler login, william
-          lombardo, Tania Lopes, Amie Lucas, André Luís, Jacine Luisi, David
-          Maciejewski, Kevin Mack, Ethan Malasky, Josh Marinacci, Eduardo
-          Marques, Mathew Marquis, Daniel Martínez, Tom Maslen, Jacob Mather,
-          Chris McAndrew, Mark McDonnell, Andre Jay Meissner, Benjamin
-          Melançon, Julian Mendl, Rick Messer, Zane Milakovic, Denys Mishunov,
-          Sabine Moebs, Ian Moffitt, Orestis Molopodis, jason morita, David
-          Moulton, Bobby Mozumder, Brian Muenzenmeyer, Emi Myoudou, Irakli
-          Nadareishvili, Giorgio Natili, Jonathan Neal, Christian Neuberger Jr,
-          David Newton, Todd Nienkerk, Ashley Nolan, Johnna Nonboe, Kenneth
-          Nordahl, Mark Nottingham, Lewis Nyman, Darrel O'Pry, Alejandro
-          Oviedo, David Owens, Paddy O’Hanlon, Isabel Palomar, suzanne peter,
-          Hassadee Pimsuwan, Guy Podjarny, Andreas Pollak, gentian polovina,
-          Dave Poole, Florent Preynat, Manik Rathee, François REMY, Venkatesh
-          Rengasamy, Jen Reynolds, Ricardo Andrade Belo Ricardo Belo, Michael
-          Riethmuller, Carlo Rizzante, John Rodler, César Rodríguez, Nestor
-          Rojas, Adrian Roselli, David Rupert, Chris Ruppel, Oguzcan Sahin,
-          Viljami Salminen, Luca Salvini, Ana Sampaio, Luke Sands, crazyrohila
-          sanjay, aron santa, Osny Santos, Jad Sarout, Brandon Satrom, Jeroen
-          Savat, Stéphane Savona, Christoph Saxe, Doug Schepers, Jason Schmidt,
-          Christopher Schmitt, Joe Schmitt, Greg Schumacher, Boaz Sender,
-          SHAHINA SHEIK, Tomoyuki Shimizu, Ariel Shkedi, Abdul Wahid Sial,
-          Pandapotan Silaban, Mauricio Silva Teixeira de Nobrega, Jen Simmons,
-          Michael Singleterry, Katerina Skotalova, David Sleight, Michael[tm]
-          Smith, Nick Snyder, Ignacio Soriano Cano, Steve Souders, Brenden
-          Sparks, Aaron Staker, Aaron Stanush, Walter Stevenson, Bridget
-          Stewart, Jared Stilwell, Matt Stow, Shari Sullivan, Kevin Suttle,
-          Patrick Szalapski, Satoru Takagi, Rob Tarr, Philipp Tautz, Nguyen
-          Thao Thao, Edward Thurgood, Anthony Ticknor, Erek Tinker, Sebastián
-          Tromer, Tsvetan Tsvetkov, Yusuke Uchida, Mads Ulsø Østergaard,
-          Katarina Ur, Adam van den Hoven, Jacob van Zijp, Lucas Vilaboim,
-          Jitendra Vyas, Amy W, Tady Walsh, Yoav Weiss, George White, Michael
-          Whittet, Matt Wilcox, Richard Wild, John Albin Wilkins, Chris
-          Williams, Rory Wilson, Owen Winkler, Robin Winslow, Cyril Wolfangel,
-          Mike Woodard, Jeremy Worboys, Mike Wu, Bruce Zawalsky, Carlos Zepeda,
-          and jintian zheng.
-        </p>
-        <p>
-          Contributions also from: David Newton, Ilya Grigorik and Leon de
-          Rijke. Special thanks to Adrian Bateman for providing the group with
-          guidance.
-        </p>
-      </section>
-    </section>
-  </body>
-</html>
+    <p>
+        All of the text of this specification is normative
+        except sections explicitly marked as non-normative, examples, and notes. <a data-biblio-type=normative data-link-type=biblio href=#rfc2119 title=rfc2119>[RFC2119]</a>
+
+    <p>
+        Examples in this specification are introduced with the words “for example”
+        or are set apart from the normative text with <code>class="example"</code>, like this:
+
+    <div class=example>
+        This is an example of an informative example.
+    </div>
+
+    <p>
+        Informative notes begin with the word “Note”
+        and are set apart from the normative text with <code>class="note"</code>, like this:
+
+    <p class=note>
+        Note, this is an informative note.
+
+<h2 class="no-num no-ref heading settled heading" id=references><span class=content>
+References</span><a class=self-link href=#references></a></h2>
+
+<h3 class="no-num no-ref heading settled heading" id=normative><span class=content>
+Normative References</span><a class=self-link href=#normative></a></h3>
+<div data-fill-with=normative-references><dl><dt id=css3val title=CSS3VAL><a class=self-link href=#css3val></a>[CSS3VAL]<dd>Håkon Wium Lie; Tab Atkins; Elika J. Etemad. <a href=http://www.w3.org/TR/2013/CR-css3-values-20130730/>CSS Values and Units Module Level 3</a>. 30 July 2013. W3C Candidate Recommendation. (Work in progress.) URL: <a href=http://www.w3.org/TR/2013/CR-css3-values-20130730/>http://www.w3.org/TR/2013/CR-css3-values-20130730/</a><dt id=html title=HTML><a class=self-link href=#html></a>[HTML]<dd>Ian Hickson. <a href=http://whatwg.org/html>HTML</a>. Living Standard. URL: <a href=http://whatwg.org/html>http://whatwg.org/html</a><dt id=mediaq title=MEDIAQ><a class=self-link href=#mediaq></a>[MEDIAQ]<dd>Florian Rivoal. <a href=http://www.w3.org/TR/2012/REC-css3-mediaqueries-20120619/>Media Queries</a>. 19 June 2012. W3C Recommendation. URL: <a href=http://www.w3.org/TR/2012/REC-css3-mediaqueries-20120619/>http://www.w3.org/TR/2012/REC-css3-mediaqueries-20120619/</a><dt id=rfc2119 title=RFC2119><a class=self-link href=#rfc2119></a>[RFC2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a><dt id=respimg-usecases title=respimg-usecases><a class=self-link href=#respimg-usecases></a>[respimg-usecases]<dd>Marcos Cáceres; et al. <a href=http://www.w3.org/TR/respimg-usecases/>Use Cases and Requirements for Standardizing Responsive Images</a>. NOTE. URL: <a href=http://www.w3.org/TR/respimg-usecases/>http://www.w3.org/TR/respimg-usecases/</a></dl></div>
+
+<h3 class="no-num no-ref heading settled heading" id=informative><span class=content>
+Informative References</span><a class=self-link href=#informative></a></h3>
+<div data-fill-with=informative-references><dl></dl></div>
+
+<h2 class="no-num no-ref heading settled heading" id=index><span class=content>
+Index</span><a class=self-link href=#index></a></h2>
+<div data-fill-with=index><ul class=indexlist>
+<li>fallback content, <a href=#dfn-fallback-content title="section 2">2</a>
+<li>find the effective size, <a href=#find-the-effective-size title="section 3.1.6">3.1.6</a>
+<li>HTMLPictureElement, <a href=#dom-htmlpictureelement title="section 3.3">3.3</a>
+<li>image source, <a href=#image-source title="section 3">3</a>
+<li>&lt;image-source&gt;, <a href=#typedef-image-source title="section 3.1.3">3.1.3</a>
+<li>&lt;image-source-list&gt;, <a href=#typedef-image-source-list title="section 3.1.3">3.1.3</a>
+<li>list of source sets, <a href=#list-of-source-sets title="section 3">3</a>
+<li>normalize the source densities, <a href=#normalize-the-source-densities title="section 3.1.5">3.1.5</a>
+<li>parse a sizes attribute, <a href=#parse-a-sizes-attribute title="section 3.1.4">3.1.4</a>
+<li>parse a src attribute, <a href=#parse-a-src-attribute title="section 3.1.3">3.1.3</a>
+<li>parse its sizes attribute, <a href=#parse-a-sizes-attribute title="section 3.1.4">3.1.4</a>
+<li>parse its src attribute, <a href=#parse-a-src-attribute title="section 3.1.3">3.1.3</a>
+<li>picture, <a href=#elementdef-picture title="section 3">3</a>
+<li>select an image source, <a href=#select-an-image-source title="section 3.1.1">3.1.1</a>
+<li>sizes<ul><li>element-attr for source, <a href=#element-attrdef-sizes title="section 4">4</a>
+<li>attribute for HTMLSourceElement, <a href=#dom-htmlsourceelement-sizes title="section 4">4</a>
+</ul><li>source set, <a href=#source-set title="section 3">3</a>
+<li>&lt;source-size&gt;, <a href=#typedef-source-size title="section 3.1.4">3.1.4</a>
+<li>&lt;source-size-list&gt;, <a href=#typedef-source-size-list title="section 3.1.4">3.1.4</a>
+<li>source size list, <a href=#source-size-list title="section 3">3</a>
+<li>&lt;source-src&gt;, <a href=#typedef-source-src title="section 4">4</a>
+<li>&lt;source-width&gt;, <a href=#typedef-source-width title="section 3.1.3">3.1.3</a>
+<li>update the list of source sets, <a href=#update-the-list-of-source-sets title="section 3.1.2">3.1.2</a>
+<li>&lt;url&gt;, <a href=#typedef-url title="section 3.1.3">3.1.3</a>
+<li>valid media query, <a href=#dfn-valid-media-query title="section 2">2</a>
+</ul></div>
+
+<h2 class="no-num no-ref heading settled heading" id=property-index><span class=content>
+Property index</span><a class=self-link href=#property-index></a></h2>
+<div data-fill-with=property-index><p>No properties defined.</div>
+
+
+
+<h2 class="no-num heading settled" id=issues-index><span class=content>Issues Index</span><a class=self-link href=#issues-index></a></h2><div style="counter-reset: issue"><div class=issue>
+		Need a bunch more examples + explanation.
+
+
+<a href=#issue-de83d86d> ↵ </a></div><div class=issue>
+		This is meant to be the HTML integration point.
+
+<a href=#issue-04df11d0> ↵ </a></div><div class=issue>make the img throw an error, however that’s done.<a href=#issue-50fd8b63> ↵ </a></div>
+			Exit this algorithm.
+
+		<div class=issue>
+				Load the url of <var>selected source</var>, etc.
+	<a href=#issue-d087258a> ↵ </a></div><div class=issue>
+		This just selects a single image and then sticks with it,
+		unlike CSS’s <a class=css data-link-type=maybe href=http://dev.w3.org/csswg/css-images-4/#funcdef-image title=image()>image()</a>,
+		but similar to <code>srcset</code>.
+		That okay?
+
+<a href=#issue-db0987e0> ↵ </a></div><div class=issue>
+		I’d like to allow individual sources to specify a type as well with a <span class=css data-link-type=maybe title=type()>type()</span> function,
+		overriding the default type specified by the <a data-link-for=source data-link-type=element-attr title=type>type</a> attribute,
+		but I’m keeping things simple for now.
+
+
+<a href=#issue-7c81674f> ↵ </a></div><div class=issue>
+		We could maybe add some more things here,
+		like a list of the relevant <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> elements
+		and the active <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element.
+		Readonly?
+		I dunno.
+
+<a href=#issue-6eda22b6> ↵ </a></div></div>
