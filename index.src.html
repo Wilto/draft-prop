@@ -233,21 +233,21 @@ Selecting an Image Source</h4>
 	<p class='issue'>
 		This is meant to be the HTML integration point.
 
-	When asked to <dfn>select an image source</dfn> for a given <a element>img</a> element <var>el</var>,
+	When asked to <dfn>select an image source</dfn> for a given <a element>img</a> element <var>el</var> with a <a element>picture</a> element parent <var>parent</var>,
 	user agents must do the following:
 
 	<ol>
 		<li>
-			<a>Update the list of source sets</a> for <var>el</var>.
+			<a>Update the list of source sets</a> for <var>parent</var>.
 
 		<li>
-			If <var>el</var>’s <a>list of source sets</a> is empty,
+			If <var>parent</var>’s <a>list of source sets</a> is empty,
 			<p class='issue'>make the img throw an error, however that's done.</p>
 			Exit this algorithm.
 
 		<li>
 			Otherwise,
-			take the first <a>source set</a> in <var>el</var>’s <a>list of source sets</a>
+			take the first <a>source set</a> in <var>parent</var>’s <a>list of source sets</a>
 			and let it be <var>source set</var>.
 
 		<li>
@@ -256,13 +256,13 @@ Selecting an Image Source</h4>
 			Let this be <var>selected source</var>.
 
 		<li>
-			The intrinsic width of <var>el</var> is the result of <a title="find the effective size">finding the effective size</a>
+			The intrinsic width of <var>parent</var> is the result of <a title="find the effective size">finding the effective size</a>
 			from <var>source list</var>.
-			The intrinsic resolution of <var>el</var> is the density associated with <var>selected source</var>.
+			The intrinsic resolution of <var>parent</var> is the density associated with <var>selected source</var>.
 
 		<li>
 			<p class='issue'>
-				Load the url of <var>selected source</var>, etc.
+				Load the url of <var>selected source</var> into <var>el</var>, etc.
 	</ol>
 
 	<p class='issue'>
