@@ -79,9 +79,9 @@ Examples of usage</h3>
 
 		<pre>
 			&lt;picture>
-				 &lt;source media="(min-width: 45em)" src="large.jpg">
-				 &lt;source media="(min-width: 18em)" src="med.jpg">
-				 &lt;source src="small.jpg">
+				 &lt;source media="(min-width: 45em)" srcset="large.jpg">
+				 &lt;source media="(min-width: 18em)" srcset="med.jpg">
+				 &lt;source srcset="small.jpg">
 				 &lt;img src="small.jpg" alt="" width="500" height="500">
 				 &lt;p>Accessible text&lt;/p>
 			&lt;/picture>
@@ -95,9 +95,9 @@ Examples of usage</h3>
 
 		<pre>
 			&lt;picture>
-				 &lt;source media="(min-width: 45em)" src="large-1.jpg, large-2.jpg 2x">
-				 &lt;source media="(min-width: 18em)" src="med-1.jpg, med-2.jpg 2x">
-				 &lt;source src="small-1.jpg, small-2.jpg 2x">
+				 &lt;source media="(min-width: 45em)" srcset="large-1.jpg, large-2.jpg 2x">
+				 &lt;source media="(min-width: 18em)" srcset="med-1.jpg, med-2.jpg 2x">
+				 &lt;source srcset="small-1.jpg, small-2.jpg 2x">
 				 &lt;img src="small-1.jpg" alt="" width="500" height="500">
 				 &lt;p>Accessible text&lt;/p>
 			&lt;/picture>
@@ -111,9 +111,9 @@ Examples of usage</h3>
 		<pre>
 			&lt;figure>
 					&lt;picture>
-						 &lt;source media="(min-width: 45em)" src="large-1.jpg, large-2.jpg 2x">
-						 &lt;source media="(min-width: 18em)" src="med-1.jpg, med-2.jpg 2x">
-						 &lt;source src="small-1.jpg, small-2.jpg 2x">
+						 &lt;source media="(min-width: 45em)" srcset="large-1.jpg, large-2.jpg 2x">
+						 &lt;source media="(min-width: 18em)" srcset="med-1.jpg, med-2.jpg 2x">
+						 &lt;source srcset="small-1.jpg, small-2.jpg 2x">
 						 &lt;img src="small-1.jpg" alt="" width="200" height="200">
 					&lt;/picture>
 					&lt;figcaption>A figure of a fox jumping over a lazy box.&lt;/figcaption>
@@ -128,9 +128,9 @@ Examples of usage</h3>
 
 		<pre>
 			&lt;picture>
-				 &lt;source media="(min-width: 45em)" sizes="(45em) 50% (60em) 30%" src="large-1.jpg 900w, large-2.jpg 1800w">
-				 &lt;source media="(min-width: 18em)" sizes="(18em) 80%" src="med-1.jpg 400w, med-2.jpg 800w">
-				 &lt;source src="small-1.jpg 200w, small-2.jpg 400w">
+				 &lt;source media="(min-width: 45em)" sizes="(45em) 50% (60em) 30%" srcset="large-1.jpg 900w, large-2.jpg 1800w">
+				 &lt;source media="(min-width: 18em)" sizes="(18em) 80%" srcset="med-1.jpg 400w, med-2.jpg 800w">
+				 &lt;source srcset="small-1.jpg 200w, small-2.jpg 400w">
 				 &lt;img src="small-1.jpg" alt="" width="200" height="200">
 				 &lt;p>Accessible text&lt;/p>
 			&lt;/picture>
@@ -300,7 +300,7 @@ Updating the List of Source Sets</h4>
 					continue to the next child.
 
 				<li>
-					<a title="parse a src attribute">Parse <var>child</var>’s src attribute</a> and let the returned <a>source set</a> be <var>source set</a>.
+					<a title="parse a srcset attribute">Parse <var>child</var>’s srcset attribute</a> and let the returned <a>source set</a> be <var>source set</a>.
 
 				<li>
 					If <var>source set</var> has zero <a>image sources</a>,
@@ -343,8 +343,8 @@ Updating the List of Source Sets</h4>
 <h4 id='parse-src-attr'>
 Parsing a <code>src</code> Attribute</h4>
 
-	When asked to <dfn title="parse a src attribute|parse its src attribute">parse a src attribute</dfn> from an element,
-	parse the value of the element's <code>src</code> attribute with the following grammar:
+	When asked to <dfn title="parse a srcset attribute|parse its srcset attribute">parse a srcset attribute</dfn> from an element,
+	parse the value of the element's <code>srcset</code> attribute with the following grammar:
 
 	<pre>
 		<dfn>&lt;image-source-list></dfn> = <<image-source>>#
@@ -533,21 +533,18 @@ Interaction with the Preload Scanner</h3>
 <h2 id='the-source-element'>
 Changes to the <a element>source</a> Element</h2>
 
-	When a <a element>source</a> element is a child of <a element>picture</a> element,
-	the syntax of its <a element-attr for="source">src</a> attribute is changed.
-	Instead of being a URL,
-	it must instead match the following grammar:
+	The <a element>source</a> element gains <dfn element-attr for="source">srcset</dfn> and <dfn element-attr for="source">sizes</dfn> attributes,
+	which contain,
+	respectively,
+	a list of one or more image sources,
+	and a set of intrinsic sizes for those sources.
 
-	<pre>
-		<dfn>&lt;source-src></dfn> = <<image-source>>#
-	</pre>
-
-	Additionally, the <a element>source</a> element gains a <dfn element-attr for="source">sizes</dfn> attribute,
-	which contains a set of intrinsic sizes for the sources it provides.
+	The <a element-attr for="source">srcset</a> attribute is reflected by the <a attribute>srcset</a> attribute on the element’s DOM interface.
 	The <a element-attr for="source">sizes</a> attribute is reflected by the <a attribute>sizes</a> attribute on the element’s DOM interface.
 
 	<pre class='idl'>
 		partial interface HTMLSourceElement {
+			attribute DOMString srcset;
 			attribute DOMString sizes;
 		};
 	</pre>
