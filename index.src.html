@@ -246,25 +246,6 @@ Examples of usage</h3>
 	</div>
 
 
-	<div class='example'>
-		This example shows how the <code>picture</code> element can be used
-		to address the art-direction and variable-width images use case:
-
-		<pre>
-			&lt;picture>
-				 &lt;source media="(min-width: 45em)" sizes="(45em) 50% (60em) 30%" srcset="large-1.jpg 900w, large-2.jpg 1800w">
-				 &lt;source media="(min-width: 18em)" sizes="(18em) 80%" srcset="med-1.jpg 400w, med-2.jpg 800w">
-				 &lt;source srcset="small-1.jpg 200w, small-2.jpg 400w">
-				 &lt;img src="small-1.jpg" alt="" width="200" height="200">
-				 &lt;p>Accessible text&lt;/p>
-			&lt;/picture>
-		</pre>
-	</div>
-
-	<p class='issue'>
-		Need a bunch more examples + explanation.
-
-
 <h3 id='relationship-to-srcset'>
 Relationship to <code>srcset</code></h3>
 
