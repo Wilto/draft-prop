@@ -10,7 +10,7 @@ Editor: Marcos Cáceres, Mozilla
 Editor: Mat Marquis, , http://matmarquis.com/
 Editor: Yoav Weiss, , http://blog.yoav.ws/
 Abstract: The <code>picture</code> element is intended to give authors a way to control which image resource a user agent presents to a user, based on media query and/or support for a particular image format.
-Abstract: The primary purpose of the <code>picture</code> element is to address use cases [[!respimg-usecases]] that are left unaddressed by the <code>srcset</code> attribute [[HTML]]; the most important being <q><a href="http://usecases.responsiveimages.org/#art-direction">art direction</a></q>. Other use cases, such as <q><a href= "http://usecases.responsiveimages.org/#matching-media-features-and-media-types"> matching media features and media types</a></q> and matching on supported <q><a href= "http://usecases.responsiveimages.org/#image-formats">image formats</a></q>, are also addressed by this specification.
+Abstract: The primary purpose of the <code>picture</code> element is to address use cases [[!respimg-usecases]] that are left unaddressed by the <code>srcset</code> attribute [[HTML]]; the most important being <a>art direction</a>. Other use cases, such as <q><a href= "http://usecases.responsiveimages.org/#matching-media-features-and-media-types"> matching media features and media types</a></q> and matching on supported <q><a href= "http://usecases.responsiveimages.org/#image-formats">image formats</a></q>, are also addressed by this specification.
 !Version History: <a href="https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages">Commit History</a>
 !Version History: <a href="https://twitter.com/respimg_commits">Github commits on Twitter</a>
 !Participate: <a href="http://w3c.responsiveimages.org">Join the Responsive Images Community Group</a>
@@ -30,78 +30,202 @@ Ignored Terms: src, media, type
 <h2 id='intro'>
 Introduction</h2>
 
-	This specification provides developers with a means to declare multiple
-	sources for an image, and, through [[!MEDIAQ]] (<cite>CSS
-	Media Queries</cite>), it gives developers control as to when those
-	images are to be presented to a user. This is achieved by introducing
-	the <code>picture</code> element to HTML, and by enhancing the
-	<code>source</code> element to support specifying multiple source urls.
+	This specification provides developers with a means to declare multiple versions of an image at different resolutions,
+	and, through [[!MEDIAQ]] (<cite>CSS Media Queries</cite>),
+	a means to create specialized presentations of an image and control when they are presented to a user.
+	This is achieved by introducing the <a element>picture</a> element to HTML,
+	and by enhancing the <a element>source</a> element to support specifying multiple source urls.
+	Through this, an <a element>img</a> element
 
-	By relying on [[!MEDIAQ]], a user agent can <em>respond</em>
-	to changes in the browsing environment by selecting the image source
-	that most closely matches the browsing environment - thus embodying a
-	technique known as <a href=
-	"http://en.wikipedia.org/wiki/Responsive_web_design">responsive web
-	design</a> directly in the HTML markup. <a href=
-	"http://www.w3.org/TR/css3-mediaqueries/#media1">Media features</a>
-	that a user agent can potentially respond to include, but are not
-	limited to, pixel widths and heights, and pixel densities, as well as
-	environmental lighting conditions, changes in orientation, and changes
-	in media type such as going from screen to print.
+	By relying on [[!MEDIAQ]], a user agent can <em>respond</em> to changes in the browsing environment
+	by selecting the image source that most closely matches the browsing environment &ndash;
+	thus embodying a technique known as <a href= "http://en.wikipedia.org/wiki/Responsive_web_design">responsive web design</a> directly in the HTML markup.
+	<a>Media features</a> that a user agent can potentially respond to include, but are not limited to,
+	pixel widths and heights,
+	and pixel densities,
+	as well as environmental lighting conditions, changes in orientation,
+	and changes in media type such as going from screen to print.
 
-	The <code>picture</code> element remains backwards compatible with
-	legacy user agents by degrading gracefully through <a>fallback
-	content</a> (i.e., through the <code>img</code> element) while also
-	potentially providing better accessibility than the existing
-	<code>img</code> element.
+	The <a element>picture</a> element remains backwards compatible with legacy user agents
+	by degrading gracefully through <a>fallback content</a>
+	(i.e., through the <a element>img</a> element)
+	while also potentially providing better accessibility than the existing <a element>img</a> element.
 
-	This specification also defines the <code>HTMLPictureElement</code>
-	interface, through which developers can interact with
-	<code>picture</code> elements.
+	This specification also defines the <a interface>HTMLPictureElement</a> interface,
+	through which developers can interact with <a element>picture</a> elements.
 
 
 <h3 id='when-to-use'>
 When to use <code>picture</code></h3>
 
-	The <code>picture</code> element is intended primarily for <q>art
-	directing</q> graphical content. For cases where a single image
-	source is available, and where no responsive adoption is needed,
-	authors are encouraged to use the <code>img</code> element instead.
+	The <a element>picture</a> element should be used when an image source exists in multiple densities,
+	or when a responsive design dictates a somewhat different image on some types of screens (“art direction”).
+
+	The <a element>picture</a> element is not a general replacement for the <a element>img</a> element.
+	When there is only a single image source,
+	authors should just use the <a element>img</a> element as usual,
+	rather than cluttering their page with additional unnecessary syntax.
 
 
 <h3 id='examples'>
 Examples of usage</h3>
 
 	<div class='example'>
-		This example shows how to combine the <code>picture</code> element
-		with the <code>source</code> element, while also providing fallback
-		content for legacy user agents through the <code>img</code> element.
+		This example shows a basic usage of the <a element>picture</a> element
+		to present the same image at multiple resolutions.
+
+		<pre>
+			&lt;picture>
+				&lt;source srcset="pic1x.jpg 1x, pic2x.jpg 2x, pic4x.jpg 4x">
+				&lt;img alt="A rad wolf." src="pix1x.jpg">
+			&lt;/picture>
+		</pre>
+
+		In this example, the user agent will choose one of the three URLs--
+		“pix1x.jpg”, “pic2x.jpg”, or “pix4x.jpg”--
+		depending on whether the quality of the user’s screen
+		and perhaps other factors,
+		such as the user’s bandwidth.
+
+		It will then load the chosen URL in the <a element>img</a> child,
+		as if it were specified in the <a element>img</a> element’s own <a element-attr for="img">src</a> attribute.
+
+		For backwards compatibility with older user agents that don't yet understand the <a element>picture</a> element,
+		one of the URLs is duplicated in the <a element>img</a> element’s <a element-attr>src</a> attribute.
+		This is ignored in modern user agents,
+		but will result in something useful
+		(though perhaps lower-resolution than the user would like)
+		being displayed even in older user agents.
+	</div>
+
+	<div class='example'>
+		When doing responsive design,
+		it is sometimes necessary to produce slightly different versions of an image
+		depending on the user's device.
+		For example,
+		on a small screen like a phone,
+		the author might want to show a zoomed-in crop of an image,
+		while on a larger screen the full image can be displayed instead.
+		This can be accomplished with multiple <a element>source</a> elements:
 
 		<pre>
 			&lt;picture>
 				 &lt;source media="(min-width: 45em)" srcset="large.jpg">
 				 &lt;source media="(min-width: 18em)" srcset="med.jpg">
 				 &lt;source srcset="small.jpg">
-				 &lt;img src="small.jpg" alt="" width="500" height="500">
-				 &lt;p>Accessible text&lt;/p>
+				 &lt;img src="small.jpg" alt="The president giving an award." width="500" height="500">
 			&lt;/picture>
 		</pre>
+
+		In this example, depending on the user’s screen size,
+		one of the URLs will be downloaded.
+		For example, on a large desktop screen “large.jpg” will be displayed in the <a element>img</a> element.
 	</div>
 
 	<div class='example'>
-		This example shows how the <code>picture</code> element can be used
-		with a <code>srcset</code>-equivalent syntax to provide a
-		range of sources suitable for a given media query:
+		Of course, one can use both multiple <a element>source</a> elements
+		<em>and</em> multiple sources within a single <a element>source</a> element together:
 
 		<pre>
 			&lt;picture>
 				 &lt;source media="(min-width: 45em)" srcset="large-1.jpg, large-2.jpg 2x">
 				 &lt;source media="(min-width: 18em)" srcset="med-1.jpg, med-2.jpg 2x">
 				 &lt;source srcset="small-1.jpg, small-2.jpg 2x">
-				 &lt;img src="small-1.jpg" alt="" width="500" height="500">
+				 &lt;img src="small-1.jpg" alt="The president giving an award." width="500" height="500">
 				 &lt;p>Accessible text&lt;/p>
 			&lt;/picture>
 		</pre>
+
+		In this example,
+		the user agent first chooses which set of sources to look at,
+		depending on the size of the user’s screen.
+		Then it chooses which of the different-density sources to load,
+		based on information it knows about the user’s device.
+	</div>
+
+	<div class='example'>
+		If the final size of the <a element>img</a> element isn’t known ahead of time,
+		it can be difficult or impossible to specify a density descriptor for the image sources.
+		For example,
+		if an image is meant to take up the full width of the user’s screen,
+		an image that is 600 image pixels wide will be approximately ''2x'' on a small ''320px''-wide phone,
+		approximately ''1x'' on a larger tablet display,
+		and less than ''1x'' on a large desktop monitor.
+
+		To help with this,
+		rather than specifying the densities of each image source,
+		the sizes of each image source can be specified directly,
+		along with the size of the <a element>img</a> element.
+		The user agent will then automatically calculate the effective pixel density of the image
+		and choose which one to download accordingly.
+
+		<pre>
+			&lt;picture>
+				&lt;source sizes="100%" srcset="pic400.jpg 400w, pic800.jpg 800w, pic1600.jpg 1600w">
+				&lt;img alt="">
+			&lt;/picture>
+		</pre>
+
+		In this example, the image source is provided at three sizes--
+		400 pixels wide, 800 pixels wide, and 1600 pixels wide.
+		As well, it declares that the <a element>img</a> element is intrinsically sized to be as wide as the entire viewport.
+		If the user's device is ''320px'' wide,
+		this is equivalent to specifying ''pic400.jpg 1.25x, pic800.jpg 2.5x, pic1600.jpg 5x''.
+		On the other hand,
+		if the user's device is ''1200px'' wide,
+		this is equivalent to specifying ''pic400.jpg .33x, pic800.jpg .67x, pic1600.jpg 1.33x''.
+
+		With this information,
+		the user agent can choose the correct image source to download
+		regardless of how large the user's device is.
+	</div>
+
+	<div class='example'>
+		The previous example showed how to deal with the <a element>img</a> element’s size being unpredictable
+		because it was a fraction of the viewport’s size.
+		Sometimes, though, the size of an image can also change based on a site’s layout breakpoints.
+
+		For example, say your site had three basic layouts:
+
+		<figure>
+			<img src="images/viewport_selection_mob_first.jpg">
+			<figcaption>
+				Single-column (100%) on small screens,
+				two-column (50%) on medium screens,
+				and three-column (approximately 33%) on large screens.
+			</figcaption>
+		</figure>
+
+		Assuming that the same image is supposed to be used at all of these layouts
+		(that is, you aren't doing <a>art direction</a> cropping to optimize the display of the image for a given size),
+		then all of these cases can be addressed by a handful of images at various sizes.
+		In that case, the following code specifies the image's display:
+
+		<pre>
+			&lt;picture>
+				&lt;source sizes="(max-width: 30em) 100%, (max-width: 50em) 50%, calc(33% - 100px)"
+				        srcset="pic100.png 100, pic200.png 200, pic400.png 400,
+				                pic800.png 800, pic1600.png 1600, pic3200.png 3200">
+				&lt;img alt="">
+			&lt;/picture>
+		</pre>
+
+		The <a element-attr for="source">sizes</a> attribute sets up the layout breakpoints at ''30em'' and ''50em'',
+		and declares the image sizes between these breakpoints to be ''100%'', ''50%'', or ''calc(33% - 100px)''.
+
+		The six image sources provided automatically cover every reasonable possibility.
+		For small screens (phone size, or even smaller, like watches),
+		anything from the 100 pixel wide image to the 800 pixel wide image may be downloaded,
+		depending on screen size and density.
+		For medium and large screens,
+		anything from the 400 pixel wide image and up may be chosen.
+		The author doesn't have to do any math or complex figuring,
+		just provide the image in enough sizes to cover everything they believe reasonable.
+
+		Specifying this information with multiple <a element>source</a> elements,
+		one for each of the <a>media queries</a>,
+		is possible, but much more verbose,
+		as the <a element-attr for="source">srcset</a> attributes have to be duplicated for each of them.
 	</div>
 
 	<div class='example'>
