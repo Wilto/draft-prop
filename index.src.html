@@ -277,6 +277,10 @@ Relationship to <code>srcset</code></h3>
 	"http://usecases.responsiveimages.org/">use cases and requirements
 	for responsive images</a> (see [[!respimg-usecases]]).
 
+    Furthermore, this specification <a href="#parse-srcset-attr">extends the <code>srcset</code> attribute </a> to adequately address the <a href=
+    "http://usecases.responsiveimages.org/#h3_viewport-based-selection">
+	viewport based selection</a> use case.
+
 <h2 id='defs'>
 Definitions</h2>
 
@@ -445,8 +449,8 @@ Updating the List of Source Sets</h4>
 		but I'm keeping things simple for now.
 
 
-<h4 id='parse-src-attr'>
-Parsing a <code>src</code> Attribute</h4>
+<h4 id='parse-srcset-attr'>
+Parsing a <code>srcset</code> Attribute</h4>
 
 	When asked to <dfn title="parse a srcset attribute|parse its srcset attribute">parse a srcset attribute</dfn> from an element,
 	parse the value of the element's <code>srcset</code> attribute with the following grammar:
