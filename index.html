@@ -546,14 +546,14 @@ span.issue, span.note {
 </p>
   <h1 class="p-name no-ref" id=title>The picture Element</h1>
   <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
-    <span class=dt-updated><span class=value-title title=20131220>20 December 2013</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20131227>27 December 2013</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>This version:<dd><a class=u-url href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Editor’s Draft:<dd><a href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Test Suite:<dd>None Yet<dt>Editors:
 <dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://xanthir.com/contact/>Tab Atkins</a> (<span class="p-org org">Google</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:>Marcos Cáceres</a> (<span class="p-org org">Mozilla</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://matmarquis.com/>Mat Marquis</a><dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://blog.yoav.ws/>Yoav Weiss</a><dt>Version History:<dd><a href=https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages>Commit History</a><dd><a href=https://twitter.com/respimg_commits>Github commits on Twitter</a><dt>Participate:<dd><a href=http://w3c.responsiveimages.org>Join the Responsive Images Community Group</a><dd><a href=http://list.responsiveimages.org>Public Mailing List</a><dd><a href=irc://irc.w3.org:6665/#respimg>IRC: #respimg on W3C’s IRC</a><dd><a href=https://twitter.com/respimg>Twitter</a><dd><a href=https://github.com/ResponsiveImagesCG/picture-element>Github</a></dl></div>
   <div data-fill-with=warning></div>
   <p class=copyright data-fill-with=copyright><a href=http://creativecommons.org/publicdomain/zero/1.0/ rel=license><img alt=CC0 src=http://i.creativecommons.org/p/zero/1.0/80x15.png></a>
 To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 20 December 2013,
+In addition, as of 27 December 2013,
 the editors have made this specification available under the
 <a href=http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0 rel=license>Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
@@ -577,8 +577,8 @@ Definitions</a><li><a href=#the-picture-element><span class=secno>3</span>
 The <span data-link-type=element title=picture>picture</span> Element</a><ul class=toc><li><a href=#algos><span class=secno>3.1</span>
 Sub-Algorithms</a><ul class=toc><li><a href=#select-image-source><span class=secno>3.1.1</span>
 Selecting an Image Source</a><li><a href=#update-source-sets><span class=secno>3.1.2</span>
-Updating the List of Source Sets</a><li><a href=#parse-src-attr><span class=secno>3.1.3</span>
-Parsing a <code>src</code> Attribute</a><li><a href=#parse-sizes-attr><span class=secno>3.1.4</span>
+Updating the List of Source Sets</a><li><a href=#parse-srcset-attr><span class=secno>3.1.3</span>
+Parsing a <code>srcset</code> Attribute</a><li><a href=#parse-sizes-attr><span class=secno>3.1.4</span>
 Parsing a <code>sizes</code> Attribute</a><li><a href=#normalize-source-densities><span class=secno>3.1.5</span>
 Normalizing the Source Densities</a><li><a href=#find-effective-size><span class=secno>3.1.6</span>
 Finding the Effective Size</a></ul><li><a href=#preloader><span class=secno>3.2</span>
@@ -825,6 +825,9 @@ Relationship to <code>srcset</code></span><a class=self-link href=#relationship-
 	to address the complete set of <a href=http://usecases.responsiveimages.org/>use cases and requirements
 	for responsive images</a> (see <a data-biblio-type=normative data-link-type=biblio href=#respimg-usecases title=respimg-usecases>[respimg-usecases]</a>).
 
+<p>    Furthermore, this specification <a href=#parse-srcset-attr>extends the <code>srcset</code> attribute </a> to adequately address the <a href=http://usecases.responsiveimages.org/#h3_viewport-based-selection>
+	viewport based selection</a> use case.
+
 <h2 class="heading settled heading" data-level=2 id=defs><span class=secno>2 </span><span class=content>
 Definitions</span><a class=self-link href=#defs></a></h2>
 
@@ -991,8 +994,8 @@ Updating the List of Source Sets</span><a class=self-link href=#update-source-se
 		but I’m keeping things simple for now.
 
 
-<h4 class="heading settled heading" data-level=3.1.3 id=parse-src-attr><span class=secno>3.1.3 </span><span class=content>
-Parsing a <code>src</code> Attribute</span><a class=self-link href=#parse-src-attr></a></h4>
+<h4 class="heading settled heading" data-level=3.1.3 id=parse-srcset-attr><span class=secno>3.1.3 </span><span class=content>
+Parsing a <code>srcset</code> Attribute</span><a class=self-link href=#parse-srcset-attr></a></h4>
 
 <p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=parse-a-srcset-attribute title="parse a srcset attribute|parse its srcset attribute">parse a srcset attribute<a class=self-link href=#parse-a-srcset-attribute></a></dfn> from an element,
 	parse the value of the element’s <code>srcset</code> attribute with the following grammar:
