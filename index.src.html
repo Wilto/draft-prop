@@ -112,7 +112,6 @@ Examples of usage</h3>
 			&lt;picture>
 				 &lt;source media="(min-width: 45em)" srcset="large.jpg">
 				 &lt;source media="(min-width: 18em)" srcset="med.jpg">
-				 &lt;source srcset="small.jpg">
 				 &lt;img src="small.jpg" alt="The president giving an award." width="500" height="500">
 			&lt;/picture>
 		</pre>
@@ -311,7 +310,7 @@ The <a element>picture</a> Element</h2>
 
 	Note: <a element>picture</a> is somewhat different from the similar-looking elements <a element>video</a> and <a element>audio</a>.
 	While all of them contain <a element>source</a> elements,
-	the syntax of the <a element-attr for="source">src</a> attribute is different when the element is nested within <a element>picture</a>,
+	the syntax of the <a element-attr for="source">srcset</a> attribute is different when the element is nested within <a element>picture</a>,
 	and the resource selection algorithm is different.
 	As well,
 	the <a element>picture</a> element itself does not display anything;
@@ -396,8 +395,15 @@ Updating the List of Source Sets</h4>
 
 			<ol>
 				<li>
-					If <var>child</var> is an <a element>img</a> element,
-					exit this sub-algorithm.
+					If <var>child</var> is an <a element>img</a> element and it has a <a element-attr for="img">srcset</a> attribute,
+                    <a title="parse a srcset attribute">parse <var>child</var>’s srcset attribute</a> and add the returned <a>source set</a>
+                    to the end of the <a>list of source sets</a>.
+                    Then exit this sub-algorithm.
+				<li>
+					If <var>child</var> is an <a element>img</a> element and it has a <a element-attr for="img">src</a> attribute,
+                    <a title="parse a src attribute">parse <var>child</var>’s src attribute</a> and add the returned <a>source set</a>
+                    to the end of the <a>list of source sets</a>.
+                    Then exit this sub-algorithm.
 
 				<li>
 					If <var>child</var> is not a <a element>source</a> element,
@@ -405,7 +411,7 @@ Updating the List of Source Sets</h4>
 					Otherwise, <var>child</var> is a <a element>source</a> element.
 
 				<li>
-					If <var>child</var> does not have a <a element-attr for="source">src</a> attribute,
+					If <var>child</var> does not have a <a element-attr for="source">srcset</a> attribute,
 					continue to the next child.
 
 				<li>
@@ -496,6 +502,42 @@ Parsing a <code>srcset</code> Attribute</h4>
 
 	Then return <var>source set</var>.
 
+<h4 id='parse-src-attr'>
+Parsing a <code>src</code> Attribute</h4>
+
+	When asked to <dfn title="parse a src attribute|parse its src attribute">parse a src attribute</dfn> from an element,
+	parse the value of the element's <code>src</code> attribute with the following grammar:
+
+	<pre>
+		<dfn>&lt;image-src></dfn> = <<src-url>>
+	</pre>
+
+	The above grammar must be interpreted per the grammar definition in [[!CSS3VAL]].
+	F=r the purposes of the above grammar,
+	the <dfn noexport>&lt;src-url></dfn> production is simply any sequence of non-<a>whitespace</a> characters
+	that does not end in a comma.
+	All other terminal productions are defined as per CSS.
+
+	If the value does not parse successfully according to the above grammar,
+	return an empty <a>source set</a>.
+
+	Otherwise,
+	let <var>source set</var> initially be an empty <a>source set</a>.
+	For each <<image-source>> parsed,
+	do the following:
+
+	<ol>
+		<li>
+			Let <var>source</var> be a fresh <a>image source</a>.
+
+		<li>
+			Set <var>source</var>’s URL to the parsed <<url>>.
+
+		<li>
+			Append <var>source</var> to <var>source set</var>.
+	</ol>
+
+	Then return <var>source set</var>.
 
 <h4 id='parse-sizes-attr'>
 Parsing a <code>sizes</code> Attribute</h4>
