@@ -546,14 +546,14 @@ span.issue, span.note {
 </p>
   <h1 class="p-name no-ref" id=title>The picture Element</h1>
   <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
-    <span class=dt-updated><span class=value-title title=20140101>1 January 2014</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20140102>2 January 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>This version:<dd><a class=u-url href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Editor’s Draft:<dd><a href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Test Suite:<dd>None Yet<dt>Editors:
 <dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://xanthir.com/contact/>Tab Atkins</a> (<span class="p-org org">Google</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:>Marcos Cáceres</a> (<span class="p-org org">Mozilla</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://matmarquis.com/>Mat Marquis</a><dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://blog.yoav.ws/>Yoav Weiss</a><dt>Version History:<dd><a href=https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages>Commit History</a><dd><a href=https://twitter.com/respimg_commits>Github commits on Twitter</a><dt>Participate:<dd><a href=http://w3c.responsiveimages.org>Join the Responsive Images Community Group</a><dd><a href=http://list.responsiveimages.org>Public Mailing List</a><dd><a href=irc://irc.w3.org:6665/#respimg>IRC: #respimg on W3C’s IRC</a><dd><a href=https://twitter.com/respimg>Twitter</a><dd><a href=https://github.com/ResponsiveImagesCG/picture-element>Github</a></dl></div>
   <div data-fill-with=warning></div>
   <p class=copyright data-fill-with=copyright><a href=http://creativecommons.org/publicdomain/zero/1.0/ rel=license><img alt=CC0 src=http://i.creativecommons.org/p/zero/1.0/80x15.png></a>
 To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 1 January 2014,
+In addition, as of 2 January 2014,
 the editors have made this specification available under the
 <a href=http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0 rel=license>Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
@@ -578,10 +578,9 @@ The <span data-link-type=element title=picture>picture</span> Element</a><ul cla
 Sub-Algorithms</a><ul class=toc><li><a href=#select-image-source><span class=secno>3.1.1</span>
 Selecting an Image Source</a><li><a href=#update-source-sets><span class=secno>3.1.2</span>
 Updating the List of Source Sets</a><li><a href=#parse-srcset-attr><span class=secno>3.1.3</span>
-Parsing a <code>srcset</code> Attribute</a><li><a href=#parse-src-attr><span class=secno>3.1.4</span>
-Parsing a <code>src</code> Attribute</a><li><a href=#parse-sizes-attr><span class=secno>3.1.5</span>
-Parsing a <code>sizes</code> Attribute</a><li><a href=#normalize-source-densities><span class=secno>3.1.6</span>
-Normalizing the Source Densities</a><li><a href=#find-effective-size><span class=secno>3.1.7</span>
+Parsing a <code>srcset</code> Attribute</a><li><a href=#parse-sizes-attr><span class=secno>3.1.4</span>
+Parsing a <code>sizes</code> Attribute</a><li><a href=#normalize-source-densities><span class=secno>3.1.5</span>
+Normalizing the Source Densities</a><li><a href=#find-effective-size><span class=secno>3.1.6</span>
 Finding the Effective Size</a></ul><li><a href=#preloader><span class=secno>3.2</span>
 Interaction with the Preload Scanner</a><li><a href=#picture-idl><span class=secno>3.3</span>
 <code>HTMLPictureElement</code> interface</a></ul><li><a href=#the-source-element><span class=secno>4</span>
@@ -825,7 +824,7 @@ Relationship to <code>srcset</code></span><a class=self-link href=#relationship-
 	to address the complete set of <a href=http://usecases.responsiveimages.org/>use cases and requirements
 	for responsive images</a> (see <a data-biblio-type=normative data-link-type=biblio href=#respimg-usecases title=respimg-usecases>[respimg-usecases]</a>).
 
-<p>    Furthermore, this specification <a href=#parse-srcset-attr>extends the <code>srcset</code> attribute </a> to adequately address the <a href=http://usecases.responsiveimages.org/#h3_viewport-based-selection>
+<p>	Furthermore, this specification <a href=#parse-srcset-attr>extends the <code>srcset</code> attribute </a> to adequately address the <a href=http://usecases.responsiveimages.org/#h3_viewport-based-selection>
 	viewport based selection</a> use case.
 
 <h2 class="heading settled heading" data-level=2 id=defs><span class=secno>2 </span><span class=content>
@@ -856,7 +855,7 @@ Attributes: Global attributes
 
 <p class=note>	Note: <a data-link-type=element href=#elementdef-picture title=picture>picture</a> is somewhat different from the similar-looking elements <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#video title=video>video</a> and <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#audio title=audio>audio</a>.
 	While all of them contain <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> elements,
-	the syntax of the <a data-link-for=source data-link-type=element-attr href=#element-attrdef-srcset title=srcset>srcset</a> attribute is different when the element is nested within <a data-link-type=element href=#elementdef-picture title=picture>picture</a>,
+	the <a data-link-for=source data-link-type=element-attr title=src>src</a> attribute has no meaning when the element is nested within <a data-link-type=element href=#elementdef-picture title=picture>picture</a>,
 	and the resource selection algorithm is different.
 	As well,
 	the <a data-link-type=element href=#elementdef-picture title=picture>picture</a> element itself does not display anything;
@@ -942,14 +941,14 @@ Updating the List of Source Sets</span><a class=self-link href=#update-source-se
 			<ol>
 				<li>
 					If <var>child</var> is an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element and it has a <a data-link-for=img data-link-type=element-attr title=srcset>srcset</a> attribute,
-                    <a data-link-type=dfn href=#parse-a-srcset-attribute title="parse a srcset attribute">parse <var>child</var>’s srcset attribute</a> and add the returned <a data-link-type=dfn href=#source-set title="source set">source set</a>
-                    to the end of the <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>.
-                    Then exit this sub-algorithm.
+					<a data-link-type=dfn href=#parse-a-srcset-attribute title="parse a srcset attribute">parse <var>child</var>’s srcset attribute</a> and add the returned <a data-link-type=dfn href=#source-set title="source set">source set</a>
+					to the end of the <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>.
+					Then exit this sub-algorithm.
 				<li>
 					If <var>child</var> is an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element and it has a <a data-link-for=img data-link-type=element-attr title=src>src</a> attribute,
-                    <a data-link-type=dfn href=#parse-a-src-attribute title="parse a src attribute">parse <var>child</var>’s src attribute</a> and add the returned <a data-link-type=dfn href=#source-set title="source set">source set</a>
-                    to the end of the <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>.
-                    Then exit this sub-algorithm.
+					create an empty <a data-link-type=dfn href=#source-set title="source set">source set</a>, append the <var>child</var>’s src attribute value to the <a data-link-type=dfn href=#source-set title="source set">source set</a>
+					and add the <a data-link-type=dfn href=#source-set title="source set">source set</a> to the end of the <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>.
+					Then exit this sub-algorithm.
 
 				<li>
 					If <var>child</var> is not a <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> element,
@@ -1046,42 +1045,7 @@ Parsing a <code>srcset</code> Attribute</span><a class=self-link href=#parse-src
 
 <p>	Then return <var>source set</var>.
 
-<h4 class="heading settled heading" data-level=3.1.4 id=parse-src-attr><span class=secno>3.1.4 </span><span class=content>
-Parsing a <code>src</code> Attribute</span><a class=self-link href=#parse-src-attr></a></h4>
-
-<p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=parse-a-src-attribute title="parse a src attribute|parse its src attribute">parse a src attribute<a class=self-link href=#parse-a-src-attribute></a></dfn> from an element,
-	parse the value of the element’s <code>src</code> attribute with the following grammar:
-
-	<pre>  <dfn class=css-code data-dfn-type=type data-export="" id=typedef-image-src>&lt;image-src&gt;<a class=self-link href=#typedef-image-src></a></dfn> = <a class="production css-code" data-link-type=type href=#typedef-src-url title="<src-url>">&lt;src-url&gt;</a>
-</pre>
-<p>	The above grammar must be interpreted per the grammar definition in <a data-biblio-type=normative data-link-type=biblio href=#css3val title=css3val>[CSS3VAL]</a>.
-	F=r the purposes of the above grammar,
-	the <dfn class=css-code data-dfn-type=type data-noexport="" id=typedef-src-url>&lt;src-url&gt;<a class=self-link href=#typedef-src-url></a></dfn> production is simply any sequence of non-<a data-link-type=dfn href=http://dev.w3.org/csswg/css-syntax-3/#whitespace title=whitespace>whitespace</a> characters
-	that does not end in a comma.
-	All other terminal productions are defined as per CSS.
-
-<p>	If the value does not parse successfully according to the above grammar,
-	return an empty <a data-link-type=dfn href=#source-set title="source set">source set</a>.
-
-<p>	Otherwise,
-	let <var>source set</var> initially be an empty <a data-link-type=dfn href=#source-set title="source set">source set</a>.
-	For each <a class="production css-code" data-link-type=type href=#typedef-image-source title="<image-source>">&lt;image-source&gt;</a> parsed,
-	do the following:
-
-	<ol>
-		<li>
-			Let <var>source</var> be a fresh <a data-link-type=dfn href=#image-source title="image source">image source</a>.
-
-		<li>
-			Set <var>source</var>’s URL to the parsed <a class="production css-code" data-link-type=type href=#typedef-url title="<url>">&lt;url&gt;</a>.
-
-		<li>
-			Append <var>source</var> to <var>source set</var>.
-	</ol>
-
-<p>	Then return <var>source set</var>.
-
-<h4 class="heading settled heading" data-level=3.1.5 id=parse-sizes-attr><span class=secno>3.1.5 </span><span class=content>
+<h4 class="heading settled heading" data-level=3.1.4 id=parse-sizes-attr><span class=secno>3.1.4 </span><span class=content>
 Parsing a <code>sizes</code> Attribute</span><a class=self-link href=#parse-sizes-attr></a></h4>
 
 <p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=parse-a-sizes-attribute title="parse a sizes attribute|parse its sizes attribute">parse a sizes attribute<a class=self-link href=#parse-a-sizes-attribute></a></dfn> from an element,
@@ -1117,7 +1081,7 @@ Parsing a <code>sizes</code> Attribute</span><a class=self-link href=#parse-size
 			and append it to <var>source size list</var>.
 	</ol>
 
-<h4 class="heading settled heading" data-level=3.1.6 id=normalize-source-densities><span class=secno>3.1.6 </span><span class=content>
+<h4 class="heading settled heading" data-level=3.1.5 id=normalize-source-densities><span class=secno>3.1.5 </span><span class=content>
 Normalizing the Source Densities</span><a class=self-link href=#normalize-source-densities></a></h4>
 
 <p>	An <a data-link-type=dfn href=#image-source title="image source">image source</a> can have a density descriptor,
@@ -1154,7 +1118,7 @@ Normalizing the Source Densities</span><a class=self-link href=#normalize-source
 	</ol>
 
 
-<h4 class="heading settled heading" data-level=3.1.7 id=find-effective-size><span class=secno>3.1.7 </span><span class=content>
+<h4 class="heading settled heading" data-level=3.1.6 id=find-effective-size><span class=secno>3.1.6 </span><span class=content>
 Finding the Effective Size</span><a class=self-link href=#find-effective-size></a></h4>
 
 <p>	When asked to <dfn data-dfn-type=dfn data-noexport="" id=find-the-effective-size>find the effective size<a class=self-link href=#find-the-effective-size></a></dfn> from a <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a> <var>list</var>,
@@ -1292,33 +1256,29 @@ Informative References</span><a class=self-link href=#informative></a></h3>
 Index</span><a class=self-link href=#index></a></h2>
 <div data-fill-with=index><ul class=indexlist>
 <li>fallback content, <a href=#dfn-fallback-content title="section 2">2</a>
-<li>find the effective size, <a href=#find-the-effective-size title="section 3.1.7">3.1.7</a>
+<li>find the effective size, <a href=#find-the-effective-size title="section 3.1.6">3.1.6</a>
 <li>HTMLPictureElement, <a href=#dom-htmlpictureelement title="section 3.3">3.3</a>
 <li>image source, <a href=#image-source title="section 3">3</a>
 <li>&lt;image-source&gt;, <a href=#typedef-image-source title="section 3.1.3">3.1.3</a>
 <li>&lt;image-source-list&gt;, <a href=#typedef-image-source-list title="section 3.1.3">3.1.3</a>
-<li>&lt;image-src&gt;, <a href=#typedef-image-src title="section 3.1.4">3.1.4</a>
 <li>list of source sets, <a href=#list-of-source-sets title="section 3">3</a>
-<li>normalize the source densities, <a href=#normalize-the-source-densities title="section 3.1.6">3.1.6</a>
-<li>parse a sizes attribute, <a href=#parse-a-sizes-attribute title="section 3.1.5">3.1.5</a>
-<li>parse a src attribute, <a href=#parse-a-src-attribute title="section 3.1.4">3.1.4</a>
+<li>normalize the source densities, <a href=#normalize-the-source-densities title="section 3.1.5">3.1.5</a>
+<li>parse a sizes attribute, <a href=#parse-a-sizes-attribute title="section 3.1.4">3.1.4</a>
 <li>parse a srcset attribute, <a href=#parse-a-srcset-attribute title="section 3.1.3">3.1.3</a>
-<li>parse its sizes attribute, <a href=#parse-a-sizes-attribute title="section 3.1.5">3.1.5</a>
-<li>parse its src attribute, <a href=#parse-a-src-attribute title="section 3.1.4">3.1.4</a>
+<li>parse its sizes attribute, <a href=#parse-a-sizes-attribute title="section 3.1.4">3.1.4</a>
 <li>parse its srcset attribute, <a href=#parse-a-srcset-attribute title="section 3.1.3">3.1.3</a>
 <li>picture, <a href=#elementdef-picture title="section 3">3</a>
 <li>select an image source, <a href=#select-an-image-source title="section 3.1.1">3.1.1</a>
 <li>sizes<ul><li>element-attr for source, <a href=#element-attrdef-sizes title="section 4">4</a>
 <li>attribute for HTMLSourceElement, <a href=#dom-htmlsourceelement-sizes title="section 4">4</a>
 </ul><li>source set, <a href=#source-set title="section 3">3</a>
-<li>&lt;source-size&gt;, <a href=#typedef-source-size title="section 3.1.5">3.1.5</a>
-<li>&lt;source-size-list&gt;, <a href=#typedef-source-size-list title="section 3.1.5">3.1.5</a>
+<li>&lt;source-size&gt;, <a href=#typedef-source-size title="section 3.1.4">3.1.4</a>
+<li>&lt;source-size-list&gt;, <a href=#typedef-source-size-list title="section 3.1.4">3.1.4</a>
 <li>source size list, <a href=#source-size-list title="section 3">3</a>
 <li>&lt;source-width&gt;, <a href=#typedef-source-width title="section 3.1.3">3.1.3</a>
 <li>srcset<ul><li>element-attr for source, <a href=#element-attrdef-srcset title="section 4">4</a>
 <li>attribute for HTMLSourceElement, <a href=#dom-htmlsourceelement-srcset title="section 4">4</a>
-</ul><li>&lt;src-url&gt;, <a href=#typedef-src-url title="section 3.1.4">3.1.4</a>
-<li>update the list of source sets, <a href=#update-the-list-of-source-sets title="section 3.1.2">3.1.2</a>
+</ul><li>update the list of source sets, <a href=#update-the-list-of-source-sets title="section 3.1.2">3.1.2</a>
 <li>&lt;url&gt;, <a href=#typedef-url title="section 3.1.3">3.1.3</a>
 <li>valid media query, <a href=#dfn-valid-media-query title="section 2">2</a>
 </ul></div>

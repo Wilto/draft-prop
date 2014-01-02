@@ -203,8 +203,8 @@ Examples of usage</h3>
 		<pre>
 			&lt;picture>
 				&lt;source sizes="(max-width: 30em) 100%, (max-width: 50em) 50%, calc(33% - 100px)"
-				        srcset="pic100.png 100, pic200.png 200, pic400.png 400,
-				                pic800.png 800, pic1600.png 1600, pic3200.png 3200">
+								srcset="pic100.png 100, pic200.png 200, pic400.png 400,
+												pic800.png 800, pic1600.png 1600, pic3200.png 3200">
 				&lt;img alt="">
 			&lt;/picture>
 		</pre>
@@ -276,8 +276,8 @@ Relationship to <code>srcset</code></h3>
 	"http://usecases.responsiveimages.org/">use cases and requirements
 	for responsive images</a> (see [[!respimg-usecases]]).
 
-    Furthermore, this specification <a href="#parse-srcset-attr">extends the <code>srcset</code> attribute </a> to adequately address the <a href=
-    "http://usecases.responsiveimages.org/#h3_viewport-based-selection">
+	Furthermore, this specification <a href="#parse-srcset-attr">extends the <code>srcset</code> attribute </a> to adequately address the <a href=
+	"http://usecases.responsiveimages.org/#h3_viewport-based-selection">
 	viewport based selection</a> use case.
 
 <h2 id='defs'>
@@ -310,7 +310,7 @@ The <a element>picture</a> Element</h2>
 
 	Note: <a element>picture</a> is somewhat different from the similar-looking elements <a element>video</a> and <a element>audio</a>.
 	While all of them contain <a element>source</a> elements,
-	the syntax of the <a element-attr for="source">srcset</a> attribute is different when the element is nested within <a element>picture</a>,
+	the <a element-attr for="source">src</a> attribute has no meaning when the element is nested within <a element>picture</a>,
 	and the resource selection algorithm is different.
 	As well,
 	the <a element>picture</a> element itself does not display anything;
@@ -396,14 +396,14 @@ Updating the List of Source Sets</h4>
 			<ol>
 				<li>
 					If <var>child</var> is an <a element>img</a> element and it has a <a element-attr for="img">srcset</a> attribute,
-                    <a title="parse a srcset attribute">parse <var>child</var>’s srcset attribute</a> and add the returned <a>source set</a>
-                    to the end of the <a>list of source sets</a>.
-                    Then exit this sub-algorithm.
+					<a title="parse a srcset attribute">parse <var>child</var>’s srcset attribute</a> and add the returned <a>source set</a>
+					to the end of the <a>list of source sets</a>.
+					Then exit this sub-algorithm.
 				<li>
 					If <var>child</var> is an <a element>img</a> element and it has a <a element-attr for="img">src</a> attribute,
-                    <a title="parse a src attribute">parse <var>child</var>’s src attribute</a> and add the returned <a>source set</a>
-                    to the end of the <a>list of source sets</a>.
-                    Then exit this sub-algorithm.
+					create an empty <a>source set</a>, append the <var>child</var>'s src attribute value to the <a>source set</a>
+					and add the <a>source set</a> to the end of the <a>list of source sets</a>.
+					Then exit this sub-algorithm.
 
 				<li>
 					If <var>child</var> is not a <a element>source</a> element,
@@ -495,43 +495,6 @@ Parsing a <code>srcset</code> Attribute</h4>
 		<li>
 			If a <<source-width>> was parsed,
 			set <var>source</var>’s width descriptor to the <<source-width>>’s value.
-
-		<li>
-			Append <var>source</var> to <var>source set</var>.
-	</ol>
-
-	Then return <var>source set</var>.
-
-<h4 id='parse-src-attr'>
-Parsing a <code>src</code> Attribute</h4>
-
-	When asked to <dfn title="parse a src attribute|parse its src attribute">parse a src attribute</dfn> from an element,
-	parse the value of the element's <code>src</code> attribute with the following grammar:
-
-	<pre>
-		<dfn>&lt;image-src></dfn> = <<src-url>>
-	</pre>
-
-	The above grammar must be interpreted per the grammar definition in [[!CSS3VAL]].
-	F=r the purposes of the above grammar,
-	the <dfn noexport>&lt;src-url></dfn> production is simply any sequence of non-<a>whitespace</a> characters
-	that does not end in a comma.
-	All other terminal productions are defined as per CSS.
-
-	If the value does not parse successfully according to the above grammar,
-	return an empty <a>source set</a>.
-
-	Otherwise,
-	let <var>source set</var> initially be an empty <a>source set</a>.
-	For each <<image-source>> parsed,
-	do the following:
-
-	<ol>
-		<li>
-			Let <var>source</var> be a fresh <a>image source</a>.
-
-		<li>
-			Set <var>source</var>’s URL to the parsed <<url>>.
 
 		<li>
 			Append <var>source</var> to <var>source set</var>.
