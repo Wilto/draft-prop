@@ -692,7 +692,6 @@ Examples of usage</span><a class=self-link href=#examples></a></h3>
      &lt;source media="(min-width: 18em)" srcset="med-1.jpg, med-2.jpg 2x"&gt;
      &lt;source srcset="small-1.jpg, small-2.jpg 2x"&gt;
      &lt;img src="small-1.jpg" alt="The president giving an award." width="500" height="500"&gt;
-     &lt;p&gt;Accessible text&lt;/p&gt;
   &lt;/picture&gt;
 </pre>
 <p>		In this example,
@@ -720,7 +719,7 @@ Examples of usage</span><a class=self-link href=#examples></a></h3>
 
 		<pre>  &lt;picture&gt;
     &lt;source sizes="100%" srcset="pic400.jpg 400w, pic800.jpg 800w, pic1600.jpg 1600w"&gt;
-    &lt;img alt=""&gt;
+    &lt;img src="pic400.jpg" alt="The president giving an award."&gt;
   &lt;/picture&gt;
 </pre>
 <p>		In this example, the image source is provided at three sizes—<wbr></wbr>400 pixels wide, 800 pixels wide, and 1600 pixels wide.
@@ -759,9 +758,9 @@ Examples of usage</span><a class=self-link href=#examples></a></h3>
 
 		<pre>  &lt;picture&gt;
     &lt;source sizes="(max-width: 30em) 100%, (max-width: 50em) 50%, calc(33% - 100px)"
-            srcset="pic100.png 100, pic200.png 200, pic400.png 400,
-                    pic800.png 800, pic1600.png 1600, pic3200.png 3200"&gt;
-    &lt;img alt=""&gt;
+            srcset="pic100.png 100w, pic200.png 200w, pic400.png 400w,
+                    pic800.png 800w, pic1600.png 1600w, pic3200.png 3200w"&gt;
+    &lt;img src="pic400.jpg" alt="The president giving an award."&gt;
   &lt;/picture&gt;
 </pre>
 <p>		The <a data-link-for=source data-link-type=element-attr href=#element-attrdef-sizes title=sizes>sizes</a> attribute sets up the layout breakpoints at <span class=css data-link-type=maybe title=30em>30em</span> and <span class=css data-link-type=maybe title=50em>50em</span>,
