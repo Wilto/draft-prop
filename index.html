@@ -546,14 +546,14 @@ span.issue, span.note {
 </p>
   <h1 class="p-name no-ref" id=title>The picture Element</h1>
   <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
-    <span class=dt-updated><span class=value-title title=20131231>31 December 2013</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20140102>2 January 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>This version:<dd><a class=u-url href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Editor’s Draft:<dd><a href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Test Suite:<dd>None Yet<dt>Editors:
 <dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://xanthir.com/contact/>Tab Atkins</a> (<span class="p-org org">Google</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:>Marcos Cáceres</a> (<span class="p-org org">Mozilla</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://matmarquis.com/>Mat Marquis</a><dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://blog.yoav.ws/>Yoav Weiss</a><dt>Version History:<dd><a href=https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages>Commit History</a><dd><a href=https://twitter.com/respimg_commits>Github commits on Twitter</a><dt>Participate:<dd><a href=http://w3c.responsiveimages.org>Join the Responsive Images Community Group</a><dd><a href=http://list.responsiveimages.org>Public Mailing List</a><dd><a href=irc://irc.w3.org:6665/#respimg>IRC: #respimg on W3C’s IRC</a><dd><a href=https://twitter.com/respimg>Twitter</a><dd><a href=https://github.com/ResponsiveImagesCG/picture-element>Github</a></dl></div>
   <div data-fill-with=warning></div>
   <p class=copyright data-fill-with=copyright><a href=http://creativecommons.org/publicdomain/zero/1.0/ rel=license><img alt=CC0 src=http://i.creativecommons.org/p/zero/1.0/80x15.png></a>
 To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 31 December 2013,
+In addition, as of 2 January 2014,
 the editors have made this specification available under the
 <a href=http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0 rel=license>Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
@@ -693,7 +693,6 @@ Examples of usage</span><a class=self-link href=#examples></a></h3>
      &lt;source media="(min-width: 18em)" srcset="med-1.jpg, med-2.jpg 2x"&gt;
      &lt;source srcset="small-1.jpg, small-2.jpg 2x"&gt;
      &lt;img src="small-1.jpg" alt="The president giving an award." width="500" height="500"&gt;
-     &lt;p&gt;Accessible text&lt;/p&gt;
   &lt;/picture&gt;
 </pre>
 <p>		In this example,
@@ -721,7 +720,7 @@ Examples of usage</span><a class=self-link href=#examples></a></h3>
 
 		<pre>  &lt;picture&gt;
     &lt;source sizes="100%" srcset="pic400.jpg 400w, pic800.jpg 800w, pic1600.jpg 1600w"&gt;
-    &lt;img alt=""&gt;
+    &lt;img src="pic400.jpg" alt="The president giving an award."&gt;
   &lt;/picture&gt;
 </pre>
 <p>		In this example, the image source is provided at three sizes—<wbr></wbr>400 pixels wide, 800 pixels wide, and 1600 pixels wide.
@@ -760,9 +759,9 @@ Examples of usage</span><a class=self-link href=#examples></a></h3>
 
 		<pre>  &lt;picture&gt;
     &lt;source sizes="(max-width: 30em) 100%, (max-width: 50em) 50%, calc(33% - 100px)"
-            srcset="pic100.png 100, pic200.png 200, pic400.png 400,
-                    pic800.png 800, pic1600.png 1600, pic3200.png 3200"&gt;
-    &lt;img alt=""&gt;
+            srcset="pic100.png 100w, pic200.png 200w, pic400.png 400w,
+                    pic800.png 800w, pic1600.png 1600w, pic3200.png 3200w"&gt;
+    &lt;img src="pic400.jpg" alt="The president giving an award."&gt;
   &lt;/picture&gt;
 </pre>
 <p>		The <a data-link-for=source data-link-type=element-attr href=#element-attrdef-sizes title=sizes>sizes</a> attribute sets up the layout breakpoints at <span class=css data-link-type=maybe title=30em>30em</span> and <span class=css data-link-type=maybe title=50em>50em</span>,

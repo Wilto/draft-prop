@@ -132,7 +132,6 @@ Examples of usage</h3>
 				 &lt;source media="(min-width: 18em)" srcset="med-1.jpg, med-2.jpg 2x">
 				 &lt;source srcset="small-1.jpg, small-2.jpg 2x">
 				 &lt;img src="small-1.jpg" alt="The president giving an award." width="500" height="500">
-				 &lt;p>Accessible text&lt;/p>
 			&lt;/picture>
 		</pre>
 
@@ -162,7 +161,7 @@ Examples of usage</h3>
 		<pre>
 			&lt;picture>
 				&lt;source sizes="100%" srcset="pic400.jpg 400w, pic800.jpg 800w, pic1600.jpg 1600w">
-				&lt;img alt="">
+				&lt;img src="pic400.jpg" alt="The president giving an award.">
 			&lt;/picture>
 		</pre>
 
@@ -204,9 +203,9 @@ Examples of usage</h3>
 		<pre>
 			&lt;picture>
 				&lt;source sizes="(max-width: 30em) 100%, (max-width: 50em) 50%, calc(33% - 100px)"
-				        srcset="pic100.png 100, pic200.png 200, pic400.png 400,
-				                pic800.png 800, pic1600.png 1600, pic3200.png 3200">
-				&lt;img alt="">
+				        srcset="pic100.png 100w, pic200.png 200w, pic400.png 400w,
+				                pic800.png 800w, pic1600.png 1600w, pic3200.png 3200w">
+				&lt;img src="pic400.jpg" alt="The president giving an award.">
 			&lt;/picture>
 		</pre>
 
