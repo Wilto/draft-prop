@@ -112,7 +112,6 @@ Examples of usage</h3>
 			&lt;picture>
 				 &lt;source media="(min-width: 45em)" srcset="large.jpg">
 				 &lt;source media="(min-width: 18em)" srcset="med.jpg">
-				 &lt;source srcset="small.jpg">
 				 &lt;img src="small.jpg" alt="The president giving an award." width="500" height="500">
 			&lt;/picture>
 		</pre>
@@ -204,8 +203,8 @@ Examples of usage</h3>
 		<pre>
 			&lt;picture>
 				&lt;source sizes="(max-width: 30em) 100%, (max-width: 50em) 50%, calc(33% - 100px)"
-				        srcset="pic100.png 100, pic200.png 200, pic400.png 400,
-				                pic800.png 800, pic1600.png 1600, pic3200.png 3200">
+								srcset="pic100.png 100, pic200.png 200, pic400.png 400,
+												pic800.png 800, pic1600.png 1600, pic3200.png 3200">
 				&lt;img alt="">
 			&lt;/picture>
 		</pre>
@@ -277,8 +276,8 @@ Relationship to <code>srcset</code></h3>
 	"http://usecases.responsiveimages.org/">use cases and requirements
 	for responsive images</a> (see [[!respimg-usecases]]).
 
-    Furthermore, this specification <a href="#parse-srcset-attr">extends the <code>srcset</code> attribute </a> to adequately address the <a href=
-    "http://usecases.responsiveimages.org/#h3_viewport-based-selection">
+	Furthermore, this specification <a href="#parse-srcset-attr">extends the <code>srcset</code> attribute </a> to adequately address the <a href=
+	"http://usecases.responsiveimages.org/#h3_viewport-based-selection">
 	viewport based selection</a> use case.
 
 <h2 id='defs'>
@@ -311,7 +310,7 @@ The <a element>picture</a> Element</h2>
 
 	Note: <a element>picture</a> is somewhat different from the similar-looking elements <a element>video</a> and <a element>audio</a>.
 	While all of them contain <a element>source</a> elements,
-	the syntax of the <a element-attr for="source">src</a> attribute is different when the element is nested within <a element>picture</a>,
+	the <a element-attr for="source">src</a> attribute has no meaning when the element is nested within <a element>picture</a>,
 	and the resource selection algorithm is different.
 	As well,
 	the <a element>picture</a> element itself does not display anything;
@@ -396,8 +395,15 @@ Updating the List of Source Sets</h4>
 
 			<ol>
 				<li>
-					If <var>child</var> is an <a element>img</a> element,
-					exit this sub-algorithm.
+					If <var>child</var> is an <a element>img</a> element and it has a <a element-attr for="img">srcset</a> attribute,
+					<a title="parse a srcset attribute">parse <var>child</var>’s srcset attribute</a> and add the returned <a>source set</a>
+					to the end of the <a>list of source sets</a>.
+					Then exit this sub-algorithm.
+				<li>
+					If <var>child</var> is an <a element>img</a> element and it has a <a element-attr for="img">src</a> attribute,
+					create an empty <a>source set</a>, append the <var>child</var>'s src attribute value to the <a>source set</a>
+					and add the <a>source set</a> to the end of the <a>list of source sets</a>.
+					Then exit this sub-algorithm.
 
 				<li>
 					If <var>child</var> is not a <a element>source</a> element,
@@ -405,7 +411,7 @@ Updating the List of Source Sets</h4>
 					Otherwise, <var>child</var> is a <a element>source</a> element.
 
 				<li>
-					If <var>child</var> does not have a <a element-attr for="source">src</a> attribute,
+					If <var>child</var> does not have a <a element-attr for="source">srcset</a> attribute,
 					continue to the next child.
 
 				<li>
@@ -495,7 +501,6 @@ Parsing a <code>srcset</code> Attribute</h4>
 	</ol>
 
 	Then return <var>source set</var>.
-
 
 <h4 id='parse-sizes-attr'>
 Parsing a <code>sizes</code> Attribute</h4>

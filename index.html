@@ -546,14 +546,14 @@ span.issue, span.note {
 </p>
   <h1 class="p-name no-ref" id=title>The picture Element</h1>
   <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
-    <span class=dt-updated><span class=value-title title=20131231>31 December 2013</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20140102>2 January 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>This version:<dd><a class=u-url href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Editor’s Draft:<dd><a href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Test Suite:<dd>None Yet<dt>Editors:
 <dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://xanthir.com/contact/>Tab Atkins</a> (<span class="p-org org">Google</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:>Marcos Cáceres</a> (<span class="p-org org">Mozilla</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://matmarquis.com/>Mat Marquis</a><dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://blog.yoav.ws/>Yoav Weiss</a><dt>Version History:<dd><a href=https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages>Commit History</a><dd><a href=https://twitter.com/respimg_commits>Github commits on Twitter</a><dt>Participate:<dd><a href=http://w3c.responsiveimages.org>Join the Responsive Images Community Group</a><dd><a href=http://list.responsiveimages.org>Public Mailing List</a><dd><a href=irc://irc.w3.org:6665/#respimg>IRC: #respimg on W3C’s IRC</a><dd><a href=https://twitter.com/respimg>Twitter</a><dd><a href=https://github.com/ResponsiveImagesCG/picture-element>Github</a></dl></div>
   <div data-fill-with=warning></div>
   <p class=copyright data-fill-with=copyright><a href=http://creativecommons.org/publicdomain/zero/1.0/ rel=license><img alt=CC0 src=http://i.creativecommons.org/p/zero/1.0/80x15.png></a>
 To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 31 December 2013,
+In addition, as of 2 January 2014,
 the editors have made this specification available under the
 <a href=http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0 rel=license>Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
@@ -675,7 +675,6 @@ Examples of usage</span><a class=self-link href=#examples></a></h3>
 		<pre>  &lt;picture&gt;
      &lt;source media="(min-width: 45em)" srcset="large.jpg"&gt;
      &lt;source media="(min-width: 18em)" srcset="med.jpg"&gt;
-     &lt;source srcset="small.jpg"&gt;
      &lt;img src="small.jpg" alt="The president giving an award." width="500" height="500"&gt;
   &lt;/picture&gt;
 </pre>
@@ -825,7 +824,7 @@ Relationship to <code>srcset</code></span><a class=self-link href=#relationship-
 	to address the complete set of <a href=http://usecases.responsiveimages.org/>use cases and requirements
 	for responsive images</a> (see <a data-biblio-type=normative data-link-type=biblio href=#respimg-usecases title=respimg-usecases>[respimg-usecases]</a>).
 
-<p>    Furthermore, this specification <a href=#parse-srcset-attr>extends the <code>srcset</code> attribute </a> to adequately address the <a href=http://usecases.responsiveimages.org/#h3_viewport-based-selection>
+<p>	Furthermore, this specification <a href=#parse-srcset-attr>extends the <code>srcset</code> attribute </a> to adequately address the <a href=http://usecases.responsiveimages.org/#h3_viewport-based-selection>
 	viewport based selection</a> use case.
 
 <h2 class="heading settled heading" data-level=2 id=defs><span class=secno>2 </span><span class=content>
@@ -856,7 +855,7 @@ Attributes: Global attributes
 
 <p class=note>	Note: <a data-link-type=element href=#elementdef-picture title=picture>picture</a> is somewhat different from the similar-looking elements <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#video title=video>video</a> and <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#audio title=audio>audio</a>.
 	While all of them contain <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> elements,
-	the syntax of the <a data-link-for=source data-link-type=element-attr title=src>src</a> attribute is different when the element is nested within <a data-link-type=element href=#elementdef-picture title=picture>picture</a>,
+	the <a data-link-for=source data-link-type=element-attr title=src>src</a> attribute has no meaning when the element is nested within <a data-link-type=element href=#elementdef-picture title=picture>picture</a>,
 	and the resource selection algorithm is different.
 	As well,
 	the <a data-link-type=element href=#elementdef-picture title=picture>picture</a> element itself does not display anything;
@@ -941,8 +940,15 @@ Updating the List of Source Sets</span><a class=self-link href=#update-source-se
 
 			<ol>
 				<li>
-					If <var>child</var> is an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element,
-					exit this sub-algorithm.
+					If <var>child</var> is an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element and it has a <a data-link-for=img data-link-type=element-attr title=srcset>srcset</a> attribute,
+					<a data-link-type=dfn href=#parse-a-srcset-attribute title="parse a srcset attribute">parse <var>child</var>’s srcset attribute</a> and add the returned <a data-link-type=dfn href=#source-set title="source set">source set</a>
+					to the end of the <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>.
+					Then exit this sub-algorithm.
+				<li>
+					If <var>child</var> is an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element and it has a <a data-link-for=img data-link-type=element-attr title=src>src</a> attribute,
+					create an empty <a data-link-type=dfn href=#source-set title="source set">source set</a>, append the <var>child</var>’s src attribute value to the <a data-link-type=dfn href=#source-set title="source set">source set</a>
+					and add the <a data-link-type=dfn href=#source-set title="source set">source set</a> to the end of the <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>.
+					Then exit this sub-algorithm.
 
 				<li>
 					If <var>child</var> is not a <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> element,
@@ -950,7 +956,7 @@ Updating the List of Source Sets</span><a class=self-link href=#update-source-se
 					Otherwise, <var>child</var> is a <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> element.
 
 				<li>
-					If <var>child</var> does not have a <a data-link-for=source data-link-type=element-attr title=src>src</a> attribute,
+					If <var>child</var> does not have a <a data-link-for=source data-link-type=element-attr href=#element-attrdef-srcset title=srcset>srcset</a> attribute,
 					continue to the next child.
 
 				<li>
@@ -1038,7 +1044,6 @@ Parsing a <code>srcset</code> Attribute</span><a class=self-link href=#parse-src
 	</ol>
 
 <p>	Then return <var>source set</var>.
-
 
 <h4 class="heading settled heading" data-level=3.1.4 id=parse-sizes-attr><span class=secno>3.1.4 </span><span class=content>
 Parsing a <code>sizes</code> Attribute</span><a class=self-link href=#parse-sizes-attr></a></h4>
