@@ -789,8 +789,7 @@ Examples of usage</span><a class=self-link href=#examples></a></h3>
       &lt;picture&gt;
          &lt;source media="(min-width: 45em)" srcset="large-1.jpg, large-2.jpg 2x"&gt;
          &lt;source media="(min-width: 18em)" srcset="med-1.jpg, med-2.jpg 2x"&gt;
-         &lt;source srcset="small-1.jpg, small-2.jpg 2x"&gt;
-         &lt;img src="small-1.jpg" alt="" width="200" height="200"&gt;
+         &lt;img src="small-1.jpg" srcset="small-2.jpg 2x" alt="" width="200" height="200"&gt;
       &lt;/picture&gt;
       &lt;figcaption&gt;A figure of a fox jumping over a lazy box.&lt;/figcaption&gt;
   &lt;/figure&gt;
@@ -938,16 +937,40 @@ Updating the List of Source Sets</span><a class=self-link href=#update-source-se
 			doing the following for each child <var>child</var>:
 
 			<ol>
+                <li>
+                    If <var>child</var> is an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element and it has a <a data-link-for=img data-link-type=element-attr title=srcset>srcset</a> attribute:
+                    <ol>
+                        <li>
+                            <a data-link-type=dfn href=#parse-a-srcset-attribute title="parse a srcset attribute">Parse <var>child</var>’s srcset attribute</a> and let the returned <a data-link-type=dfn href=#source-set title="source set">source set</a> be <var>source set.
+
+                        </var><li>
+                            If <var>child</var> has a <a data-link-for=source data-link-type=element-attr href=#element-attrdef-sizes title=sizes>sizes</a> attribute,
+                            <a data-link-type=dfn href=#parse-a-sizes-attribute title="parse its sizes attribute">parse its sizes attribute</a>
+                            and let <var>source set</var>’s <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a> be the returned value.
+                            Otherwise,
+                            let <var>source set</var>’s <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a> be an empty <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a>.
+                        <li>
+                            Add the returned <a data-link-type=dfn href=#source-set title="source set">source set</a> to the end of the <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>.
+
+                        <li>
+                            Exit this sub-algorithm.
+                    </ol>
+
 				<li>
-					If <var>child</var> is an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element and it has a <a data-link-for=img data-link-type=element-attr title=srcset>srcset</a> attribute,
-					<a data-link-type=dfn href=#parse-a-srcset-attribute title="parse a srcset attribute">parse <var>child</var>’s srcset attribute</a> and add the returned <a data-link-type=dfn href=#source-set title="source set">source set</a>
-					to the end of the <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>.
-					Then exit this sub-algorithm.
-				<li>
-					If <var>child</var> is an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element and it has a <a data-link-for=img data-link-type=element-attr title=src>src</a> attribute,
-					create an empty <a data-link-type=dfn href=#source-set title="source set">source set</a>, append the <var>child</var>’s src attribute value to the <a data-link-type=dfn href=#source-set title="source set">source set</a>
-					and add the <a data-link-type=dfn href=#source-set title="source set">source set</a> to the end of the <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>.
-					Then exit this sub-algorithm.
+					If <var>child</var> is an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element and it has a <a data-link-for=img data-link-type=element-attr title=src>src</a> attribute:
+                    <ol>
+                        <li>
+                            create an empty <a data-link-type=dfn href=#source-set title="source set">source set</a>. 
+
+                        <li>
+                            Append the <var>child</var>’s src attribute value to the <a data-link-type=dfn href=#source-set title="source set">source set</a>.
+
+                        <li>
+                            Add the <a data-link-type=dfn href=#source-set title="source set">source set</a> to the end of the <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>.
+
+                        <li>
+                            Exit this sub-algorithm.
+                    </ol>
 
 				<li>
 					If <var>child</var> is not a <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-source-element title=source>source</a> element,
@@ -1059,7 +1082,7 @@ Parsing a <code>sizes</code> Attribute</span><a class=self-link href=#parse-size
 	return an empty <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a>.
 
 <p>	Otherwise,
-	let <var>source size list</var> initially be an emtpy <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a>.
+	let <var>source size list</var> initially be an empty <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a>.
 	For each <a class="production css-code" data-link-type=type href=#typedef-source-size title="<source-size>">&lt;source-size&gt;</a> parsed,
 	do the following:
 
