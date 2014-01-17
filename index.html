@@ -938,10 +938,14 @@ Updating the List of Source Sets</span><a class=self-link href=#update-source-se
 
 			<ol>
                 <li>
-                    If <var>child</var> is an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element and it has a <a data-link-for=img data-link-type=element-attr title=srcset>srcset</a> attribute:
+                    If <var>child</var> is an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element:
                     <ol>
                         <li>
-                            <a data-link-type=dfn href=#parse-a-srcset-attribute title="parse a srcset attribute">Parse <var>child</var>’s srcset attribute</a> and let the returned <a data-link-type=dfn href=#source-set title="source set">source set</a> be <var>source set.
+                            If <var>child</var> has a <a data-link-for=img data-link-type=element-attr title=srcset>srcset</a> attribute,
+                            <a data-link-type=dfn href=#parse-a-srcset-attribute title="parse a srcset attribute">parse <var>child</var>’s srcset attribute</a>
+                            and let the returned <a data-link-type=dfn href=#source-set title="source set">source set</a> be <var>source set.
+                            Otherwise,
+                            let <var>source set</var> be an empty <a data-link-type=dfn href=#source-set title="source set">source set</a>.
 
                         </var><li>
                             If <var>child</var> has a <a data-link-for=source data-link-type=element-attr href=#element-attrdef-sizes title=sizes>sizes</a> attribute,
@@ -950,26 +954,15 @@ Updating the List of Source Sets</span><a class=self-link href=#update-source-se
                             Otherwise,
                             let <var>source set</var>’s <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a> be an empty <a data-link-type=dfn href=#source-size-list title="source size list">source size list</a>.
                         <li>
+                            If <var>child</var> has a <a data-link-for=img data-link-type=element-attr title=src>src</a> attribute and <var>source set</var> does not contains a
+                            <var>source</var> with a <a class="production css-code" data-link-type=type href=http://dev.w3.org/csswg/css-values-3/#resolution-value title="<resolution>">&lt;resolution&gt;</a> value of 1,
+                            append the <var>child</var>’s src attribute value to the <a data-link-type=dfn href=#source-set title="source set">source set</a>.
+
+                        <li>
                             Add the returned <a data-link-type=dfn href=#source-set title="source set">source set</a> to the end of the <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>.
 
                         <li>
-                            Exit this sub-algorithm.
-                    </ol>
-
-				<li>
-					If <var>child</var> is an <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element and it has a <a data-link-for=img data-link-type=element-attr title=src>src</a> attribute:
-                    <ol>
-                        <li>
-                            create an empty <a data-link-type=dfn href=#source-set title="source set">source set</a>. 
-
-                        <li>
-                            Append the <var>child</var>’s src attribute value to the <a data-link-type=dfn href=#source-set title="source set">source set</a>.
-
-                        <li>
-                            Add the <a data-link-type=dfn href=#source-set title="source set">source set</a> to the end of the <a data-link-type=dfn href=#list-of-source-sets title="list of source sets">list of source sets</a>.
-
-                        <li>
-                            Exit this sub-algorithm.
+                            Exit the "Updating the List of Source Sets" algorithm.
                     </ol>
 
 				<li>
