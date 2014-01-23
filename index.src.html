@@ -392,33 +392,33 @@ Updating the List of Source Sets</h4>
 			doing the following for each child <var>child</var>:
 
 			<ol>
-                <li>
-                    If <var>child</var> is an <a element>img</a> element:
-                    <ol>
-                        <li>
-                            If <var>child</var> has a <a element-attr for="img">srcset</a> attribute,
-                            <a title="parse a srcset attribute">parse <var>child</var>’s srcset attribute</a>
-                            and let the returned <a>source set</a> be <var>source set</a>.
-                            Otherwise,
-                            let <var>source set</var> be an empty <a>source set</a>.
+				<li>
+					If <var>child</var> is an <a element>img</a> element:
+					<ol>
+						<li>
+							If <var>child</var> has a <a element-attr for="img">srcset</a> attribute,
+							<a title="parse a srcset attribute">parse <var>child</var>’s srcset attribute</a>
+							and let the returned <a>source set</a> be <var>source set</var>.
+							Otherwise,
+							let <var>source set</var> be an empty <a>source set</a>.
 
-                        <li>
-                            If <var>child</var> has a <a element-attr for="source">sizes</a> attribute,
-                            <a>parse its sizes attribute</a>
-                            and let <var>source set</var>’s <a>source size list</a> be the returned value.
-                            Otherwise,
-                            let <var>source set</var>’s <a>source size list</a> be an empty <a>source size list</a>.
-                        <li>
-                            If <var>child</var> has a <a element-attr for="img">src</a> attribute and <var>source set</var> does not contains a
-                            <var>source</var> with a <<resolution>> value of 1,
-                            append the <var>child</var>'s src attribute value to the <a>source set</a>.
+						<li>
+							If <var>child</var> has a <a element-attr for="source">sizes</a> attribute,
+							<a>parse its sizes attribute</a>
+							and let <var>source set</var>’s <a>source size list</a> be the returned value.
+							Otherwise,
+							let <var>source set</var>’s <a>source size list</a> be an empty <a>source size list</a>.
+						<li>
+							If <var>child</var> has a <a element-attr for="img">src</a> attribute and <var>source set</var> does not contain a
+							<var>source</var> with a <<resolution>> value of 1,
+							append the <var>child</var>'s src attribute value to the <a>source set</a>.
 
-                        <li>
-                            Add the returned <a>source set</a> to the end of the <a>list of source sets</a>.
+						<li>
+							Add the returned <a>source set</a> to the end of the <a>list of source sets</a>.
 
-                        <li>
-                            Exit the "Updating the List of Source Sets" algorithm.
-                    </ol>
+						<li>
+							Exit the "Updating the List of Source Sets" algorithm.
+					</ol>
 
 				<li>
 					If <var>child</var> is not a <a element>source</a> element,
