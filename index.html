@@ -1184,6 +1184,22 @@ Interaction with the Preload Scanner</span><a class=self-link href=#preloader></
 			or one which it cannot correctly determine the truth value of,
 			it must not attempt to preload <strong>any</strong> URL for the given <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element.
 	</ul>
+    <div class=note>
+        In some cases, the preload scanner cannot be aware of the final viewport’s dimensions when it encounters a <a data-link-type=element href=#elementdef-picture title=picture>picture</a> or a
+        <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element. One example of such a case is when a '@viewport' definition is located in an external style-sheet. Another
+        is when the preload scanner is operating on a <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-iframe-element title=iframe>iframe</a> based document, which has its dimensions defined in an external
+        style-sheet.
+        <p>
+        Authors should be aware of these limitations, and should follow the following best practices:
+        <ul>
+            <li>
+                <span class=css data-link-type=maybe title=@viewport>@viewport</span> CSS rules should be defined inlined whenever viewport dependant resources need to be fetched as part of the
+                page’s loading.
+            <li>
+                iframes that may contain viewport dependant resources should have their dimensions defined either in markup (as <a class=css data-link-type=maybe href=http://dev.w3.org/csswg/css-writing-modes-3/#height title=height>height</a>
+                and <span class=css data-link-type=maybe title=weight>weight</span> attributes) or as inline CSS rules.
+        </ul>
+    </div>
 
 <h3 class="heading settled heading" data-level=3.3 id=picture-idl><span class=secno>3.3 </span><span class=content>
 <code>HTMLPictureElement</code> interface</span><a class=self-link href=#picture-idl></a></h3>
