@@ -643,6 +643,22 @@ Interaction with the Preload Scanner</h3>
 			or one which it cannot correctly determine the truth value of,
 			it must not attempt to preload <strong>any</strong> URL for the given <a element>img</a> element.
 	</ul>
+	<div class='note'>
+		In some cases, the preload scanner or the parser cannot be aware of the final viewport's dimensions when it encounters a <a element>picture</a> or a
+		<a element>img</a> element. One example of such a case is when a @viewport definition is located in an external style-sheet. Another
+		is when the preload scanner is operating on a <a element>iframe</a> based document, which has its dimensions defined in an external
+		style-sheet.
+
+		Authors should be aware of these limitations, and should follow the following best practices:
+		<ul>
+			<li>
+				@viewport CSS rules should be defined inline whenever viewport dependant resources need to be fetched as part of the
+				page.
+			<li>
+				iframes that may contain viewport dependant resources should have their dimensions defined either in markup 
+                    (as <a element-attr for=iframe>height</a> and <a element-attr for=iframe>width</a> attributes) or as inline CSS rules.
+		</ul>
+	</div>
 
 <h3 id='picture-idl'>
 <code>HTMLPictureElement</code> interface</h3>
