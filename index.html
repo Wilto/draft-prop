@@ -546,14 +546,14 @@ span.issue, span.note {
 </p>
   <h1 class="p-name no-ref" id=title>The picture Element</h1>
   <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
-    <span class=dt-updated><span class=value-title title=20140123>23 January 2014</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20140124>24 January 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>This version:<dd><a class=u-url href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Editor’s Draft:<dd><a href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Test Suite:<dd>None Yet<dt>Editors:
 <dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://xanthir.com/contact/>Tab Atkins</a> (<span class="p-org org">Google</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:>Marcos Cáceres</a> (<span class="p-org org">Mozilla</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://matmarquis.com/>Mat Marquis</a><dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://blog.yoav.ws/>Yoav Weiss</a><dt>Version History:<dd><a href=https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages>Commit History</a><dd><a href=https://twitter.com/respimg_commits>Github commits on Twitter</a><dt>Participate:<dd><a href=http://w3c.responsiveimages.org>Join the Responsive Images Community Group</a><dd><a href=http://list.responsiveimages.org>Public Mailing List</a><dd><a href=irc://irc.w3.org:6665/#respimg>IRC: #respimg on W3C’s IRC</a><dd><a href=https://twitter.com/respimg>Twitter</a><dd><a href=https://github.com/ResponsiveImagesCG/picture-element>Github</a></dl></div>
   <div data-fill-with=warning></div>
   <p class=copyright data-fill-with=copyright><a href=http://creativecommons.org/publicdomain/zero/1.0/ rel=license><img alt=CC0 src=http://i.creativecommons.org/p/zero/1.0/80x15.png></a>
 To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 23 January 2014,
+In addition, as of 24 January 2014,
 the editors have made this specification available under the
 <a href=http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0 rel=license>Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
@@ -1186,17 +1186,18 @@ Interaction with the Preload Scanner</span><a class=self-link href=#preloader></
 	</ul>
 	<div class=note>
 		In some cases, the preload scanner or the parser cannot be aware of the final viewport’s dimensions when it encounters a <a data-link-type=element href=#elementdef-picture title=picture>picture</a> or a
-		<a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element. One example of such a case is when a '@viewport' definition is located in an external style-sheet. Another
+		<a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element. One example of such a case is when a @viewport definition is located in an external style-sheet. Another
 		is when the preload scanner is operating on a <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-iframe-element title=iframe>iframe</a> based document, which has its dimensions defined in an external
 		style-sheet.
-		<p>
-		Authors should be aware of these limitations, and should follow the following best practices:
+
+<p>		Authors should be aware of these limitations, and should follow the following best practices:
 		<ul>
 			<li>
-				<span class=css data-link-type=maybe title=@viewport>@viewport</span> CSS rules should be defined inline whenever viewport dependant resources need to be fetched as part of the
+				@viewport CSS rules should be defined inline whenever viewport dependant resources need to be fetched as part of the
 				page.
 			<li>
-				iframes that may contain viewport dependant resources should have their dimensions defined either in markup (as <a class=idl-code data-link-type=attribute title=height>height</a> and <a class=idl-code data-link-type=attribute href=http://dev.w3.org/csswg/css-font-load-events-3/#dom-fontface-weight title=weight>weight</a> attributes) or as inline CSS rules.
+				iframes that may contain viewport dependant resources should have their dimensions defined either in markup 
+                    (as <a data-link-for=iframe data-link-type=element-attr title=height>height</a> and <a data-link-for=iframe data-link-type=element-attr title=width>width</a> attributes) or as inline CSS rules.
 		</ul>
 	</div>
 
