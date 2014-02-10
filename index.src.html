@@ -18,7 +18,8 @@ Abstract: The primary purpose of the <code>picture</code> element is to address 
 !Participate: <a href="irc://irc.w3.org:6665/#respimg">IRC: #respimg on W3C's IRC</a>
 !Participate: <a href="https://twitter.com/respimg">Twitter</a>
 !Participate: <a href="https://github.com/ResponsiveImagesCG/picture-element">Github</a>
-Ignored Terms: src, media, type
+Ignored Terms: width, height, src, srcset, media, type
+Link Defaults: html5 (element) source/video/audio/iframe
 </pre>
 
 <style>
@@ -49,7 +50,7 @@ Introduction</h2>
 	The <a element>picture</a> element remains backwards compatible with legacy user agents
 	by degrading gracefully through <a>fallback content</a>
 	(i.e., through the <a element>img</a> element)
-	while also potentially providing better accessibility than the existing <a element>img</a> element.
+	while offering the same accessibility options as the existing <a element>img</a> element.
 
 	This specification also defines the <a interface>HTMLPictureElement</a> interface,
 	through which developers can interact with <a element>picture</a> elements.
@@ -655,7 +656,7 @@ Interaction with the Preload Scanner</h3>
 				@viewport CSS rules should be defined inline whenever viewport dependant resources need to be fetched as part of the
 				page.
 			<li>
-				iframes that may contain viewport dependant resources should have their dimensions defined either in markup 
+				iframes that may contain viewport dependant resources should have their dimensions defined either in markup
                     (as <a element-attr for=iframe>height</a> and <a element-attr for=iframe>width</a> attributes) or as inline CSS rules.
 		</ul>
 	</div>
