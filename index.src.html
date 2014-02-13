@@ -36,7 +36,6 @@ Introduction</h2>
 	a means to create specialized presentations of an image and control when they are presented to a user.
 	This is achieved by introducing the <a element>picture</a> element to HTML,
 	and by enhancing the <a element>source</a> element to support specifying multiple source urls.
-	Through this, an <a element>img</a> element
 
 	By relying on [[!MEDIAQ]], a user agent can <em>respond</em> to changes in the browsing environment
 	by selecting the image source that most closely matches the browsing environment &ndash;
@@ -51,9 +50,6 @@ Introduction</h2>
 	by degrading gracefully through <a>fallback content</a>
 	(i.e., through the <a element>img</a> element)
 	while offering the same accessibility options as the existing <a element>img</a> element.
-
-	This specification also defines the <a interface>HTMLPictureElement</a> interface,
-	through which developers can interact with <a element>picture</a> elements.
 
 
 <h3 id='when-to-use'>
@@ -287,7 +283,7 @@ Definitions</h2>
 	is not exhaustive; other terms are defined throughout this
 	specification.
 
-	The follow terms are defined by the [[!HTML]] specification:
+	The following terms are defined by the [[!HTML]] specification:
 	<dfn id="dfn-fallback-content"><a href="http://dev.w3.org/html5/spec/single-page.html#fallback-content">fallback content</a></dfn>,
 	and <dfn id="dfn-valid-media-query"><a href="http://dev.w3.org/html5/spec/single-page.html#valid-media-query">valid media query</a></dfn>.
 
@@ -669,12 +665,8 @@ Interaction with the Preload Scanner</h3>
 		};
 	</pre>
 
-	<p class='issue'>
-		We could maybe add some more things here,
-		like a list of the relevant <a element>source</a> elements
-		and the active <a element>img</a> element.
-		Readonly?
-		I dunno.
+	<p class="note">
+		The <code>HTMLPictureElement</code> serves as an extension point for future API extensions.  
 
 <h2 id='the-source-element'>
 Changes to the <a element>source</a> Element</h2>
