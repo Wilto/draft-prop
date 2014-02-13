@@ -158,10 +158,6 @@ img, a.logo { border-style: none; }
 [data-link-type="maybe"]::after {content: "”";}
 [data-link-type].production::before,
 [data-link-type].production::after { content: ""; }
-/* Element-type link styling */
-[data-link-type=element] { font-family: monospace; }
-[data-link-type=element]::before { content: "<" }
-[data-link-type=element]::after { content: ">" }
 /* Self-links */
 a.self-link {
   position: absolute;
@@ -405,7 +401,7 @@ dl.switch > dt:before {
 
 
 /* Obsoletion notice */
-details.annoying-warning[open] {
+details.obsolete[open] {
   background: #fdd;
   color: red;
   font-weight: bold;
@@ -419,7 +415,7 @@ details.annoying-warning[open] {
   bottom: 1em;
   z-index: 1000;
 }
-details.annoying-warning:not([open]) > summary {
+details.obsolete:not([open]) > summary {
   background: #fdd;
   color: red;
   font-weight: bold;
@@ -535,14 +531,14 @@ span.issue, span.note {
   border-right-style: solid;
 }
   </style>
-<style>
+</head>
+<body class=h-entry>
+<style scoped>
 [data-link-type=element] { font-family: monospace; }
 [data-link-type=element]::before { content: "<" }
 [data-link-type=element]::after { content: ">" }
 </style>
 
-</head>
-<body class=h-entry>
 <div class=head>
   <p data-fill-with=logo><a href=http://responsiveimages.org>
 	<img alt="Responsive Images Community Group" src=https://raw.github.com/ResponsiveImagesCG/meta/master/logo/Web/RICG_logo_small.png>
@@ -550,18 +546,18 @@ span.issue, span.note {
 </p>
   <h1 class="p-name no-ref" id=title>The picture Element</h1>
   <h2 class="no-num no-toc no-ref heading settled heading" id=subtitle><span class=content>Editor’s Draft,
-    <span class=dt-updated><span class=value-title title=20140210>10 February 2014</span></span></span></h2>
+    <span class=dt-updated><span class=value-title title=20140213>13 February 2014</span></span></span></h2>
   <div data-fill-with=spec-metadata><dl><dt>This version:<dd><a class=u-url href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Editor’s Draft:<dd><a href=http://picture.responsiveimages.org>http://picture.responsiveimages.org</a><dt>Test Suite:<dd>None Yet<dt>Editors:
-<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://xanthir.com/contact/>Tab Atkins</a> (<span class="p-org org">Google</span>)<dd class="p-author h-card vcard"><span class="p-name fn">Marcos Cáceres</span> (<span class="p-org org">Mozilla</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://matmarquis.com/>Mat Marquis</a><dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://blog.yoav.ws/>Yoav Weiss</a><dt>Version History:<dd><a href=https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages>Commit History</a><dd><a href=https://twitter.com/respimg_commits>Github commits on Twitter</a><dt>Participate:<dd><a href=http://w3c.responsiveimages.org>Join the Responsive Images Community Group</a><dd><a href=http://list.responsiveimages.org>Public Mailing List</a><dd><a href=irc://irc.w3.org:6665/#respimg>IRC: #respimg on W3C’s IRC</a><dd><a href=https://twitter.com/respimg>Twitter</a><dd><a href=https://github.com/ResponsiveImagesCG/picture-element>Github</a></dl></div>
+<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://xanthir.com/contact/>Tab Atkins</a> (<span class="p-org org">Google</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:>Marcos Cáceres</a> (<span class="p-org org">Mozilla</span>)<dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://matmarquis.com/>Mat Marquis</a><dd class="p-author h-card vcard"><a class="p-name fn u-url url" href=http://blog.yoav.ws/>Yoav Weiss</a><dt>Version History:<dd><a href=https://github.com/ResponsiveImagesCG/picture-element/commits/gh-pages>Commit History</a><dd><a href=https://twitter.com/respimg_commits>Github commits on Twitter</a><dt>Participate:<dd><a href=http://w3c.responsiveimages.org>Join the Responsive Images Community Group</a><dd><a href=http://list.responsiveimages.org>Public Mailing List</a><dd><a href=irc://irc.w3.org:6665/#respimg>IRC: #respimg on W3C’s IRC</a><dd><a href=https://twitter.com/respimg>Twitter</a><dd><a href=https://github.com/ResponsiveImagesCG/picture-element>Github</a></dl></div>
   <div data-fill-with=warning></div>
   <p class=copyright data-fill-with=copyright><a href=http://creativecommons.org/publicdomain/zero/1.0/ rel=license><img alt=CC0 src=http://i.creativecommons.org/p/zero/1.0/80x15.png></a>
 To the extent possible under law, the editors have waived all copyright
 and related or neighboring rights to this work.
-In addition, as of 10 February 2014,
+In addition, as of 13 February 2014,
 the editors have made this specification available under the
 <a href=http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0 rel=license>Open Web Foundation Agreement Version 1.0</a>,
 which is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
-Parts of this work may be from another specification document.  If so, those parts are instead covered by the license of that specification document.
+Parts of this work may be from an existing specification document.  If so, those parts are instead covered by the license of the existing specification document.
 </p>
   <hr title="Separator for header">
 </div>
@@ -651,7 +647,7 @@ Examples of usage</span><a class=self-link href=#examples></a></h3>
     &lt;img alt="A rad wolf." src="pic1x.jpg"&gt;
   &lt;/picture&gt;
 </pre>
-<p>		In this example, the user agent will choose one of the three URLs—<wbr>“pic1x.jpg”, “pic2x.jpg”, or “pic4x.jpg”—<wbr>depending on whether the quality of the user’s screen
+<p>		In this example, the user agent will choose one of the three URLs—<wbr></wbr>“pic1x.jpg”, “pic2x.jpg”, or “pic4x.jpg”—<wbr></wbr>depending on whether the quality of the user’s screen
 		and perhaps other factors,
 		such as the user’s bandwidth.
 
@@ -659,7 +655,7 @@ Examples of usage</span><a class=self-link href=#examples></a></h3>
 		as if it were specified in the <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element’s own <a data-link-for=img data-link-type=element-attr title=src>src</a> attribute.
 
 <p>		For backwards compatibility with older user agents that don’t yet understand the <a data-link-type=element href=#elementdef-picture title=picture>picture</a> element,
-		one of the URLs is duplicated in the <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element’s <a data-link-type=element-attr href=http://dev.w3.org/fxtf/filters/#element-attrdef-src title=src>src</a> attribute.
+		one of the URLs is duplicated in the <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element’s <a data-link-type=element-attr title=src>src</a> attribute.
 		This is ignored in modern user agents,
 		but will result in something useful
 		(though perhaps lower-resolution than the user would like)
@@ -726,7 +722,7 @@ Examples of usage</span><a class=self-link href=#examples></a></h3>
     &lt;img src="pic400.jpg" alt="The president giving an award."&gt;
   &lt;/picture&gt;
 </pre>
-<p>		In this example, the image source is provided at three sizes—<wbr>400 pixels wide, 800 pixels wide, and 1600 pixels wide.
+<p>		In this example, the image source is provided at three sizes—<wbr></wbr>400 pixels wide, 800 pixels wide, and 1600 pixels wide.
 		As well, it declares that the <a data-link-type=element href=http://www.w3.org/html/wg/drafts/html/CR/embedded-content-0.html#the-img-element title=img>img</a> element is intrinsically sized to be as wide as the entire viewport.
 		If the user’s device is <span class=css data-link-type=maybe title=320px>320px</span> wide,
 		this is equivalent to specifying <span class=css data-link-type=maybe title="pic400.jpg 1.25x, pic800.jpg 2.5x, pic1600.jpg 5x">pic400.jpg 1.25x, pic800.jpg 2.5x, pic1600.jpg 5x</span>.
@@ -1208,7 +1204,7 @@ Interaction with the Preload Scanner</span><a class=self-link href=#preloader></
 <h3 class="heading settled heading" data-level=3.3 id=picture-idl><span class=secno>3.3 </span><span class=content>
 <code>HTMLPictureElement</code> interface</span><a class=self-link href=#picture-idl></a></h3>
 
-	<pre class=idl>interface <dfn class=idl-code data-dfn-type=interface data-export="" data-global-name="" id=dom-htmlpictureelement>HTMLPictureElement<a class=self-link href=#dom-htmlpictureelement></a></dfn> {
+	<pre class=idl>interface <dfn class=idl-code data-dfn-type=interface data-export="" data-global-name="" id=dom-htmlpictureelement>HTMLPictureElement<a class=self-link href=#dom-htmlpictureelement></a></dfn> : <a data-link-type=idl href=http://www.w3.org/html/wg/drafts/html/CR/dom.html#htmlelement title=htmlelement>HTMLElement</a> {
   };
 </pre>
 	<p class=issue id=issue-6eda22b6><a class=self-link href=#issue-6eda22b6></a>
